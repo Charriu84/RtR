@@ -5,6 +5,8 @@
 #include "CvGameCoreDLL.h"
 #include "CyGame.h"
 #include "CvGameAI.h"
+#include "CvInitCore.h"
+
 #include "CyGlobalContext.h"
 #include "CyPlayer.h"
 //#include "CvEnums.h"
@@ -388,6 +390,16 @@ int CyGame::getTurnSlice() const
 	return (NULL != m_pGame ? m_pGame->getTurnSlice() : -1);
 }
 
+//PB Mod, for increment and decrement
+void CyGame::incrementTurnTimer(int iNumTurnSlices){
+	if( m_pGame != NULL){
+		if (isMPOption(MPOPTION_TURN_TIMER)){
+			m_pGame->incrementTurnTimer(iNumTurnSlices);
+		}
+	}
+}
+//END PB Mod
+
 int CyGame::getMinutesPlayed() const
 {
 	return (NULL != m_pGame ? m_pGame->getMinutesPlayed() : 0);
@@ -615,6 +627,16 @@ bool CyGame::isPitboss()
 {
 	return m_pGame ? m_pGame->isPitboss() : false;
 }
+bool CyGame::isPitbossShortNames() const
+{
+	return m_pGame ? CvInitCore::isPitbossShortNames() : false;
+}
+
+void CyGame::setPitbossShortNames(bool bShort, int maxLenName, int maxLenDesc){
+	if( m_pGame != NULL ){
+		CvInitCore::setPitbossShortNames( bShort, maxLenName, maxLenDesc );
+	}
+}
 
 bool CyGame::isSimultaneousTeamTurns()
 {
@@ -640,6 +662,12 @@ void CyGame::setActivePlayer(int /*PlayerTypes*/ eNewValue, bool bForceHotSeat)
 int CyGame::getPausePlayer()
 {
 	return m_pGame ? m_pGame->getPausePlayer() : -1;
+}
+
+void CyGame::setPausePlayer(int /*PlayerTypes*/ eNewValue)
+{
+	if (m_pGame)
+		m_pGame->setPausePlayer((PlayerTypes)eNewValue);
 }
 
 bool CyGame::isPaused()
@@ -1152,4 +1180,110 @@ void CyGame::doControl(int iControl)
 	{
 		m_pGame->doControl((ControlTypes) iControl);
 	}
+}
+
+/* Set player password to new value. Requires correct admin password as second argument.
+ * */
+int CyGame::setCivPassword(int ePlayer, const char *pNewPw, const char *pAdminPw)
+{
+  // Evaluate MD5-Hash of AdminPw
+  CvWString szAdminPw(pAdminPw);
+  if (!szAdminPw.empty()){
+    szAdminPw = CvWString(gDLL->md5String((char*)CvString(szAdminPw).GetCString()));
+  }
+
+  if( 0 == szAdminPw.compare( GC.getInitCore().getAdminPassword())){
+    CvWString szNewCivPW( pNewPw );
+    GC.getInitCore().setCivPassword((PlayerTypes)ePlayer, szNewCivPW );
+  }else{
+    return -1;
+  }
+  return 0;
+}
+
+bool CyGame::isDiploScreenUp() const
+{
+	return (NULL != m_pGame ? m_pGame->isDiploScreenUp() : false);
+}
+
+void CyGame::sendTurnCompletePB(int iPlayer){
+	if( m_pGame != NULL ){
+    GC.getInitCore().sendTurnCompletePB((PlayerTypes) iPlayer);
+	}
+}
+
+std::wstring __mod_path__; // static variable to avoid local one.
+std::wstring CyGame::getModPath()
+{
+  const char *path = get_dll_folder();  
+
+  // Remove lowest folder (\Assets)
+  char *last_slash = strrchr(path, '\\');
+  *last_slash = '\0';
+
+  __mod_path__.clear();
+  int status = CharToWString(__mod_path__, path);
+  return status == 0 ? __mod_path__ : L"";
+}
+
+int CyGame::unzipModUpdate(std::wstring zipFilename)
+{
+	std::wstring out_folder(getModPath());   
+	BSTR out_folder_bstr = SysAllocString(out_folder.c_str());
+	
+#if 0
+	// Manuell konstruieren
+	const char *dll_folder = get_dll_folder();
+	std::string absolute_path = std::string(dll_folder);
+	absolute_path.append("\\");
+	absolute_path.append("Update 1.zip");
+	std::wstring wabsolute_path;
+	StringToWString(wabsolute_path, absolute_path);
+	BSTR z_bstr = SysAllocString(wabsolute_path.c_str()); //=>File not found error
+	free((void *)dll_folder);
+#else
+	//BSTR z_bstr = SysAllocString(L"I:\\Olaf\\Civ4\\Beyond the Sword\\Mods\\PB Mod_v7\\Update 1.zip");//ok
+	BSTR z_bstr = SysAllocString(zipFilename.c_str());
+	//BSTR z_bstr = SysAllocString(L"Z:\\home\\olaf\\Civ4\\Civ4\\Beyond the Sword\\Mods\\PB Mod_v7\\Update 1.zip");
+#endif
+
+	int ret = Unzip2Folder(z_bstr, out_folder_bstr);
+
+	SysFreeString(z_bstr);
+	SysFreeString(out_folder_bstr);
+	return ret;
+}
+
+/* Delayed Python Call stuff ... */
+int CyGame::delayedPythonCall(int milliseconds, int arg1, int arg2)
+{
+	return (NULL != m_pGame ? m_pGame->delayedPythonCall(milliseconds, arg1, arg2) : -1);
+}
+
+int CyGame::setAdminPassword(const char *pNewAdminPw, const char *pAdminPw)
+{
+  if( !isPitbossHost() ){
+    return -2;
+  }
+
+  // Evaluate MD5-Hash of AdminPw
+  CvWString szAdminPw(pAdminPw);
+  if (!szAdminPw.empty()){
+    szAdminPw = CvWString(gDLL->md5String((char*)CvString(szAdminPw).GetCString()));
+  }
+
+  if( 0 == szAdminPw.compare( GC.getInitCore().getAdminPassword())){
+    CvWString szNewAdminPW( pNewAdminPw );
+    GC.getInitCore().setAdminPassword(szNewAdminPW );
+  }else{
+    return -1;
+  }
+  return 0;
+}
+
+void CyGame::fixTradeRoutes()
+{
+  if(m_pGame){
+    m_pGame->fixTradeRoutes();
+  }
 }

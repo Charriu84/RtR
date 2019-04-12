@@ -183,7 +183,9 @@ BOOST_LIB_PATH=$(CIV4_LIB_INSTALL_PATH)/
 !ENDIF
 
 PROJECT_INCS=/I"$(BOOST_LIB_PATH)Boost-1.32.0/include" /I"$(BOOST_LIB_PATH)Python24/include"
-PROJECT_LIBS=/LIBPATH:"$(BOOST_LIB_PATH)Python24/libs" /LIBPATH:"$(BOOST_LIB_PATH)boost-1.32.0/libs/" boost_python-vc71-mt-1_32.lib
+PROJECT_LIBS=/LIBPATH:"$(BOOST_LIB_PATH)Python24/libs" /LIBPATH:"$(BOOST_LIB_PATH)boost-1.32.0/libs/" boost_python-vc71-mt-1_32.lib \
+	thread.obj exceptions.obj condition.obj xtime.obj mutex.obj once.obj \
+	recursive_mutex.obj read_write_mutex.obj tss_hooks.obj
 
 INCS = $(PROJECT_INCS) $(GLOBAL_INCS)
 

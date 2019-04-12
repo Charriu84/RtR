@@ -32,6 +32,9 @@
 #include "CvDLLFAStarIFaceBase.h"
 #include "CvDLLPythonIFaceBase.h"
 
+//plako for Rbmod (monitor)
+#include <sstream>
+
 // Public Functions...
 
 CvPlayer::CvPlayer()
@@ -82,7 +85,7 @@ CvPlayer::CvPlayer()
 
 	m_ppaaiSpecialistExtraYield = NULL;
 	m_ppaaiImprovementYieldChange = NULL;
-
+	
 	reset(NO_PLAYER, true);
 }
 
@@ -219,6 +222,8 @@ void CvPlayer::init(PlayerTypes eID)
 				}
 
 				changeUpkeepModifier(GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier());
+				//T-hawk for RB balance mod
+				changeCityUpkeepModifier(GC.getTraitInfo((TraitTypes)iI).getCityUpkeepModifier());
 				changeLevelExperienceModifier(GC.getTraitInfo((TraitTypes)iI).getLevelExperienceModifier());
 				changeGreatPeopleRateModifier(GC.getTraitInfo((TraitTypes)iI).getGreatPeopleRateModifier());
 				changeGreatGeneralRateModifier(GC.getTraitInfo((TraitTypes)iI).getGreatGeneralRateModifier());
@@ -429,6 +434,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iCorporationMaintenanceModifier = 0;
 	m_iTotalMaintenance = 0;
 	m_iUpkeepModifier = 0;
+	m_iCityUpkeepModifier = 0;		//T-hawk for RB balance mod
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
 	m_iBuildingGoodHealth = 0;
@@ -1813,16 +1819,30 @@ CvWString CvPlayer::getNewCityName() const
 		}
 	}
 
+	/* OOS-Fix: Role dice regardless if szName is empty or not. The emptyness of the string depends on the language!
+	 */
 	if (szName.empty())
 	{
 		getCivilizationCityName(szName, getCivilizationType());
+	}else{
+		if (isBarbarian() || isMinorCiv())
+		{
+			GC.getGameINLINE().getSorenRandNum(GC.getCivilizationInfo(getCivilizationType()).getNumCityNames(), "getNewCityName 1 (Player)");
+		}
 	}
 
+	/* OOS-Fix: The following code free's the number of getSorenRandNum calls from the emptyness-condition of szName, too.
+	 * Thus, it will be languange independent.
+	 * numCityNameCalls defines the (maximal) number of getCivilizationCityName calls and exact number of getSorenRandNum
+	 * calls (in the isBarbarian() case).
+	 */
+	int numCityNameCalls = std::min(5, GC.getNumCivilizationInfos());
+
+	int iRandOffset = GC.getGameINLINE().getSorenRandNum(GC.getNumCivilizationInfos(), "getNewCityName 2 (Player)");
 	if (szName.empty())
 	{
 		// Pick a name from another random civ
-		int iRandOffset = GC.getGameINLINE().getSorenRandNum(GC.getNumCivilizationInfos(), "Place Units (Player)");
-		for (iI = 0; iI < GC.getNumCivilizationInfos(); iI++)
+		for (iI = 0; iI < numCityNameCalls; iI++)
 		{
 			int iLoopName = ((iI + iRandOffset) % GC.getNumCivilizationInfos());
 
@@ -1830,7 +1850,21 @@ CvWString CvPlayer::getNewCityName() const
 
 			if (!szName.empty())
 			{
+				++iI;
 				break;
+			}
+		}
+		for (iI; iI < numCityNameCalls; iI++){
+			if(isBarbarian() || isMinorCiv()){
+				int iLoopName = ((iI + iRandOffset) % GC.getNumCivilizationInfos());
+				GC.getGameINLINE().getSorenRandNum(GC.getCivilizationInfo(((CivilizationTypes)iLoopName)).getNumCityNames(), "getNewCityName 3A (Player)");
+			}
+		}
+	}else{
+		for (iI = 0; iI < numCityNameCalls; iI++){
+			if(isBarbarian() || isMinorCiv()){
+				int iLoopName = ((iI + iRandOffset) % GC.getNumCivilizationInfos());
+				GC.getGameINLINE().getSorenRandNum(GC.getCivilizationInfo(((CivilizationTypes)iLoopName)).getNumCityNames(), "getNewCityName 3B (Player)");
 			}
 		}
 	}
@@ -2222,7 +2256,8 @@ bool CvPlayer::hasTrait(TraitTypes eTrait) const
 {
 	FAssertMsg((getLeaderType() >= 0), "getLeaderType() is less than zero");
 	FAssertMsg((eTrait >= 0), "eTrait is less than zero");
-	return GC.getLeaderHeadInfo(getLeaderType()).hasTrait(eTrait);
+	return GC.getLeaderHeadInfo(getLeaderType()).hasTrait(eTrait)
+		|| GC.getCivilizationInfo(getCivilizationType()).hasTrait(eTrait); // AGDM addition
 }
 
 bool CvPlayer::isHuman() const
@@ -2261,6 +2296,10 @@ const wchar* CvPlayer::getName(uint uiForm) const
 	}
 }
 
+void CvPlayer::setName(const wchar* szNewValue)
+{
+	GC.getInitCore().setLeaderName(getID(), szNewValue);
+}
 
 const wchar* CvPlayer::getNameKey() const
 {
@@ -3009,6 +3048,12 @@ void CvPlayer::chooseTech(int iDiscover, CvWString szText, bool bFront)
 	CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CHOOSETECH);
 	if (NULL != pInfo)
 	{
+		//PB Mod
+		//For Oracle double tech bugfix. Store if this player is logged in.
+		if ( gDLL->IsPitbossHost() && isConnected() ){
+			pInfo->setFlags(1);
+		}
+
 		pInfo->setData1(iDiscover);
 		pInfo->setText(szText);
 		gDLL->getInterfaceIFace()->addPopup(pInfo, getID(), false, bFront);
@@ -3833,8 +3878,14 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 	case TRADE_CITIES:
 		{
 			CvCity* pCityTraded = getCity(item.m_iData);
+			
+			// RBMP bugfix - cancel trade if city to be traded doesn't exist anymore
+			if (NULL == pCityTraded)
+			{
+				return false;
+			}
 
-			if (NULL != pCityTraded && pCityTraded->getLiberationPlayer(false) == eWhoTo)
+			if (pCityTraded->getLiberationPlayer(false) == eWhoTo)
 			{
 				return true;
 			}
@@ -3877,6 +3928,14 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 		break;
 
 	case TRADE_MAPS:
+
+		//Plako for RtR mod No barbs = no map trading
+		if (GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS))
+		{
+			return false;
+		}
+		//end RtR mod
+
 		if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
 		{
 			if (GET_TEAM(getTeam()).isMapTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isMapTrading())
@@ -6389,9 +6448,44 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 		}
 	}
 
+	//novice: Hard cap used to increase known tech boni for games with many players
+	int iPossibleKnownCountHardCap = GC.getDefineINT("TECH_COST_CIV_COUNT_HARD_CAP");
+	if(iPossibleKnownCountHardCap > 0) {
+		// There's a hard cap; cap the number of civs at the hard cap.
+		// This increases known tech boni for games with more players than the hard cap.
+		if(iPossibleKnownCount > iPossibleKnownCountHardCap) {
+			iPossibleKnownCount = iPossibleKnownCountHardCap;
+		}
+	}
+
+	//novice: Hard lower cap used to decrease known tech boni for games with few players
+	int iPossibleKnownCountHardCapLower = GC.getDefineINT("TECH_COST_CIV_COUNT_HARD_CAP_LOWER");
+	if(iPossibleKnownCountHardCapLower > 0) {
+		// There's a hard cap; cap the number of civs at the hard cap.
+		// This decreases known tech boni for games with fewer players than the hard cap.
+		if(iPossibleKnownCount < iPossibleKnownCountHardCapLower) {
+			iPossibleKnownCount = iPossibleKnownCountHardCapLower;
+		}
+	}
+
 	if (iPossibleKnownCount > 0)
 	{
-		iModifier += (GC.getDefineINT("TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER") * iKnownCount) / iPossibleKnownCount;
+		float fMultiplierPerEra = GC.getDefineFLOAT("TECH_COST_MODIFIER_PER_ERA_MULTIPLIER");
+		if(fMultiplierPerEra == 0) {
+			// BTS implementation:
+			iModifier += (GC.getDefineINT("TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER") * iKnownCount) / iPossibleKnownCount;
+		}
+		else {
+			//novice RB Mod known tech bonus implementation: 
+			int iCurrentHighestEra = GC.getGameINLINE().getCurrentHighestEra();
+			int iMaximumEra = GC.getDefineINT("TECH_COST_MAXIMUM_ERA_CAP");
+			//Use highest era (possibly capped) and multiply with the fraction of contacts knowing the tech, TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER, and TECH_COST_MODIFIER_PER_ERA_MULTIPLIER
+			iModifier += (int)(std::min(iMaximumEra, iCurrentHighestEra) * fMultiplierPerEra * ((GC.getDefineINT("TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER") * iKnownCount) / iPossibleKnownCount));
+			if (iCurrentHighestEra < iMaximumEra)
+				iModifier = std::min(GC.getDefineINT("TECH_COST_TOTAL_MODIFIER_EARLY_CAP"), iModifier);
+			else 
+				iModifier = std::min(GC.getDefineINT("TECH_COST_TOTAL_MODIFIER_ADVANCED_CAP"), iModifier);
+		}
 	}
 
 	int iPossiblePaths = 0;
@@ -8589,6 +8683,18 @@ void CvPlayer::changeUpkeepModifier(int iChange)
 	m_iUpkeepModifier = (m_iUpkeepModifier + iChange);
 }
 
+//T-hawk for RB balance mod
+int CvPlayer::getCityUpkeepModifier() const
+{
+	return m_iCityUpkeepModifier;
+}
+
+//T-hawk for RB balance mod
+void CvPlayer::changeCityUpkeepModifier(int iChange)
+{
+	m_iCityUpkeepModifier = (m_iCityUpkeepModifier + iChange);
+}
+
 
 int CvPlayer::getLevelExperienceModifier() const
 {
@@ -9126,6 +9232,9 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 	bool bUpdatePlotGroups;
 
 	pOldCapitalCity = getCapitalCity();
+
+	if (pOldCapitalCity != NULL) pOldCapitalCity->plot()->updateYield(); // AGDM addition
+	if (pNewCapitalCity != NULL) pNewCapitalCity->plot()->updateYield(); // AGDM addition
 
 	if (pOldCapitalCity != pNewCapitalCity)
 	{
@@ -9869,6 +9978,17 @@ void CvPlayer::setEndTurn(bool bNewValue)
 		if (isEndTurn())
 		{
 			setAutoMoves(true);
+
+			//Plako for RBmod (monitor)
+			GC.getGameINLINE().logEvent(getID(), "END TURN");
+			// Novice: Log game state when player ends turn
+			GC.getGameINLINE().logGameStateString(getID());
+			// Novice: Trigger autosave if in pitboss mode
+			if(gDLL->IsPitbossHost() && GC.getDefineINT("ENABLE_EXTENDED_RECOVERY_SAVES") > 0) {
+				CvString saveName = (CvString)(getName()) + "_end_turn_" + GC.getGameINLINE().getLocalTimeString(true) + ".CivBeyondSwordSave";
+				CvString fileName = GC.getGameINLINE().getLogfilePath(saveName, false);
+				gDLL->getEngineIFace()->SaveGame(fileName, SAVEGAME_RECOVERY);
+			}
 		}
 	}
 }
@@ -10229,6 +10349,13 @@ int CvPlayer::getPlayerTextColorA() const
 	return ((int)(GC.getColorInfo((ColorTypes) GC.getPlayerColorInfo(getPlayerColor()).getTextColorType()).getColor().a * 255));
 }
 
+void CvPlayer::setPlayerColor(PlayerColorTypes eColor)
+{
+	FAssertMsg(eColor != NO_PLAYERCOLOR, "getPlayerColor() is not expected to be equal with NO_PLAYERCOLOR");
+	if( eColor < GC.getNumPlayerColorInfos() ){
+		GC.getInitCore().setColor(getID(), eColor);
+	}
+}
 
 int CvPlayer::getSeaPlotYield(YieldTypes eIndex) const
 {
@@ -12384,6 +12511,9 @@ void CvPlayer::clearDiplomacy()
 
 const CvDiploQueue& CvPlayer::getDiplomacy() const
 {
+	if (GC.getGameINLINE().isPaused() && GC.getGameINLINE().isPitboss() && GC.getDefineINT("ENABLE_PITBOSS_PAUSE_FIX") > 0) {
+        return m_listDiplomacyEmpty;
+    }
 	return (m_listDiplomacy);
 }
 
@@ -13252,7 +13382,7 @@ int CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Player
 	}
 	else if (kMission.getCounterespionageMod() > 0)
 	{
-		if (GET_TEAM(getTeam()).getCounterespionageTurnsLeftAgainstTeam(GET_PLAYER(eTargetPlayer).getTeam()) <= 0)
+		if (GET_TEAM(getTeam()).getCounterespionageTurnsLeftAgainstTeam(GET_PLAYER(eTargetPlayer).getTeam()) <= 1 /*0 */) // PB Mod: Allow Counterespionage in last running round
 		{
 			iMissionCost = (iBaseMissionCost * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getResearchPercent()) / 100;
 		}
@@ -13755,34 +13885,41 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 	// Player Anarchy
 
 	if (kMission.getPlayerAnarchyCounter() > 0)
-	{
-		if (NO_PLAYER != eTargetPlayer)
-		{
-			int iTurns = (kMission.getPlayerAnarchyCounter() * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getAnarchyPercent()) / 100;
-			szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_PLAYER_ANARCHY").GetCString();
-			GET_PLAYER(eTargetPlayer).changeAnarchyTurns(iTurns);
+  {
+    if (NO_PLAYER != eTargetPlayer)
+    {
+      int iTurns = (kMission.getPlayerAnarchyCounter() * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getAnarchyPercent()) / 100;
+      szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_PLAYER_ANARCHY").GetCString();
+      GET_PLAYER(eTargetPlayer).changeAnarchyTurns(iTurns);
 
-			bSomethingHappened = true;
-		}
-	}
+      bSomethingHappened = true;
+    }
+  }
 
 	//////////////////////////////
 	// Counterespionage
 
 	if (kMission.getCounterespionageNumTurns() > 0 && kMission.getCounterespionageMod() > 0)
-	{
-		szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_COUNTERESPIONAGE").GetCString();
+  {
+    szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_COUNTERESPIONAGE").GetCString();
 
-		if (NO_TEAM != eTargetTeam)
-		{
-			int iTurns = (kMission.getCounterespionageNumTurns() * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getResearchPercent()) / 100;
-			GET_TEAM(getTeam()).changeCounterespionageTurnsLeftAgainstTeam(eTargetTeam, iTurns);
-			GET_TEAM(getTeam()).changeCounterespionageModAgainstTeam(eTargetTeam, kMission.getCounterespionageMod());
-	
-			bSomethingHappened = true;
+    if (NO_TEAM != eTargetTeam)
+    {
+      int iTurns = (kMission.getCounterespionageNumTurns() * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getResearchPercent()) / 100;
+      if( GET_TEAM(getTeam()).getCounterespionageTurnsLeftAgainstTeam(eTargetTeam) == 0 ){
+        // Do not increase twice for multiple counter espionage.
+        GET_TEAM(getTeam()).changeCounterespionageModAgainstTeam(eTargetTeam, kMission.getCounterespionageMod());
+      }
+      GET_TEAM(getTeam()).changeCounterespionageTurnsLeftAgainstTeam(eTargetTeam, iTurns);
+      if( GET_TEAM(getTeam()).getCounterespionageTurnsLeftAgainstTeam(eTargetTeam) == 0 ){
+        // Do not increase twice for multiple counter espionage.
+        GET_TEAM(getTeam()).changeCounterespionageModAgainstTeam(eTargetTeam, kMission.getCounterespionageMod());
+      }
 
-		}		
-	}
+      bSomethingHappened = true;
+
+    }		
+  }
 
 	int iHave = 0;
 	if (NO_TEAM != eTargetTeam)
@@ -15505,6 +15642,28 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange)
 			changeExtraBuildingHappiness(eOurBuilding, (GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) * iChange));
 			changeExtraBuildingHealth(eOurBuilding, (GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) * iChange));
 		}
+		// AGDM addition:
+		// TODO: Process this when a city is aquired as well. (I.e. a city changes ownership; thus the civics of the city changes
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); NULL != pLoopCity; pLoopCity = nextCity(&iLoop))
+		{
+			for (iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
+			{
+				pLoopCity->changeBuildingYieldChange((BuildingClassTypes)iI, (YieldTypes)iJ, (GC.getCivicInfo(eCivic)).getBuildingYieldChanges(iI, iJ) * iChange);
+				pLoopCity->changeYieldRateModifier((YieldTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingYieldModifiers(iI, iJ) * iChange);
+			}
+			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; ++iJ)
+			{
+				pLoopCity->changeBuildingCommerceChange((BuildingClassTypes)iI, (CommerceTypes)iJ, (GC.getCivicInfo(eCivic)).getBuildingCommerceChanges(iI, iJ) * iChange);
+				pLoopCity->changeCommerceRateModifier((CommerceTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingCommerceModifiers(iI, iJ) * iChange);
+			}
+			for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
+			{
+				pLoopCity->changeFreeSpecialistCount((SpecialistTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingFreeSpecialistCounts(iI, iJ) * iChange);
+			}
+			pLoopCity->changeMilitaryProductionModifier(pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingMilitaryProductionModifiers(iI) * iChange);
+			pLoopCity->changeFreeExperience(pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingFreeExperiences(iI) * iChange);
+		}					
 	}
 
 	for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
@@ -15635,6 +15794,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iCorporationMaintenanceModifier);
 	pStream->Read(&m_iTotalMaintenance);
 	pStream->Read(&m_iUpkeepModifier);
+	pStream->Read(&m_iCityUpkeepModifier);			//T-hawk for RB balance mod
 	pStream->Read(&m_iLevelExperienceModifier);
 	pStream->Read(&m_iExtraHealth);
 	pStream->Read(&m_iBuildingGoodHealth);
@@ -16098,6 +16258,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(m_iCorporationMaintenanceModifier);
 	pStream->Write(m_iTotalMaintenance);
 	pStream->Write(m_iUpkeepModifier);
+	pStream->Write(m_iCityUpkeepModifier);			//T-hawk for RB balance mod
 	pStream->Write(m_iLevelExperienceModifier);
 	pStream->Write(m_iExtraHealth);
 	pStream->Write(m_iBuildingGoodHealth);
@@ -19598,7 +19759,9 @@ void CvPlayer::launch(VictoryTypes eVictory)
 	kTeam.finalizeProjectArtTypes();
 	kTeam.setVictoryCountdown(eVictory, kTeam.getVictoryDelay(eVictory));
 
-	gDLL->getEngineIFace()->AddLaunch(getID());
+  if ( GC.IsGraphicsInitialized()){
+    gDLL->getEngineIFace()->AddLaunch(getID());
+  }
 
 	kTeam.setCanLaunch(eVictory, false);
 

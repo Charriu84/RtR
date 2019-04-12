@@ -98,7 +98,6 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 			}
 		}
 		break;
-
 	case BUTTONPOPUP_MAIN_MENU:
 		if (pPopupReturn->getButtonClicked() == 0)
 		{	// exit to desktop
@@ -119,12 +118,21 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 			}
 		}
 		else if (pPopupReturn->getButtonClicked() == 2)
-		{
-			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU);
-			if (NULL != pInfo)
-			{
-				pInfo->setData1(2);
-				gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
+		{ 
+			if( GC.getGameINLINE().isPitboss() ){
+				CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU_KI);
+				if (NULL != pInfo)
+				{
+					pInfo->setData1(10005);
+					gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
+				}
+			}else{
+				CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU);
+				if (NULL != pInfo)
+				{
+					pInfo->setData1(2);
+					gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
+				}
 			}
 		}
 		else if (pPopupReturn->getButtonClicked() == 3)
@@ -721,6 +729,29 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 		CvMessageControl::getInstance().sendFoundReligion(GC.getGameINLINE().getActivePlayer(), (ReligionTypes)pPopupReturn->getButtonClicked(), (ReligionTypes)info.getData1());
 		break;
 
+	case BUTTONPOPUP_CONFIRM_MENU_KI:
+		{
+			if ( pPopupReturn->getButtonClicked() == 0 )
+			{
+				switch (info.getData1())
+				{
+					case 10005:
+						gDLL->getInterfaceIFace()->exitingToMainMenu();
+						break;
+				}
+			}
+			if ( pPopupReturn->getButtonClicked() == 2 )
+			{
+				switch (info.getData1())
+				{
+					case 10005:
+						GC.getGameINLINE().doControl(CONTROL_RETIRE);
+						break;
+				}
+			}
+		}
+		break;
+
 	default:
 		FAssert(false);
 		break;
@@ -933,6 +964,9 @@ bool CvDLLButtonPopup::launchButtonPopup(CvPopup* pPopup, CvPopupInfo &info)
 		break;
 	case BUTTONPOPUP_FOUND_RELIGION:
 		bLaunched = launchFoundReligionPopup(pPopup, info);
+		break;
+	case BUTTONPOPUP_CONFIRM_MENU_KI:
+		bLaunched = launchConfirmMenuKI(pPopup, info);
 		break;
 	default:
 		FAssert(false);
@@ -1434,6 +1468,19 @@ bool CvDLLButtonPopup::launchDisbandCityPopup(CvPopup* pPopup, CvPopupInfo &info
 
 bool CvDLLButtonPopup::launchChooseTechPopup(CvPopup* pPopup, CvPopupInfo &info)
 {
+
+	/* PB Mod
+	 * Oracle double tech bugfix. If a player is logged in during the building
+	 * of the oracle in one of his cities, he get immediately the Tech selection
+	 * and again, at the next login.
+	 * 
+	 * Solution: Set a flag if the player was logged in during the oracle build
+	 *           and skip second popup.
+	 */
+	if( PBMOD_IS_POPUP_FLAG(info.getFlags()) && PBMOD_GET_POPUP_FLAG(info.getFlags()) == 1 ){
+		return (false);
+	}
+
 	CyArgsList argsList;
 	argsList.add(GC.getGameINLINE().getActivePlayer());
 	long lResult=0;
@@ -1823,6 +1870,16 @@ bool CvDLLButtonPopup::launchDoEspionagePopup(CvPopup* pPopup, CvPopupInfo &info
 		return (false);
 	}
 
+	/* PB Mod.
+	 * Espionage popup bugfix: Compare turn slice timestamp. 
+	 * This fails for all quequed messages in pitboss save.
+	 */
+  if( PBMOD_IS_POPUP_FLAG(info.getFlags()) &&
+      PBMOD_GET_POPUP_FLAG(info.getFlags()) != GC.getGameINLINE().getTurnSlice()
+    ){
+    return (false);
+  }
+
 	gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, gDLL->getText("TXT_KEY_CHOOSE_ESPIONAGE_MISSION"));
 
 	for (int iLoop = 0; iLoop < GC.getNumEspionageMissionInfos(); iLoop++)
@@ -1863,6 +1920,16 @@ bool CvDLLButtonPopup::launchDoEspionageTargetPopup(CvPopup* pPopup, CvPopupInfo
 	{
 		return false;
 	}
+
+	/* PB Mod.
+	 * Espionage popup bugfix: Compare turn slice timestamp. 
+	 * This fails for all quequed messages in pitboss save.
+	 */
+  if( PBMOD_IS_POPUP_FLAG(info.getFlags()) &&
+      PBMOD_GET_POPUP_FLAG(info.getFlags()) != GC.getGameINLINE().getTurnSlice()
+    ){
+    return (false);
+  }
 
 	CvPlot* pPlot = pUnit->plot();
 	CvCity* pCity = pPlot->getPlotCity();
@@ -2006,7 +2073,11 @@ bool CvDLLButtonPopup::launchMainMenuPopup(CvPopup* pPopup, CvPopupInfo &info)
 
 	if (GC.getGameINLINE().canDoControl(CONTROL_RETIRE))
 	{
-		gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_RETIRE").c_str(), NULL, 2, WIDGET_GENERAL, 2, 0, true, POPUP_LAYOUT_STRETCH, DLL_FONT_CENTER_JUSTIFY);
+		if( GC.getGameINLINE().isPitboss()){
+			gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_RETIRE_MOD_PITBOSS").c_str(), NULL, 2, WIDGET_GENERAL, 2, 0, true, POPUP_LAYOUT_STRETCH, DLL_FONT_CENTER_JUSTIFY);
+		}else{
+			gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_RETIRE").c_str(), NULL, 2, WIDGET_GENERAL, 2, 0, true, POPUP_LAYOUT_STRETCH, DLL_FONT_CENTER_JUSTIFY);
+		}
 	}
 
 	if ((GC.getGameINLINE().getElapsedGameTurns() == 0) && !(GC.getGameINLINE().isGameMultiPlayer()) && !(GC.getInitCore().getWBMapScript()))
@@ -2122,6 +2193,16 @@ bool CvDLLButtonPopup::launchCancelDeal(CvPopup* pPopup, CvPopupInfo &info)
 
 bool CvDLLButtonPopup::launchPythonPopup(CvPopup* pPopup, CvPopupInfo &info)
 {
+	/* PB Mod.
+	 * Python popup bugfix: Compare turn slice timestamp. 
+	 * This fails for all quequed messages in pitboss save.
+	 */
+  if( PBMOD_IS_POPUP_FLAG(info.getFlags()) &&
+      PBMOD_GET_POPUP_FLAG(info.getFlags()) != GC.getGameINLINE().getTurnSlice()
+    ){
+    return (false);
+  }
+
 	gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, info.getText());
 	for (int i = 0; i < info.getNumPythonButtons(); i++)
 	{
@@ -2557,6 +2638,22 @@ bool CvDLLButtonPopup::launchFoundReligionPopup(CvPopup* pPopup, CvPopupInfo &in
 		return false;
 	}
 
+	gDLL->getInterfaceIFace()->popupLaunch(pPopup, false, POPUPSTATE_IMMEDIATE);
+
+	return true;
+}
+
+bool CvDLLButtonPopup::launchConfirmMenuKI(CvPopup *pPopup, CvPopupInfo &info)
+{
+	bool bTakeoverAI = GC.getInitCore().getMPOption(MPOPTION_TAKEOVER_AI);
+	if( bTakeoverAI ){
+		gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, gDLL->getText("TXT_KEY_POPUP_ARE_YOU_SURE_MOD_PITBOSS").c_str());
+	}else{
+		gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, gDLL->getText("TXT_KEY_POPUP_ARE_YOU_SURE_MOD_PITBOSS2").c_str());
+	}
+	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_MOD_NO_BUT_EXIT").c_str(), NULL, 0, WIDGET_GENERAL);
+	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_NO").c_str(), NULL, 1, WIDGET_GENERAL);
+	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_MOD_YES_KI").c_str(), NULL, 2, WIDGET_GENERAL);
 	gDLL->getInterfaceIFace()->popupLaunch(pPopup, false, POPUPSTATE_IMMEDIATE);
 
 	return true;

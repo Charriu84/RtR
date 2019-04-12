@@ -73,6 +73,7 @@ public:
 	DllExport bool isBarbarian() const;																																					// Exposed to Python						
 
 	DllExport const wchar* getName(uint uiForm = 0) const;																											// Exposed to Python
+	void setName(const wchar* szNewValue);		// Exposed to Python
 	DllExport const wchar* getNameKey() const;																																	// Exposed to Python
 	DllExport const wchar* getCivilizationDescription(uint uiForm = 0) const;																		// Exposed to Python
 	DllExport const wchar* getCivilizationDescriptionKey() const;																								// Exposed to Python
@@ -476,6 +477,10 @@ public:
 	int getUpkeepModifier() const;																																						// Exposed to Python
 	void changeUpkeepModifier(int iChange);
 
+	//T-hawk for RB balance mod
+	int getCityUpkeepModifier() const;																																						// Exposed to Python
+	void changeCityUpkeepModifier(int iChange);
+
 	int getLevelExperienceModifier() const;																																						// Exposed to Python
 	void changeLevelExperienceModifier(int iChange);
 
@@ -654,6 +659,7 @@ public:
 	DllExport int getPlayerTextColorG() const;																												// Exposed to Python									
 	DllExport int getPlayerTextColorB() const;																												// Exposed to Python									
 	DllExport int getPlayerTextColorA() const;																												// Exposed to Python									
+	void setPlayerColor(PlayerColorTypes color);																								// Exposed to Python									
 																																									
 	int getSeaPlotYield(YieldTypes eIndex) const;																											// Exposed to Python
 	void changeSeaPlotYield(YieldTypes eIndex, int iChange);
@@ -1040,6 +1046,12 @@ public:
 	virtual int AI_maxGoldPerTurnTrade(PlayerTypes ePlayer) const = 0;
 	virtual int AI_maxGoldTrade(PlayerTypes ePlayer) const = 0;
 
+	//Plako for RBmod (monitor)
+	bool getPreviousConnected() {return m_bPreviousConnected;};
+	void setPreviousConnected(bool previousConnected) { m_bPreviousConnected=previousConnected;};
+	int getPreviousScore() {return m_iPreviousScore;};
+	void setPreviousScore(int previousScore) { m_iPreviousScore=previousScore;};
+
 protected:
 
 	int m_iStartingX;
@@ -1100,6 +1112,7 @@ protected:
 	int m_iCorporationMaintenanceModifier;
 	int m_iTotalMaintenance;
 	int m_iUpkeepModifier;
+	int m_iCityUpkeepModifier;			//T-hawk for RB balance mod
 	int m_iLevelExperienceModifier;
 	int m_iExtraHealth;
 	int m_iBuildingGoodHealth;
@@ -1149,7 +1162,10 @@ protected:
 	bool m_bFoundedFirstCity;
 	bool m_bStrike;
 	bool m_bHuman;
-
+	//Plako for RBmod (monitor)
+	bool m_bPreviousConnected;
+	int m_iPreviousScore;
+	
 	PlayerTypes m_eID;
 	LeaderHeadTypes m_ePersonalityType;
 	EraTypes m_eCurrentEra;
@@ -1235,7 +1251,10 @@ protected:
 
 	CvMessageQueue m_listGameMessages; 
 	CvPopupQueue m_listPopups;
-	CvDiploQueue m_listDiplomacy; 
+	CvDiploQueue m_listDiplomacy;
+	
+	// novice for RtR
+	CvDiploQueue m_listDiplomacyEmpty;
 
 	CvTurnScoreMap m_mapScoreHistory;
 	CvTurnScoreMap m_mapEconomyHistory;

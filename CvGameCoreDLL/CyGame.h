@@ -106,6 +106,9 @@ public:
 	int getEstimateEndTurn() const;
 	void setEstimateEndTurn(int iNewValue);
 	int getTurnSlice() const;
+	//PB Mod, for increment and decrement
+	void incrementTurnTimer(int iNumTurnSlices);
+	//END PB Mod
 	int getMinutesPlayed() const;
 	int getTargetScore() const;
 	void setTargetScore(int iNewValue);
@@ -155,6 +158,8 @@ public:
 	bool isHotSeat();
 	bool isPbem();
 	bool isPitboss();
+	bool isPitbossShortNames() const;
+	void setPitbossShortNames(bool bShort, int maxLenName, int maxLenDesc);
 	bool isSimultaneousTeamTurns();
 
 	bool isFinalInitialized();
@@ -162,6 +167,7 @@ public:
 	int /*PlayerTypes*/ getActivePlayer();
 	void setActivePlayer(int /*PlayerTypes*/ eNewValue, bool bForceHotSeat);
 	int getPausePlayer();
+	void setPausePlayer(int /*PlayerTypes*/ eNewValue);
 	bool isPaused();
 	int /*UnitTypes*/ getBestLandUnit();
 	int getBestLandUnitCombat();
@@ -270,6 +276,15 @@ public:
 
 	bool isEventActive(int /*EventTriggerTypes*/ eTrigger);
 	void doControl(int iControl);
+
+	int setCivPassword(int ePlayer, const char *pNewPw, const char *pAdminPw);
+	bool isDiploScreenUp() const;
+	void sendTurnCompletePB(int iPlayer);
+	std::wstring getModPath();
+	int unzipModUpdate(std::wstring zipFilename);
+	int delayedPythonCall(int milliseconds, int arg1, int arg2);
+	int setAdminPassword(const char *pNewAdminPw, const char *pAdminPw);
+	void fixTradeRoutes();
 
 protected:
 	CvGame* m_pGame;
