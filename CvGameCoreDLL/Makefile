@@ -154,7 +154,7 @@ FILE_DEPENDS = $(TEMP_TARGET_FILES)\depends
 #GLOBAL_CFLAGS=/GR /Gy /W3 /EHsc /Gd /Gm- /Fd"$(Target_PDB)" $(CUSTOM_CFLAGS) $(PROJECT_CFLAGS)
 GLOBAL_CFLAGS=/GR /Gy /W3 /EHsc /Gd /Gm- /DWIN32 /D_WINDOWS /D_USRDLL /DCVGAMECOREDLL_EXPORTS /Yu"CvGameCoreDLL.h"
 #Debug_CFLAGS=/MD /Zi /Od /RTC1 $(Debug_DEFINES) $(GLOBAL_CFLAGS)
-Debug_CFLAGS=/MD /Zi /Od /D_DEBUG /RTC1 /Fp"$(Debug_PCH)" $(GLOBAL_CFLAGS)
+Debug_CFLAGS=/MD /Zi /Od /D_DEBUG /RTC1 /Fp"$(Target_PCH)" $(GLOBAL_CFLAGS)
 #Release_CFLAGS= /MD /O2 /Oy- /Oi /G7 $(Release_DEFINES) $(GLOBAL_CFLAGS)
 Release_CFLAGS=/MD /O2 /Oy- /Oi /G7 /DNDEBUG /DFINAL_RELEASE /Fp"$(Target_PCH)" $(GLOBAL_CFLAGS)
 
@@ -164,7 +164,8 @@ PRECOMPILE_CFLAGS2 = CvGameCoreDLL.h" /Fp"$(Target_PCH)"
 #### LDFLAGS ####
 GLOBAL_LDFLAGS=/DLL /NOLOGO /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /PDB:"$(Target_PDB)" $(CUSTOM_LDFLAGS) $(PROJECT_LDFLAGS)
 Debug_LDFLAGS=/INCREMENTAL /DEBUG /IMPLIB:"$(Target_STATICLIB)" $(GLOBAL_LDFLAGS)
-Release_LDFLAGS=/INCREMENTAL:NO /OPT:REF /OPT:ICF $(GLOBAL_LDFLAGS)
+#Release_LDFLAGS=/INCREMENTAL:NO /OPT:REF /OPT:ICF $(GLOBAL_LDFLAGS)
+Release_LDFLAGS=/INCREMENTAL:NO /OPT:REF /OPT:ICF /PDB:"$(Target_PDB)" $(GLOBAL_LDFLAGS)
 
 #### INCLUDES ####
 GLOBAL_INCS=/I"$(TOOLKIT)/include" /I"$(PSDK)/Include" /I"$(PSDK)/Include/mfc"
@@ -186,14 +187,14 @@ BOOST_LIB_PATH=$(CIV4_LIB_INSTALL_PATH)/
 !ENDIF
 
 PROJECT_INCS=/I"$(BOOST_LIB_PATH)Boost-1.32.0/include" /I"$(BOOST_LIB_PATH)Python24/include"
-PROJECT_LIBS=/LIBPATH:"$(BOOST_LIB_PATH)Python24/libs" /LIBPATH:"$(BOOST_LIB_PATH)boost-1.32.0/libs/" boost_python-vc71-mt-1_32.lib \
-	thread.obj exceptions.obj condition.obj xtime.obj mutex.obj once.obj \
-	recursive_mutex.obj read_write_mutex.obj tss_hooks.obj
 
 INCS = $(PROJECT_INCS) $(GLOBAL_INCS)
 
 #### LIBS ####
 GLOBAL_LIBS=/LIBPATH:"$(TOOLKIT)/lib" /LIBPATH:"$(PSDK)/Lib" winmm.lib user32.lib
+PROJECT_LIBS=/LIBPATH:"$(BOOST_LIB_PATH)Python24/libs" /LIBPATH:"$(BOOST_LIB_PATH)boost-1.32.0/libs/" boost_python-vc71-mt-1_32.lib \
+	thread.obj exceptions.obj condition.obj xtime.obj mutex.obj once.obj \
+	recursive_mutex.obj read_write_mutex.obj tss_hooks.obj
 LIBS = $(PROJECT_LIBS) $(GLOBAL_LIBS)
 
 
@@ -228,6 +229,19 @@ LDFLAGS = $(Debug_LDFLAGS)
 !IF EXIST ($(FILE_DEPENDS))
 !INCLUDE $(FILE_DEPENDS)
 !ENDIF
+
+#### Auto SOURCES/OBJS ####
+#!IF [ECHO SOURCES= \> sources.mk] == 0 && \
+#    [FOR %i IN (*.cpp) DO @ECHO. "%i" \>> sources.mk] == 0 && \
+#    [ECHO.>> sources.mk] == 0 && \
+#    [ECHO OBJS= \>> sources.mk] == 0 && \
+#    [FOR /F "delims=." %i IN ('dir /b *.cpp') DO @ECHO. $(TEMP_TARGET_FILES)\%i.obj \>> sources.mk] == 0 && \
+#    [ECHO.>> sources.mk] == 0
+#!INCLUDE sources.mk
+#!IF [DEL sources.mk]
+#!ENDIF
+#!ENDIF
+
 
 #### Targets ####
 #################
