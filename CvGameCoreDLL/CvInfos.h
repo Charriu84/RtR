@@ -1363,7 +1363,6 @@ public:
 	int getSpecialistExtraCommerce(int i) const;				// Exposed to Python
 	int* getSpecialistExtraCommerceArray() const;
 	int getBuildingHappinessChanges(int i) const;				// Exposed to Python
-	int getRtRExtraSpecialistCounts(int i) const;				//Plako for RtR mod 21.7.2015
 	int getBuildingHealthChanges(int i) const;				// Exposed to Python
 	int getFeatureHappinessChanges(int i) const;				// Exposed to Python
 
@@ -1453,7 +1452,6 @@ protected:
 	int* m_piCapitalCommerceModifier;
 	int* m_piSpecialistExtraCommerce;
 	int* m_paiBuildingHappinessChanges;
-	int* m_paiRtRExtraSpecialistCounts; //Plako for RtR mod 22.7.2015
 	int* m_paiBuildingHealthChanges;
 	int* m_paiFeatureHappinessChanges;
 
@@ -2179,7 +2177,6 @@ public:
 	DllExport void setArtDefineTag(const TCHAR* szVal);
 	// Arrays
 
-	bool hasTrait(int i) const; // AGDM addition
 	DllExport int getCivilizationBuildings(int i) const;				// Exposed to Python
 	DllExport int getCivilizationUnits(int i) const;				// Exposed to Python
 	DllExport int getCivilizationFreeUnitsClass(int i) const;				// Exposed to Python
@@ -2223,8 +2220,6 @@ protected:
 	CvWString m_szShortDescriptionKey;
 	CvWString m_szAdjectiveKey;
 	// Arrays
-
-	bool* m_pbTraits; // AGDM addition
 
 	int* m_piCivilizationBuildings;
 	int* m_piCivilizationUnits;

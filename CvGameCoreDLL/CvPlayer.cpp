@@ -2256,8 +2256,7 @@ bool CvPlayer::hasTrait(TraitTypes eTrait) const
 {
 	FAssertMsg((getLeaderType() >= 0), "getLeaderType() is less than zero");
 	FAssertMsg((eTrait >= 0), "eTrait is less than zero");
-	return GC.getLeaderHeadInfo(getLeaderType()).hasTrait(eTrait)
-		|| GC.getCivilizationInfo(getCivilizationType()).hasTrait(eTrait); // AGDM addition
+	return GC.getLeaderHeadInfo(getLeaderType()).hasTrait(eTrait);
 }
 
 bool CvPlayer::isHuman() const
@@ -3928,14 +3927,6 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 		break;
 
 	case TRADE_MAPS:
-
-		//Plako for RtR mod No barbs = no map trading
-		if (GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS))
-		{
-			return false;
-		}
-		//end RtR mod
-
 		if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
 		{
 			if (GET_TEAM(getTeam()).isMapTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isMapTrading())
