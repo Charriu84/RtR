@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by lcollins (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 Beyond the Sword -->
+<!-- RtR mod -->
+<!-- Game Text Infos -->
+<!-- -->
 <Civ4GameText xmlns="http://www.firaxis.com">
-	<TEXT>
-		<Tag>TXT_KEY_GAME_OPTION_NO_MAP_TRADING</Tag>
-		<English>No Map Trading</English>
-		<French>No Map Trading</French>
-		<German>Kein Karten Handel</German>
-		<Italian>No Map Trading</Italian>
-		<Spanish>No Map Trading</Spanish>
-	</TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_GAME_OPTION_NO_MAP_TRADING</Tag>
+    <English>No Map Trading</English>
+    <French>No Map Trading</French>
+    <German>Kein Karten Handel</German>
+    <Italian>No Map Trading</Italian>
+    <Spanish>No Map Trading</Spanish>
+  </TEXT>
   <TEXT>
     <Tag>TXT_KEY_GAME_OPTION_NO_MAP_TRADING_HELP</Tag>
     <English>Trading maps via the trading window is not possible</English>
