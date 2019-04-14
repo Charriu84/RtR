@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by lcollins (Firaxis Games) -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_NO_MAP_TRADING</Tag>
+		<English>No Map Trading</English>
+		<French>No Map Trading</French>
+		<German>Kein Karten Handel</German>
+		<Italian>No Map Trading</Italian>
+		<Spanish>No Map Trading</Spanish>
+	</TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_GAME_OPTION_NO_MAP_TRADING_HELP</Tag>
+    <English>Trading maps via the trading window is not possible</English>
+    <French>Trading maps via the trading window is not possible</French>
+    <German>Karten können nicht mit Hilfe des Handelsbildschirms gehandelt werden</German>
+    <Italian>Trading maps via the trading window is not possible</Italian>
+    <Spanish>Trading maps via the trading window is not possible</Spanish>
+  </TEXT>
+</Civ4GameText>
