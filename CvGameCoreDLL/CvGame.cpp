@@ -4249,6 +4249,7 @@ bool CvGame::circumnavigationAvailable() const
 {
 	if (isCircumnavigated())
 	{
+		//Charriu Uncommented for RtR 16.06.2019
 		//return false;
 	}
 
