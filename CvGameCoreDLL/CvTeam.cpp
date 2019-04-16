@@ -5298,6 +5298,11 @@ void CvTeam::testCircumnavigated()
 		return;
 	}
 
+	if (getExtraMoves(DOMAIN_SEA) == 1)
+	{
+		return;
+	}
+
 	if (GC.getMapINLINE().isWrapXINLINE())
 	{
 		for (iX = 0; iX < GC.getMapINLINE().getGridWidthINLINE(); iX++)

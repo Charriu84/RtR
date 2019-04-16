@@ -4249,7 +4249,7 @@ bool CvGame::circumnavigationAvailable() const
 {
 	if (isCircumnavigated())
 	{
-		return false;
+		//return false;
 	}
 
 	if (GC.getDefineINT("CIRCUMNAVIGATE_FREE_MOVES") == 0)
