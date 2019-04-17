@@ -98,14 +98,16 @@ g_iTimeTextCounter = 0
 
 g_pSelectedUnit = 0
 
-
+# Added either by PBMod or RtR Start
 #class CvMainInterface:
 #	"Main Interface Screen"
 
 ## UltraPack Initialisation ##
 lUnitCombat = []
+# Added either by PBMod or RtR End
 
 class CvMainInterface:
+	# Added either by PBMod or RtR Start
 	def __init__ (self) :
 		self.iScoreRows = 20	## Score Board
 		self.iScoreWidth = 100
@@ -114,6 +116,7 @@ class CvMainInterface:
 		self.diploScreenActive = False
 		self.pauseActive = CyGame().isPaused()
 
+	# Added either by PBMod or RtR End
 	def numPlotListButtons(self):
 		return self.m_iNumPlotListButtons
 
@@ -759,6 +762,7 @@ class CvMainInterface:
 			CyInterface().setDirty(InterfaceDirtyBits.GlobeInfo_DIRTY_BIT, False)
 			self.updateGlobeviewButtons()
 
+		# Added either by PBMod or RtR Start
 		"""
 		Add unpause button if diplo screen is open.
 		It's important to redraw the button just if the state
@@ -779,7 +783,7 @@ class CvMainInterface:
 						302016, -1, ButtonStyles.BUTTON_STYLE_LABEL )
 			else:
 				screen.hide("DiploScreenUnpauseBtn")
-
+		# Added either by PBMod or RtR End
 		return 0
 
 	# Will update the percent buttons
@@ -2889,6 +2893,7 @@ class CvMainInterface:
 				screen.setPanelSize( "ScoreBackground", xResolution - 21 - iWidth, yCoord - (iBtnHeight * iCount) - 4, iWidth + 12, (iBtnHeight * iCount) + 8 )
 				screen.show( "ScoreBackground" )
 
+	# Added by PBMod Start
 	def updateScoreStrings( self ):
 		screen = CyGInterfaceScreen("MainInterface", CvScreenEnums.MAIN_INTERFACE)
 		screen.hide("ScoreBackground")
@@ -3022,7 +3027,7 @@ class CvMainInterface:
 				if iTech > -1:
 					sTech = u"<color=%d,%d,%d,%d>%d</color>" %( pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA(), pPlayer.getResearchTurnsLeft(pPlayer.getCurrentResearch(), True))
 					screen.setTableText("ScoreForeground", 4, iRow, sTech, gc.getTechInfo(iTech).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 1, CvUtil.FONT_LEFT_JUSTIFY)
-
+	# Added by PBMod End
 
 	# Will update the help Strings
 	def updateHelpStrings( self ):
@@ -3260,7 +3265,9 @@ class CvMainInterface:
 		xResolution = screen.getXResolution()
 		yResolution = screen.getYResolution()
 
+		# Added either by PBMod or RtR Start
 		screen.addCheckBoxGFC( "UnitIcons", "", "", 0, 0, 28, 28, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_UNIT_ICONS).getActionInfoIndex(), -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		# Added either by PBMod or RtR End
 		screen.setStyle( "UnitIcons", "Button_HUDGlobeUnit_Style" )
 		screen.setState( "UnitIcons", False )
 		screen.hide( "UnitIcons" )
@@ -3297,6 +3304,7 @@ class CvMainInterface:
 
 	# Will handle the input for this screen...
 	def handleInput (self, inputClass):
+# Added by PBMod Start
 ## Score Board ##
 		if inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED:
 			if inputClass.getFunctionName() == "ScoreRowPlus":
@@ -3316,7 +3324,7 @@ class CvMainInterface:
 				#gc.sendPause(-1)
 				# Workaround.
 				gc.sendChat("RemovePause", ChatTargetTypes.CHATTARGET_ALL)
-
+# Added by RtR End
 		return 0
 
 	def update(self, fDelta):
