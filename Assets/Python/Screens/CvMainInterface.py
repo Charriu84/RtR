@@ -96,6 +96,8 @@ g_iNumRightBonus = 0
 g_szTimeText = ""
 g_iTimeTextCounter = 0
 
+HELP_TEXT_MINIMUM_WIDTH = 300
+
 g_pSelectedUnit = 0
 
 # Added either by PBMod or RtR Start
@@ -105,6 +107,12 @@ g_pSelectedUnit = 0
 ## UltraPack Initialisation ##
 lUnitCombat = []
 # Added either by PBMod or RtR End
+
+# BUG - start
+g_mainInterface = None
+def onSwitchHotSeatPlayer(argsList):
+	g_mainInterface.resetEndTurnObjects()
+# BUG - end
 
 class CvMainInterface:
 	# Added either by PBMod or RtR Start
@@ -117,6 +125,10 @@ class CvMainInterface:
 		self.pauseActive = CyGame().isPaused()
 
 	# Added either by PBMod or RtR End
+# BUG - start
+		global g_mainInterface
+		g_mainInterface = self
+# BUG - end
 	def numPlotListButtons(self):
 		return self.m_iNumPlotListButtons
 
@@ -164,7 +176,7 @@ class CvMainInterface:
 		g_NumActionInfos = gc.getNumActionInfos()
 
 		# Help Text Area
-		screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+		screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 
 		# Center Left
 		screen.addPanel( "InterfaceCenterLeftBackgroundWidget", u"", u"", True, False, 0, 0, 258, yResolution-149, PanelStyles.PANEL_STYLE_STANDARD )
@@ -557,6 +569,16 @@ class CvMainInterface:
 
 		screen.setLabel( "TradeRouteListLabel", "Background", localText.getText("TXT_KEY_HEADING_TRADEROUTE_LIST", ()), CvUtil.FONT_CENTER_JUSTIFY, 129, 165, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.hide( "TradeRouteListLabel" )
+# BUG - BUG Option Button - Start
+		iBtnWidth	= 28
+		iBtnY = 27
+		iBtnX = 27
+		iBtnX = 10
+
+		sBUGOptionsScreenButton = ArtFileMgr.getInterfaceArtInfo("BUG_OPTIONS_SCREEN_BUTTON").getPath()
+		screen.setImageButton("BUGOptionsScreenWidget", sBUGOptionsScreenButton,  iBtnX + 30, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_BUG_OPTION_SCREEN, -1, -1)
+		screen.hide("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 
 		screen.addPanel( "BuildingListBackground", u"", u"", True, False, 10, 287, 238, 30, PanelStyles.PANEL_STYLE_STANDARD )
 		screen.setStyle( "BuildingListBackground", "Panel_City_Header_Style" )
@@ -830,6 +852,17 @@ class CvMainInterface:
 
 		return 0
 
+# BUG - start
+	def resetEndTurnObjects(self):
+		"""
+		Clears the end turn text and hides it and the button.
+		"""
+		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+		screen.setEndTurnState( "EndTurnText", u"" )
+		screen.hideEndTurn( "EndTurnText" )
+		screen.hideEndTurn( "EndTurnButton" )
+# BUG - end
+
 	# Will update the end Turn Button
 	def updateEndTurnButton( self ):
 
@@ -905,6 +938,9 @@ class CvMainInterface:
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
 			screen.hide( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+			screen.hide("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 
 		elif ( CyInterface().isCityScreenUp() ):
 			screen.show( "InterfaceLeftBackgroundWidget" )
@@ -927,6 +963,9 @@ class CvMainInterface:
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
 			screen.hide( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+			screen.hide("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 
 		elif ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_HIDE):
 			screen.hide( "InterfaceLeftBackgroundWidget" )
@@ -961,6 +1000,10 @@ class CvMainInterface:
 			screen.moveToFront( "MilitaryAdvisorButton" )
 			screen.moveToFront( "VictoryAdvisorButton" )
 			screen.moveToFront( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+#			screen.moveToFront("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
+
 
 		elif (CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_ADVANCED_START):		
 			screen.hide( "InterfaceLeftBackgroundWidget" )
@@ -983,6 +1026,9 @@ class CvMainInterface:
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
 			screen.hide( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+			screen.hide("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 
 		elif ( CyEngine().isGlobeviewUp() ):
 			screen.hide( "InterfaceLeftBackgroundWidget" )
@@ -1017,6 +1063,9 @@ class CvMainInterface:
 			screen.moveToFront( "MilitaryAdvisorButton" )
 			screen.moveToFront( "VictoryAdvisorButton" )
 			screen.moveToFront( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+#			screen.moveToFront("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 
 		else:
 			screen.show( "InterfaceLeftBackgroundWidget" )
@@ -1051,6 +1100,9 @@ class CvMainInterface:
 			screen.moveToFront( "MilitaryAdvisorButton" )
 			screen.moveToFront( "VictoryAdvisorButton" )
 			screen.moveToFront( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+#			screen.moveToFront("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 
 		screen.updateMinimapVisibility()
 
@@ -2519,9 +2571,9 @@ class CvMainInterface:
 		
 			# Help Text Area
 			if ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW ):
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 			else:
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 
 			screen.hide( "InterfaceTopLeftBackgroundWidget" )
 			screen.hide( "InterfaceTopRightBackgroundWidget" )
@@ -3088,15 +3140,15 @@ class CvMainInterface:
 		
 		# Positioning things based on the visibility of the globe
 		if kEngine.isGlobeviewUp():
-			screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+			screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 		else:
 			if ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW ):
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 			else:
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 
-
-		# Set base Y position for the LayerOptions, if we find them
+		
+		# Set base Y position for the LayerOptions, if we find them	
 		if CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_HIDE:
 			iY = yResolution - iGlobeLayerOptionsY_Minimal
 		else:

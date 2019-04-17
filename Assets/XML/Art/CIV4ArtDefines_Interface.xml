@@ -1324,5 +1324,12 @@
 			<Type>INTERFACE_ATTITUDE_4</Type>
 			<Path>Modules/UltraPack/Art/Attitude4.dds</Path>
 		</InterfaceArtInfo>
+
+<!-- BUG - Main Interface - BUG Options Screen - Start -->			
+		<InterfaceArtInfo>
+			<Type>BUG_OPTIONS_SCREEN_BUTTON</Type>
+			<Path>Art/BUG/BUGMantis.dds</Path>
+		</InterfaceArtInfo>
+<!-- BUG - Main Interface - BUG Options Screen - end -->			
 	</InterfaceArtInfos>
 </Civ4ArtDefines>
