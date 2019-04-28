@@ -48,6 +48,10 @@ import ScreenInput as PyScreenInput
 from CvScreenEnums import *
 from CvPythonExtensions import *
 
+# BUG - Options - end
+import BugCore
+# BUG - Options - end
+
 g_bIsScreenActive = -1
 
 def toggleSetNoScreens():
@@ -65,6 +69,9 @@ def toggleSetScreenOn(argsList):
 mainInterface = CvMainInterface.CvMainInterface()
 def showMainInterface():
 	mainInterface.interfaceScreen()
+
+def reinitMainInterface():
+	mainInterface.initState()
 
 def numPlotListButtons():
 	return mainInterface.numPlotListButtons()
@@ -192,13 +199,13 @@ def showVictoryScreen():
 pediaMainScreen = CvPediaMain.CvPediaMain()
 def linkToPedia(argsList):
 	pediaMainScreen.link(argsList[0])
-		
+
 def pediaShow():
 	return pediaMainScreen.pediaShow()
-	
+
 def pediaBack():
 	return pediaMainScreen.back()
-		
+
 def pediaForward():
 	pediaMainScreen.forward()
 		
@@ -831,10 +838,10 @@ def featAccomplishedOnClickedCallback(argsList):
 		elif ((iData1 >= FeatTypes.FEAT_COPPER_CONNECTED) and (iData1 <= FeatTypes.FEAT_FOOD_CONNECTED)):
 			showForeignAdvisorScreen([0])
 		elif ((iData1 == FeatTypes.FEAT_NATIONAL_WONDER)):
-		  # 2 is for the wonder tab...
+			# 2 is for the wonder tab...
 			showInfoScreen([2, 0])
 		elif ((iData1 >= FeatTypes.FEAT_POPULATION_HALF_MILLION) and (iData1 <= FeatTypes.FEAT_POPULATION_2_BILLION)):
-		  # 1 is for the demographics tab...
+			# 1 is for the demographics tab...
 			showInfoScreen([1, 0])
 		elif iData1 == FeatTypes.FEAT_CORPORATION_ENABLED:
 			showCorporationScreen()
@@ -942,3 +949,8 @@ HandleNavigationMap = {
 				
 				# add new screens here
 				}
+# BUG - Options - start
+def init():
+	# delete this later when adding stuff
+	szText = szText
+# BUG - Options - end
