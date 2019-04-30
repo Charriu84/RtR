@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	BUG Main Interface
+	by EmperorFool, Impaler[WrG], NeverMind, SimCutie
+	
+	Collects all of the various main interface mods.
+	
+	Copyright (c) 2008 The BUG Mod.
+-->
+<mod id="MainInterface" 
+	 name="BUG Main Interface" 
+	 author="EmperorFool, Impaler[WrG], NeverMind, SimCutie" 
+	 version="3.0" 
+	 date="07/11/2008"
+	 url="http://forums.civfanatics.com/forumdisplay.php?f=268">
+	 
+	<options id="MainInterface" file="BUG Main Interface.ini">
+		<section id="Main">
+			<!-- Options Screen Button -->
+			<option id="OptionsButton" key="Options Button"
+					type="boolean" default="True"
+					get="isShowOptionsButton" set="setShowOptionsButton" dirtyBit="GameData"/>
+		</section>
+	</options>
+
+	<widget name="WIDGET_BUG_OPTION_SCREEN" xml="TXT_KEY_BUG_OPTIONS_SCREEN_HOVER"/>
+</mod>

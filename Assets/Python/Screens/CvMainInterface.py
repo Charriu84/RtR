@@ -7,6 +7,19 @@ import CvScreenEnums
 import CvEventInterface
 import time
 
+# BUG - DLL - start
+import BugDll
+# BUG - DLL - end
+
+# BUG - Options - start
+import BugCore
+import BugOptions
+import BugOptionsScreen
+import BugPath
+import BugUtil
+MainOpt = BugCore.game.MainInterface
+# BUG - Options - end
+
 # globals
 gc = CyGlobalContext()
 ArtFileMgr = CyArtFileMgr()
@@ -576,7 +589,7 @@ class CvMainInterface:
 		iBtnX = 10
 
 		sBUGOptionsScreenButton = ArtFileMgr.getInterfaceArtInfo("BUG_OPTIONS_SCREEN_BUTTON").getPath()
-		screen.setImageButton("BUGOptionsScreenWidget", sBUGOptionsScreenButton,  iBtnX + 30, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setImageButton("BUGOptionsScreenWidget", sBUGOptionsScreenButton,  iBtnX + 30, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_BUG_OPTION_SCREEN, -1, -1)
 		screen.hide("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
 
@@ -642,13 +655,20 @@ class CvMainInterface:
 		global g_szTimeText
 		global g_iTimeTextCounter
 
-		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+#		BugUtil.debug("update - Turn %d, Player %d, Interface %d, End Turn Button %d ===", 
+#				gc.getGame().getGameTurn(), gc.getGame().getActivePlayer(), CyInterface().getShowInterface(), CyInterface().getEndTurnState())
 
+# BUG - Options - start
+		BugOptions.write()
+# BUG - Options - end
+
+		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+		
 		# Find out our resolution
 		xResolution = screen.getXResolution()
 		yResolution = screen.getYResolution()
-		self.m_iNumPlotListButtons = (xResolution - (iMultiListXL+iMultiListXR) - 68) / 34
-
+#		self.m_iNumPlotListButtons = (xResolution - (iMultiListXL+iMultiListXR) - 68) / 34
+		
 		# This should recreate the minimap on load games and returns if already exists -JW
 		screen.initMinimap( xResolution - 210, xResolution - 9, yResolution - 131, yResolution - 9, -0.1 )
 
@@ -988,6 +1008,10 @@ class CvMainInterface:
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
 			screen.show( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+			if MainOpt.isShowOptionsButton():
+				screen.show("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 			screen.moveToFront( "TurnLogButton" )
 			screen.moveToFront( "EspionageAdvisorButton" )
 			screen.moveToFront( "DomesticAdvisorButton" )
@@ -1051,6 +1075,10 @@ class CvMainInterface:
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
 			screen.show( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+			if MainOpt.isShowOptionsButton():
+				screen.show("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 			screen.moveToFront( "TurnLogButton" )
 			screen.moveToFront( "EspionageAdvisorButton" )
 			screen.moveToFront( "DomesticAdvisorButton" )
@@ -1088,6 +1116,10 @@ class CvMainInterface:
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
 			screen.show( "InfoAdvisorButton" )
+# BUG - BUG Option Button - Start
+			if MainOpt.isShowOptionsButton():
+				screen.show("BUGOptionsScreenWidget")
+# BUG - BUG Option Button - End
 			screen.moveToFront( "TurnLogButton" )
 			screen.moveToFront( "EspionageAdvisorButton" )
 			screen.moveToFront( "DomesticAdvisorButton" )
@@ -3381,8 +3413,18 @@ class CvMainInterface:
 				# Workaround.
 				gc.sendChat("RemovePause", ChatTargetTypes.CHATTARGET_ALL)
 # Added by RtR End
-		return 0
 
+# BUG - BUG Option Button - Start
+			if inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED:
+				if inputClass.getFunctionName() == "BUGOptionsScreenWidget":
+					BugOptionsScreen.showOptionsScreen()
+					return 1
+# BUG - BUG Option Button - End
+
+
+
+		return 0
+	
 	def update(self, fDelta):
 		return
 	

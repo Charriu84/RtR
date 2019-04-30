@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	Main BUG Mod Initialization
+
+	This file initializes the BUG Core and all mods.
+
+	Copyright (c) 2008 The BUG Mod.
+-->
+<bug>
+	
+	<!-- BUG Core -->
+	
+	<load mod="BUG Config"/>
+	<load mod="BUG Core"/>
+
+	<!-- Mods -->
+
+	<load mod="BUG Main Interface"/>
+
+</bug>

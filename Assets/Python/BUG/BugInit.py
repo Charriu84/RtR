@@ -58,12 +58,12 @@ def loadMod(name):
 	path = BugPath.findAssetFile(name + ".xml", "Config")
 	if path:
 		BugUtil.debug("BugInit - loading mod %s...", name)
-		#parser = BugConfig.ConfigParser()
+		parser = BugConfig.ConfigParser()
 		timer = BugUtil.Timer("load mod")
-		#try:
-	#		parser.parse(path)
-	#	finally:
-	#		timer.log(name)
+		try:
+			parser.parse(path)
+		finally:
+			timer.log(name)
 	else:
 		BugUtil.error("BugInit - cannot find XML file for mod %s", name)
 
