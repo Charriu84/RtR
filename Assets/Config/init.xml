@@ -68,7 +68,7 @@
 	
     <gameutils module="WidgetUtil" handler="getWidgetHelp"/>
 	<!-- Mods -->
-
+	
 	<load mod="BUG Main Interface"/>
 
 	<load mod="BUFFY"/>
@@ -78,5 +78,7 @@
 	
 	<screen id="BUGFull">
 		<tab module="BugGeneralOptionsTab"/>
+		
+		<tab module="BugSystemOptionsTab"/>
 	</screen>
 </bug>
