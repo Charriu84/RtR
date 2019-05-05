@@ -37,6 +37,38 @@
 	<symbol id="ss thruster"/>
 	<symbol id="citizen" from="POWER" offset="1"/>
 	<symbol id="greatgeneral" name="GREAT_GENERAL"/>
+	
+	<init module="AttitudeUtil">
+		<!-- Furious, Annoyed, Cautious, Pleased, Friendly -->
+		<arg name="colors" type="tuple">
+			"COLOR_RED", 
+			"COLOR_CYAN", 
+			"COLOR_CLEAR", 
+			"COLOR_GREEN", 
+			"COLOR_YELLOW"
+		</arg>
+		<!-- Non-memory attitude modifier keys -->
+		<arg name="modifiers" type="tuple">
+			"TXT_KEY_MISC_ATTITUDE_LAND_TARGET",
+			"TXT_KEY_MISC_ATTITUDE_WAR",
+			"TXT_KEY_MISC_ATTITUDE_PEACE",
+			"TXT_KEY_MISC_ATTITUDE_SAME_RELIGION",
+			"TXT_KEY_MISC_ATTITUDE_DIFFERENT_RELIGION",
+			"TXT_KEY_MISC_ATTITUDE_BONUS_TRADE",
+			"TXT_KEY_MISC_ATTITUDE_OPEN_BORDERS",
+			"TXT_KEY_MISC_ATTITUDE_DEFENSIVE_PACT",
+			"TXT_KEY_MISC_ATTITUDE_RIVAL_DEFENSIVE_PACT",
+			"TXT_KEY_MISC_ATTITUDE_RIVAL_VASSAL",
+			"TXT_KEY_MISC_ATTITUDE_SHARE_WAR",
+			"TXT_KEY_MISC_ATTITUDE_FAVORITE_CIVIC",
+			"TXT_KEY_MISC_ATTITUDE_TRADE",
+			"TXT_KEY_MISC_ATTITUDE_RIVAL_TRADE",
+			"TXT_KEY_MISC_ATTITUDE_FREEDOM",
+			"TXT_KEY_MISC_ATTITUDE_EXTRA_GOOD",
+			"TXT_KEY_MISC_ATTITUDE_EXTRA_BAD"
+		</arg>
+	</init>
+	<event type="LanguageChanged" module="AttitudeUtil" function="initModifiers"/>
 	<symbol id="furious" name="ATTITUDE_FURIOUS" from="POWER" offset="4"/>
 	<symbol id="annoyed" name="ATTITUDE_ANNOYED"/>
 	<symbol id="cautious" name="ATTITUDE_CAUTIOUS"/>
@@ -66,15 +98,19 @@
 	</init>
 	<event type="LanguageChanged" module="ColorUtil" function="createColors"/>
 	
+	<events module="DiplomacyUtil" function="addEvents"/>
+	<extend how="after" module="DiplomacyUtil" function="handleAIComment" to="CvDiplomacyInterface" as="beginDiplomacy"/>
+	<extend how="after" module="DiplomacyUtil" function="handleUserResponse" to="CvDiplomacyInterface" as="handleUserResponse"/>
+	<init module="TradeUtil"/>
     <gameutils module="WidgetUtil" handler="getWidgetHelp"/>
 	<!-- Mods -->
 	
 	<load mod="BUG Main Interface"/>
-
 	<load mod="Autolog"/>
 	<load mod="StatusDump"/>
 	
 	<load mod="AutoSave"/>
+	<load mod="MapFinder"/>
 	<load mod="BUFFY"/>
 	
 	
@@ -86,5 +122,6 @@
 		<tab module="BugAutologOptionsTab"/>
 		
 		<tab module="BugSystemOptionsTab"/>
+		<tab module="BugCreditsOptionsTab"/>
 	</screen>
 </bug>
