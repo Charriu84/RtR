@@ -569,6 +569,14 @@ class CvMainInterface:
 
 		screen.setButtonGFC( "CityScrollPlus", u"", "", 288, 32, 32, 32, WidgetTypes.WIDGET_CITY_SCROLL, 1, -1, ButtonStyles.BUTTON_STYLE_ARROW_RIGHT )
 		screen.hide( "CityScrollPlus" )
+		
+# BUG - City Arrows - start
+		screen.setButtonGFC( "MainCityScrollMinus", u"", "", xResolution - 275, yResolution - 165, 32, 32, WidgetTypes.WIDGET_CITY_SCROLL, -1, -1, ButtonStyles.BUTTON_STYLE_ARROW_LEFT )
+		screen.hide( "MainCityScrollMinus" )
+
+		screen.setButtonGFC( "MainCityScrollPlus", u"", "", xResolution - 255, yResolution - 165, 32, 32, WidgetTypes.WIDGET_CITY_SCROLL, 1, -1, ButtonStyles.BUTTON_STYLE_ARROW_RIGHT )
+		screen.hide( "MainCityScrollPlus" )
+# BUG - City Arrows - end
 
 		screen.setButtonGFC( "PlotListMinus", u"", "", 315 + ( xResolution - (iMultiListXL+iMultiListXR) - 68 ), yResolution - 171, 32, 32, WidgetTypes.WIDGET_PLOT_LIST_SHIFT, -1, -1, ButtonStyles.BUTTON_STYLE_ARROW_LEFT )
 		screen.hide( "PlotListMinus" )
@@ -992,6 +1000,10 @@ class CvMainInterface:
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
 			screen.hide( "InfoAdvisorButton" )
+# BUG - City Arrows - start
+			screen.hide( "MainCityScrollMinus" )
+			screen.hide( "MainCityScrollPlus" )
+# BUG - City Arrows - end
 # BUG - BUG Option Button - Start
 			screen.hide("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
@@ -1017,6 +1029,10 @@ class CvMainInterface:
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
 			screen.hide( "InfoAdvisorButton" )
+# BUG - City Arrows - start
+			screen.hide( "MainCityScrollMinus" )
+			screen.hide( "MainCityScrollPlus" )
+# BUG - City Arrows - end
 # BUG - BUG Option Button - Start
 			screen.hide("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
@@ -1042,6 +1058,10 @@ class CvMainInterface:
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
 			screen.show( "InfoAdvisorButton" )
+# BUG - City Arrows - start
+			screen.hide( "MainCityScrollMinus" )
+			screen.hide( "MainCityScrollPlus" )
+# BUG - City Arrows - end
 # BUG - BUG Option Button - Start
 			if MainOpt.isShowOptionsButton():
 				screen.show("BUGOptionsScreenWidget")
@@ -1084,6 +1104,10 @@ class CvMainInterface:
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
 			screen.hide( "InfoAdvisorButton" )
+# BUG - City Arrows - start
+			screen.hide( "MainCityScrollMinus" )
+			screen.hide( "MainCityScrollPlus" )
+# BUG - City Arrows - end
 # BUG - BUG Option Button - Start
 			screen.hide("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
@@ -1109,6 +1133,10 @@ class CvMainInterface:
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
 			screen.show( "InfoAdvisorButton" )
+# BUG - City Arrows - start
+			screen.hide( "MainCityScrollMinus" )
+			screen.hide( "MainCityScrollPlus" )
+# BUG - City Arrows - end
 # BUG - BUG Option Button - Start
 			if MainOpt.isShowOptionsButton():
 				screen.show("BUGOptionsScreenWidget")
@@ -1150,6 +1178,14 @@ class CvMainInterface:
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
 			screen.show( "InfoAdvisorButton" )
+# BUG - City Arrows - start
+			if (MainOpt.isShowCityCycleArrows()):
+				screen.show( "MainCityScrollMinus" )
+				screen.show( "MainCityScrollPlus" )
+			else:
+				screen.hide( "MainCityScrollMinus" )
+				screen.hide( "MainCityScrollPlus" )
+# BUG - City Arrows - end
 # BUG - BUG Option Button - Start
 			if MainOpt.isShowOptionsButton():
 				screen.show("BUGOptionsScreenWidget")
@@ -3393,9 +3429,7 @@ class CvMainInterface:
 		xResolution = screen.getXResolution()
 		yResolution = screen.getYResolution()
 
-		# Added either by PBMod or RtR Start
 		screen.addCheckBoxGFC( "UnitIcons", "", "", 0, 0, 28, 28, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_UNIT_ICONS).getActionInfoIndex(), -1, ButtonStyles.BUTTON_STYLE_LABEL )
-		# Added either by PBMod or RtR End
 		screen.setStyle( "UnitIcons", "Button_HUDGlobeUnit_Style" )
 		screen.setState( "UnitIcons", False )
 		screen.hide( "UnitIcons" )

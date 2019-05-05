@@ -30,6 +30,12 @@
 					type="boolean" default="True" 
 					get="isShowMinMaxCommerceButtons" dirtyBit="PercentButtons, GameData">
 			</option>
+			
+			<!-- City Cycle Arrows by SimCutie -->
+			<option id="CityArrows" key="City Cycle Arrows" 
+					type="boolean" default="True" 
+					get="isShowCityCycleArrows" dirtyBit="MiscButtons"/>
+
 		</section>
 	</options>
 
