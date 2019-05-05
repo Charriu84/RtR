@@ -71,6 +71,10 @@
 	
 	<load mod="BUG Main Interface"/>
 
+	<load mod="Autolog"/>
+	<load mod="StatusDump"/>
+	
+	<load mod="AutoSave"/>
 	<load mod="BUFFY"/>
 	
 	
@@ -78,6 +82,8 @@
 	
 	<screen id="BUGFull">
 		<tab module="BugGeneralOptionsTab"/>
+		
+		<tab module="BugAutologOptionsTab"/>
 		
 		<tab module="BugSystemOptionsTab"/>
 	</screen>
