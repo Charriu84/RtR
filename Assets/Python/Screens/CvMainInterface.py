@@ -726,6 +726,16 @@ class CvMainInterface:
 					#screen.modifyLabel( "EndTurnText", acOutput, CvUtil.FONT_CENTER_JUSTIFY )
 					screen.setEndTurnState( "EndTurnText", acOutput )
 					bShow = True
+# BUG - Options - start
+				elif ( MainOpt.isShowOptionsKeyReminder() ):
+					if BugPath.isMac():
+						acOutput = localText.getText("TXT_KEY_BUG_OPTIONS_KEY_REMINDER_MAC", (BugPath.getModName(),))
+					else:
+						acOutput = localText.getText("TXT_KEY_BUG_OPTIONS_KEY_REMINDER", (BugPath.getModName(),))
+					#screen.modifyLabel( "EndTurnText", acOutput, CvUtil.FONT_CENTER_JUSTIFY )
+					screen.setEndTurnState( "EndTurnText", acOutput )
+					bShow = True
+# BUG - Options - end
 
 		if ( bShow ):
 			screen.showEndTurn( "EndTurnText" )
@@ -842,6 +852,12 @@ class CvMainInterface:
 			screen.hide( szString )
 			szString = "DecreasePercent" + str(iI)
 			screen.hide( szString )
+# BUG - Min/Max Sliders - start
+			szString = "MaxPercent" + str(iI)
+			screen.hide( szString )
+			szString = "MinPercent" + str(iI)
+			screen.hide( szString )
+# BUG - Min/Max Sliders - start
 
 		pHeadSelectedCity = CyInterface().getHeadSelectedCity()
 
@@ -852,24 +868,42 @@ class CvMainInterface:
 				for iI in range( CommerceTypes.NUM_COMMERCE_TYPES ):
 					# Intentional offset...
 					eCommerce = (iI + 1) % CommerceTypes.NUM_COMMERCE_TYPES
-
+										
 					if (gc.getActivePlayer().isCommerceFlexible(eCommerce) or (CyInterface().isCityScreenUp() and (eCommerce == CommerceTypes.COMMERCE_GOLD))):
-						szString1 = "IncreasePercent" + str(eCommerce)
-						screen.setButtonGFC( szString1, u"", "", 70, 50 + (19 * iCount), 20, 20, WidgetTypes.WIDGET_CHANGE_PERCENT, eCommerce, gc.getDefineINT("COMMERCE_PERCENT_CHANGE_INCREMENTS"), ButtonStyles.BUTTON_STYLE_CITY_PLUS )
-						screen.show( szString1 )
-						szString2 = "DecreasePercent" + str(eCommerce)
-						screen.setButtonGFC( szString2, u"", "", 90, 50 + (19 * iCount), 20, 20, WidgetTypes.WIDGET_CHANGE_PERCENT, eCommerce, -gc.getDefineINT("COMMERCE_PERCENT_CHANGE_INCREMENTS"), ButtonStyles.BUTTON_STYLE_CITY_MINUS )
-						screen.show( szString2 )
+# BUG - Min/Max Sliders - start
+						bEnable = gc.getActivePlayer().isCommerceFlexible(eCommerce)
+						if MainOpt.isShowMinMaxCommerceButtons() and not CyInterface().isCityScreenUp():
+							iMinMaxAdjustX = 20
+							szString = "MaxPercent" + str(eCommerce)
+							screen.setButtonGFC( szString, u"", "", 70, 50 + (19 * iCount), 20, 20, 
+												 *BugDll.widget("WIDGET_SET_PERCENT", eCommerce, 100, 
+												 				WidgetTypes.WIDGET_CHANGE_PERCENT, eCommerce, 100, 
+												 				ButtonStyles.BUTTON_STYLE_CITY_PLUS) )
+							screen.show( szString )
+							screen.enable( szString, bEnable )
+							szString = "MinPercent" + str(eCommerce)
+							screen.setButtonGFC( szString, u"", "", 130, 50 + (19 * iCount), 20, 20, 
+												 *BugDll.widget("WIDGET_SET_PERCENT", eCommerce, 0, 
+												 				WidgetTypes.WIDGET_CHANGE_PERCENT, eCommerce, -100, 
+												 				ButtonStyles.BUTTON_STYLE_CITY_MINUS) )
+							screen.show( szString )
+							screen.enable( szString, bEnable )
+						else:
+							iMinMaxAdjustX = 0
+						
+						szString = "IncreasePercent" + str(eCommerce)
+						screen.setButtonGFC( szString, u"", "", 70 + iMinMaxAdjustX, 50 + (19 * iCount), 20, 20, WidgetTypes.WIDGET_CHANGE_PERCENT, eCommerce, gc.getDefineINT("COMMERCE_PERCENT_CHANGE_INCREMENTS"), ButtonStyles.BUTTON_STYLE_CITY_PLUS )
+						screen.show( szString )
+						screen.enable( szString, bEnable )
+						szString = "DecreasePercent" + str(eCommerce)
+						screen.setButtonGFC( szString, u"", "", 90 + iMinMaxAdjustX, 50 + (19 * iCount), 20, 20, WidgetTypes.WIDGET_CHANGE_PERCENT, eCommerce, -gc.getDefineINT("COMMERCE_PERCENT_CHANGE_INCREMENTS"), ButtonStyles.BUTTON_STYLE_CITY_MINUS )
+						screen.show( szString )
+						screen.enable( szString, bEnable )
 
 						iCount = iCount + 1
-
-						if (gc.getActivePlayer().isCommerceFlexible(eCommerce)):
-							screen.enable( szString1, True )
-							screen.enable( szString2, True )
-						else:
-							screen.enable( szString1, False )
-							screen.enable( szString2, False )
-
+						# moved enabling above
+# BUG - Min/Max Sliders - end
+						
 		return 0
 
 # BUG - start
@@ -1854,7 +1888,13 @@ class CvMainInterface:
 						if not CyInterface().isCityScreenUp():
 							szOutText = u"<font=2>" + localText.getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (gc.getPlayer(ePlayer).getCommerceRate(CommerceTypes(eCommerce)), )) + u"</font>"
 							szString = "RateText" + str(iI)
-							screen.setLabel( szString, "Background", szOutText, CvUtil.FONT_LEFT_JUSTIFY, 112, 50 + (iCount * 19), -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+# BUG - Min/Max Sliders - start
+							if MainOpt.isShowMinMaxCommerceButtons():
+								iMinMaxAdjustX = 40
+							else:
+								iMinMaxAdjustX = 0
+							screen.setLabel( szString, "Background", szOutText, CvUtil.FONT_LEFT_JUSTIFY, 112 + iMinMaxAdjustX, 50 + (iCount * 19), -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+# BUG - Min/Max Sliders - end
 							screen.show( szString )
 
 						iCount = iCount + 1;
