@@ -16,9 +16,14 @@
 	 
 	<options id="MainInterface" file="BUG Main Interface.ini">
 		<section id="Main">
+			<!-- Options Screen Shortcut Reminder -->
+			<option id="OptionsKey" key="Options Shortcut Reminder" 
+					type="boolean" default="True" 
+					get="isShowOptionsKeyReminder" set="setShowOptionsKeyReminder" dirtyBit="GameData"/>
+			
 			<!-- Options Screen Button -->
-			<option id="OptionsButton" key="Options Button"
-					type="boolean" default="True"
+			<option id="OptionsButton" key="Options Button" 
+					type="boolean" default="True" 
 					get="isShowOptionsButton" set="setShowOptionsButton" dirtyBit="GameData"/>
 		</section>
 	</options>

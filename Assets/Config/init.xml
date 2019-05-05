@@ -13,8 +13,64 @@
 	<load mod="BUG Config"/>
 	<load mod="BUG Core"/>
 
+	<!-- Utility Modules -->
+	
+	<init module="FontUtil" immediate="True"/>
+	<symbol id="war" from="COMMERCE_GOLD" offset="25"/>
+	<symbol id="peace"/>
+	<symbol id="space"/>  <!-- blank symbol the same size as other standard symbols -->
+	<symbol id="militaryinstructor" name="MILITARY_INSTRUCTOR"/>
+	<symbol id="land" name="DOMAIN_LAND"/>
+	<symbol id="sea" name="DOMAIN_SEA"/>
+	<symbol id="air" name="DOMAIN_AIR"/>
+	<symbol id="sentry" name="ORDER_SENTRY"/>
+	<symbol id="fortify" name="ORDER_FORTIFY"/>
+	<symbol id="wait" name="ORDER_WAIT"/>
+	<symbol id="upgrade"/>
+	<symbol id="cancel"/>
+	<symbol id="ss casing" from="HAPPY" offset="-25"/>
+	<symbol id="ss cockpit"/>
+	<symbol id="ss docking bay"/>
+	<symbol id="ss engine"/>
+	<symbol id="ss life support"/>
+	<symbol id="ss stasis chamber"/>
+	<symbol id="ss thruster"/>
+	<symbol id="citizen" from="POWER" offset="1"/>
+	<symbol id="greatgeneral" name="GREAT_GENERAL"/>
+	<symbol id="furious" name="ATTITUDE_FURIOUS" from="POWER" offset="4"/>
+	<symbol id="annoyed" name="ATTITUDE_ANNOYED"/>
+	<symbol id="cautious" name="ATTITUDE_CAUTIOUS"/>
+	<symbol id="pleased" name="ATTITUDE_PLEASED"/>
+	<symbol id="friendly" name="ATTITUDE_FRIENDLY"/>
+	
+	<init module="ColorUtil">
+		<!--
+			You can safely modify this list to change the color dropdown menus
+			for color options. You can change the text displayed in the menus by
+			adding translations for your new colors to Colors_CIV4GameText.xml
+			in the XML/Text directory. 
+		-->
+		<arg name="colors" type="tuple">
+			"COLOR_RED",
+			"COLOR_YELLOW",
+			"COLOR_CYAN",
+			"COLOR_GREEN",
+			"COLOR_BLUE",
+			"COLOR_MAGENTA",
+			"COLOR_WHITE",
+			"COLOR_LIGHT_GREY",
+			"COLOR_GREY",
+			"COLOR_DARK_GREY",
+			"COLOR_BLACK"
+		</arg>
+	</init>
+	<event type="LanguageChanged" module="ColorUtil" function="createColors"/>
+	
+    <gameutils module="WidgetUtil" handler="getWidgetHelp"/>
 	<!-- Mods -->
 
 	<load mod="BUG Main Interface"/>
+
+	<!-- Options Screen -->
 
 </bug>

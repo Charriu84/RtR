@@ -43,13 +43,11 @@
 			<option id="CheckForUpdates" key="Check For Updates" 
 					type="boolean" default="False" 
 					title="Check for Updates">
-				<change module="BugUpdateChecker" function="onCheckForUpdatesChanged"/>
 			</option>
 			
 			<option id="LocalRoot" key="Local Root" 
 					type="string" default=""
 					title="Local Root Directory">
-				<change module="BugUpdateChecker" function="onLocalRootChanged"/>
 			</option>
 			<option id="LocalVersion" key="Local Revision" 
 					type="int" default="0"
@@ -58,7 +56,6 @@
 			<option id="RepositoryUrl" key="Repository URL" 
 					type="string" default="http://civ4bug.svn.sourceforge.net/svnroot/civ4bug/BUG Mod/"
 					title="Repository URL">
-				<change module="BugUpdateChecker" function="onRepositoryUrlChanged"/>
 			</option>
 			<option id="RepositoryVersion" key="Repository Revision" 
 					type="int" default="0"
