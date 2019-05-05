@@ -71,6 +71,12 @@
 
 	<load mod="BUG Main Interface"/>
 
+	<load mod="BUFFY"/>
+	
+	
 	<!-- Options Screen -->
-
+	
+	<screen id="BUGFull">
+		<tab module="BugGeneralOptionsTab"/>
+	</screen>
 </bug>

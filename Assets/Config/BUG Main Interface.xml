@@ -25,6 +25,11 @@
 			<option id="OptionsButton" key="Options Button" 
 					type="boolean" default="True" 
 					get="isShowOptionsButton" set="setShowOptionsButton" dirtyBit="GameData"/>
+			<!-- Min/Max Commerce Buttons by codewarrior -->
+			<option id="MinMax_Commerce" key="MinMax Commerce" 
+					type="boolean" default="True" 
+					get="isShowMinMaxCommerceButtons" dirtyBit="PercentButtons, GameData">
+			</option>
 		</section>
 	</options>
 
