@@ -17,7 +17,9 @@ import BugOptions
 import BugOptionsScreen
 import BugPath
 import BugUtil
+import CityUtil
 MainOpt = BugCore.game.MainInterface
+CityScreenOpt = BugCore.game.CityScreen
 # BUG - Options - end
 
 # globals
@@ -25,6 +27,7 @@ gc = CyGlobalContext()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
+import GPUtil
 g_NumEmphasizeInfos = 0
 g_NumCityTabTypes = 0
 g_NumHurryInfos = 0
@@ -2763,9 +2766,19 @@ class CvMainInterface:
 					screen.show( "CultureText" )
 
 				if ((pHeadSelectedCity.getGreatPeopleProgress() > 0) or (pHeadSelectedCity.getGreatPeopleRate() > 0)):
-					szBuffer = localText.getText("INTERFACE_CITY_GREATPEOPLE_RATE", (CyGame().getSymbolID(FontSymbols.GREAT_PEOPLE_CHAR), pHeadSelectedCity.getGreatPeopleRate()))
+# BUG - Great Person Turns - start
+					iRate = pHeadSelectedCity.getGreatPeopleRate()
+					if CityScreenOpt.isShowCityGreatPersonInfo():
+						iGPTurns = GPUtil.getCityTurns(pHeadSelectedCity)
+						szBuffer = GPUtil.getGreatPeopleText(pHeadSelectedCity, iGPTurns, 230, MainOpt.isGPBarTypesNone(), MainOpt.isGPBarTypesOne(), False)
+					else:
+						szBuffer = localText.getText("INTERFACE_CITY_GREATPEOPLE_RATE", (CyGame().getSymbolID(FontSymbols.GREAT_PEOPLE_CHAR), pHeadSelectedCity.getGreatPeopleRate()))
+						if CityScreenOpt.isShowGreatPersonTurns() and iRate > 0:
+							iGPTurns = GPUtil.getCityTurns(pHeadSelectedCity)
+							szBuffer += u" " + localText.getText("INTERFACE_CITY_TURNS", (iGPTurns, ))
+# BUG - Great Person Turns - end
 
-					screen.setLabel( "GreatPeopleText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 146, yResolution - 176, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+					screen.setLabel( "GreatPeopleText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 126, yResolution - 182, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 					screen.setHitTest( "GreatPeopleText", HitTestTypes.HITTEST_NOHIT )
 					screen.show( "GreatPeopleText" )
 

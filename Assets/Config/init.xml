@@ -101,11 +101,13 @@
 	<events module="DiplomacyUtil" function="addEvents"/>
 	<extend how="after" module="DiplomacyUtil" function="handleAIComment" to="CvDiplomacyInterface" as="beginDiplomacy"/>
 	<extend how="after" module="DiplomacyUtil" function="handleUserResponse" to="CvDiplomacyInterface" as="handleUserResponse"/>
+	<init module="GPUtil"/>
 	<init module="TradeUtil"/>
     <gameutils module="WidgetUtil" handler="getWidgetHelp"/>
 	<!-- Mods -->
 	
 	<load mod="BUG Main Interface"/>
+	<load mod="BUG City Screen"/>
 	<load mod="Autolog"/>
 	<load mod="StatusDump"/>
 	
@@ -119,6 +121,7 @@
 	<screen id="BUGFull">
 		<tab module="BugGeneralOptionsTab"/>
 		<tab module="BugMapOptionsTab"/>
+		<tab module="BugCityScreenOptionsTab"/>
 		
 		<tab module="BugAutologOptionsTab"/>
 		
