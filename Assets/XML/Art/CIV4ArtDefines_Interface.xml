@@ -1300,6 +1300,24 @@
 			<Type>INTERFACE_AUTOMATE</Type>
 			<Path>Art/Interface/Buttons/Actions/Automate.dds</Path>
 		</InterfaceArtInfo>
+
+<!-- BUG - specialists  - start  -->
+
+		<InterfaceArtInfo>
+			<Type>OVERLAY_CHEVRON5</Type>
+			<Path>Art/Interface/screens/medallion_Chevron5.dds</Path>
+		</InterfaceArtInfo>	
+		<InterfaceArtInfo>
+			<Type>OVERLAY_CHEVRON10</Type>
+			<Path>Art/Interface/screens/medallion_Chevron10.dds</Path>
+		</InterfaceArtInfo>	
+		<InterfaceArtInfo>
+			<Type>OVERLAY_CHEVRON20</Type>
+			<Path>Art/Interface/screens/medallion_Chevron20.dds</Path>
+		</InterfaceArtInfo>	
+
+<!-- BUG - specialists  - end  -->		
+
 		<InterfaceArtInfo>
 			<Type>INTERFACE_ATTITUDE_BOY</Type>
 			<Path>Modules/UltraPack/Art/Boy.dds</Path>

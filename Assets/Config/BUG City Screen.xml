@@ -29,6 +29,18 @@
 			<option id="GreatPersonInfo" key="Great Person Info" 
 					type="boolean" default="True" 
 					get="isShowCityGreatPersonInfo" dirtyBit="CityScreen"/>
+			
+			<!-- Specialist Stacker by TheLopez -->
+			<!-- Specialist Chevrons by Ruff_Hi -->
+			<list   id="Specialists" key="City Specialists" 
+					type="int" default="2" listType="string" 
+					values="Default|Stacker|Chevron" 
+					get="getCitySpecialist" dirtyBit="CityScreen">
+				<choice id="Default" get="isCitySpecialist_Default"/>
+				<choice id="Stacker" get="isCitySpecialist_Stacker"/>
+				<choice id="Chevron" get="isCitySpecialist_Chevron"/>
+			</list>
+			
 		</section>
 	</options>
 </mod>
