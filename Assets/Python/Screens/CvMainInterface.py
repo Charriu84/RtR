@@ -109,17 +109,20 @@ g_iNumRightBonus = 0
 g_szTimeText = ""
 g_iTimeTextCounter = 0
 
-HELP_TEXT_MINIMUM_WIDTH = 300
 
-g_pSelectedUnit = 0
+# BUG - field of view slider - start
+DEFAULT_FIELD_OF_VIEW = 42
+# BUG - field of view slider - end
 
 # Added either by PBMod or RtR Start
 #class CvMainInterface:
 #	"Main Interface Screen"
+HELP_TEXT_MINIMUM_WIDTH = 300
 
 ## UltraPack Initialisation ##
 lUnitCombat = []
 # Added either by PBMod or RtR End
+g_pSelectedUnit = 0
 
 # BUG - start
 g_mainInterface = None
@@ -142,12 +145,49 @@ class CvMainInterface:
 		global g_mainInterface
 		g_mainInterface = self
 # BUG - end
+# BUG - field of view slider - start
+		self.szSliderTextId = "FieldOfViewSliderText"
+		self.sFieldOfView_Text = ""
+		self.szSliderId = "FieldOfViewSlider"
+		self.iField_View_Prev = -1
+# BUG - field of view slider - end
+
+
+		
+
+############## Basic operational functions ###################
+
+#########################################################################################
+#########################################################################################
+#########################################################################################
+#########################################################################################
+
+	def numPlotListButtonsPerRow(self):
+		return self.m_iNumPlotListButtonsPerRow
+
+# I know that this is redundent, but CyInterface().getPlotListOffset() (and prob the column one too)
+# uses this function
+# it is also used in "...\EntryPoints\CvScreensInterface.py" too
 	def numPlotListButtons(self):
-		return self.m_iNumPlotListButtons
+		return self.numPlotListButtonsPerRow()
 
-	def interfaceScreen (self):
 
-		# Global variables being set here
+	def initState (self, screen=None):
+		"""
+		Initialize screen instance (self.foo) and global variables.
+		
+		This function is called before drawing the screen (from interfaceScreen() below)
+		and anytime the Python modules are reloaded (from CvEventInterface).
+		
+		THIS FUNCTION MUST NOT ALTER THE SCREEN -- screen.foo()
+		"""
+		if screen is None:
+			screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+		self.xResolution = screen.getXResolution()
+		self.yResolution = screen.getYResolution()
+		
+
+		# Set up our global variables...
 		global g_NumEmphasizeInfos
 		global g_NumCityTabTypes
 		global g_NumHurryInfos
@@ -162,23 +202,7 @@ class CvMainInterface:
 		global MAX_DISPLAYABLE_TRADE_ROUTES
 		global MAX_BONUS_ROWS
 		global MAX_CITIZEN_BUTTONS
-
-
-		if ( CyGame().isPitbossHost() ):
-			return
-
-		# This is the main interface screen, create it as such
-		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
-		screen.setForcedRedraw(True)
-
-		# Find out our resolution
-		xResolution = screen.getXResolution()
-		yResolution = screen.getYResolution()
-		self.m_iNumPlotListButtons = (xResolution - (iMultiListXL+iMultiListXR) - 68) / 34
-
-		screen.setDimensions(0, 0, xResolution, yResolution)
-
-		# Set up our global variables...
+		
 		g_NumEmphasizeInfos = gc.getNumEmphasizeInfos()
 		g_NumCityTabTypes = CityTabTypes.NUM_CITYTAB_TYPES
 		g_NumHurryInfos = gc.getNumHurryInfos()
@@ -187,7 +211,44 @@ class CvMainInterface:
 		g_NumProjectInfos = gc.getNumProjectInfos()
 		g_NumProcessInfos = gc.getNumProcessInfos()
 		g_NumActionInfos = gc.getNumActionInfos()
+		
+# BUG - field of view slider - start
+		iBtnY = 27
+		self.iX_FoVSlider = self.xResolution - 120
+		self.iY_FoVSlider = iBtnY + 30
+		self.sFieldOfView_Text = localText.getText("TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_TEXT", ())
+		if MainOpt.isRememberFieldOfView():
+			self.iField_View = int(MainOpt.getFieldOfView())
+		else:
+			self.iField_View = DEFAULT_FIELD_OF_VIEW
+# BUG - field of view slider - end
 
+
+		self.m_iNumPlotListButtonsPerRow = (self.xResolution - (iMultiListXL+iMultiListXR) - 68) / 34
+
+
+	def interfaceScreen (self):
+		"""
+		Draw all of the screen elements.
+		
+		This function is called once after starting or loading a game.
+		
+		THIS FUNCTION MUST NOT CREATE ANY INSTANCE OR GLOBAL VARIABLES.
+		It may alter existing ones created in __init__() or initState(), however.
+		"""
+		if ( CyGame().isPitbossHost() ):
+			return
+		
+		# This is the main interface screen, create it as such
+		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+		self.initState(screen)
+		screen.setForcedRedraw(True)
+		screen.setDimensions(0, 0, self.xResolution, self.yResolution)
+		
+		# to avoid changing all the code below
+		xResolution = self.xResolution
+		yResolution = self.yResolution
+		
 		# Help Text Area
 		screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 
@@ -336,6 +397,14 @@ class CvMainInterface:
 			screen.setImageButton( "EspionageAdvisorButton", "", iBtnX, iBtnY, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_ESPIONAGE_SCREEN).getActionInfoIndex(), -1 )
 			screen.setStyle( "EspionageAdvisorButton", "Button_HUDAdvisorEspionage_Style" )
 			screen.hide( "EspionageAdvisorButton" )
+# BUG - field of view slider - start
+		self.setFieldofView_Text(screen)
+		iW = 100
+		iH = 15
+		screen.addSlider(self.szSliderId, self.iX_FoVSlider + 5, self.iY_FoVSlider, iW, iH, self.iField_View - 1, 0, 100 - 1, WidgetTypes.WIDGET_GENERAL, -1, -1, False);
+		screen.hide(self.szSliderTextId)
+		screen.hide(self.szSliderId)
+# BUG - field of view slider - end
 
 		# City Tabs
 		iBtnX = xResolution - 324
@@ -770,6 +839,10 @@ class CvMainInterface:
 
 		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
 
+# BUG - Field of View - start
+		self.setFieldofView(screen, CyInterface().isCityScreenUp())
+# BUG - Field of View - end
+
 		# Check Dirty Bits, see what we need to redraw...
 		if (CyInterface().isDirty(InterfaceDirtyBits.PercentButtons_DIRTY_BIT) == True):
 			# Percent Buttons
@@ -1007,6 +1080,10 @@ class CvMainInterface:
 # BUG - BUG Option Button - Start
 			screen.hide("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
+# BUG - field of view slider - start
+			screen.hide(self.szSliderTextId)
+			screen.hide(self.szSliderId)
+# BUG - field of view slider - end
 
 		elif ( CyInterface().isCityScreenUp() ):
 			screen.show( "InterfaceLeftBackgroundWidget" )
@@ -1036,6 +1113,10 @@ class CvMainInterface:
 # BUG - BUG Option Button - Start
 			screen.hide("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
+# BUG - field of view slider - start
+			screen.hide(self.szSliderTextId)
+			screen.hide(self.szSliderId)
+# BUG - field of view slider - end
 
 		elif ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_HIDE):
 			screen.hide( "InterfaceLeftBackgroundWidget" )
@@ -1066,6 +1147,11 @@ class CvMainInterface:
 			if MainOpt.isShowOptionsButton():
 				screen.show("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
+# BUG - field of view slider - start
+			screen.hide(self.szSliderTextId)
+			screen.hide(self.szSliderId)
+# BUG - field of view slider - end
+
 			screen.moveToFront( "TurnLogButton" )
 			screen.moveToFront( "EspionageAdvisorButton" )
 			screen.moveToFront( "DomesticAdvisorButton" )
@@ -1141,6 +1227,11 @@ class CvMainInterface:
 			if MainOpt.isShowOptionsButton():
 				screen.show("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
+# BUG - field of view slider - start
+			screen.hide(self.szSliderTextId)
+			screen.hide(self.szSliderId)
+# BUG - field of view slider - end
+
 			screen.moveToFront( "TurnLogButton" )
 			screen.moveToFront( "EspionageAdvisorButton" )
 			screen.moveToFront( "DomesticAdvisorButton" )
@@ -1190,6 +1281,15 @@ class CvMainInterface:
 			if MainOpt.isShowOptionsButton():
 				screen.show("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
+# BUG - field of view slider - start
+			if (MainOpt.isShowFieldOfView()):
+				screen.show(self.szSliderTextId)
+				screen.show(self.szSliderId)
+			else:
+				screen.hide(self.szSliderTextId)
+				screen.hide(self.szSliderId)
+# BUG - field of view slider - end
+
 			screen.moveToFront( "TurnLogButton" )
 			screen.moveToFront( "EspionageAdvisorButton" )
 			screen.moveToFront( "DomesticAdvisorButton" )
@@ -3507,6 +3607,16 @@ class CvMainInterface:
 
 
 
+# BUG - field of view slider - start
+		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_SLIDER_NEWSTOP):
+			if (inputClass.getFunctionName() == self.szSliderId):
+				screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+				self.iField_View = inputClass.getData() + 1
+				self.setFieldofView(screen, False)
+				self.setFieldofView_Text(screen)
+				MainOpt.setFieldOfView(self.iField_View)
+# BUG - field of view slider - end
+
 		return 0
 	
 	def update(self, fDelta):
@@ -3525,3 +3635,20 @@ class CvMainInterface:
 				CyGame().doControl(ControlTypes.CONTROL_PREVCITY)
 			else:
 				CyGame().doControl(ControlTypes.CONTROL_PREVUNIT)
+
+# BUG - field of view slider - start
+	def setFieldofView(self, screen, bDefault):
+		if bDefault or not MainOpt.isShowFieldOfView():
+			self._setFieldofView(screen, DEFAULT_FIELD_OF_VIEW)
+		else:
+			self._setFieldofView(screen, self.iField_View)
+
+	def _setFieldofView(self, screen, iFoV):
+		if self.iField_View_Prev != iFoV:
+			gc.setDefineFLOAT("FIELD_OF_VIEW", float(iFoV))
+			self.iField_View_Prev = iFoV
+
+	def setFieldofView_Text(self, screen):
+		zsFieldOfView_Text = "%s [%i]" % (self.sFieldOfView_Text, self.iField_View)
+		screen.setLabel(self.szSliderTextId, "", zsFieldOfView_Text, CvUtil.FONT_RIGHT_JUSTIFY, self.iX_FoVSlider, self.iY_FoVSlider + 6, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+# BUG - field of view slider - end
