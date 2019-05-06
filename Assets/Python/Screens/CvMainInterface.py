@@ -2761,6 +2761,14 @@ class CvMainInterface:
 					else:
 						szRate = u"+%d.%02d" % (iRate/100, iRate%100)
 						szBuffer = localText.getText("INTERFACE_CITY_COMMERCE_RATE_FLOAT", (gc.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar(), gc.getCultureLevelInfo(pHeadSelectedCity.getCultureLevel()).getTextKey(), szRate))
+						
+# BUG - Culture Turns - start
+					if CityScreenOpt.isShowCultureTurns() and iRate > 0:
+						iCultureTimes100 = pHeadSelectedCity.getCultureTimes100(pHeadSelectedCity.getOwner())
+						iCultureLeftTimes100 = 100 * pHeadSelectedCity.getCultureThreshold() - iCultureTimes100
+						szBuffer += u" " + localText.getText("INTERFACE_CITY_TURNS", (((iCultureLeftTimes100 + iRate - 1) / iRate),))
+# BUG - Culture Turns - end
+
 					screen.setLabel( "CultureText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, 125, yResolution - 184, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 					screen.setHitTest( "CultureText", HitTestTypes.HITTEST_NOHIT )
 					screen.show( "CultureText" )
