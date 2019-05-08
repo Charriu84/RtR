@@ -103,6 +103,7 @@
 	<extend how="after" module="DiplomacyUtil" function="handleUserResponse" to="CvDiplomacyInterface" as="handleUserResponse"/>
 	<init module="GPUtil"/>
 	<init module="TradeUtil"/>
+	<init module="UnitUtil"/>
     <gameutils module="WidgetUtil" handler="getWidgetHelp"/>
 	<!-- Mods -->
 	
@@ -110,6 +111,7 @@
 	<load mod="BUG City Screen"/>
 	<load mod="Not Just Another Game Clock"/>
 	<load mod="Autolog"/>
+	<load mod="Unit Naming"/>
 	<load mod="StatusDump"/>
 	
 	<load mod="AutoSave"/>
@@ -125,6 +127,8 @@
 		<tab module="BugCityScreenOptionsTab"/>
 		
 		<tab module="BugNJAGCOptionsTab"/>
+		<tab module="BugUnitNameOptionsTab"/>
+		
 		<tab module="BugAutologOptionsTab"/>
 		
 		<tab module="BugSystemOptionsTab"/>
