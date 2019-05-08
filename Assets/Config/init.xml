@@ -108,6 +108,7 @@
 	
 	<load mod="BUG Main Interface"/>
 	<load mod="BUG City Screen"/>
+	<load mod="Not Just Another Game Clock"/>
 	<load mod="Autolog"/>
 	<load mod="StatusDump"/>
 	
@@ -123,6 +124,7 @@
 		<tab module="BugMapOptionsTab"/>
 		<tab module="BugCityScreenOptionsTab"/>
 		
+		<tab module="BugNJAGCOptionsTab"/>
 		<tab module="BugAutologOptionsTab"/>
 		
 		<tab module="BugSystemOptionsTab"/>

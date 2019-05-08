@@ -18,6 +18,7 @@ import BugOptionsScreen
 import BugPath
 import BugUtil
 import CityUtil
+ClockOpt = BugCore.game.NJAGC
 MainOpt = BugCore.game.MainInterface
 CityScreenOpt = BugCore.game.CityScreen
 # BUG - Options - end
@@ -121,7 +122,11 @@ g_iNumCenterBonus = 0
 g_iNumRightBonus = 0
 
 g_szTimeText = ""
-g_iTimeTextCounter = 0
+
+# BUG - NJAGC - start
+g_bShowTimeTextAlt = False
+g_iTimeTextCounter = -1
+# BUG - NJAGC - end
 
 
 # BUG - field of view slider - start
@@ -847,17 +852,53 @@ class CvMainInterface:
 
 		self.updateEndTurnButton()
 
-		if (CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_HIDE_ALL and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_ADVANCED_START):
-			self.updateTimeText()
-			screen.setLabel( "TimeText", "Background", g_szTimeText, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 56, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-			screen.show( "TimeText" )
+# BUG - NJAGC - start
+		global g_bShowTimeTextAlt
+		if (CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_HIDE_ALL and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_MINIMAP_ONLY  and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_ADVANCED_START):
+			if (ClockOpt.isEnabled()):
+				if (ClockOpt.isShowEra()):
+					screen.show( "EraText" )
+				else:
+					screen.hide( "EraText" )
+				
+				if (ClockOpt.isAlternateTimeText()):
+					#global g_iTimeTextCounter (already done above)
+					if (CyUserProfile().wasClockJustTurnedOn() or g_iTimeTextCounter <= 0):
+						# reset timer, display primary
+						g_bShowTimeTextAlt = False
+						g_iTimeTextCounter = ClockOpt.getAlternatePeriod() * 1000
+						CyUserProfile().setClockJustTurnedOn(False)
+					else:
+						# countdown timer
+						g_iTimeTextCounter -= 250
+						if (g_iTimeTextCounter <= 0):
+							# timer elapsed, toggle between primary and alternate
+							g_iTimeTextCounter = ClockOpt.getAlternatePeriod() * 1000
+							g_bShowTimeTextAlt = not g_bShowTimeTextAlt
+				else:
+					g_bShowTimeTextAlt = False
+				
+				self.updateTimeText()
+				screen.setLabel( "TimeText", "Background", g_szTimeText, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 56, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+				screen.show( "TimeText" )
+			else:
+				screen.hide( "EraText" )
+				self.updateTimeText()
+				screen.setLabel( "TimeText", "Background", g_szTimeText, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 56, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+				screen.show( "TimeText" )
 		else:
 			screen.hide( "TimeText" )
+			screen.hide( "EraText" )
+# BUG - NJAGC - end
+
 
 		return 0
 
 	# Will redraw the interface
 	def redraw( self ):
+
+#		BugUtil.debug("redraw - Turn %d, Player %d, Interface %d, End Turn Button %d", 
+#				gc.getGame().getGameTurn(), gc.getGame().getActivePlayer(), CyInterface().getShowInterface(), CyInterface().getEndTurnState())
 
 		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
 
@@ -2348,8 +2389,14 @@ class CvMainInterface:
 		screen.hide( "TimeText" )
 		screen.hide( "ResearchBar" )
 
-		bShift = CyInterface().shiftKey()
+# BUG - NJAGC - start
+		screen.hide( "EraText" )
+# BUG - NJAGC - end
 
+
+
+		bShift = CyInterface().shiftKey()
+		
 		xResolution = screen.getXResolution()
 		yResolution = screen.getYResolution()
 
@@ -2399,16 +2446,28 @@ class CvMainInterface:
 			self.updateTimeText()
 			screen.setLabel( "TimeText", "Background", g_szTimeText, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 56, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 			screen.show( "TimeText" )
-
+			
 			if (gc.getPlayer(ePlayer).isAlive()):
 
 				szText = CyGameTextMgr().getGoldStr(ePlayer)
 				screen.setLabel( "GoldText", "Background", szText, CvUtil.FONT_LEFT_JUSTIFY, 12, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 				screen.show( "GoldText" )
-
+				
 				if (((gc.getPlayer(ePlayer).calculateGoldRate() != 0) and not (gc.getPlayer(ePlayer).isAnarchy())) or (gc.getPlayer(ePlayer).getGold() != 0)):
 					screen.show( "GoldText" )
 
+# BUG - NJAGC - start
+				if (ClockOpt.isEnabled()
+				and ClockOpt.isShowEra()):
+					szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getDescription(), ))
+					if(ClockOpt.isUseEraColor()):
+						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getType())
+						if (iEraColor >= 0):
+							szText = localText.changeTextColor(szText, iEraColor)
+					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+					screen.show( "EraText" )
+# BUG - NJAGC - end
+				
 				if (gc.getPlayer(ePlayer).isAnarchy()):
 
 					szText = localText.getText("INTERFACE_ANARCHY", (gc.getPlayer(ePlayer).getAnarchyTurns(), ))
@@ -2442,13 +2501,82 @@ class CvMainInterface:
 	def updateTimeText( self ):
 
 		global g_szTimeText
-
+		
 		ePlayer = gc.getGame().getActivePlayer()
-
-		g_szTimeText = localText.getText("TXT_KEY_TIME_TURN", (CyGame().getGameTurn(), )) + u" - " + unicode(CyGameTextMgr().getInterfaceTimeStr(ePlayer))
-		if (CyUserProfile().isClockOn()):
-			g_szTimeText = getClockText() + u" - " + g_szTimeText
-
+		
+# BUG - NJAGC - start
+		if (ClockOpt.isEnabled()):
+			"""
+			Format: Time - GameTurn/Total Percent - GA (TurnsLeft) Date
+			
+			Ex: 10:37 - 220/660 33% - GA (3) 1925
+			"""
+			if (g_bShowTimeTextAlt):
+				bShowTime = ClockOpt.isShowAltTime()
+				bShowGameTurn = ClockOpt.isShowAltGameTurn()
+				bShowTotalTurns = ClockOpt.isShowAltTotalTurns()
+				bShowPercentComplete = ClockOpt.isShowAltPercentComplete()
+				bShowDateGA = ClockOpt.isShowAltDateGA()
+			else:
+				bShowTime = ClockOpt.isShowTime()
+				bShowGameTurn = ClockOpt.isShowGameTurn()
+				bShowTotalTurns = ClockOpt.isShowTotalTurns()
+				bShowPercentComplete = ClockOpt.isShowPercentComplete()
+				bShowDateGA = ClockOpt.isShowDateGA()
+			
+			if (not gc.getGame().getMaxTurns() > 0):
+				bShowTotalTurns = False
+				bShowPercentComplete = False
+			
+			bFirst = True
+			g_szTimeText = ""
+			
+			if (bShowTime):
+				bFirst = False
+				g_szTimeText += getClockText()
+			
+			if (bShowGameTurn):
+				if (bFirst):
+					bFirst = False
+				else:
+					g_szTimeText += u" - "
+				g_szTimeText += u"%d" %( gc.getGame().getElapsedGameTurns() )
+				if (bShowTotalTurns):
+					g_szTimeText += u"/%d" %( gc.getGame().getMaxTurns() )
+			
+			if (bShowPercentComplete):
+				if (bFirst):
+					bFirst = False
+				else:
+					if (not bShowGameTurn):
+						g_szTimeText += u" - "
+					else:
+						g_szTimeText += u" "
+				g_szTimeText += u"%2.2f%%" %( 100 *(float(gc.getGame().getElapsedGameTurns()) / float(gc.getGame().getMaxTurns())) )
+			
+			if (bShowDateGA):
+				if (bFirst):
+					bFirst = False
+				else:
+					g_szTimeText += u" - "
+				szDateGA = unicode(CyGameTextMgr().getInterfaceTimeStr(ePlayer))
+				if(ClockOpt.isUseEraColor()):
+					iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getType())
+					if (iEraColor >= 0):
+						szDateGA = localText.changeTextColor(szDateGA, iEraColor)
+				g_szTimeText += szDateGA
+		else:
+			"""
+			Original Clock
+			Format: Time - 'Turn' GameTurn - GA (TurnsLeft) Date
+			
+			Ex: 10:37 - Turn 220 - GA (3) 1925
+			"""
+			g_szTimeText = localText.getText("TXT_KEY_TIME_TURN", (CyGame().getGameTurn(), )) + u" - " + unicode(CyGameTextMgr().getInterfaceTimeStr(ePlayer))
+			if (CyUserProfile().isClockOn()):
+				g_szTimeText = getClockText() + u" - " + g_szTimeText
+# BUG - NJAGC - end
+		
 	# Will update the selection Data Strings
 	def updateCityScreen( self ):
 	
@@ -3418,7 +3546,7 @@ class CvMainInterface:
 						iRow += 1
 
 		return 0
-
+		
 	# Will update the scores
 	def updateScoreStringsOrig( self ):
 
@@ -3426,9 +3554,9 @@ class CvMainInterface:
 
 		xResolution = screen.getXResolution()
 		yResolution = screen.getYResolution()
-
+		
 		screen.hide( "ScoreBackground" )
-
+		
 		for i in range( gc.getMAX_PLAYERS() ):
 			szName = "ScoreText" + str(i)
 			screen.hide( szName )
@@ -3436,7 +3564,7 @@ class CvMainInterface:
 		iWidth = 0
 		iCount = 0
 		iBtnHeight = 22
-
+		
 		if ((CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_HIDE_ALL and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_MINIMAP_ONLY)):
 			if (CyInterface().isScoresVisible() and not CyInterface().isCityScreenUp() and CyEngine().isGlobeviewUp() == false):
 
