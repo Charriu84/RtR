@@ -20,6 +20,24 @@
 			<option id="BugFinanceAdvisor" key="BUG Finance Advisor" 
 					type="boolean" default="True" 
 					get="isBugFinanceAdvisor"/>
+
+			<!-- Exotic Foreign Advisor (F4) by Requies, Dresden, EmperorFool -->
+			<option id="EFAGlanceTab" key="EFA Glance" 
+					type="boolean" default="True" 
+					get="isShowGlance"/>
+			<list   id="EFAGlanceAttitudes" key="EFA Glance Attitudes" 
+					type="int" default="1" listType="string">
+				<choice id="Numbers" get="isShowGlanceNumbers"/>
+				<choice id="Smilies" get="isShowGlanceSmilies"/>
+				<choice id="Both" get="isShowGlanceNumbers isShowGlanceSmilies"/>
+			</list>
+			<option id="EFAImprovedInfo" key="EFA Improved Info" 
+					type="boolean" default="True" 
+					get="isUseImprovedEFAInfo"/>
+			<option id="EFADealTurnsLeft" key="EFA Deal Turns Left" 
+					type="boolean" default="True" 
+					get="isShowDealTurnsLeft"/>
+	
 		</section>
 	</options>
 	
