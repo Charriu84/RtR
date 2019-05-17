@@ -42,6 +42,7 @@
 			<option id="MinMax_Commerce" key="MinMax Commerce" 
 					type="boolean" default="True" 
 					get="isShowMinMaxCommerceButtons" dirtyBit="PercentButtons, GameData">
+				<change module="CvCustomizableDomesticAdvisor" function="forcePositionCalc"/>
 			</option>
 			
 			<!-- City Cycle Arrows by SimCutie -->

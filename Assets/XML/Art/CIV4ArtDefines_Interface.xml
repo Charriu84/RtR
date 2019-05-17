@@ -1317,6 +1317,15 @@
 			<Path>Art/Interface/Buttons/Actions/Automate.dds</Path>
 		</InterfaceArtInfo>
 
+<!-- BUG - Tech Advisor - start -->
+
+		<InterfaceArtInfo>
+			<Type>DISCOVER_TECHNOLOGY_BUTTON</Type>
+			<Path>Art/Interface/Buttons/Actions/Discover.dds</Path>
+		</InterfaceArtInfo>
+
+<!-- BUG - Tech Advisor - end -->
+
 <!-- BUG - specialists  - start  -->
 
 		<InterfaceArtInfo>

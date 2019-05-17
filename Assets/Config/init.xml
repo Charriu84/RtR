@@ -110,9 +110,15 @@
 	<extend how="after" module="DiplomacyUtil" function="handleAIComment" to="CvDiplomacyInterface" as="beginDiplomacy"/>
 	<extend how="after" module="DiplomacyUtil" function="handleUserResponse" to="CvDiplomacyInterface" as="handleUserResponse"/>
 	<init module="GPUtil"/>
+	<init module="TechUtil"/>
 	<init module="TradeUtil"/>
 	<init module="UnitUtil"/>
     <gameutils module="WidgetUtil" handler="getWidgetHelp"/>
+    
+	<event type="OnLoad" module="CvTechChooser" function="resetTechPrefs"/>
+	<event type="GameStart" module="CvTechChooser" function="resetTechPrefs"/>
+	
+	
 	<!-- Mods -->
 	
 	<load mod="BUG Main Interface"/>
@@ -120,6 +126,8 @@
 	<load mod="BUG Advisors"/>
 	
 	<load mod="Customizable Domestic Advisor"/>
+	<load mod="TechWindow"/>
+	
 	<load mod="Not Just Another Game Clock"/>
 	<load mod="Autolog"/>
 	<load mod="Unit Naming"/>
