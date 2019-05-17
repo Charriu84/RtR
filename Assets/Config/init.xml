@@ -12,7 +12,14 @@
 	
 	<load mod="BUG Config"/>
 	<load mod="BUG Core"/>
-
+	
+	
+	<!-- Civilization Core -->
+	
+	<!-- Domestic and Military Advisors and Civilopedia are chosen by options -->
+	<init module="CvScreensInterface"/>
+	
+	
 	<!-- Utility Modules -->
 	
 	<init module="FontUtil" immediate="True"/>
@@ -109,6 +116,9 @@
 	
 	<load mod="BUG Main Interface"/>
 	<load mod="BUG City Screen"/>
+	<load mod="BUG Advisors"/>
+	
+	<load mod="Customizable Domestic Advisor"/>
 	<load mod="Not Just Another Game Clock"/>
 	<load mod="Autolog"/>
 	<load mod="Unit Naming"/>
@@ -125,6 +135,8 @@
 		<tab module="BugGeneralOptionsTab"/>
 		<tab module="BugMapOptionsTab"/>
 		<tab module="BugCityScreenOptionsTab"/>
+		
+		<tab module="BugAdvisorOptionsTab"/>
 		
 		<tab module="BugNJAGCOptionsTab"/>
 		<tab module="BugUnitNameOptionsTab"/>

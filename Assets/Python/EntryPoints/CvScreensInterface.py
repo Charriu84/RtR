@@ -1,7 +1,6 @@
 ## Sid Meier's Civilization 4
 ## Copyright Firaxis Games 2005
 import CvMainInterface
-import CvDomesticAdvisor
 import CvTechChooser
 import CvForeignAdvisor
 import CvExoticForeignAdvisor
@@ -50,6 +49,8 @@ from CvPythonExtensions import *
 
 # BUG - Options - end
 import BugCore
+AdvisorOpt = BugCore.game.Advisors
+CustDomAdvOpt = BugCore.game.CustDomAdv
 # BUG - Options - end
 
 g_bIsScreenActive = -1
@@ -115,7 +116,21 @@ def showFinanceAdvisor():
 	if (-1 != CyGame().getActivePlayer()):
 		financeAdvisor.interfaceScreen()
 
-domesticAdvisor = CvDomesticAdvisor.CvDomesticAdvisor()
+# BUG - CustDomAdv - start
+domesticAdvisor = None
+def createDomesticAdvisor():
+	"""Creates the correct Domestic Advisor based on an option."""
+	global domesticAdvisor
+	if domesticAdvisor is None:
+		if (CustDomAdvOpt.isEnabled()):
+			import CvCustomizableDomesticAdvisor
+			domesticAdvisor = CvCustomizableDomesticAdvisor.CvCustomizableDomesticAdvisor()
+		else:
+			import CvDomesticAdvisor
+			domesticAdvisor = CvDomesticAdvisor.CvDomesticAdvisor()
+		HandleInputMap[DOMESTIC_ADVISOR] = domesticAdvisor
+# BUG - CustDomAdv - end
+
 def showDomesticAdvisor(argsList):
 	if (-1 != CyGame().getActivePlayer()):
 		domesticAdvisor.interfaceScreen()
@@ -875,7 +890,7 @@ HandleCloseMap = {  DAWN_OF_MAN : dawnOfMan,
 ## Handle Input Map
 #######################################################################################
 HandleInputMap = {  MAIN_INTERFACE : mainInterface,
-					DOMESTIC_ADVISOR : domesticAdvisor,
+#					DOMESTIC_ADVISOR : domesticAdvisor,
 					RELIGION_SCREEN : religionScreen,
 					CORPORATION_SCREEN : corporationScreen,
 					CIVICS_SCREEN : civicScreen,
@@ -951,6 +966,5 @@ HandleNavigationMap = {
 				}
 # BUG - Options - start
 def init():
-	# delete this later when adding stuff
-	szText = szText
+	createDomesticAdvisor()
 # BUG - Options - end

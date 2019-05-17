@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	BUG Advisors
+	by Taelis, Cammagno, Requies, Ruff_Hi, Sevo, EmperorFool
+	
+	Collects all of the various advisor-based mods.
+
+	Copyright (c) 2008 The BUG Mod.
+-->
+<mod id="Advisors" 
+	 name="BUG Advisors" 
+	 author="Taelis, Cammagno, Requies, Ruff_Hi, Sevo, EmperorFool" 
+	 version="3.0" 
+	 date="07/11/2008"
+	 url="http://forums.civfanatics.com/forumdisplay.php?f=268">
+	 
+	<options id="Advisors" file="BUG Advisors.ini">
+		<section id="Advisors">
+			<!-- Finance Advisor by EmperorFool -->
+			<option id="BugFinanceAdvisor" key="BUG Finance Advisor" 
+					type="boolean" default="True" 
+					get="isBugFinanceAdvisor"/>
+		</section>
+	</options>
+	
+	<widget name="WIDGET_INFO_WORLD_WONDERS" xml="TXT_KEY_TOP_CITIES_SCREEN_WORLD_WONDERS"/>
+	<widget name="WIDGET_INFO_NATIONAL_WONDERS" xml="TXT_KEY_TOP_CITIES_SCREEN_NATIONAL_WONDERS"/>
+	<widget name="WIDGET_INFO_PROJECTS" xml="TXT_KEY_PEDIA_CATEGORY_PROJECT"/>
+
+	<event type="ResolutionChanged" module="CvCustomizableDomesticAdvisor" function="forcePositionCalc"/>
+	<event type="LanguageChanged" module="CvCustomizableDomesticAdvisor" function="forcePositionCalc"/>
+
+</mod>
