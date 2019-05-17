@@ -1343,30 +1343,32 @@
 
 <!-- BUG - specialists  - end  -->		
 
+<!-- BUG - Wonders Tab - start -->			
 		<InterfaceArtInfo>
-			<Type>INTERFACE_ATTITUDE_BOY</Type>
-			<Path>Modules/UltraPack/Art/Boy.dds</Path>
+			<Type>BUG_WORLDWONDER_OFF</Type>
+			<Path>Art/BUG/World_Off.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
-			<Type>INTERFACE_ATTITUDE_0</Type>
-			<Path>Modules/UltraPack/Art/Attitude0.dds</Path>
+			<Type>BUG_WORLDWONDER_ON</Type>
+			<Path>Art/BUG/World_On.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
-			<Type>INTERFACE_ATTITUDE_1</Type>
-			<Path>Modules/UltraPack/Art/Attitude1.dds</Path>
+			<Type>BUG_NATWONDER_OFF</Type>
+			<Path>Art/BUG/National_Off.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
-			<Type>INTERFACE_ATTITUDE_2</Type>
-			<Path>Modules/UltraPack/Art/Attitude2.dds</Path>
+			<Type>BUG_NATWONDER_ON</Type>
+			<Path>Art/BUG/National_On.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
-			<Type>INTERFACE_ATTITUDE_3</Type>
-			<Path>Modules/UltraPack/Art/Attitude3.dds</Path>
+			<Type>BUG_PROJECT_OFF</Type>
+			<Path>Art/BUG/Projects_Off.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
-			<Type>INTERFACE_ATTITUDE_4</Type>
-			<Path>Modules/UltraPack/Art/Attitude4.dds</Path>
+			<Type>BUG_PROJECT_ON</Type>
+			<Path>Art/BUG/Projects_On.dds</Path>
 		</InterfaceArtInfo>
+<!-- BUG - Wonders Tab - end -->			
 
 <!-- BUG - Main Interface - BUG Options Screen - Start -->			
 		<InterfaceArtInfo>
