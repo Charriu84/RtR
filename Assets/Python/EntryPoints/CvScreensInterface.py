@@ -5,7 +5,6 @@ import CvTechChooser
 import CvForeignAdvisor
 import CvExoticForeignAdvisor
 import CvMilitaryAdvisor
-import CvFinanceAdvisor
 import CvReligionScreen
 import CvCorporationScreen
 import CvCivicsScreen
@@ -112,7 +111,21 @@ def showForeignAdvisorScreen(argsList):
 	if (-1 != CyGame().getActivePlayer()):
 		foreignAdvisor.interfaceScreen(argsList[0])
 
-financeAdvisor = CvFinanceAdvisor.CvFinanceAdvisor()
+# BUG - Finance Advisor - start
+financeAdvisor = None
+def createFinanceAdvisor():
+	"""Creates the correct Finance Advisor based on an option."""
+	global financeAdvisor
+	if financeAdvisor is None:
+		if (AdvisorOpt.isBugFinanceAdvisor()):
+			import BugFinanceAdvisor
+			financeAdvisor = BugFinanceAdvisor.BugFinanceAdvisor()
+		else:
+			import CvFinanceAdvisor
+			financeAdvisor = CvFinanceAdvisor.CvFinanceAdvisor()
+		HandleInputMap[FINANCE_ADVISOR] = financeAdvisor
+# BUG - Finance Advisor - end
+			
 def showFinanceAdvisor():
 	if (-1 != CyGame().getActivePlayer()):
 		financeAdvisor.interfaceScreen()
@@ -922,8 +935,8 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					CIVICS_SCREEN : civicScreen,
 					TECH_CHOOSER : techChooser,
 					FOREIGN_ADVISOR : foreignAdvisor,
-					FINANCE_ADVISOR : financeAdvisor,
 					MILITARY_ADVISOR : militaryAdvisor,
+#					FINANCE_ADVISOR : financeAdvisor,
 					DAWN_OF_MAN : dawnOfMan,
 					WONDER_MOVIE_SCREEN : wonderMovie,
 					ERA_MOVIE_SCREEN : eraMovie,
@@ -992,5 +1005,6 @@ HandleNavigationMap = {
 # BUG - Options - start
 def init():
 	createDomesticAdvisor()
+	createFinanceAdvisor()
 	createTechSplash()
 # BUG - Options - end
