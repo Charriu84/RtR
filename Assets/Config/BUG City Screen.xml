@@ -16,6 +16,13 @@
 	 
 	<options id="CityScreen" file="BUG City Screen.ini">
 		<section id="City Screen">
+			<!-- WhipAssist by EmperorFool, Dresden -->
+			<option id="WhipAssist" key="WhipAssist" 
+					type="boolean" default="True" 
+					get="isShowWhipAssist" dirtyBit="CityScreen"/>
+			<option id="WhipAssistOverflowCountCurrentProduction" key="WhipAssist Overflow Count Current Production" 
+					type="boolean" default="True" 
+					get="isWhipAssistOverflowCountCurrentProduction" dirtyBit="CityScreen"/>
 			
 			<!-- Culture Turns by Chinese American -->
 			<option id="CultureTurns" key="Culture Turns" 
