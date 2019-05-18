@@ -10,9 +10,17 @@
 #
 # No other modules should import this
 #
-import CvScreenUtils
+#######################################
+## Strategy Overlay Changed 10/20/2008
+##
+## Changed import to import CvOverlayScreenUtils
+## Changed normalScreenUtils to return the CvOverlayScreenUtils class
+## Placed in CustomAssets/Python/EntryPoints for bug mod use
+##########################################
 
-normalScreenUtils = CvScreenUtils.CvScreenUtils()
+import CvOverlayScreenUtils
+
+normalScreenUtils = CvOverlayScreenUtils.CvOverlayScreenUtils()
 
 def getScreenUtils():
 	return normalScreenUtils

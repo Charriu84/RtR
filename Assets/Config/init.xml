@@ -132,6 +132,7 @@
 	<load mod="Autolog"/>
 	<load mod="Unit Naming"/>
 	<load mod="FavoriteCivicDetector"/>
+	<load mod="Strategy Overlay"/>
 	<load mod="StatusDump"/>
 	
 	<load mod="AutoSave"/>
