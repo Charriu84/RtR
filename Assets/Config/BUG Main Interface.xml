@@ -25,6 +25,12 @@
 			<option id="OptionsButton" key="Options Button" 
 					type="boolean" default="True" 
 					get="isShowOptionsButton" set="setShowOptionsButton" dirtyBit="GameData"/>
+
+			<!-- Gold Rate Warning -->
+			<option id="GoldRateWarning" key="Gold Rate Warning" 
+					type="boolean" default="True" 
+					get="isGoldRateWarning" dirtyBit="GameData"/>
+			
 			<!-- Great Person Progress Bar by Impaler[WrG], EmperorFool -->
 			<option id="GPBar" key="GP Progress Bar" 
 					type="boolean" default="True" 

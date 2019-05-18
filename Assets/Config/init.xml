@@ -150,6 +150,8 @@
 		<tab module="BugAdvisorOptionsTab"/>
 		
 		<tab module="BugNJAGCOptionsTab"/>
+		
+		<tab module="BugPleOptionsTab"/>
 		<tab module="BugUnitNameOptionsTab"/>
 		
 		<tab module="BugAutologOptionsTab"/>
