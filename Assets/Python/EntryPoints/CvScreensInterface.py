@@ -4,7 +4,6 @@ import CvMainInterface
 import CvTechChooser
 import CvForeignAdvisor
 import CvExoticForeignAdvisor
-import CvMilitaryAdvisor
 import CvReligionScreen
 import CvCorporationScreen
 import CvCivicsScreen
@@ -149,10 +148,27 @@ def showDomesticAdvisor(argsList):
 	if (-1 != CyGame().getActivePlayer()):
 		domesticAdvisor.interfaceScreen()
 
-militaryAdvisor = CvMilitaryAdvisor.CvMilitaryAdvisor(MILITARY_ADVISOR)
+# BUG - Military Advisor - start
+militaryAdvisor = None
+def createMilitaryAdvisor():
+	"""Creates the correct Military Advisor based on an option."""
+	global militaryAdvisor
+	if militaryAdvisor is None:
+		if (AdvisorOpt.isBUG_MA()):
+			import CvBUGMilitaryAdvisor
+			militaryAdvisor = CvBUGMilitaryAdvisor.CvMilitaryAdvisor(MILITARY_ADVISOR)
+		else:
+			import CvMilitaryAdvisor
+			militaryAdvisor = CvMilitaryAdvisor.CvMilitaryAdvisor(MILITARY_ADVISOR)
+		HandleInputMap[MILITARY_ADVISOR] = militaryAdvisor
+
 def showMilitaryAdvisor():
 	if (-1 != CyGame().getActivePlayer()):
+		if (AdvisorOpt.isBUG_MA()):
+			# TODO: move to CvBUGMilitaryAdvisor.interfaceScreen()
+			militaryAdvisor.IconGridActive = False
 		militaryAdvisor.interfaceScreen()
+# BUG - Military Advisor - end
 
 espionageAdvisor = CvEspionageAdvisor.CvEspionageAdvisor()
 def showEspionageAdvisor():
@@ -935,8 +951,8 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					CIVICS_SCREEN : civicScreen,
 					TECH_CHOOSER : techChooser,
 					FOREIGN_ADVISOR : foreignAdvisor,
-					MILITARY_ADVISOR : militaryAdvisor,
 #					FINANCE_ADVISOR : financeAdvisor,
+#					MILITARY_ADVISOR : militaryAdvisor,
 					DAWN_OF_MAN : dawnOfMan,
 					WONDER_MOVIE_SCREEN : wonderMovie,
 					ERA_MOVIE_SCREEN : eraMovie,
@@ -1006,5 +1022,6 @@ HandleNavigationMap = {
 def init():
 	createDomesticAdvisor()
 	createFinanceAdvisor()
+	createMilitaryAdvisor()
 	createTechSplash()
 # BUG - Options - end
