@@ -128,6 +128,20 @@ g_bShowTimeTextAlt = False
 g_iTimeTextCounter = -1
 # BUG - NJAGC - end
 
+# BUG - Raw Yields - start
+import RawYields
+g_bRawShowing = False
+g_bYieldView, g_iYieldType = RawYields.getViewAndType(0)
+g_iYieldTiles = RawYields.WORKED_TILES
+RAW_YIELD_HELP = ( "TXT_KEY_RAW_YIELD_VIEW_TRADE",
+				   "TXT_KEY_RAW_YIELD_VIEW_FOOD",
+				   "TXT_KEY_RAW_YIELD_VIEW_PRODUCTION",
+				   "TXT_KEY_RAW_YIELD_VIEW_COMMERCE",
+				   "TXT_KEY_RAW_YIELD_TILES_WORKED",
+				   "TXT_KEY_RAW_YIELD_TILES_CITY",
+				   "TXT_KEY_RAW_YIELD_TILES_OWNED",
+				   "TXT_KEY_RAW_YIELD_TILES_ALL" )
+# BUG - Raw Yields - end
 
 # BUG - field of view slider - start
 DEFAULT_FIELD_OF_VIEW = 42
@@ -205,6 +219,12 @@ class CvMainInterface:
 		self.xResolution = screen.getXResolution()
 		self.yResolution = screen.getYResolution()
 		
+# BUG - Raw Yields - begin
+		global g_bYieldView
+		global g_iYieldType
+		g_bYieldView, g_iYieldType = RawYields.getViewAndType(CityScreenOpt.getRawYieldsDefaultView())
+# BUG - Raw Yields - end
+
 
 		# Set up our global variables...
 		global g_NumEmphasizeInfos
@@ -686,6 +706,42 @@ class CvMainInterface:
 
 		screen.setLabel( "TradeRouteListLabel", "Background", localText.getText("TXT_KEY_HEADING_TRADEROUTE_LIST", ()), CvUtil.FONT_CENTER_JUSTIFY, 129, 165, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.hide( "TradeRouteListLabel" )
+		
+# BUG - Raw Yields - start
+		nX = 10 + 24
+		nY = 157 + 5
+		nSize = 24
+		nDist = 24
+		nGap = 10
+		szHighlightButton = ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_HIGHLIGHT").getPath()
+		
+		# Trade
+		screen.addCheckBoxGFC( "RawYieldsTrade0", ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_TRADE").getPath(), szHighlightButton, nX, nY, nSize, nSize, WidgetTypes.WIDGET_GENERAL, 0, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		screen.hide("RawYieldsTrade0")
+		
+		# Yields
+		nX += nDist + nGap
+		screen.addCheckBoxGFC( "RawYieldsFood1", ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_FOOD").getPath(), szHighlightButton, nX, nY, nSize, nSize, WidgetTypes.WIDGET_GENERAL, 1, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		screen.hide("RawYieldsFood1")
+		nX += nDist
+		screen.addCheckBoxGFC( "RawYieldsProduction2", ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_PRODUCTION").getPath(), szHighlightButton, nX, nY, nSize, nSize, WidgetTypes.WIDGET_GENERAL, 2, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		screen.hide("RawYieldsProduction2")
+		nX += nDist
+		screen.addCheckBoxGFC( "RawYieldsCommerce3", ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_COMMERCE").getPath(), szHighlightButton, nX, nY, nSize, nSize, WidgetTypes.WIDGET_GENERAL, 3, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		screen.hide("RawYieldsCommerce3")
+		
+		# Tile Selection
+		nX += nDist + nGap
+		screen.addCheckBoxGFC( "RawYieldsWorkedTiles4", ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_WORKED_TILES").getPath(), szHighlightButton, nX, nY, nSize, nSize, WidgetTypes.WIDGET_GENERAL, 4, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		screen.hide("RawYieldsWorkedTiles4")
+		nX += nDist
+		screen.addCheckBoxGFC( "RawYieldsCityTiles5", ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_CITY_TILES").getPath(), szHighlightButton, nX, nY, nSize, nSize, WidgetTypes.WIDGET_GENERAL, 5, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		screen.hide("RawYieldsCityTiles5")
+		nX += nDist
+		screen.addCheckBoxGFC( "RawYieldsOwnedTiles6", ArtFileMgr.getInterfaceArtInfo("RAW_YIELDS_OWNED_TILES").getPath(), szHighlightButton, nX, nY, nSize, nSize, WidgetTypes.WIDGET_GENERAL, 6, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+		screen.hide("RawYieldsOwnedTiles6")
+# BUG - Raw Yields - end
+
 # BUG - BUG Option Button - Start
 		iBtnWidth	= 28
 		iBtnY = 27
@@ -2633,6 +2689,17 @@ class CvMainInterface:
 		screen.hide( "CultureBar" )
 		screen.hide( "MaintenanceText" )
 		screen.hide( "MaintenanceAmountText" )
+
+# BUG - Raw Commerce - start
+		screen.hide("RawYieldsTrade0")
+		screen.hide("RawYieldsFood1")
+		screen.hide("RawYieldsProduction2")
+		screen.hide("RawYieldsCommerce3")
+		screen.hide("RawYieldsWorkedTiles4")
+		screen.hide("RawYieldsCityTiles5")
+		screen.hide("RawYieldsOwnedTiles6")
+# BUG - Raw Commerce - end
+		
 		screen.hide( "NationalityText" )
 		screen.hide( "NationalityBar" )
 		screen.hide( "DefenseText" )
@@ -2932,15 +2999,28 @@ class CvMainInterface:
 
 				iCount = 0
 
-				screen.addTableControlGFC( "TradeRouteTable", 3, 10, 187, 238, 98, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
-				screen.setStyle( "TradeRouteTable", "Table_City_Style" )
 				screen.addTableControlGFC( "BuildingListTable", 3, 10, 317, 238, yResolution - 541, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
 				screen.setStyle( "BuildingListTable", "Table_City_Style" )
-
-				screen.setTableColumnHeader( "TradeRouteTable", 0, u"", 108 )
-				screen.setTableColumnHeader( "TradeRouteTable", 1, u"", 118 )
-				screen.setTableColumnHeader( "TradeRouteTable", 2, u"", 10 )
-				screen.setTableColumnRightJustify( "TradeRouteTable", 1 )
+				
+# BUG - Raw Yields - start
+				bShowRawYields = g_bYieldView and CityScreenOpt.isShowRawYields()
+				if (bShowRawYields):
+					screen.addTableControlGFC( "TradeRouteTable", 4, 10, 187, 238, 98, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
+					screen.setStyle( "TradeRouteTable", "Table_City_Style" )
+					screen.setTableColumnHeader( "TradeRouteTable", 0, u"", 111 )
+					screen.setTableColumnHeader( "TradeRouteTable", 1, u"", 60 )
+					screen.setTableColumnHeader( "TradeRouteTable", 2, u"", 55 )
+					screen.setTableColumnHeader( "TradeRouteTable", 3, u"", 10 )
+					screen.setTableColumnRightJustify( "TradeRouteTable", 1 )
+					screen.setTableColumnRightJustify( "TradeRouteTable", 2 )
+				else:
+					screen.addTableControlGFC( "TradeRouteTable", 3, 10, 187, 238, 98, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
+					screen.setStyle( "TradeRouteTable", "Table_City_Style" )
+					screen.setTableColumnHeader( "TradeRouteTable", 0, u"", 158 )
+					screen.setTableColumnHeader( "TradeRouteTable", 1, u"", 68 )
+					screen.setTableColumnHeader( "TradeRouteTable", 2, u"", 10 )
+					screen.setTableColumnRightJustify( "TradeRouteTable", 1 )
+# BUG - Raw Yields - end
 
 				screen.setTableColumnHeader( "BuildingListTable", 0, u"", 108 )
 				screen.setTableColumnHeader( "BuildingListTable", 1, u"", 118 )
@@ -2950,8 +3030,29 @@ class CvMainInterface:
 				screen.show( "BuildingListBackground" )
 				screen.show( "TradeRouteListBackground" )
 				screen.show( "BuildingListLabel" )
-				screen.show( "TradeRouteListLabel" )
-
+				
+# BUG - Raw Yields - start
+				if (CityScreenOpt.isShowRawYields()):
+					screen.setState("RawYieldsTrade0", not g_bYieldView)
+					screen.show("RawYieldsTrade0")
+					
+					screen.setState("RawYieldsFood1", g_bYieldView and g_iYieldType == YieldTypes.YIELD_FOOD)
+					screen.show("RawYieldsFood1")
+					screen.setState("RawYieldsProduction2", g_bYieldView and g_iYieldType == YieldTypes.YIELD_PRODUCTION)
+					screen.show("RawYieldsProduction2")
+					screen.setState("RawYieldsCommerce3", g_bYieldView and g_iYieldType == YieldTypes.YIELD_COMMERCE)
+					screen.show("RawYieldsCommerce3")
+					
+					screen.setState("RawYieldsWorkedTiles4", g_iYieldTiles == RawYields.WORKED_TILES)
+					screen.show("RawYieldsWorkedTiles4")
+					screen.setState("RawYieldsCityTiles5", g_iYieldTiles == RawYields.CITY_TILES)
+					screen.show("RawYieldsCityTiles5")
+					screen.setState("RawYieldsOwnedTiles6", g_iYieldTiles == RawYields.OWNED_TILES)
+					screen.show("RawYieldsOwnedTiles6")
+				else:
+					screen.show( "TradeRouteListLabel" )
+# BUG - Raw Yields - end
+				
 				for i in range( 3 ):
 					szName = "BonusPane" + str(i)
 					screen.show( szName )
@@ -2960,6 +3061,9 @@ class CvMainInterface:
 
 				i = 0
 				iNumBuildings = 0
+# BUG - Raw Yields - start
+				self.yields = RawYields.Tracker()
+# BUG - Raw Yields - end
 				for i in range( gc.getNumBuildingInfos() ):
 					if (pHeadSelectedCity.getNumBuilding(i) > 0):
 
@@ -3015,6 +3119,10 @@ class CvMainInterface:
 										else:
 											szTempBuffer = u"%s%d%c" %( "", iYield, gc.getYieldInfo(j).getChar() )
 											szRightBuffer = szRightBuffer + szTempBuffer
+										
+# BUG - Raw Yields - start
+										self.yields.addBuilding(j, iYield)
+# BUG - Raw Yields - end
 
 							for j in range(CommerceTypes.NUM_COMMERCE_TYPES):
 								iCommerce = pHeadSelectedCity.getBuildingCommerceByBuilding(j, i) / pHeadSelectedCity.getNumBuilding(i)
@@ -3063,17 +3171,25 @@ class CvMainInterface:
 								else:
 									szTempBuffer = u"%s%d%c" %( "", iTradeProfit, gc.getYieldInfo(j).getChar() )
 									szRightBuffer = szRightBuffer + szTempBuffer
+# BUG - Raw Yields - start
+								if (j == YieldTypes.YIELD_COMMERCE):
+									if pHeadSelectedCity.getTeam() == pLoopCity.getTeam():
+										self.yields.addDomesticTrade(iTradeProfit)
+									else:
+										self.yields.addForeignTrade(iTradeProfit)
 
-						screen.appendTableRow( "TradeRouteTable" )
-						screen.setTableText( "TradeRouteTable", 0, iNumTradeRoutes, "<font=1>" + szLeftBuffer + "</font>", "", WidgetTypes.WIDGET_HELP_TRADE_ROUTE_CITY, i, -1, CvUtil.FONT_LEFT_JUSTIFY )
-						screen.setTableText( "TradeRouteTable", 1, iNumTradeRoutes, "<font=1>" + szRightBuffer + "</font>", "", WidgetTypes.WIDGET_HELP_TRADE_ROUTE_CITY, i, -1, CvUtil.FONT_RIGHT_JUSTIFY )
-
+						if (not bShowRawYields):
+							screen.appendTableRow( "TradeRouteTable" )
+							screen.setTableText( "TradeRouteTable", 0, iNumTradeRoutes, "<font=1>" + szLeftBuffer + "</font>", "", WidgetTypes.WIDGET_HELP_TRADE_ROUTE_CITY, i, -1, CvUtil.FONT_LEFT_JUSTIFY )
+							screen.setTableText( "TradeRouteTable", 1, iNumTradeRoutes, "<font=1>" + szRightBuffer + "</font>", "", WidgetTypes.WIDGET_HELP_TRADE_ROUTE_CITY, i, -1, CvUtil.FONT_RIGHT_JUSTIFY )
+# BUG - Raw Yields - end
+						
 						iNumTradeRoutes = iNumTradeRoutes + 1
-
+						
 				if ( iNumTradeRoutes > g_iNumTradeRoutes ):
 					g_iNumTradeRoutes = iNumTradeRoutes
 
-				i = 0
+				i = 0  
 				iLeftCount = 0
 				iCenterCount = 0
 				iRightCount = 0
@@ -3154,6 +3270,12 @@ class CvMainInterface:
 				szBuffer = u"-%d.%02d %c" %(iMaintenance/100, iMaintenance%100, gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar())
 				screen.setLabel( "MaintenanceAmountText", "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, 220, 125, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_HELP_MAINTENANCE, -1, -1 )
 				screen.show( "MaintenanceAmountText" )
+				
+# BUG - Raw Yields - start
+				if (bShowRawYields):
+					self.yields.processCity(pHeadSelectedCity)
+					self.yields.fillTable(screen, "TradeRouteTable", g_iYieldType, g_iYieldTiles)
+# BUG - Raw Yields - end
 
 				szBuffer = u""
 
@@ -4165,6 +4287,11 @@ class CvMainInterface:
 # BUG - BUG Option Button - End
 
 
+# BUG - Raw Yields - start
+		if (inputClass.getFunctionName().startswith("RawYields")):
+			return self.handleRawYieldsButtons(inputClass)
+# BUG - Raw Yields - end
+
 
 # BUG - field of view slider - start
 		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_SLIDER_NEWSTOP):
@@ -4177,6 +4304,32 @@ class CvMainInterface:
 # BUG - field of view slider - end
 
 		return 0
+	
+# BUG - Raw Yields - start
+	def handleRawYieldsButtons(self, inputClass):
+		iButton = inputClass.getID()
+		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_ON):
+			self.PLE.displayHelpHover(RAW_YIELD_HELP[iButton])
+		elif (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_OFF):
+			self.PLE.hideInfoPane()
+		elif (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED):
+			global g_bYieldView
+			global g_iYieldType
+			global g_iYieldTiles
+			if iButton == 0:
+				g_bYieldView = False
+			elif iButton in (1, 2, 3):
+				g_bYieldView = True
+				g_iYieldType = RawYields.YIELDS[iButton - 1]
+			elif iButton in (4, 5, 6):
+				g_bYieldView = True
+				g_iYieldTiles = RawYields.TILES[iButton - 4]
+			else:
+				return 0
+			CyInterface().setDirty(InterfaceDirtyBits.CityScreen_DIRTY_BIT, True)
+			return 1
+		return 0
+# BUG - Raw Yields - end
 	
 	def update(self, fDelta):
 		return

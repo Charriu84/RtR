@@ -16,6 +16,29 @@
 	 
 	<options id="CityScreen" file="BUG City Screen.ini">
 		<section id="City Screen">
+			<!-- Raw Yields by EmperorFool (inspired by Raw Commerce by Sevo) -->
+			<option id="RawYields" key="Raw Yields" 
+					type="boolean" default="True" 
+					get="isShowRawYields" dirtyBit="CityScreen"/>
+			<list   id="RawYieldsView" key="Raw Yields View" 
+					type="int" default="0" listType="string" 
+					values="Trade Routes|Food|Production|Commerce" 
+					get="getRawYieldsDefaultView" dirtyBit="CityScreen">
+				<choice id="TradeRoutes" get="isRawYieldsDefaultViewTradeRoutes"/>
+				<choice id="Food" get="isRawYieldsDefaultViewFood"/>
+				<choice id="Production" get="isRawYieldsDefaultViewProduction"/>
+				<choice id="Commerce" get="isRawYieldsDefaultViewCommerce"/>
+			</list>
+			<list   id="RawYieldsTiles" key="Raw Yields Tiles" 
+					type="int" default="0" listType="string" 
+					values="Worked|City|Owned" 
+					get="getRawYieldsDefaultTiles" dirtyBit="CityScreen">
+				<choice id="Worked" get="isRawYieldsDefaultTilesWorked"/>
+				<choice id="City" get="isRawYieldsDefaultTilesCity"/>
+				<choice id="Owned" get="isRawYieldsDefaultTilesOwned"/>
+				<!--choice id="All" get="isRawYieldsDefaultTilesAll"/-->
+			</list>
+			
 			<!-- WhipAssist by EmperorFool, Dresden -->
 			<option id="WhipAssist" key="WhipAssist" 
 					type="boolean" default="True" 
