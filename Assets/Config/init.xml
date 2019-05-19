@@ -110,6 +110,7 @@
 	<extend how="after" module="DiplomacyUtil" function="handleAIComment" to="CvDiplomacyInterface" as="beginDiplomacy"/>
 	<extend how="after" module="DiplomacyUtil" function="handleUserResponse" to="CvDiplomacyInterface" as="handleUserResponse"/>
 	<init module="GPUtil"/>
+	<init module="ReligionUtil"/>
 	<init module="TechUtil"/>
 	<init module="TradeUtil"/>
 	<init module="UnitUtil"/>

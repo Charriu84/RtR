@@ -54,6 +54,18 @@
 					type="boolean" default="False"
 					get="isShowTechEra"/>
 	
+			<!-- BUG Religion Advisor (F7) by Ruff_Hi -->
+			<option id="BugReligiousTab" key="Religious" 
+					type="boolean" default="True" 
+					get="isReligious"/>
+			<list   id="ShowReligions" key="Show Religions" 
+					type="int" default="0" listType="string" 
+					get="getShowReligions">
+				<choice id="All" get="isShowAllReligions isShowFoundedReligions isShowPlayerReligions"/>
+				<choice id="Founded" get="isShowFoundedReligions"/>
+				<choice id="Player" get="isShowPlayerReligions"/>
+			</list>
+
 			<!-- BUG Info Screen (F9) by Ruff_Hi -->
 			<option id="BugGraphsTab" key="Graphs" 
 					type="boolean" default="True" 
