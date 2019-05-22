@@ -76,8 +76,12 @@ credits = [
 			"Nercury - Planet Generator",
 			"Ruff_Hi - Ring World",
 			"Sto - Full of Resources",
-		"INTEGRATION INTO RTR|Integration into RtR",
-			"Charriu - Coding, Testing",
+		"RTR|RtR",
+			"Krill - Balancing",
+			"T-hawk - Coding, Circumnavigation, Torodial Maintenance fix",
+			"Novice - Coding, Bugfixes",
+			"Plako - Coding, No City Trading option",
+			"Charriu - Coding, Integration of BUG, Testing",
 ]
 
 class BugCreditsOptionsTab(BugOptionsTab.BugOptionsTab):
