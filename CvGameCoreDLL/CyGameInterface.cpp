@@ -274,6 +274,11 @@ void CyGamePythonInterface()
 		.def("delayedPythonCall", &CyGame::delayedPythonCall, "int (int milliseconds, int arg1, int arg2) - Call function delayed (unblocked).")
 		.def("setAdminPassword", &CyGame::setAdminPassword, "int (const char *szNewPw, const char *szAdminPw) - Allows change of admin password over webinterface")
 		.def("fixTradeRoutes", &CyGame::fixTradeRoutes, "void (void) - Re-evauate used cities in trade routes.")
+
+// BUG - EXE/DLL Paths - start
+		.def("getDLLPath", &CyGame::getDLLPath, "string getDLLPath()")
+		.def("getExePath", &CyGame::getExePath, "string getExePath()")
+// BUG - EXE/DLL Paths - end
 		;
 
 	python::class_<CyDeal>("CyDeal")
