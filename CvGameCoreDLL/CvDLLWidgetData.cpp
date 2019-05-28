@@ -20,6 +20,17 @@
 #include "FProfiler.h"
 #include "CvMessageControl.h"
 
+// BUG - start
+#include "BugMod.h"
+#include "CvBugOptions.h"
+// BUG - end
+
+// BUFFY - start
+#ifdef _BUFFY
+#include "Buffy.h"
+#endif
+// BUFFY - end
+
 CvDLLWidgetData* CvDLLWidgetData::m_pInst = NULL;
 
 CvDLLWidgetData& CvDLLWidgetData::getInstance()
@@ -3517,6 +3528,43 @@ void CvDLLWidgetData::parseUnitModelHelp(CvWidgetDataStruct &widgetDataStruct, C
 void CvDLLWidgetData::parseFlagHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	CvWString szTempBuffer;
+
+// BUG - Version Info - start
+	// add version strings to flag hover text. Idea borrowed from BetterAI mod.
+	// BTS Version
+	float fVersion = GC.getDefineINT("CIV4_VERSION") / 100.0f;
+	szTempBuffer.Format(SETCOLR L"Beyond the Sword %0.2f" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), fVersion);
+	szBuffer.append(szTempBuffer);
+
+#ifdef _BUFFY
+	// BUFFY Version
+	szTempBuffer.Format(NEWLINE SETCOLR L"%s %s [Build %s]" ENDCOLR, TEXT_COLOR("COLOR_POSITIVE_TEXT"), 
+			BUFFY_DLL_NAME, BUFFY_DLL_VERSION, BUFFY_DLL_BUILD);
+	szBuffer.append(szTempBuffer);
+#else
+	// BUG Mod version
+	if (isBug())
+	{
+		CvWString szBugNameAndVersion;
+		gDLL->getPythonIFace()->callFunction(PYBugModule, "getModNameAndVersion", NULL, &szBugNameAndVersion);
+		szTempBuffer.Format(NEWLINE SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_POSITIVE_TEXT"), szBugNameAndVersion.c_str());
+		szBuffer.append(szTempBuffer);
+	}
+	// BUG DLL version
+	szTempBuffer.Format(NEWLINE SETCOLR L"%s %s [Build %s]" ENDCOLR, TEXT_COLOR("COLOR_POSITIVE_TEXT"), 
+			BUG_DLL_NAME, BUG_DLL_VERSION, BUG_DLL_BUILD);
+	szBuffer.append(szTempBuffer);
+#endif
+
+	szTempBuffer.Format(NEWLINE L"%c", gDLL->getSymbolID(BULLET_CHAR));
+
+	// unofficial patch
+	szBuffer.append(szTempBuffer);
+	szBuffer.append(L"Unofficial 3.19 Patch v1.50");
+
+	// separator line
+	szBuffer.append(NEWLINE L"==============================" NEWLINE);
+// BUG - Version Info - end
 
 	szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivilizationInfo(GC.getGameINLINE().getActiveCivilizationType()).getDescription());
 	szBuffer.append(szTempBuffer);

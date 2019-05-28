@@ -52,6 +52,12 @@ public:
 
 	DllExport void setInitialItems();
 	DllExport void regenerateMap();
+// BUFFY - Security Checks - start
+#ifdef _BUFFY
+	int checkCRCs(std::string fileName_, std::string expectedModCRC_, std::string expectedDLLCRC_, std::string expectedShaderCRC_, std::string expectedPythonCRC_, std::string expectedXMLCRC_) const;		// Exposed to Python
+	int getWarningStatus() const;											// Exposed to Python
+#endif
+// BUFFY - Security Checks - end
 
 	DllExport void initDiplomacy();
 	DllExport void initFreeState();

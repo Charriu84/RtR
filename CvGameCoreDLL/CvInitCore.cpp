@@ -14,6 +14,10 @@
 #define PBMOD_FRAME_POINTER_ENABLED 1
 #define DISALLOW_LOCAL_LOADING_OF_PB 1
 // Public Functions...
+// BUG - EXE/DLL Paths - start
+#include "moduleobject.h"
+#include "CvDLLIniParserIFaceBase.h"
+#include <shlobj.h>
 
 //PB Mod, to fix crash in BASE use static variables instead of member variables in CvInitCore.
 struct pbmod_t {
@@ -23,6 +27,14 @@ struct pbmod_t {
 };
 static pbmod_t pbmod = {false, 1, 4};
 //PB Mod End
+CvString CvInitCore::dllPath;
+CvString CvInitCore::dllName;
+CvString CvInitCore::exePath;
+CvString CvInitCore::exeName;
+bool CvInitCore::bPathsSet;
+// BUG - EXE/DLL Paths - end
+
+// Public Functions...
 
 CvInitCore::CvInitCore()
 {
@@ -65,6 +77,10 @@ CvInitCore::CvInitCore()
 
 	m_aeCustomMapOptions = NULL;
 	m_abVictories = NULL;
+
+// BUG - EXE/DLL Paths - start
+	bPathsSet = false;
+// BUG - EXE/DLL Paths - end
 
 	reset(NO_GAMEMODE);
 }
@@ -255,6 +271,7 @@ bool CvInitCore::getPbem() const
 {
 	return ( (getType() == GAME_PBEM_NEW) || (getType() == GAME_PBEM_SCENARIO) || (getType() == GAME_PBEM_LOAD) );
 }
+
 
 bool CvInitCore::checkBounds( int iValue, int iLower, int iUpper ) const
 {
@@ -616,7 +633,7 @@ void CvInitCore::resetGame(CvInitCore * pSource, bool bClear, bool bSaveGameType
 		setMaxCityElimination(pSource->getMaxCityElimination());
 
 		setNumAdvancedStartPoints(pSource->getNumAdvancedStartPoints());
-		
+
 		setSyncRandSeed(pSource->getSyncRandSeed());
 		setMapRandSeed(pSource->getMapRandSeed());
 
@@ -750,7 +767,7 @@ void CvInitCore::resetPlayer(PlayerTypes eID, CvInitCore * pSource, bool bClear,
 
 
 CvWString CvInitCore::getMapScriptName() const
-{
+{ 
 	if (gDLL->getTransferredMap())
 	{
 		if (!getWBMapScript())
@@ -759,7 +776,7 @@ CvWString CvInitCore::getMapScriptName() const
 			return ( m_szMapScriptName + CvWString(MAP_TRANSFER_EXT) );
 		}
 	}
-	return m_szMapScriptName;
+	return m_szMapScriptName; 
 }	
 
 void CvInitCore::setMapScriptName(const CvWString & szMapScriptName)
@@ -2126,7 +2143,7 @@ void CvInitCore::write(FDataStreamBase* pStream)
 
 	pStream->Write(m_eWorldSize);
 	pStream->Write(m_eClimate);
-	pStream->Write(m_eSeaLevel);	
+	pStream->Write(m_eSeaLevel);
 	pStream->Write(m_eEra);
 	pStream->Write(m_eGameSpeed);
 	pStream->Write(m_eTurnTimer);
@@ -2222,3 +2239,72 @@ void CvInitCore::sendTurnCompletePB(PlayerTypes eActivePlayer)
     }
   }
 }
+
+// BUG - EXE/DLL Paths - start
+CvString CvInitCore::getDLLPath() const
+{
+	setPathNames();
+	return dllPath;
+}
+
+CvString CvInitCore::getDLLName() const
+{
+	setPathNames();
+	return dllName;
+}
+
+CvString CvInitCore::getExePath() const
+{
+	setPathNames();
+	return exePath;
+}
+
+CvString CvInitCore::getExeName() const
+{
+	setPathNames();
+	return exeName;
+}
+
+extern HANDLE dllModule;
+void CvInitCore::setPathNames()
+{
+	if (bPathsSet)
+	{
+		return;
+	}
+
+	TCHAR pathBuffer[4096];
+	DWORD result;
+	TCHAR* pos;
+	
+	result = GetModuleFileName(NULL, pathBuffer, sizeof(pathBuffer));
+	pos = strchr(pathBuffer, '\\');
+	while (pos != NULL && *pos != NULL)
+	{
+		TCHAR* next = strchr(pos + 1, '\\');
+		if (!next)
+		{
+			*pos = 0;
+			exePath = pathBuffer;
+			exeName = pos + 1;
+		}
+		pos = next;
+	}
+
+	result = GetModuleFileName((HMODULE)dllModule, pathBuffer, sizeof(pathBuffer));
+	pos = strchr(pathBuffer, '\\');
+	while (pos != NULL && *pos != NULL)
+	{
+		TCHAR* next = strchr(pos + 1, '\\');
+		if (!next)
+		{
+			*pos = 0;
+			dllPath = pathBuffer;
+			dllName = pos + 1;
+		}
+		pos = next;
+	}
+
+	bPathsSet = true;
+}
+// BUG - EXE/DLL Paths - end

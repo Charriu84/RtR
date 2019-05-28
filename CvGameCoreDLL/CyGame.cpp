@@ -1254,6 +1254,18 @@ int CyGame::unzipModUpdate(std::wstring zipFilename)
 	return ret;
 }
 
+// BUG - EXE/DLL Paths - start
+std::string CyGame::getDLLPath() const
+{
+	return GC.getInitCore().getDLLPath();
+}
+
+std::string CyGame::getExePath() const
+{
+	return GC.getInitCore().getExePath();
+}
+// BUG - EXE/DLL Paths - end
+
 /* Delayed Python Call stuff ... */
 int CyGame::delayedPythonCall(int milliseconds, int arg1, int arg2)
 {
@@ -1287,3 +1299,17 @@ void CyGame::fixTradeRoutes()
     m_pGame->fixTradeRoutes();
   }
 }
+
+// BUFFY - Security Checks - start
+#ifdef _BUFFY
+int CyGame::checkCRCs(std::string fileName_, std::string expectedModCRC_, std::string expectedDLLCRC_, std::string expectedShaderCRC_, std::string expectedPythonCRC_, std::string expectedXMLCRC_) const
+{
+	return NULL != m_pGame ? m_pGame->checkCRCs(fileName_, expectedModCRC_, expectedDLLCRC_, expectedShaderCRC_, expectedPythonCRC_, expectedXMLCRC_) : -1;
+}
+
+int CyGame::getWarningStatus() const
+{
+	return NULL != m_pGame ? m_pGame->getWarningStatus() : -1;
+}
+#endif
+// BUFFY - Security Checks - end

@@ -157,6 +157,9 @@ int CvGame::delayedPythonCall2()
   return 0; // Abort
 }
 //PB Mod END
+// BUG - start
+#include "BugMod.h"
+// BUG - end
 
 // Public Functions...
 
@@ -500,7 +503,6 @@ void CvGame::regenerateMap()
 		}
 	}
 }
-
 
 void CvGame::uninit()
 {
@@ -9557,3 +9559,18 @@ bool CvGame::pythonIsBonusIgnoreLatitudes() const
     }
   }
   // PB Mod END
+// BUFFY - Security Checks - start
+#ifdef _BUFFY
+// from HOF Mod - Dianthus
+int CvGame::checkCRCs(std::string fileName_, std::string expectedModCRC_, std::string expectedDLLCRC_, std::string expectedShaderCRC_, std::string expectedPythonCRC_, std::string expectedXMLCRC_) const
+{
+	return 0;
+}
+
+// from HOF Mod - Denniz 3.17
+int CvGame::getWarningStatus() const
+{
+	return 0;
+}
+#endif
+// BUFFY - Security Checks - end
