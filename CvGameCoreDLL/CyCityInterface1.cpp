@@ -199,5 +199,7 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("calculateColonyMaintenanceTimes100", &CyCity::calculateColonyMaintenanceTimes100, "int ()")
 		.def("calculateCorporationMaintenance", &CyCity::calculateCorporationMaintenance, "int ()")
 		.def("calculateCorporationMaintenanceTimes100", &CyCity::calculateCorporationMaintenanceTimes100, "int ()")
+		.def("setBuildingHappyChange", &CyCity::setBuildingHappyChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int iChange)")
+		.def("setBuildingHealthChange", &CyCity::setBuildingHealthChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int iChange)")
 		;
 }

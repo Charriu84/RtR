@@ -217,7 +217,22 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	if (lResult == 1)
 	{
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       03/01/10                     Mongoose & jdog5000      */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+/* original bts code
 		if (pPlot->getFeatureType() != NO_FEATURE)
+*/
+		// From Mongoose SDK
+		// Don't remove floodplains from tiles when founding city
+		//if ((pPlot->getFeatureType() != NO_FEATURE) && (pPlot->getFeatureType() != (FeatureTypes)GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS")))
+		
+		if (pPlot->getFeatureType() != NO_FEATURE)
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 		{
 			pPlot->setFeatureType(NO_FEATURE);
 		}
@@ -487,6 +502,16 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_bInfoDirty = true;
 	m_bLayoutDirty = false;
 	m_bPlundered = false;
+
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       12/07/09                         denev & jdog5000     */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+	m_bPopProductionProcess = false;
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 
 	m_eOwner = eOwner;
 	m_ePreviousOwner = NO_PLAYER;
@@ -798,6 +823,33 @@ void CvCity::kill(bool bUpdatePlotGroups)
 	clearTradeRoutes();
 
 	pPlot->setPlotCity(NULL);
+
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       03/04/10                                jdog5000      */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+	// Replace floodplains after city is removed
+	if (pPlot->getBonusType() == NO_BONUS)
+	{
+		for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
+		{
+			if (GC.getFeatureInfo((FeatureTypes)iJ).isRequiresRiver())
+			{
+				if (pPlot->canHaveFeature((FeatureTypes)iJ))
+				{
+					if (GC.getFeatureInfo((FeatureTypes)iJ).getAppearanceProbability() == 10000)
+					{
+						pPlot->setFeatureType((FeatureTypes)iJ);
+						break;
+					}
+				}
+			}
+		}
+	}
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 
 	area()->changeCitiesPerPlayer(getOwnerINLINE(), -1);
 
@@ -3094,7 +3146,16 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 		}
 	}
 
-	return std::max(0, iMultiplier);
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       05/10/10                             jdog5000         */
+/*                                                                                              */
+/* For mods                                                                                     */
+/************************************************************************************************/
+//	return std::max(0, iMultiplier);
+	return std::max(-50, iMultiplier);
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 }
 
 
@@ -3124,7 +3185,16 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 		}
 	}
 
-	return std::max(0, iMultiplier);
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       05/10/10                             jdog5000         */
+/*                                                                                              */
+/* For mods                                                                                     */
+/************************************************************************************************/
+//	return std::max(0, iMultiplier);
+	return std::max(-50, iMultiplier);
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 }
 
 
@@ -3145,7 +3215,16 @@ int CvCity::getProductionModifier(ProjectTypes eProject) const
 		}
 	}
 
-	return std::max(0, iMultiplier);
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       05/10/10                             jdog5000         */
+/*                                                                                              */
+/* For mods                                                                                     */
+/************************************************************************************************/
+//	return std::max(0, iMultiplier);
+	return std::max(-50, iMultiplier);
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 }
 
 
@@ -4020,7 +4099,7 @@ bool CvCity::isDisorder() const
 }
 
 
-bool CvCity::isHolyCity(ReligionTypes eIndex) const
+bool CvCity::isHolyCity (ReligionTypes eIndex) const
 {
 	return (GC.getGameINLINE().getHolyCity(eIndex) == this);
 }
@@ -4963,6 +5042,32 @@ bool CvCity::hasActiveWorldWonder() const
 	return false;
 }
 
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       03/04/10                                jdog5000      */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+int CvCity::getNumActiveWorldWonders() const
+{
+	int iI;
+	int iCount = 0;
+
+	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	{
+		if (isWorldWonderClass((BuildingClassTypes)(GC.getBuildingInfo((BuildingTypes)iI).getBuildingClassType())))
+		{
+			if (getNumRealBuilding((BuildingTypes)iI) > 0 && !(GET_TEAM(getTeam()).isObsoleteBuilding((BuildingTypes)iI)))
+			{
+				iCount++;
+			}
+		}
+	}
+
+	return iCount;
+}
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 
 int CvCity::getReligionCount() const
 {
@@ -10648,7 +10753,7 @@ void CvCity::updateTradeRoutes()
 	}
 
 	clearTradeRoutes();
-	
+
 	if (!isDisorder() && !isPlundered())
 	{
 		iTradeRoutes = getTradeRoutes();
@@ -10988,7 +11093,18 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 
 		if (bFinish)
 		{
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                       10/08/09                  davidlallen & jdog5000       */
+/*                                                                                               */
+/* Bugfix                                                                                        */
+/*************************************************************************************************/
+/* original bts code
 			if (GET_PLAYER(getOwnerINLINE()).isBuildingClassMaxedOut(((BuildingClassTypes)(GC.getBuildingInfo(eConstructBuilding).getBuildingClassType())), 1))
+*/
+			if (GET_PLAYER(getOwnerINLINE()).isBuildingClassMaxedOut(((BuildingClassTypes)(GC.getBuildingInfo(eConstructBuilding).getBuildingClassType())), GC.getBuildingClassInfo((BuildingClassTypes)(GC.getBuildingInfo(eConstructBuilding).getBuildingClassType())).getExtraPlayerInstances()))
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                         END                                                  */
+/*************************************************************************************************/
 			{
 				GET_PLAYER(getOwnerINLINE()).removeBuildingClass((BuildingClassTypes)(GC.getBuildingInfo(eConstructBuilding).getBuildingClassType()));
 			}
@@ -13358,6 +13474,12 @@ void CvCity::changeBuildingCommerceChange(BuildingClassTypes eBuildingClass, Com
 	setBuildingCommerceChange(eBuildingClass, eCommerce, getBuildingCommerceChange(eBuildingClass, eCommerce) + iChange);
 }
 
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       10/22/09                                jdog5000      */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+/* orginal bts code
 void CvCity::setBuildingHappyChange(BuildingClassTypes eBuildingClass, int iChange)
 {
 	for (BuildingChangeArray::iterator it = m_aBuildingHappyChange.begin(); it != m_aBuildingHappyChange.end(); ++it)
@@ -13412,6 +13534,78 @@ void CvCity::setBuildingHappyChange(BuildingClassTypes eBuildingClass, int iChan
 		}
 	}
 }
+*/
+void CvCity::setBuildingHappyChange(BuildingClassTypes eBuildingClass, int iChange)
+{
+	for (BuildingChangeArray::iterator it = m_aBuildingHappyChange.begin(); it != m_aBuildingHappyChange.end(); ++it)
+	{
+		if ((*it).first == eBuildingClass)
+		{
+			if ((*it).second != iChange)
+			{
+				int iOldChange = (*it).second;
+
+				m_aBuildingHappyChange.erase(it);
+
+				BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass);
+				if (NO_BUILDING != eBuilding)
+				{
+					if (getNumActiveBuilding(eBuilding) > 0)
+					{
+
+						if (iOldChange > 0)
+						{
+							changeBuildingGoodHappiness(-iOldChange);
+						}
+						else if (iOldChange < 0)
+						{
+							changeBuildingBadHappiness(-iOldChange);
+						}
+
+						if( iChange != 0 )
+						{
+							m_aBuildingHappyChange.push_back(std::make_pair(eBuildingClass, iChange));
+							if (iChange > 0)
+							{
+								changeBuildingGoodHappiness(iChange);
+							}
+							else if (iChange < 0)
+							{
+								changeBuildingBadHappiness(iChange);
+							}
+						}
+					}
+				}
+			}
+
+			return;
+		}
+	}
+
+	if (0 != iChange)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass);
+		if (NO_BUILDING != eBuilding)
+		{
+			if (getNumActiveBuilding(eBuilding) > 0)
+			{
+				m_aBuildingHappyChange.push_back(std::make_pair(eBuildingClass, iChange));
+
+				if (iChange > 0)
+				{
+					changeBuildingGoodHappiness(iChange);
+				}
+				else if (iChange < 0)
+				{
+					changeBuildingBadHappiness(iChange);
+				}
+			}
+		}
+	}
+}
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 
 int CvCity::getBuildingHappyChange(BuildingClassTypes eBuildingClass) const
 {
@@ -13426,6 +13620,12 @@ int CvCity::getBuildingHappyChange(BuildingClassTypes eBuildingClass) const
 	return 0;
 }
 
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       10/22/09                                jdog5000      */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+/* orginal bts code
 void CvCity::setBuildingHealthChange(BuildingClassTypes eBuildingClass, int iChange)
 {
 	for (BuildingChangeArray::iterator it = m_aBuildingHealthChange.begin(); it != m_aBuildingHealthChange.end(); ++it)
@@ -13480,6 +13680,77 @@ void CvCity::setBuildingHealthChange(BuildingClassTypes eBuildingClass, int iCha
 		}
 	}
 }
+*/
+void CvCity::setBuildingHealthChange(BuildingClassTypes eBuildingClass, int iChange)
+{
+	for (BuildingChangeArray::iterator it = m_aBuildingHealthChange.begin(); it != m_aBuildingHealthChange.end(); ++it)
+	{
+		if ((*it).first == eBuildingClass)
+		{
+			if ((*it).second != iChange)
+			{
+				int iOldChange = (*it).second;
+
+				m_aBuildingHealthChange.erase(it);
+
+				BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass);
+				if (NO_BUILDING != eBuilding)
+				{
+					if (getNumActiveBuilding(eBuilding) > 0)
+					{
+						if (iOldChange > 0)
+						{
+							changeBuildingGoodHealth(-iOldChange);
+						}
+						else if (iOldChange < 0)
+						{
+							changeBuildingBadHealth(-iOldChange);
+						}
+
+						if( iChange != 0 )
+						{
+							m_aBuildingHealthChange.push_back(std::make_pair(eBuildingClass, iChange));
+							if (iChange > 0)
+							{
+								changeBuildingGoodHealth(iChange);
+							}
+							else if (iChange < 0)
+							{
+								changeBuildingBadHealth(iChange);
+							}
+						}
+					}
+				}
+			}
+
+			return;
+		}
+	}
+
+	if (0 != iChange)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass);
+		if (NO_BUILDING != eBuilding)
+		{
+			if (getNumActiveBuilding(eBuilding) > 0)
+			{	
+				m_aBuildingHealthChange.push_back(std::make_pair(eBuildingClass, iChange));
+
+				if (iChange > 0)
+				{
+					changeBuildingGoodHealth(iChange);
+				}
+				else if (iChange < 0)
+				{
+					changeBuildingBadHealth(iChange);
+				}
+			}
+		}
+	}
+}
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 
 int CvCity::getBuildingHealthChange(BuildingClassTypes eBuildingClass) const
 {
