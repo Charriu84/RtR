@@ -25,7 +25,6 @@ import CvUtil
 import BugCore
 import BugPath
 import BugUtil
-import MapFinder
 import PlayerUtil
 
 
@@ -84,7 +83,7 @@ def getSaveDir(type=SINGLE, variant=None):
 def getSaveFileName(pathName):
 	if pathName:
 		activePlayer = PlayerUtil.getActivePlayer()
-		if not MapFinder.isActive() and options.isUsePlayerName():
+		if options.isUsePlayerName():
 			fileName = activePlayer.getName()
 			turnYear = CyGameTextMgr().getTimeStr(gc.getGame().getGameTurn(), False)
 			fileName += '_' + turnYear.replace(" ", "-")
@@ -128,21 +127,21 @@ def saveGameStart():
 	"""
 	Saves the single-player game when the map is generated as long as MapFinder isn't active.
 	"""
-	if not CyGame().isGameMultiPlayer() and options.isCreateStartSave() and not MapFinder.isActive():
+	if not CyGame().isGameMultiPlayer() and options.isCreateStartSave():
 		saveGame()
 
 def saveGameEnd():
 	"""
 	Saves the single-player game when the game ends.
 	"""
-	if not CyGame().isGameMultiPlayer() and options.isCreateEndSave() and not MapFinder.isActive():
+	if not CyGame().isGameMultiPlayer() and options.isCreateEndSave():
 		saveGame()
 
 def saveGameExit():
 	"""
 	Saves the single-player game when the player exits to the main menu or desktop.
 	"""
-	if not CyGame().isGameMultiPlayer() and options.isCreateExitSave() and not MapFinder.isActive():
+	if not CyGame().isGameMultiPlayer() and options.isCreateExitSave():
 		saveGame()
 
 
