@@ -358,9 +358,11 @@ class BugEventManager(CvEventManager.CvEventManager):
 		if self.EventHandlerMap.has_key(eventType):
 			for eventHandler in self.EventHandlerMap[eventType]:
 				try:
-					eventHandler(argsList)
+					eventHandler(argsList)	
 				except:
 					BugUtil.trace("Error in %s event handler %s", eventType, eventHandler)
+
+			print ("Done with handling")
 
 	def _handleConsumableEvent(self, eventType, argsList):
 		"""Handles events that can be consumed by the handlers, such as
@@ -539,6 +541,11 @@ class BugEventManager(CvEventManager.CvEventManager):
 				civics.append(gc.getCivicInfo(eNewCivic).getDescription())
 		BugUtil.debug("Revolution for %s, %d turns: %s", gc.getPlayer(ePlayer).getName(), iAnarchyTurns, ", ".join(civics))
 
+	def _handleWindowActivationEvent(self, eventType, argsList):
+		"""Basically the same what CvEventManager does, but without this it throws an python exception.
+		"""
+		bActive = argsList[0]
+
 
 EVENT_FUNCTION_MAP = {
 	"kbdEvent": BugEventManager._handleConsumableEvent,
@@ -548,7 +555,7 @@ EVENT_FUNCTION_MAP = {
 	"OnLoad": BugEventManager._handleInitBugEvent,
 	"PreGameStart": BugEventManager._handleInitBugEvent,
 	#"GameStart": BugEventManager._handleInitBugEvent,
-	#"windowActivation": BugEventManager._handleInitBugEvent,
+	"windowActivation": BugEventManager._handleWindowActivationEvent,
 }
 
 
