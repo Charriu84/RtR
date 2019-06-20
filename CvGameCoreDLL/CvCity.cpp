@@ -8080,6 +8080,80 @@ int CvCity::calculateTradeYield(YieldTypes eIndex, int iTradeProfit) const
 }
 
 
+// BUG - Trade Totals - start
+/*
+ * Adds the yield and count for each trade route with eWithPlayer.
+ *
+ * The yield and counts are not reset to zero.
+ * If Fractional Trade Routes is enabled and bRound is false, or if bBase if true, the yield values are left times 100.
+ */
+void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer, bool bRound, bool bBase) const
+{
+	if (!isDisorder())
+	{
+		int iCityDomesticYield = 0;
+		int iCityDomesticRoutes = 0;
+		int iCityForeignYield = 0;
+		int iCityForeignRoutes = 0;
+		int iNumTradeRoutes = getTradeRoutes();
+		PlayerTypes ePlayer = getOwnerINLINE();
+
+		for (int iI = 0; iI < iNumTradeRoutes; ++iI)
+		{
+			CvCity* pTradeCity = getTradeCity(iI);
+			if (pTradeCity && pTradeCity->getOwnerINLINE() >= 0 && (NO_PLAYER == eWithPlayer || pTradeCity->getOwnerINLINE() == eWithPlayer))
+			{
+				int iTradeYield;
+
+				if (bBase)
+				{
+					iTradeYield = getBaseTradeProfit(pTradeCity);
+				}
+				else
+				{
+					int iTradeProfit = calculateTradeProfit(pTradeCity);
+					iTradeYield = calculateTradeYield(YIELD_COMMERCE, iTradeProfit);
+				}
+
+				if (pTradeCity->getOwnerINLINE() == ePlayer)
+				{
+					iCityDomesticYield += iTradeYield;
+					iCityDomesticRoutes++;
+				}
+				else
+				{
+					iCityForeignYield += iTradeYield;
+					iCityForeignRoutes++;
+				}
+			}
+		}
+
+		iDomesticYield += iCityDomesticYield;
+		iDomesticRoutes += iCityDomesticRoutes;
+		iForeignYield += iCityForeignYield;
+		iForeignRoutes += iCityForeignRoutes;		
+	}
+}
+
+/*
+ * Returns the total trade yield.
+ *
+ * If Fractional Trade Routes is enabled or bBase is true, the yield value is left times 100.
+ * UNUSED
+ */
+int CvCity::calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer, bool bRound, bool bBase) const
+{
+	int iDomesticYield = 0;
+	int iDomesticRoutes = 0;
+	int iForeignYield = 0;
+	int iForeignRoutes = 0;
+	
+	calculateTradeTotals(eIndex, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, bRound, bBase);
+	return iDomesticYield + iForeignRoutes;
+}
+// BUG - Trade Totals - end
+
+
 void CvCity::setTradeYield(YieldTypes eIndex, int iNewValue)
 {
 	int iOldValue;
@@ -10888,6 +10962,9 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 			GET_TEAM(getTeam()).changeProjectMaking(((ProjectTypes)iData1), 1);
 
 			bValid = true;
+// BUG - Project Started Event - start
+			CvEventReporter::getInstance().cityBuildingProject(this, (ProjectTypes)iData1);
+// BUG - Project Started Event - end
 		}
 		break;
 
@@ -10895,6 +10972,9 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		if (canMaintain((ProcessTypes)iData1) || bForce)
 		{
 			bValid = true;
+// BUG - Process Started Event - start
+			CvEventReporter::getInstance().cityBuildingProcess(this, (ProcessTypes)iData1);
+// BUG - Process Started Event - end
 		}
 		break;
 

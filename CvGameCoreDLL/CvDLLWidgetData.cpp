@@ -146,6 +146,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseChangePercentHelp(widgetDataStruct, szBuffer);
 		break;
 
+// BUG - Min/Max Commerce Rate - start
+	case WIDGET_SET_PERCENT:
+		parseSetPercentHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Min/Max Commerce Rate - end
+
 	case WIDGET_CITY_TAB:
 		{
 			CvWString szTemp;
@@ -416,6 +422,20 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_HELP_FOUND_CORPORATION:
 		parseFoundCorporationHelp(widgetDataStruct, szBuffer);
 		break;
+
+// BUG - Finance Advisor - start
+	case WIDGET_HELP_FINANCE_DOMESTIC_TRADE:
+		parseFinanceDomesticTrade(widgetDataStruct, szBuffer);
+		break;
+
+	case WIDGET_HELP_FINANCE_FOREIGN_TRADE:
+		parseFinanceForeignTrade(widgetDataStruct, szBuffer);
+		break;
+
+	case WIDGET_HELP_FINANCE_SPECIALISTS:
+		parseFinanceSpecialistGold(widgetDataStruct, szBuffer);
+		break;
+// BUG - Finance Advisor - end
 
 	case WIDGET_HELP_FINANCE_NUM_UNITS:
 		parseFinanceNumUnits(widgetDataStruct, szBuffer);
@@ -690,6 +710,12 @@ bool CvDLLWidgetData::executeAction( CvWidgetDataStruct &widgetDataStruct )
 	case WIDGET_CHANGE_PERCENT:
 		doChangePercent(widgetDataStruct);
 		break;
+
+// BUG - Min/Max Commerce Rate - start
+	case WIDGET_SET_PERCENT:
+		doSetPercent(widgetDataStruct);
+		break;
+// BUG - Min/Max Commerce Rate - end
 
 	case WIDGET_CITY_TAB:
 		doCityTab(widgetDataStruct);
@@ -1269,6 +1295,13 @@ void CvDLLWidgetData::doChangePercent(CvWidgetDataStruct &widgetDataStruct)
 {
 	CvMessageControl::getInstance().sendPercentChange(((CommerceTypes)widgetDataStruct.m_iData1), widgetDataStruct.m_iData2);
 }
+
+// BUG - Min/Max Commerce Rate - start
+void CvDLLWidgetData::doSetPercent(CvWidgetDataStruct &widgetDataStruct)
+{
+	CvMessageControl::getInstance().sendPercentChange(((CommerceTypes)widgetDataStruct.m_iData1), widgetDataStruct.m_iData2 - GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCommercePercent((CommerceTypes)widgetDataStruct.m_iData1));
+}
+// BUG - Min/Max Commerce Rate - end
 
 void CvDLLWidgetData::doCityTab(CvWidgetDataStruct &widgetDataStruct)
 {
@@ -1870,6 +1903,13 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 			CvWString szTemp;
 			szTemp.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_UNIT_TEXT"), GC.getUnitInfo(pHeadSelectedCity->getConscriptUnit()).getDescription());
 			szBuffer.assign(szTemp);
+		
+// BUG - Starting Experience - start
+			if (getBugOptionBOOL("MiscHover__ConscriptUnit", true, "BUG_CONSCRIPT_UNIT_HOVER"))
+			{
+				GAMETEXT.setBasicUnitHelpWithCity(szBuffer, pHeadSelectedCity->getConscriptUnit(), false, pHeadSelectedCity, true);
+			}
+// BUG - Starting Experience - end
 
 			iConscriptPopulation = pHeadSelectedCity->getConscriptPopulation();
 
@@ -1922,6 +1962,32 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 					szBuffer.append(ENDCOLR);
 				}
 			}
+// BUG - Conscript Limit - start
+			else if (getBugOptionBOOL("MiscHover__ConscriptLimit", true, "BUG_CONSCRIPT_LIMIT_HOVER"))
+			{
+				if (pHeadSelectedCity->isDrafted())
+				{
+					szBuffer.append(NEWLINE);
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_CITY_HAS_CONSCRIPTED"));
+				}
+				else
+				{
+					int iDraftUnits = GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getConscriptCount();
+					int iMaxDraftUnits = GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getMaxConscript();
+
+					if (iDraftUnits >= iMaxDraftUnits)
+					{
+						szBuffer.append(NEWLINE);
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_NO_CONSCRIPT_UNITS_LEFT"));
+					}
+					else
+					{
+						szBuffer.append(NEWLINE);
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_CONSCRIPT_UNITS_LEFT", iMaxDraftUnits - iDraftUnits));
+					}
+				}
+			}
+// BUG - Conscript Limit - end
 		}
 	}
 }
@@ -3198,6 +3264,13 @@ void CvDLLWidgetData::parseChangePercentHelp(CvWidgetDataStruct &widgetDataStruc
 	}
 }
 
+// BUG - Min/Max Commerce Rate - start
+void CvDLLWidgetData::parseSetPercentHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	szBuffer.assign(gDLL->getText("TXT_KEY_MISC_SET_RATE", GC.getCommerceInfo((CommerceTypes) widgetDataStruct.m_iData1).getTextKeyWide(), widgetDataStruct.m_iData2));
+}
+// BUG - Min/Max Commerce Rate - end
+
 
 void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
@@ -4154,6 +4227,40 @@ void CvDLLWidgetData::parseFoundCorporationHelp(CvWidgetDataStruct &widgetDataSt
 {
 	GAMETEXT.buildFoundCorporationString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)), widgetDataStruct.m_iData2, true);
 }
+
+// BUG - Finance Advisor - start
+void CvDLLWidgetData::parseFinanceDomesticTrade(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+//	szBuffer = "The Total Commerce from Domestic Trade Routes";
+	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_DOMESTIC_TRADE"));
+	szBuffer.append(NEWLINE);
+	if (widgetDataStruct.m_iData2 > 0)
+	{
+		GAMETEXT.buildDomesticTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+	}
+}
+
+void CvDLLWidgetData::parseFinanceForeignTrade(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+//	szBuffer = "The Total Commerce from Foreign Trade Routes";
+	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_FOREIGN_TRADE"));
+	szBuffer.append(NEWLINE);
+	if (widgetDataStruct.m_iData2 > 0)
+	{
+		GAMETEXT.buildForeignTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+	}
+}
+
+void CvDLLWidgetData::parseFinanceSpecialistGold(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+//	szBuffer = "The Total Commerce from Foreign Trade Routes";
+	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALISTS"));
+	if (widgetDataStruct.m_iData2 > 0)
+	{
+		GAMETEXT.buildFinanceSpecialistGoldString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+	}
+}
+// BUG - Finance Advisor - end
 
 void CvDLLWidgetData::parseFinanceNumUnits(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {

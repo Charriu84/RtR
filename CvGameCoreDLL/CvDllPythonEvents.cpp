@@ -529,6 +529,44 @@ void CvDllPythonEvents::reportCityBuildingBuilding( CvCity *pCity, BuildingTypes
 	}
 }
 
+// BUG - Project Started Event - start
+void CvDllPythonEvents::reportCityBuildingProject( CvCity* pCity, ProjectTypes eProjectType )
+{
+	if (preEvent())
+	{
+		CyArgsList eventData;
+		eventData.add("cityBuildingProject");						// add key to lookup python handler fxn
+
+		CyCity* pCyCity = new CyCity(pCity);
+		eventData.add(gDLL->getPythonIFace()->makePythonObject(pCyCity));
+
+		eventData.add((int) eProjectType);
+
+		postEvent(eventData);
+		delete pCyCity;
+	}
+}
+// BUG - Project Started Event - end
+
+// BUG - Process Started Event - start
+void CvDllPythonEvents::reportCityBuildingProcess( CvCity* pCity, ProcessTypes eProcessType )
+{
+	if (preEvent())
+	{
+		CyArgsList eventData;
+		eventData.add("cityBuildingProcess");						// add key to lookup python handler fxn
+
+		CyCity* pCyCity = new CyCity(pCity);
+		eventData.add(gDLL->getPythonIFace()->makePythonObject(pCyCity));
+
+		eventData.add((int) eProcessType);
+
+		postEvent(eventData);
+		delete pCyCity;
+	}
+}
+// BUG - Process Started Event - end
+
 void CvDllPythonEvents::reportCityRename( CvCity *pCity )
 {
 	if (preEvent())
@@ -728,6 +766,26 @@ void CvDllPythonEvents::reportUnitPromoted(CvUnit* pUnit, PromotionTypes ePromot
 		delete pyu;
 	}
 }
+
+// BUG - Upgrade Unit Event - start
+void CvDllPythonEvents::reportUnitUpgraded(CvUnit* pOldUnit, CvUnit* pNewUnit, int iPrice)
+{
+	if (preEvent())
+	{
+		CyArgsList eventData;
+		eventData.add("unitUpgraded");						// add key to lookup python handler fxn
+
+		CyUnit* pyOldUnit = new CyUnit(pOldUnit);
+		eventData.add(gDLL->getPythonIFace()->makePythonObject(pyOldUnit));
+		CyUnit* pyNewUnit = new CyUnit(pNewUnit);
+		eventData.add(gDLL->getPythonIFace()->makePythonObject(pyNewUnit));
+		eventData.add(iPrice);
+		postEvent(eventData);
+		delete pyNewUnit;
+		delete pyOldUnit;
+	}
+}
+// BUG - Upgrade Unit Event - end
 
 void CvDllPythonEvents::reportUnitSelected(CvUnit* pUnit)
 {

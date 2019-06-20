@@ -23,6 +23,11 @@
 #include "CvEventReporter.h"
 #include "CvMessageControl.h"
 
+// BUG - start
+#include "BugMod.h"
+#include "CvBugOptions.h"
+// BUG - end
+
 // Public Functions...
 
 #define PASSWORD_DEFAULT (L"*****")
@@ -81,9 +86,21 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 			switch (info.getData1())
 			{
 			case 0:
+// BUG - Exit Save - start
+				if (GC.getGameINLINE().getVictory() == NO_VICTORY)
+				{
+					gDLL->getPythonIFace()->callFunction(PYBugModule, "gameExitSave");
+				}
+// BUG - Exit Save - end
 				gDLL->SetDone(true);
 				break;
 			case 1:
+// BUG - Exit Save - start
+				if (GC.getGameINLINE().getVictory() == NO_VICTORY)
+				{
+					gDLL->getPythonIFace()->callFunction(PYBugModule, "gameExitSave");
+				}
+// BUG - Exit Save - end
 				gDLL->getInterfaceIFace()->exitingToMainMenu();
 				break;
 			case 2:
@@ -119,21 +136,12 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 			}
 		}
 		else if (pPopupReturn->getButtonClicked() == 2)
-		{ 
-			if( GC.getGameINLINE().isPitboss() ){
-				CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU_KI);
-				if (NULL != pInfo)
-				{
-					pInfo->setData1(10005);
-					gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
-				}
-			}else{
-				CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU);
-				if (NULL != pInfo)
-				{
-					pInfo->setData1(2);
-					gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
-				}
+		{
+			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU);
+			if (NULL != pInfo)
+			{
+				pInfo->setData1(2);
+				gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
 			}
 		}
 		else if (pPopupReturn->getButtonClicked() == 3)

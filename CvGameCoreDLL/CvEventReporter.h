@@ -69,6 +69,12 @@ public:
 	void cityDoTurn(CvCity *pCity, PlayerTypes ePlayer);
 	void cityBuildingUnit(CvCity* pCity, UnitTypes eUnitType);
 	void cityBuildingBuilding(CvCity* pCity, BuildingTypes eBuildingType);
+// BUG - Project Started Event - start
+	void cityBuildingProject(CvCity* pCity, ProjectTypes eProjectType);
+// BUG - Project Started Event - end
+// BUG - Process Started Event - start
+	void cityBuildingProcess(CvCity* pCity, ProcessTypes eProcessType);
+// BUG - Process Started Event - end
 	void cityRename(CvCity* pCity);
 	void cityHurry(CvCity* pCity, HurryTypes eHurry);
 
@@ -81,6 +87,9 @@ public:
 	void unitKilled(CvUnit *pUnit, PlayerTypes eAttacker);
 	void unitLost(CvUnit *pUnit);
 	void unitPromoted(CvUnit *pUnit, PromotionTypes ePromotion);
+// BUG - Upgrade Unit Event - start
+	void unitUpgraded(CvUnit *pOldUnit, CvUnit *pNewUnit, int iPrice);
+// BUG - Upgrade Unit Event - end
 	DllExport void unitSelected(CvUnit *pUnit);
 	void unitRename(CvUnit* pUnit);
 	void unitPillage(CvUnit* pUnit, ImprovementTypes eImprovement, RouteTypes eRoute, PlayerTypes ePlayer);

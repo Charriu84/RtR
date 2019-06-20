@@ -220,6 +220,18 @@ protected:
 	std::vector<CvUnit *> m_aDifferentUnitCache;
 	bool m_bIsBusyCache;
 
+// BUG - Safe Move - start
+	bool m_bLastPathPlotChecked;
+	bool m_bLastPlotVisible;
+	bool m_bLastPlotRevealed;
+
+	void checkLastPathPlot(CvPlot* pPlot);
+	void clearLastPathPlot();
+	bool isLastPathPlotChecked() const;
+	bool isLastPathPlotVisible() const;
+	bool isLastPathPlotRevealed() const;
+// BUG - Safe Move - end
+
 	void activateHeadMission();
 	void deactivateHeadMission();
 	

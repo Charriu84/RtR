@@ -14,6 +14,10 @@
 #define PBMOD_FRAME_POINTER_ENABLED 1
 #define DISALLOW_LOCAL_LOADING_OF_PB 1
 // Public Functions...
+// BUG - Save Format - start
+#include "BugMod.h"
+// BUG - Save Format - end
+
 // BUG - EXE/DLL Paths - start
 #include "moduleobject.h"
 #include "CvDLLIniParserIFaceBase.h"
@@ -2011,6 +2015,10 @@ void CvInitCore::read(FDataStreamBase* pStream)
 	uint uiSaveFlag=0;
 	pStream->Read(&uiSaveFlag);		// flags for expansion (see SaveBits)
 
+// BUG - Save Format - start
+	bool bugSaveFlag = uiSaveFlag & BUG_DLL_SAVE_FORMAT;
+	uiSaveFlag &= ~BUG_DLL_SAVE_FORMAT;
+
 	// GAME DATA
 	pStream->Read((int*)&m_eType);
 	pStream->ReadString(m_szGameName);
@@ -2045,6 +2053,14 @@ void CvInitCore::read(FDataStreamBase* pStream)
 		pStream->Read(m_iNumVictories, m_abVictories);
 	}
 
+// BUG - Save Format - start
+	if (bugSaveFlag)
+	{
+		// read and ignore number of game options as it's only for external tools
+		int iNumGameOptions = 0;
+		pStream->Read(&iNumGameOptions);
+	}
+// BUG - Save Format - end
 
 	if (uiSaveFlag > 0)
 	{
@@ -2130,6 +2146,13 @@ void CvInitCore::read(FDataStreamBase* pStream)
 void CvInitCore::write(FDataStreamBase* pStream)
 {
 	uint uiSaveFlag=1;
+// BUG - Save Format - start
+	// If any optional mod alters the number of game options or save format in any way,
+	// set the BUG save format bit and write out the number of game options later.
+	// It is safe to have multiple #ifdefs trigger.
+	bool bugSaveFlag = false;
+	bugSaveFlag = true;
+	uiSaveFlag |= BUG_DLL_SAVE_FORMAT;
 	pStream->Write(uiSaveFlag);		// flag for expansion, see SaveBits)
 
 	// GAME DATA
@@ -2155,6 +2178,14 @@ void CvInitCore::write(FDataStreamBase* pStream)
 
 	pStream->Write(m_iNumVictories);
 	pStream->Write(m_iNumVictories, m_abVictories);
+
+// BUG - Save Format - start
+	if (bugSaveFlag)
+	{
+		// write out the number of game options for the external parser tool
+		pStream->Write(NUM_GAMEOPTION_TYPES);
+	}
+// BUG - Save Format - end
 
 	pStream->Write(NUM_GAMEOPTION_TYPES, m_abOptions);
 	pStream->Write(NUM_MPOPTION_TYPES, m_abMPOptions);

@@ -31,6 +31,9 @@
 #include "CyArgsList.h"
 #include "CvDLLPythonIFaceBase.h"
 
+// BUG - start
+#include "CvBugOptions.h"
+// BUG - end
 int shortenID(int iId)
 {
 	return iId;
@@ -5566,6 +5569,13 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 
 void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText)
 {
+// BUG - Starting Experience - start
+	setBasicUnitHelpWithCity(szBuffer, eUnit, bCivilopediaText);
+}
+
+void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText, CvCity* pCity, bool bConscript)
+{
+// BUG - Starting Experience - end
 	PROFILE_FUNC();
 
 	CvWString szTempBuffer;
@@ -5607,6 +5617,13 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 			szBuffer.append(L", ");
 			szBuffer.append(gDLL->getText("TXT_KEY_UNIT_AIR_RANGE", GC.getUnitInfo(eUnit).getAirRange()));
 		}
+		
+// BUG - Starting Experience - start
+		if (pCity != NULL && getBugOptionBOOL("MiscHover__UnitExperience", true, "BUG_UNIT_EXPERIENCE_HOVER"))
+		{
+			setUnitExperienceHelp(szBuffer, L", ", eUnit, pCity, bConscript);
+		}
+// BUG - Starting Experience - end
 	}
 
 	if (GC.getUnitInfo(eUnit).isGoldenAge())
@@ -6262,6 +6279,89 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 			bFirst = false;
 		}
 	}
+		
+// BUG - Starting Experience - start
+	if (pCity != NULL && getBugOptionBOOL("MiscHover__UnitExperienceModifiers", true, "BUG_UNIT_EXPERIENCE_MODIFIERS_HOVER"))
+	{
+		CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+		CvPlayer& kPlayer = GET_PLAYER(pCity->getOwnerINLINE());
+		CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(kPlayer.getCivilizationType());
+
+		UnitClassTypes eUnitClass = (UnitClassTypes)kUnit.getUnitClassType();
+		UnitCombatTypes eCombatType = (UnitCombatTypes)kUnit.getUnitCombatType();
+		DomainTypes eDomainType = (DomainTypes)kUnit.getDomainType();
+
+		if ((UnitTypes)kCivilization.getCivilizationUnits(eUnitClass) == eUnit && kUnit.canAcquireExperience())
+		{
+			int iExperience;
+
+			iExperience = pCity->getFreeExperience();
+			if (iExperience != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_CITY_FREE_EXPERIENCE", iExperience));
+			}
+			iExperience = kPlayer.getFreeExperience();
+			if (iExperience != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_PLAYER_FREE_EXPERIENCE", iExperience));
+			}
+			iExperience = pCity->getSpecialistFreeExperience();
+			if (iExperience != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_SPECIALIST_FREE_EXPERIENCE", iExperience));
+			}
+
+			for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+			{
+				BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings((BuildingClassTypes)iI);
+				if (eBuilding != NO_BUILDING)
+				{
+					CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+					iExperience = kBuilding.getUnitCombatFreeExperience(eCombatType);
+					if (!kUnit.isSpy())
+					{
+						iExperience += kBuilding.getDomainFreeExperience(eDomainType);
+					}
+
+					if (iExperience != 0)
+					{
+						if (pCity->getNumBuilding(eBuilding) > 0)
+						{
+							szBuffer.append(NEWLINE);
+							szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_FREE_EXPERIENCE", iExperience, kBuilding.getTextKeyWide()));
+						}
+						else if (pCity->canConstruct(eBuilding, false, true))
+						{
+							szBuffer.append(NEWLINE);
+							szBuffer.append(gDLL->getText("TXT_KEY_NO_BUILDING_FREE_EXPERIENCE", iExperience, kBuilding.getTextKeyWide()));
+						}
+					}
+				}
+			}
+
+			if (kPlayer.getStateReligion() != NO_RELIGION)
+			{
+				iExperience = kPlayer.getStateReligionFreeExperience();
+				if (iExperience != 0)
+				{
+					if (pCity->isHasReligion(kPlayer.getStateReligion()))
+					{
+						szBuffer.append(NEWLINE);
+						szBuffer.append(gDLL->getText("TXT_KEY_STATE_RELIGION_FREE_EXPERIENCE", iExperience));
+					}
+					else
+					{
+						szBuffer.append(NEWLINE);
+						szBuffer.append(gDLL->getText("TXT_KEY_NO_STATE_RELIGION_FREE_EXPERIENCE", iExperience));
+					}
+				}
+			}
+		}
+	}
+// BUG - Starting Experience - end
 
 	if (GC.getUnitInfo(eUnit).getExtraCost() != 0)
 	{
@@ -6296,6 +6396,32 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 		szBuffer.append(GC.getUnitInfo(eUnit).getHelp());
 	}
 }
+		
+// BUG - Starting Experience - start
+/*
+ * Appends the starting experience and number of promotions the given unit will have
+ * when trained or conscripted in the given city.
+ */
+void CvGameTextMgr::setUnitExperienceHelp(CvWStringBuffer &szBuffer, CvWString szStart, UnitTypes eUnit, CvCity* pCity, bool bConscript)
+{
+	if (GC.getUnitInfo(eUnit).canAcquireExperience())
+	{
+		int iExperience = pCity->getProductionExperience(eUnit) >> (bConscript ? 1 : 0);
+		if (iExperience > 0)
+		{
+			szBuffer.append(szStart);
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_EXPERIENCE", iExperience));
+
+			int iLevel = calculateLevel(iExperience, pCity->getOwnerINLINE());
+			if (iLevel > 1)
+			{
+				szBuffer.append(L", ");
+				szBuffer.append(gDLL->getText("TXT_KEY_MISC_PROMOTIONS", iLevel - 1));
+			}
+		}
+	}
+}
+// BUG - Starting Experience - end
 
 
 void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText, bool bStrategyText, bool bTechChooserText, CvCity* pCity)
@@ -6399,7 +6525,9 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 		szBuffer.append(gDLL->getText("TXT_KEY_UNIT_INSTANCE_COST_MOD", GC.getUnitClassInfo(eUnitClass).getInstanceCostModifier()));
 	}
 
-	setBasicUnitHelp(szBuffer, eUnit, bCivilopediaText);
+// BUG - Starting Experience - start
+	setBasicUnitHelpWithCity(szBuffer, eUnit, bCivilopediaText, pCity);
+// BUG - Starting Experience - end
 
 	if ((pCity == NULL) || !(pCity->canTrain(eUnit)))
 	{
@@ -10583,6 +10711,67 @@ void CvGameTextMgr::buildSingleLineTechTreeString(CvWStringBuffer &szBuffer, Tec
 		// you need to specify a tech of origin for this method to do anything
 		return;
 	}
+	
+// BUG - Show Sped-Up Techs - start
+	if (bPlayerContext && getBugOptionBOOL("MiscHover__SpedUpTechs", true, "BUG_SPED_UP_TECHS_HOVER"))
+	{
+		CvPlayer& player = GET_PLAYER(GC.getGameINLINE().getActivePlayer());
+
+		// techs that speed this one up
+		bool bFirst = true;
+		for (int iJ = 0; iJ < GC.getNUM_OR_TECH_PREREQS(); iJ++)
+		{
+			TechTypes ePrereqTech = (TechTypes)GC.getTechInfo(eTech).getPrereqOrTechs(iJ);
+			if (ePrereqTech != NO_TECH && player.canResearch(ePrereqTech))
+			{
+				szTempBuffer.Format( SETCOLR L"<link=literal>%s</link>" ENDCOLR , TEXT_COLOR("COLOR_TECH_TEXT"), GC.getTechInfo(ePrereqTech).getDescription());
+				setListHelp(szBuffer, gDLL->getText("TXT_KEY_MISC_SPED_UP_BY").c_str(), szTempBuffer, L", ", bFirst);
+				bFirst = false;
+			}
+		}
+
+		// techs sped up by this one
+		bFirst = true;
+		for (int iI = 0; iI < GC.getNumTechInfos(); ++iI)
+		{
+			if (player.canResearch((TechTypes)iI))
+			{
+				bool bTechFound = false;
+
+				if (!bTechFound)
+				{
+					for (int iJ = 0; iJ < GC.getNUM_OR_TECH_PREREQS(); iJ++)
+					{
+						if (GC.getTechInfo((TechTypes) iI).getPrereqOrTechs(iJ) == eTech)
+						{
+							bTechFound = true;
+							break;
+						}
+					}
+				}
+
+				if (!bTechFound)
+				{
+					for (int iJ = 0; iJ < GC.getNUM_AND_TECH_PREREQS(); iJ++)
+					{
+						if (GC.getTechInfo((TechTypes) iI).getPrereqAndTechs(iJ) == eTech)
+						{
+							bTechFound = true;
+							break;
+						}
+					}
+				}
+
+				if (bTechFound)
+				{
+					szTempBuffer.Format( SETCOLR L"<link=literal>%s</link>" ENDCOLR , TEXT_COLOR("COLOR_TECH_TEXT"), GC.getTechInfo((TechTypes) iI).getDescription());
+					setListHelp(szBuffer, gDLL->getText("TXT_KEY_MISC_SPEEDS_UP").c_str(), szTempBuffer, L", ", bFirst);
+					bFirst = false;
+				}
+			}
+		}
+	}
+// BUG - Show Sped-Up Techs - end
 
 	bool bFirst = true;
 	for (int iI = 0; iI < GC.getNumTechInfos(); ++iI)
@@ -11438,6 +11627,54 @@ void CvGameTextMgr::setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerr
 		}
 	}
 }
+
+// BUG - Finance Advisor - start
+void CvGameTextMgr::buildFinanceSpecialistGoldString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer)
+{
+	if (NO_PLAYER == ePlayer)
+	{
+		return;
+	}
+	CvPlayer& player = GET_PLAYER(ePlayer);
+
+	int* iCounts = new int[GC.getNumSpecialistInfos()];
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		iCounts[iI] = 0;
+	}
+	int iIter;
+	for (CvCity* pCity = player.firstCity(&iIter); NULL != pCity; pCity = player.nextCity(&iIter))
+	{
+		if (!pCity->isDisorder())
+		{
+			for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+			{
+				iCounts[iI] += pCity->getSpecialistCount((SpecialistTypes)iI) + pCity->getFreeSpecialistCount((SpecialistTypes)iI);
+			}
+		}
+	}
+	
+	bool bFirst = true;
+	int iTotal = 0;
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		int iGold = iCounts[iI] * player.specialistCommerce((SpecialistTypes)iI, COMMERCE_GOLD);
+		if (iGold != 0)
+		{
+			if (bFirst)
+			{
+				szBuffer.append(NEWLINE);
+				bFirst = false;
+			}
+			szBuffer.append(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALIST_GOLD", iGold, iCounts[iI], GC.getSpecialistInfo((SpecialistTypes)iI).getDescription()));
+			iTotal += iGold;
+		}
+	}
+
+	szBuffer.append(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALIST_TOTAL_GOLD", iTotal));
+	SAFE_DELETE_ARRAY(iCounts);
+}
+// BUG - Finance Advisor - end
 
 void CvGameTextMgr::buildFinanceInflationString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer)
 {
@@ -12646,6 +12883,21 @@ void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvC
 				szBuffer.append(CvWString::format(L"%c", gDLL->getSymbolID(TRADE_CHAR)));
 			}
 		}
+
+// BUG - Airport Icon - start
+		if (getBugOptionBOOL("CityBar__AirportIcon", true, "BUG_CITYBAR_AIRPORT_ICONS"))
+		{
+			int eAirportClass = GC.getInfoTypeForString("BUILDINGCLASS_AIRPORT");
+			if (eAirportClass != -1)
+			{
+				int eAirport = GC.getCivilizationInfo(pCity->getCivilizationType()).getCivilizationBuildings(eAirportClass);
+				if (eAirport != -1 && pCity->getNumBuilding((BuildingTypes)eAirport) > 0)
+				{
+					szBuffer.append(CvWString::format(L"%c", gDLL->getSymbolID(AIRPORT_CHAR)));
+				}
+			}
+		}
+// BUG - Airport Icon - start
 	}
 
 	// religion icons
@@ -14247,6 +14499,127 @@ void CvGameTextMgr::getTradeScreenHeader(CvWString& szHeader, PlayerTypes ePlaye
 		szHeader += CvWString::format(L" (%s)", GC.getAttitudeInfo(kPlayer.AI_getAttitude(eOtherPlayer)).getDescription());
 	}
 }
+
+// BUG - Trade Hover - start
+void CvGameTextMgr::buildDomesticTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer)
+{
+	buildTradeString(szBuffer, ePlayer, NO_PLAYER, true, false, false);
+}
+
+void CvGameTextMgr::buildForeignTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer)
+{
+	buildTradeString(szBuffer, ePlayer, NO_PLAYER, false, true, false);
+}
+
+void CvGameTextMgr::buildTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eWithPlayer, bool bDomestic, bool bForeign, bool bHeading)
+{
+	if (NO_PLAYER == ePlayer)
+	{
+		return;
+	}
+
+	CvPlayer& player = GET_PLAYER(ePlayer);
+	if (bHeading)
+	{
+		if (ePlayer == eWithPlayer)
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_BUG_DOMESTIC_TRADE_HEADING"));
+		}
+		else if (NO_PLAYER != eWithPlayer)
+		{
+			if (player.canHaveTradeRoutesWith(eWithPlayer))
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_BUG_FOREIGN_TRADE_HEADING", GET_PLAYER(eWithPlayer).getNameKey(), GET_PLAYER(eWithPlayer).getCivilizationShortDescription()));
+			}
+			else
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_BUG_CANNOT_TRADE_HEADING", GET_PLAYER(eWithPlayer).getNameKey(), GET_PLAYER(eWithPlayer).getCivilizationShortDescription()));
+			}
+		}
+		else
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_BUG_TRADE_HEADING"));
+		}
+		szBuffer.append(NEWLINE);
+	}
+
+	if (NO_PLAYER != eWithPlayer)
+	{
+		bDomestic = ePlayer == eWithPlayer;
+		bForeign = ePlayer != eWithPlayer;
+
+		if (bForeign && !player.canHaveTradeRoutesWith(eWithPlayer))
+		{
+			CvPlayer& withPlayer = GET_PLAYER(eWithPlayer);
+			bool bCanTrade = true;
+			if (!GET_PLAYER(eWithPlayer).isAlive())
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_BUG_CANNOT_TRADE_DEAD"));
+				return;
+			}
+			if (!player.canTradeNetworkWith(eWithPlayer))
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_BUG_CANNOT_TRADE_NETWORK_NOT_CONNECTED"));
+				bCanTrade = false;
+			}
+			if (!GET_TEAM(player.getTeam()).isFreeTrade(withPlayer.getTeam()))
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_BUG_CANNOT_TRADE_CLOSED_BORDERS"));
+				bCanTrade = false;
+			}
+			if (player.isNoForeignTrade())
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_BUG_CANNOT_TRADE_FOREIGN_YOU"));
+				bCanTrade = false;
+			}
+			if (withPlayer.isNoForeignTrade())
+			{
+				szBuffer.append(gDLL->getText("TXT_KEY_BUG_CANNOT_TRADE_FOREIGN_THEM"));
+				bCanTrade = false;
+			}
+
+			if (!bCanTrade)
+			{
+				return;
+			}
+		}
+	}
+
+	int iDomesticYield = 0;
+	int iDomesticRoutes = 0;
+	int iForeignYield = 0;
+	int iForeignRoutes = 0;
+
+	player.calculateTradeTotals(YIELD_COMMERCE, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, false);
+
+	int iTotalYield = 0;
+	int iTotalRoutes = 0;
+	if (bDomestic)
+	{
+		iTotalYield += iDomesticYield;
+		iTotalRoutes += iDomesticRoutes;
+	}
+	if (bForeign)
+	{
+		iTotalYield += iForeignYield;
+		iTotalRoutes += iForeignRoutes;
+	}
+
+	CvWString szYield;
+
+	szBuffer.append(gDLL->getText("TXT_KEY_BUG_TOTAL_TRADE_YIELD", szYield.GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_BUG_TOTAL_TRADE_ROUTES", iTotalRoutes));
+
+	int iAverage = 100 * iTotalYield / iTotalRoutes;
+
+	if (iTotalRoutes > 0)
+	{
+		CvWString szAverage;
+		szAverage.Format(L"%d.%02d", iAverage / 100, iAverage % 100);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUG_AVERAGE_TRADE_YIELD", szAverage.GetCString()));
+	}
+}
+// BUG - Trade Hover - end
 
 void CvGameTextMgr::getGlobeLayerName(GlobeLayerTypes eType, int iOption, CvWString& strName)
 {

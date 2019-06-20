@@ -27,6 +27,10 @@
 #include "CvPopupInfo.h"
 #include "CvArtFileMgr.h"
 
+// BUG - start
+#include "CvBugOptions.h"
+// BUG - end
+
 // Public Functions...
 
 
@@ -441,6 +445,15 @@ void CvUnit::convert(CvUnit* pUnit)
 	setExperience(std::max(0, (pUnit->getExperience() * iOurModifier) / iOldModifier));
 
 	setName(pUnit->getNameNoDesc());
+// BUG - Unit Name - start
+	if (pUnit->isDescInName() && getBugOptionBOOL("MiscHover__UpdateUnitNameOnUpgrade", true, "BUG_UPDATE_UNIT_NAME_ON_UPGRADE"))
+	{
+		CvWString szUnitType(pUnit->m_pUnitInfo->getDescription());
+
+		//szUnitType.Format(L"%s", pUnit->m_pUnitInfo->getDescription());
+		m_szName.replace(m_szName.find(szUnitType), szUnitType.length(), m_pUnitInfo->getDescription());
+	}
+// BUG - Unit Name - end
 	setLeaderUnitType(pUnit->getLeaderUnitType());
 
 	CvUnit* pTransportUnit = pUnit->getTransportUnit();
@@ -7125,7 +7138,10 @@ void CvUnit::upgrade(UnitTypes eUnit)
 		return;
 	}
 
-	GET_PLAYER(getOwnerINLINE()).changeGold(-(upgradePrice(eUnit)));
+// BUG - Upgrade Unit Event - start
+	int iPrice = upgradePrice(eUnit);
+	GET_PLAYER(getOwnerINLINE()).changeGold(-iPrice);
+// BUG - Upgrade Unit Event - end
 
 	pUpgradeUnit = GET_PLAYER(getOwnerINLINE()).initUnit(eUnit, getX_INLINE(), getY_INLINE(), AI_getUnitAIType());
 
@@ -7144,6 +7160,10 @@ void CvUnit::upgrade(UnitTypes eUnit)
 			pUpgradeUnit->setExperience(GC.getDefineINT("MAX_EXPERIENCE_AFTER_UPGRADE"));
 		}
 	}
+
+// BUG - Upgrade Unit Event - start
+	CvEventReporter::getInstance().unitUpgraded(this, pUpgradeUnit, iPrice);
+// BUG - Upgrade Unit Event - end
 }
 
 
@@ -8466,22 +8486,9 @@ int CvUnit::fortifyModifier() const
 
 int CvUnit::experienceNeeded() const
 {
-	// Use python to determine pillage amounts...
-	int iExperienceNeeded;
-	long lExperienceNeeded;
-
-	lExperienceNeeded = 0;
-	iExperienceNeeded = 0;
-
-	CyArgsList argsList;
-	argsList.add(getLevel());	// pass in the units level
-	argsList.add(getOwnerINLINE());	// pass in the units 
-
-	gDLL->getPythonIFace()->callFunction(PYGameModule, "getExperienceNeeded", argsList.makeFunctionArgs(),&lExperienceNeeded);
-
-	iExperienceNeeded = (int)lExperienceNeeded;
-
-	return iExperienceNeeded;
+// BUG - Unit Experience - start
+	return calculateExperience(getLevel(), getOwnerINLINE());
+// BUG - Unit Experience - end
 }
 
 
@@ -10975,11 +10982,24 @@ const CvWString CvUnit::getName(uint uiForm) const
 	{
 		return m_pUnitInfo->getDescription(uiForm);
 	}
+// BUG - Unit Name - start
+	else if (isDescInName())
+	{
+		return m_szName;
+	}
+// BUG - Unit Name - end
 
 	szBuffer.Format(L"%s (%s)", m_szName.GetCString(), m_pUnitInfo->getDescription(uiForm));
 
 	return szBuffer;
 }
+
+// BUG - Unit Name - start
+bool CvUnit::isDescInName() const
+{
+	return (m_szName.find(m_pUnitInfo->getDescription()) != -1);
+}
+// BUG - Unit Name - end
 
 
 const wchar* CvUnit::getNameKey() const

@@ -279,6 +279,13 @@ void CyGamePythonInterface()
 		.def("getDLLPath", &CyGame::getDLLPath, "string getDLLPath()")
 		.def("getExePath", &CyGame::getExePath, "string getExePath()")
 // BUG - EXE/DLL Paths - end
+
+// BUFFY - Security Checks - start
+#ifdef _BUFFY
+		.def("checkCRCs", &CyGame::checkCRCs, "checkCRCs (string, string, string, string, string, string)")
+		.def("getWarningStatus", &CyGame::getWarningStatus, "int getWarningStatus()")
+#endif
+// BUFFY - Security Checks - end
 		;
 
 	python::class_<CyDeal>("CyDeal")
@@ -292,5 +299,10 @@ void CyGamePythonInterface()
 		.def("getFirstTrade", &CyDeal::getFirstTrade, python::return_value_policy<python::reference_existing_object>(), "TradeData* (int i)")
 		.def("getSecondTrade", &CyDeal::getSecondTrade, python::return_value_policy<python::reference_existing_object>(), "TradeData* (int i)")
 		.def("kill", &CyDeal::kill, "void ()")
+// BUG - Expose Deal Cancelability - start
+		.def("isCancelable", &CyDeal::isCancelable, "bool isCancelable(int /*PlayerTypes*/ eByPlayer, bool bIgnoreWaitingPeriod)")
+		.def("getCannotCancelReason", &CyDeal::getCannotCancelReason, "string getCannotCancelReason(int /*PlayerTypes*/ eByPlayer)")
+		.def("turnsToCancel", &CyDeal::turnsToCancel, "int turnsToCancel(int /*PlayerTypes*/ eByPlayer)")
+// BUG - Expose Deal Cancelability - end
 		;
 }
