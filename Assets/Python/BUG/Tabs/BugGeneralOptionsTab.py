@@ -22,11 +22,11 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 		left, center, right = self.addThreeColumnLayout(screen, column, "Top", True)
 		
-		self.createGreatPersonGeneralPanel(screen, left)
+		#self.createGreatPersonGeneralPanel(screen, left)
 		self.addSpacer(screen, left, "General1")
 		self.createTechSplashPanel(screen, left)
 		self.addSpacer(screen, left, "General2")
-		self.createLeaderheadPanel(screen, left)
+		#self.createLeaderheadPanel(screen, left)
 		
 		self.createAutoSavePanel(screen, center)
 		self.addSpacer(screen, center, "General3")
@@ -60,10 +60,10 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 	def createActionsPanel(self, screen, panel):
 		self.addLabel(screen, panel, "Actions", "Actions:")
 		self.addCheckbox(screen, panel, "Actions__AskDeclareWarUnits")
-		self.addCheckbox(screen, panel, "Actions__SentryHealing")
-		self.addCheckbox(screen, panel, "Actions__SentryHealingOnlyNeutral", True)
-		self.addCheckbox(screen, panel, "Actions__PreChopForests")
-		self.addCheckbox(screen, panel, "Actions__PreChopImprovements")
+		#self.addCheckbox(screen, panel, "Actions__SentryHealing")
+		#self.addCheckbox(screen, panel, "Actions__SentryHealingOnlyNeutral", True)
+		#self.addCheckbox(screen, panel, "Actions__PreChopForests")
+		#self.addCheckbox(screen, panel, "Actions__PreChopImprovements")
 		
 	def createTechSplashPanel(self, screen, panel):
 		self.addLabel(screen, panel, "TechWindow", "Tech Splash Screen:")
@@ -79,8 +79,8 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addLabel(screen, panel, "Misc", "Misc:")
 		self.addCheckbox(screen, panel, "MainInterface__GoldRateWarning")
 		self.addCheckbox(screen, panel, "MainInterface__MinMax_Commerce")
-		self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
-		self.addCheckbox(screen, panel, "MainInterface__UnitMovementPointsFraction")
-		self.addCheckbox(screen, panel, "MainInterface__StackMovementPoints")
+		#self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
+		#self.addCheckbox(screen, panel, "MainInterface__UnitMovementPointsFraction")
+		#self.addCheckbox(screen, panel, "MainInterface__StackMovementPoints")
 		self.addTextDropdown(screen, panel, panel, "MainInterface__BuildIconSize", True)
 		self.addCheckbox(screen, panel, "MainInterface__CityArrows")
