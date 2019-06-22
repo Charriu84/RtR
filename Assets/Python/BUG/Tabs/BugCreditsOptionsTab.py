@@ -78,6 +78,7 @@ credits = [
 			"Sto - Full of Resources",
 		"RTR|RtR",
 			"Krill - Balancing",
+			"Cyneheard - Balancing, Coding",
 			"T-hawk - Coding, Circumnavigation, Torodial Maintenance fix",
 			"Novice - Coding, Bugfixes",
 			"Plako - Coding, No City Trading option",
