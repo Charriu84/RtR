@@ -5315,9 +5315,12 @@ void CvTeam::testCircumnavigated()
 		return;
 	}
 
-	if (isCircumNavigated())
+	if (GC.getDefineINT("CIRCUM_FOR_EVERYBODY") > 0)
 	{
-		return;
+		if (isCircumNavigated())
+		{
+			return;
+		}
 	}
 
 	if (GC.getMapINLINE().isWrapXINLINE())
