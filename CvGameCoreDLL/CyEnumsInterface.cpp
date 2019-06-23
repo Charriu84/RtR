@@ -399,6 +399,15 @@ void CyEnumsPythonInterface()
 		.value("WIDGET_HELP_FINANCE_SPECIALISTS", WIDGET_HELP_FINANCE_SPECIALISTS)
 // BUG - Finance Advisor - end
 
+// BUG - Foreign Advisor INFO Trade - start
+		.value("WIDGET_TRADE_ROUTES", WIDGET_TRADE_ROUTES)
+// BUG - Foreign Advisor INFO Trade - end
+
+
+// BUG - Leaderhead Relations - start
+		.value("WIDGET_LEADERHEAD_RELATIONS", WIDGET_LEADERHEAD_RELATIONS)
+// BUG - Leaderhead Relations - end
+
 		.value("NUM_WIDGET_TYPES", NUM_WIDGET_TYPES)
 		;
 

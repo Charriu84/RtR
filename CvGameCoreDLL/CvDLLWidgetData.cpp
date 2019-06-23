@@ -597,6 +597,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseLeaderheadHelp(widgetDataStruct, szBuffer);
 		break;
 
+// BUG - Leaderhead Relations - start
+	case WIDGET_LEADERHEAD_RELATIONS:
+		parseLeaderheadRelationsHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Leaderhead Relations - end
+
 	case WIDGET_LEADER_LINE:
 		parseLeaderLineHelp(widgetDataStruct, szBuffer);
 		break;
@@ -604,6 +610,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_COMMERCE_MOD_HELP:
 		parseCommerceModHelp(widgetDataStruct, szBuffer);
 		break;
+
+// BUG - Trade Hover - start
+	case WIDGET_TRADE_ROUTES:
+		parseTradeRoutes(widgetDataStruct, szBuffer);
+		break;
+// BUG - Trade Hover - end
 
 	}
 }
@@ -1009,6 +1021,12 @@ bool CvDLLWidgetData::executeAltAction( CvWidgetDataStruct &widgetDataStruct )
 	case WIDGET_LEADERHEAD:
 		doContactCiv(widgetDataStruct);
 		break;
+
+// BUG - Leaderhead Relations - start
+	case WIDGET_LEADERHEAD_RELATIONS:
+		doContactCiv(widgetDataStruct);
+		break;
+// BUG - Leaderhead Relations - end
 
 	default:
 		bHandled = false;
@@ -4684,6 +4702,13 @@ void CvDLLWidgetData::parseLeaderLineHelp(CvWidgetDataStruct &widgetDataStruct, 
 	GAMETEXT.parseLeaderLineHelp(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
 }
 
+// BUG - Leaderhead Relations - start
+void CvDLLWidgetData::parseLeaderheadRelationsHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	GAMETEXT.parseLeaderHeadRelationsHelp(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
+}
+// BUG - Leaderhead Relations - end
+
 void CvDLLWidgetData::parseCommerceModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
@@ -4697,4 +4722,12 @@ void CvDLLWidgetData::parseScoreHelp(CvWidgetDataStruct& widgetDataStruct, CvWSt
 {
 	GAMETEXT.setScoreHelp(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
 }
+
+// BUG - Trade Hover - start
+void CvDLLWidgetData::parseTradeRoutes(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+	GAMETEXT.buildTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
+	GAMETEXT.getActiveDealsString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
+}
+// BUG - Trade Hover - end
 

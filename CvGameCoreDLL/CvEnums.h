@@ -551,6 +551,15 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_HELP_FINANCE_SPECIALISTS,
 // BUG - Finance Advisor - end
 
+// BUG - Foreign Advisor INFO Trade - start
+	WIDGET_TRADE_ROUTES,
+// BUG - Foreign Advisor INFO Trade - end
+
+
+// BUG - Leaderhead Relations - start
+	WIDGET_LEADERHEAD_RELATIONS,
+// BUG - Leaderhead Relations - end
+
 #ifdef _USRDLL
 	NUM_WIDGET_TYPES
 #endif
