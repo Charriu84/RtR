@@ -21090,7 +21090,7 @@ void CvPlayer::updateTradeList(PlayerTypes eOtherPlayer, CLinkList<TradeData>& o
 		{
 			if (pNode->m_data.m_eItemType == TRADE_PEACE_TREATY || pNode->m_data.m_eItemType == TRADE_SURRENDER)
 			{
-				if (GET_TEAM(getTeam()).getAtWarCounter(GET_PLAYER(eOtherPlayer).getTeam()) < 20)
+				if (GET_TEAM(getTeam()).getAtWarCounter(GET_PLAYER(eOtherPlayer).getTeam()) < GC.getDefineINT("PEACE_TREATY_NEGOTIATIONS"))
 					pNode->m_data.m_bHidden = true;
 			}
 		}
