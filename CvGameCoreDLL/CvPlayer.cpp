@@ -21084,12 +21084,13 @@ void CvPlayer::updateTradeList(PlayerTypes eOtherPlayer, CLinkList<TradeData>& o
 				pNode->m_data.m_bHidden = true;
 			}
 		}
+
 		// Charriu for RB Gameoption No Immediate Peace Treaties
 		else if (GC.getGame().isOption(GAMEOPTION_NO_IMMEDIATE_PEACE))
 		{
 			if (pNode->m_data.m_eItemType == TRADE_PEACE_TREATY || pNode->m_data.m_eItemType == TRADE_SURRENDER)
 			{
-				if (GET_TEAM(getTeam()).getAtWarCount(true) < 10)
+				if (GET_TEAM(getTeam()).getAtWarCounter(GET_PLAYER(eOtherPlayer).getTeam()) < 20)
 					pNode->m_data.m_bHidden = true;
 			}
 		}

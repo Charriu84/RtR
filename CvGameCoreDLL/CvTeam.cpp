@@ -857,6 +857,7 @@ void CvTeam::doTurn()
 	FAssertMsg(isAlive(), "isAlive is expected to be true");
 
 	AI_doTurnPre();
+	doWarCounter();
 
 	if (isBarbarian())
 	{
