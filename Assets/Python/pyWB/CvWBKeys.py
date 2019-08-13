@@ -31,7 +31,7 @@ try:
     CityKeys.extend(CvWBKeys_auto.CityKeys)
 
     del sys.modules['CvWBKeys_auto']  # Module not needed anymore
-except Exception as e:
+except Exception, e:
     raise(e)
     pass
 
