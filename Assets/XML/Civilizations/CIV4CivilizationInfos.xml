@@ -88,7 +88,7 @@
 			</Buildings>
 			<Units>
 				<Unit>
-					<UnitClassType>UNITCLASS_RIFLEMAN</UnitClassType>
+					<UnitClassType>UNITCLASS_MUSKETMAN</UnitClassType>
 					<UnitType>UNIT_AMERICAN_MINUTEMAN</UnitType>
 				</Unit>
 			</Units>
@@ -400,7 +400,7 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_COLOSSEUM</BuildingClassType>
+					<BuildingClassType>BUILDINGCLASS_GRANARY</BuildingClassType>
 					<BuildingType>BUILDING_BABYLON_GARDEN</BuildingType>
 				</Building>
 			</Buildings>
@@ -510,14 +510,14 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_THEATRE</BuildingClassType>
+					<BuildingClassType>BUILDINGCLASS_BARRACKS</BuildingClassType>
 					<BuildingType>BUILDING_BYZANTINE_HIPPODROME</BuildingType>
 				</Building>
 			</Buildings>
 			<Units>
 				<Unit>
-					<UnitClassType>UNITCLASS_KNIGHT</UnitClassType>
-					<UnitType>UNIT_BYZANTINE_CATAPHRACT</UnitType>
+					<UnitClassType>UNITCLASS_TREBUCHET</UnitClassType>
+					<UnitType>UNIT_COUNTERWEIGHT_TREBUCHET</UnitType>
 				</Unit>
 			</Units>
 			<FreeUnitClasses>
@@ -1421,14 +1421,14 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_FACTORY</BuildingClassType>
-					<BuildingType>BUILDING_GERMAN_ASSEMBLY_PLANT</BuildingType>
+					<BuildingClassType>BUILDINGCLASS_FORGE</BuildingClassType>
+					<BuildingType>BUILDING_GERMAN_WERKSTATT</BuildingType>
 				</Building>
 			</Buildings>
 			<Units>
 				<Unit>
-					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
-					<UnitType>UNIT_GERMAN_KANONE</UnitType>
+					<UnitClassType>UNITCLASS_GRENADIER</UnitClassType>
+					<UnitType>UNIT_GERMAN_STROSSTRUPPER</UnitType>
 				</Unit>
 			</Units>
 			<FreeUnitClasses>
@@ -1658,7 +1658,7 @@
 			</Buildings>
 			<Units>
 				<Unit>
-					<UnitClassType>UNITCLASS_PIKEMAN</UnitClassType>
+					<UnitClassType>UNITCLASS_LONGBOWMAN</UnitClassType>
 					<UnitType>UNIT_HOLY_ROMAN_LANDSKNECHT</UnitType>
 				</Unit>
 			</Units>
@@ -1915,14 +1915,14 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_JAIL</BuildingClassType>
-					<BuildingType>BUILDING_INDIAN_MAUSOLEUM</BuildingType>
+					<BuildingClassType>BUILDINGCLASS_CASTLE</BuildingClassType>
+					<BuildingType>BUILDING_INDIAN_KILA</BuildingType>
 				</Building>
 			</Buildings>
 			<Units>
 				<Unit>
-					<UnitClassType>UNITCLASS_WORKER</UnitClassType>
-					<UnitType>UNIT_INDIAN_FAST_WORKER</UnitType>
+					<UnitClassType>UNITCLASS_PIKEMAN</UnitClassType>
+					<UnitType>UNIT_INDIAN_URUKKU_PIKEMAN</UnitType>
 				</Unit>
 			</Units>
 			<FreeUnitClasses>
@@ -1943,7 +1943,7 @@
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_THE_WHEEL</TechType>
+					<TechType>TECH_MINING</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 			</FreeTechs>
@@ -2020,8 +2020,8 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_OBSERVATORY</BuildingClassType>
-					<BuildingType>BUILDING_JAPANESE_PAGODA</BuildingType>
+					<BuildingClassType>BUILDINGCLASS_HARBOR</BuildingClassType>
+					<BuildingType>BUILDING_JAPANESE_NANBAN_HARBOUR</BuildingType>
 				</Building>
 			</Buildings>
 			<Units>
@@ -2048,7 +2048,7 @@
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_AGRICULTURE</TechType>
+					<TechType>TECH_THE_WHEEL</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 			</FreeTechs>
@@ -2654,8 +2654,8 @@
 			</Buildings>
 			<Units>
 				<Unit>
-					<UnitClassType>UNITCLASS_AXEMAN</UnitClassType>
-					<UnitType>UNIT_NATIVE_AMERICA_DOG_SOLDIER</UnitType>
+					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
+					<UnitType>UNIT_NATIVE_AMERICA_TRACKER</UnitType>
 				</Unit>
 			</Units>
 			<FreeUnitClasses>
@@ -2676,7 +2676,7 @@
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_FISHING</TechType>
+					<TechType>TECH_HUNTING</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 			</FreeTechs>
@@ -2759,7 +2759,7 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_LEVEE</BuildingClassType>
+					<BuildingClassType>BUILDINGCLASS_CUSTOM_HOUSE</BuildingClassType>
 					<BuildingType>BUILDING_NETHERLANDS_DIKE</BuildingType>
 				</Building>
 			</Buildings>
@@ -2996,8 +2996,8 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_GROCER</BuildingClassType>
-					<BuildingType>BUILDING_PERSIAN_APOTHECARY</BuildingType>
+					<BuildingClassType>BUILDINGCLASS_MARKET</BuildingClassType>
+					<BuildingType>BUILDING_PERSIAN_SATRAP_COURT</BuildingType>
 				</Building>
 			</Buildings>
 			<Units>
@@ -3455,7 +3455,7 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_CASTLE</BuildingClassType>
+					<BuildingClassType>BUILDINGCLASS_CUSTOM_HOUSE</BuildingClassType>
 					<BuildingType>BUILDING_SPANISH_CITADEL</BuildingType>
 				</Building>
 			</Buildings>

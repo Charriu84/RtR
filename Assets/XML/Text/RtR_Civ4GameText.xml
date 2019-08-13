@@ -56,7 +56,7 @@
     <Tag>TXT_KEY_GAME_OPTION_NO_IMMEDIATE_PEACE</Tag>
     <English>No Immediate Peace Treaties</English>
     <French>No Immediate Peace Treaties</French>
-    <German>Keine sofortigen Friedensverträge</German>
+    <German>Keine sofortigen Friedensvertrï¿½ge</German>
     <Italian>No Immediate Peace Treaties</Italian>
     <Spanish>No Immediate Peace Treaties</Spanish>
   </TEXT>
@@ -64,7 +64,7 @@
     <Tag>TXT_KEY_GAME_OPTION_NO_IMMEDIATE_PEACE_HELP</Tag>
     <English>Peace Treaties cannot be signed until 5 turns after war declaration unless a city has been captured by one of the two parties.</English>
     <French>Peace Treaties cannot be signed until 5 turns after war declaration unless a city has been captured by one of the two parties.</French>
-    <German>Friedensverträge können erst 5 Runden nach Kriegsbeginn verhandelt werden oder nachdem eine Stadt einer der beiden Parteien erobert wurde.</German>
+    <German>Friedensvertrï¿½ge kï¿½nnen erst 5 Runden nach Kriegsbeginn verhandelt werden oder nachdem eine Stadt einer der beiden Parteien erobert wurde.</German>
     <Italian>Peace Treaties cannot be signed until 5 turns after war declaration unless a city has been captured by one of the two parties.</Italian>
     <Spanish>Peace Treaties cannot be signed until 5 turns after war declaration unless a city has been captured by one of the two parties.</Spanish>
   </TEXT>
@@ -80,8 +80,136 @@
     <Tag>TXT_KEY_GAME_OPTION_TRUE_AI_DIPLO_HELP</Tag>
     <English>Players can trade the same items with humans as with AI</English>
     <French>Players can trade the same items with humans as with AI</French>
-    <German>Spieler können mit Menschen die gleichen Objekte verhandeln wie mit der KI</German>
+    <German>Spieler kï¿½nnen mit Menschen die gleichen Objekte verhandeln wie mit der KI</German>
     <Italian>Players can trade the same items with humans as with AI</Italian>
     <Spanish>Players can trade the same items with humans as with AI</Spanish>
   </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_GERMAN_WERKSTATT_STRATEGY</Tag>
+        <English>The Werkstatt is a German forge that also lowers the city maintanence cost</English>
+		    <French>The Werkstatt is a German forge that also lowers the city maintanence cost</French>
+    <German>The Werkstatt is a German forge that also lowers the city maintanence cost</German>
+    <Italian>The Werkstatt is a German forge that also lowers the city maintanence cost</Italian>
+    <Spanish>The Werkstatt is a German forge that also lowers the city maintanence cost</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_GERMAN_WERKSTATT</Tag>
+        <English>Werkstatt</English>
+		    <French>Werkstatt</French>
+    <German>Werkstatt</German>
+    <Italian>Werkstatt</Italian>
+    <Spanish>Werkstatt</Spanish>
+        </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_JAPANESE_NANBAN_HARBOUR_STRATEGY</Tag>
+        <English>The Nanban  Harbour is a Japanese harbour that provides experience to specific unit types.</English>
+		    <French>The Nanban  Harbour is a Japanese harbour that provides experience to specific unit types.</French>
+    <German>The Nanban  Harbour is a Japanese harbour that provides experience to specific unit types.</German>
+    <Italian>The Nanban  Harbour is a Japanese harbour that provides experience to specific unit types.</Italian>
+    <Spanish>The Nanban  Harbour is a Japanese harbour that provides experience to specific unit types.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_JAPANESE_NANBAN_HARBOUR</Tag>
+        <English>Nanban Harbour</English>
+		    <French>Nanban Harbour</French>
+    <German>Nanban Harbour</German>
+    <Italian>Nanban Harbour</Italian>
+    <Spanish>Nanban Harbour</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_UNIT_TRACKER</Tag>
+        <English>Tracker</English>
+		    <French>Tracker</French>
+    <German>Tracker</German>
+    <Italian>Tracker</Italian>
+    <Spanish>Tracker</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_UNIT_TRACKER_PEDIA</Tag>
+        <English>The Tracker is a scout replacement that can also built Totem poles.</English>
+		    <French>The Tracker is a scout replacement that can also built Totem poles.</French>
+    <German>The Tracker is a scout replacement that can also built Totem poles.</German>
+    <Italian>The Tracker is a scout replacement that can also built Totem poles.</Italian>
+    <Spanish>The Tracker is a scout replacement that can also built Totem poles.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_UNIT_STROSSTRUPPER</Tag>
+        <English>Stosstrupp</English>
+		    <French>Stosstrupp</French>
+    <German>Stosstrupp</German>
+    <Italian>Stosstrupp</Italian>
+    <Spanish>Stosstrupp</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_UNIT_STROSSTRUPPER_STRATEGY</Tag>
+        <English>The Stosstrupp is the german replacement for the grenadier, and is more powerful.</English>
+		    <French>The Stosstrupp is the german replacement for the grenadier, and is more powerful.</French>
+    <German>The Stosstrupp is the german replacement for the grenadier, and is more powerful.</German>
+    <Italian>The Stosstrupp is the german replacement for the grenadier, and is more powerful.</Italian>
+    <Spanish>The Stosstrupp is the german replacement for the grenadier, and is more powerful.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_SATRAP_COURT</Tag>
+        <English>Satrap Court</English>
+		    <French>Satrap Court</French>
+    <German>Satrap Court</German>
+    <Italian>Satrap Court</Italian>
+    <Spanish>Satrap Court</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_SATRAP_COURT_PEDIA</Tag>
+        <English>The Satrap Court is the Persian replacement for the Market, which gives helps reduce city maintenance within the city it is built.</English>
+		    <French>The Satrap Court is the Persian replacement for the Market, which gives helps reduce city maintenance within the city it is built.</French>
+    <German>The Satrap Court is the Persian replacement for the Market, which gives helps reduce city maintenance within the city it is built.</German>
+    <Italian>The Satrap Court is the Persian replacement for the Market, which gives helps reduce city maintenance within the city it is built.</Italian>
+    <Spanish>The Satrap Court is the Persian replacement for the Market, which gives helps reduce city maintenance within the city it is built.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_UNIT_INDIAN_POINTY_THING</Tag>
+        <English>Urukku Pikeman</English>
+		    <French>Urukku Pikeman</French>
+    <German>Urukku Pikeman</German>
+    <Italian>Urukku Pikeman</Italian>
+    <Spanish>Urukku Pikeman</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_INDIAN_KILA</Tag>
+        <English>Kila</English>
+		    <French>Kila</French>
+    <German>Kila</German>
+    <Italian>Kila</Italian>
+    <Spanish>Kila</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_BUILDING_INDIAN_KILA_PEDIA</Tag>
+        <English>The Indian Kila is a castle that has an extra trade route.</English>
+		    <French>The Indian Kila is a castle that has an extra trade route.</French>
+    <German>The Indian Kila is a castle that has an extra trade route.</German>
+    <Italian>The Indian Kila is a castle that has an extra trade route.</Italian>
+    <Spanish>The Indian Kila is a castle that has an extra trade route.</Spanish>
+    </TEXT>
+	<TEXT>
+        <Tag>TXT_KEY_UNIT_COUNTERWEIGHT_TREBUCHET</Tag>
+        <English>Counterweight Trebuchet</English>
+		    <French>Counterweight Trebuchet</French>
+    <German>Counterweight Trebuchet</German>
+    <Italian>Counterweight Trebuchet</Italian>
+    <Spanish>Counterweight Trebuchet</Spanish>
+    </TEXT>
+	<TEXT>
+        <Tag>TXT_KEY_UNIT_COUNTERWEIGHT_TREBUCHET_PEDIA</Tag>
+        <English>The Byzantine COunterweight Trebuchet is a stronger trebuchet that is stronger in field combat than the basic catapult.</English>
+		    <French>The Byzantine COunterweight Trebuchet is a stronger trebuchet that is stronger in field combat than the basic catapult.</French>
+    <German>The Byzantine COunterweight Trebuchet is a stronger trebuchet that is stronger in field combat than the basic catapult.</German>
+    <Italian>The Byzantine COunterweight Trebuchet is a stronger trebuchet that is stronger in field combat than the basic catapult.</Italian>
+    <Spanish>The Byzantine COunterweight Trebuchet is a stronger trebuchet that is stronger in field combat than the basic catapult.</Spanish>
+    </TEXT>
+	   <TEXT>
+        <Tag>TXT_KEY_BUILDING_AMERICAN_ARMOURY_STRATEGY</Tag>
+        <English>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</English>
+		    <French>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</French>
+    <German>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</German>
+    <Italian>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Italian>
+    <Spanish>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Spanish>
+    </TEXT>
 </Civ4GameText>

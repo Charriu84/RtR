@@ -2735,7 +2735,7 @@
 			<Description>TXT_KEY_PROMOTION_DRILL4</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<LayerAnimationPath>NONE</LayerAnimationPath>
-			<PromotionPrereq>NONE</PromotionPrereq>
+			<PromotionPrereq>PROMOTION_DRILL2</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_DRILL3</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
 			<TechPrereq>NONE</TechPrereq>
