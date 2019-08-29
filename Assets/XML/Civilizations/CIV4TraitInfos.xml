@@ -119,15 +119,15 @@
 			<iHealth>0</iHealth>
 			<iHappiness>0</iHappiness>
 			<iMaxAnarchy>-1</iMaxAnarchy>
-			<iUpkeepModifier>0</iUpkeepModifier>
+			<iUpkeepModifier>-15</iUpkeepModifier>
 			<iCityUpkeepModifier>0</iCityUpkeepModifier>
 			<iLevelExperienceModifier>0</iLevelExperienceModifier>
 			<iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
 			<iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
 			<iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
-			<iMaxGlobalBuildingProductionModifier>0</iMaxGlobalBuildingProductionModifier>
-			<iMaxTeamBuildingProductionModifier>0</iMaxTeamBuildingProductionModifier>
-			<iMaxPlayerBuildingProductionModifier>0</iMaxPlayerBuildingProductionModifier>
+			<iMaxGlobalBuildingProductionModifier>50</iMaxGlobalBuildingProductionModifier>
+			<iMaxTeamBuildingProductionModifier>50</iMaxTeamBuildingProductionModifier>
+			<iMaxPlayerBuildingProductionModifier>50</iMaxPlayerBuildingProductionModifier>
 			<ExtraYieldThresholds/>
 			<TradeYieldModifiers/>
 			<CommerceChanges/>
@@ -257,11 +257,11 @@
 			<CommerceModifiers/>
 			<FreePromotions>
 				<FreePromotion>
-					<PromotionType>PROMOTION_DRILL3</PromotionType>
+					<PromotionType>PROMOTION_DRILL1</PromotionType>
 					<bFreePromotion>1</bFreePromotion>
 				</FreePromotion>
 				<FreePromotion>
-					<PromotionType>PROMOTION_DRILL1</PromotionType>
+					<PromotionType>PROMOTION_DRILL3</PromotionType>
 					<bFreePromotion>1</bFreePromotion>
 				</FreePromotion>
 			</FreePromotions>
@@ -284,7 +284,7 @@
 			<iHappiness>0</iHappiness>
 			<iMaxAnarchy>-1</iMaxAnarchy>
 			<iUpkeepModifier>0</iUpkeepModifier>
-			<iCityUpkeepModifier>0</iCityUpkeepModifier>
+			<iCityUpkeepModifier>10</iCityUpkeepModifier>
 			<iLevelExperienceModifier>0</iLevelExperienceModifier>
 			<iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
 			<iGreatGeneralRateModifier>100</iGreatGeneralRateModifier>

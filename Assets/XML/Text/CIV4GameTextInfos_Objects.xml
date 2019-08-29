@@ -17791,11 +17791,51 @@
 		</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUILDING_AMERICAN_ARMOURY</Tag>
-		<English>Armoury</English>
+		<Tag>TXT_KEY_SHIP_OF_THE_LINE</Tag>
+		<English>Ship of the Line</English>
+		<French>
+			<Text>Galion de guerre:Galions de guerre</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>Linienschiff</Text>
+			<Gender>Neuter</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Nave da prima linea:Navi da prima linea</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Buque de guerra:Buques de guerra</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUILDING_INDUSTRIAL_MOAI_STATUES</Tag>
-		<English>Industrial Moai Statues</English>
+		<Tag>TXT_KEY_BUILDING_AMERICAN_ARMOURY</Tag>
+		<English>Armoury</English>
+		<French>
+			<Text>Armoury</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>Armoury</Text>
+			<Gender>Neuter</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Armoury</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Armoury</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
 	</TEXT>
 </Civ4GameText>
