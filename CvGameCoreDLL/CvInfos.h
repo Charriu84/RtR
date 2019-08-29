@@ -2867,7 +2867,7 @@ public:
 	DllExport bool isGoody() const;				// Exposed to Python
 	bool isPermanent() const;				// Exposed to Python
 	//Permanent/Pillage split by Charriu for RtR
-	bool isPillage() const;				// Exposed to Python
+	bool isNotPillage() const;				// Exposed to Python
 	bool isOutsideBorders() const;				// Exposed to Python
 
 	const TCHAR* getArtDefineTag() const;
@@ -2947,7 +2947,7 @@ protected:
 	bool m_bGoody;
 	bool m_bPermanent;
 	//Permanent/Pillage split by Charriu for RtR
-	bool m_bPillage;
+	bool m_bNotPillage;
 	bool m_bOutsideBorders;
 
 	CvString m_szArtDefineTag;

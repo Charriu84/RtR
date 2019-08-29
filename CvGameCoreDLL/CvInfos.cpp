@@ -11810,7 +11810,7 @@ m_bWater(false),
 m_bGoody(false),							
 m_bPermanent(false),
 //Permanent/Pillage split by Charriu for RtR
-m_bPillage(false),
+m_bNotPillage(false),
 m_bOutsideBorders(false),
 m_iWorldSoundscapeScriptId(0),
 m_piPrereqNatureYield(NULL),
@@ -12010,9 +12010,9 @@ bool CvImprovementInfo::isPermanent() const
 }
 
 //Permanent/Pillage split by Charriu for RtR
-bool CvImprovementInfo::isPillage() const			
+bool CvImprovementInfo::isNotPillage() const			
 {
-	return m_bPillage; 
+	return m_bNotPillage; 
 }
 
 const TCHAR* CvImprovementInfo::getArtDefineTag() const
@@ -12224,7 +12224,7 @@ void CvImprovementInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bGoody);							
 	stream->Read(&m_bPermanent);
 	//Permanent/Pillage split by Charriu for RtR
-	stream->Read(&m_bPillage);
+	stream->Read(&m_bNotPillage);
 	stream->Read(&m_bOutsideBorders);
 
 	stream->ReadString(m_szArtDefineTag);
@@ -12337,7 +12337,7 @@ void CvImprovementInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bGoody);							
 	stream->Write(m_bPermanent);
 	//Permanent/Pillage split by Charriu for RtR
-	stream->Write(m_bPillage);
+	stream->Write(m_bNotPillage);
 	stream->Write(m_bOutsideBorders);
 
 	stream->WriteString(m_szArtDefineTag);
@@ -12454,7 +12454,7 @@ bool CvImprovementInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bGoody, "bGoody");
 	pXML->GetChildXmlValByName(&m_bPermanent, "bPermanent");
 	//Permanent/Pillage split by Charriu for RtR
-	pXML->GetChildXmlValByName(&m_bPillage, "bPillage");
+	pXML->GetChildXmlValByName(&m_bNotPillage, "bNotPillage");
 	pXML->GetChildXmlValByName(&m_iTilesPerGoody, "iTilesPerGoody");
 	pXML->GetChildXmlValByName(&m_iGoodyUniqueRange, "iGoodyRange");
 	pXML->GetChildXmlValByName(&m_iFeatureGrowthProbability, "iFeatureGrowth");

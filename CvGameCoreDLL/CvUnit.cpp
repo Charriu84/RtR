@@ -4200,7 +4200,7 @@ bool CvUnit::canAirBombAt(const CvPlot* pPlot, int iX, int iY) const
 		}
 
 		//Permanent/Pillage split by Charriu for RtR
-		if (GC.getImprovementInfo(pTargetPlot->getImprovementType()).isPillage())
+		if (GC.getImprovementInfo(pTargetPlot->getImprovementType()).isNotPillage())
 		{
 			return false;
 		}
@@ -4453,7 +4453,7 @@ bool CvUnit::canPillage(const CvPlot* pPlot) const
 	else
 	{
 		//Permanent/Pillage split by Charriu for RtR
-		if (GC.getImprovementInfo(pPlot->getImprovementType()).isPillage())
+		if (GC.getImprovementInfo(pPlot->getImprovementType()).isNotPillage())
 		{
 			return false;
 		}
