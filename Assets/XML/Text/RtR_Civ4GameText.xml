@@ -173,20 +173,20 @@
     <Spanish>Urukku Pikeman</Spanish>
     </TEXT>
     <TEXT>
-        <Tag>TXT_KEY_BUILDING_INDIAN_KILA</Tag>
-        <English>Kila</English>
-		    <French>Kila</French>
-    <German>Kila</German>
-    <Italian>Kila</Italian>
-    <Spanish>Kila</Spanish>
+        <Tag>TXT_KEY_BUILDING_INDIAN_HARAPPAN_GRANARY</Tag>
+        <English>Harappan Granary</English>
+		    <French>Harappan Granary</French>
+    <German>Harappan Granary</German>
+    <Italian>Harappan Granary</Italian>
+    <Spanish>Harappan Granary</Spanish>
     </TEXT>
     <TEXT>
-        <Tag>TXT_KEY_BUILDING_INDIAN_KILA_PEDIA</Tag>
-        <English>The Indian Kila is a castle that has an extra trade route.</English>
-		    <French>The Indian Kila is a castle that has an extra trade route.</French>
-    <German>The Indian Kila is a castle that has an extra trade route.</German>
-    <Italian>The Indian Kila is a castle that has an extra trade route.</Italian>
-    <Spanish>The Indian Kila is a castle that has an extra trade route.</Spanish>
+        <Tag>TXT_KEY_BUILDING_INDIAN_HARAPPAN_GRANARY_PEDIA</Tag>
+        <English>The Indian Harappan Granary is a granary that gives extra happiness and health.</English>
+		    <French>The Indian Harappan Granary is a granary that gives extra happiness and health.</French>
+    <German>The Indian Harappan Granary is a granary that gives extra happiness and health.</German>
+    <Italian>The Indian Harappan Granary is a granary that gives extra happiness and health.</Italian>
+    <Spanish>The Indian Harappan Granary is a granary that gives extra happiness and health.</Spanish>
     </TEXT>
 	<TEXT>
         <Tag>TXT_KEY_UNIT_COUNTERWEIGHT_TREBUCHET</Tag>
@@ -211,5 +211,45 @@
     <German>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</German>
     <Italian>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Italian>
     <Spanish>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Spanish>
+    </TEXT>
+	<TEXT>
+        <Tag>TXT_KEY_PROMOTION_NAVAL_SENTRY</Tag>
+			<English>Naval Sentry</English>
+		    <French>Naval Sentry</French>
+			<German>Naval Sentry</German>
+			<Italian>Naval Sentry</Italian>
+			<Spanish>Naval Sentry</Spanish>
+    </TEXT>
+	<TEXT>
+        <Tag>TXT_KEY_PROMOTION_NAVAL_FLANKING1</Tag>
+			<English>Naval Flanking 1</English>
+		    <French>Naval Flanking 1</French>
+			<German>Naval Flanking 1</German>
+			<Italian>Naval Flanking 1</Italian>
+			<Spanish>Naval Flanking 1</Spanish>
+    </TEXT>
+	<TEXT>
+        <Tag>TXT_KEY_PROMOTION_NAVAL_FLANKING2</Tag>
+			<English>Naval Flanking 2</English>
+		    <French>Naval Flanking 2</French>
+			<German>Naval Flanking 2</German>
+			<Italian>Naval Flanking 2</Italian>
+			<Spanish>Naval Flanking 2</Spanish>
+    </TEXT>
+	<TEXT>
+        <Tag>TXT_KEY_PROMOTION_NAVAL_DRILL3</Tag>
+			<English>Naval Drill 3</English>
+		    <French>Naval Drill 3</French>
+			<German>Naval Drill 3</German>
+			<Italian>Naval Drill 3</Italian>
+			<Spanish>Naval Drill 3</Spanish>
+    </TEXT>
+	<TEXT>
+        <Tag>TXT_KEY_PROMOTION_NAVAL_DRILL4</Tag>
+			<English>Naval Drill 4</English>
+		    <French>Naval Drill 4</French>
+			<German>Naval Drill 4</German>
+			<Italian>Naval Drill 4</Italian>
+			<Spanish>Naval Drill 4</Spanish>
     </TEXT>
 </Civ4GameText>

@@ -1915,8 +1915,8 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_CASTLE</BuildingClassType>
-					<BuildingType>BUILDING_INDIAN_KILA</BuildingType>
+					<BuildingClassType>BUILDINGCLASS_GRANARY</BuildingClassType>
+					<BuildingType>BUILDING_INDIAN_HARRAPAN_GRANARY</BuildingType>
 				</Building>
 			</Buildings>
 			<Units>
@@ -3455,7 +3455,7 @@
 			</Cities>
 			<Buildings>
 				<Building>
-					<BuildingClassType>BUILDINGCLASS_CUSTOM_HOUSE</BuildingClassType>
+					<BuildingClassType>BUILDINGCLASS_CASTLE</BuildingClassType>
 					<BuildingType>BUILDING_SPANISH_CITADEL</BuildingType>
 				</Building>
 			</Buildings>
