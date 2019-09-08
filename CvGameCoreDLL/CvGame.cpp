@@ -6174,88 +6174,88 @@ void CvGame::doDeals()
 
 void CvGame::doGlobalWarming()
 {
-	int iGlobalWarmingDefense = 0;
-	for (int i = 0; i < GC.getMapINLINE().numPlotsINLINE(); ++i)
-	{
-		CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(i);
+	//int iGlobalWarmingDefense = 0;
+	//for (int i = 0; i < GC.getMapINLINE().numPlotsINLINE(); ++i)
+	//{
+	//	CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(i);
 
-		if (!pPlot->isWater())
-		{
-			if (pPlot->getFeatureType() != NO_FEATURE)
-			{
-				if (GC.getFeatureInfo(pPlot->getFeatureType()).getGrowthProbability() > 0) // hack, but we don't want to add new XML field in the patch just for this
-				{
-					++iGlobalWarmingDefense;
-				}
-			}
-		}
-	}
-	iGlobalWarmingDefense = iGlobalWarmingDefense * GC.getDefineINT("GLOBAL_WARMING_FOREST") / std::max(1, GC.getMapINLINE().getLandPlots());
+	//	if (!pPlot->isWater())
+	//	{
+	//		if (pPlot->getFeatureType() != NO_FEATURE)
+	//		{
+	//			if (GC.getFeatureInfo(pPlot->getFeatureType()).getGrowthProbability() > 0) // hack, but we don't want to add new XML field in the patch just for this
+	//			{
+	//				++iGlobalWarmingDefense;
+	//			}
+	//		}
+	//	}
+	//}
+	//iGlobalWarmingDefense = iGlobalWarmingDefense * GC.getDefineINT("GLOBAL_WARMING_FOREST") / std::max(1, GC.getMapINLINE().getLandPlots());
 
-	int iUnhealthWeight = GC.getDefineINT("GLOBAL_WARMING_UNHEALTH_WEIGHT");
-	int iGlobalWarmingValue = 0;
-	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-	{
-		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes) iPlayer);
-		if (kPlayer.isAlive())
-		{
-			int iLoop;
-			for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
-			{
-				iGlobalWarmingValue -= pCity->getBuildingBadHealth() * iUnhealthWeight;
-			}
-		}
-	}
-	iGlobalWarmingValue /= GC.getMapINLINE().numPlotsINLINE();
+	//int iUnhealthWeight = GC.getDefineINT("GLOBAL_WARMING_UNHEALTH_WEIGHT");
+	//int iGlobalWarmingValue = 0;
+	//for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	//{
+	//	CvPlayer& kPlayer = GET_PLAYER((PlayerTypes) iPlayer);
+	//	if (kPlayer.isAlive())
+	//	{
+	//		int iLoop;
+	//		for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+	//		{
+	//			iGlobalWarmingValue -= pCity->getBuildingBadHealth() * iUnhealthWeight;
+	//		}
+	//	}
+	//}
+	//iGlobalWarmingValue /= GC.getMapINLINE().numPlotsINLINE();
 
-	iGlobalWarmingValue += getNukesExploded() * GC.getDefineINT("GLOBAL_WARMING_NUKE_WEIGHT") / 100;
+	//iGlobalWarmingValue += getNukesExploded() * GC.getDefineINT("GLOBAL_WARMING_NUKE_WEIGHT") / 100;
 
-	TerrainTypes eWarmingTerrain = ((TerrainTypes)(GC.getDefineINT("GLOBAL_WARMING_TERRAIN")));
+	//TerrainTypes eWarmingTerrain = ((TerrainTypes)(GC.getDefineINT("GLOBAL_WARMING_TERRAIN")));
 
-	for (int iI = 0; iI < iGlobalWarmingValue; iI++)
-	{
-		if (getSorenRandNum(100, "Global Warming") + iGlobalWarmingDefense < GC.getDefineINT("GLOBAL_WARMING_PROB"))
-		{
-			CvPlot* pPlot = GC.getMapINLINE().syncRandPlot(RANDPLOT_LAND | RANDPLOT_NOT_CITY);
+	//for (int iI = 0; iI < iGlobalWarmingValue; iI++)
+	//{
+	//	if (getSorenRandNum(100, "Global Warming") + iGlobalWarmingDefense < GC.getDefineINT("GLOBAL_WARMING_PROB"))
+	//	{
+	//		CvPlot* pPlot = GC.getMapINLINE().syncRandPlot(RANDPLOT_LAND | RANDPLOT_NOT_CITY);
 
-			if (pPlot != NULL)
-			{
-				bool bChanged = false;
+	//		if (pPlot != NULL)
+	//		{
+	//			bool bChanged = false;
 
-				if (pPlot->getFeatureType() != NO_FEATURE)
-				{
-					if (pPlot->getFeatureType() != GC.getDefineINT("NUKE_FEATURE"))
-					{
-						pPlot->setFeatureType(NO_FEATURE);
-						bChanged = true;
-					}
-				}
-				else if (pPlot->getTerrainType() != eWarmingTerrain)
-				{
-					if (pPlot->calculateTotalBestNatureYield(NO_TEAM) > 1)
-					{
-						pPlot->setTerrainType(eWarmingTerrain);
-						bChanged = true;
-					}
-				}
+	//			if (pPlot->getFeatureType() != NO_FEATURE)
+	//			{
+	//				if (pPlot->getFeatureType() != GC.getDefineINT("NUKE_FEATURE"))
+	//				{
+	//					pPlot->setFeatureType(NO_FEATURE);
+	//					bChanged = true;
+	//				}
+	//			}
+	//			else if (pPlot->getTerrainType() != eWarmingTerrain)
+	//			{
+	//				if (pPlot->calculateTotalBestNatureYield(NO_TEAM) > 1)
+	//				{
+	//					pPlot->setTerrainType(eWarmingTerrain);
+	//					bChanged = true;
+	//				}
+	//			}
 
-				if (bChanged)
-				{
-					pPlot->setImprovementType(NO_IMPROVEMENT);
+	//			if (bChanged)
+	//			{
+	//				pPlot->setImprovementType(NO_IMPROVEMENT);
 
-					CvCity* pCity = GC.getMapINLINE().findCity(pPlot->getX_INLINE(), pPlot->getY_INLINE());
-					if (pCity != NULL)
-					{
-						if (pPlot->isVisible(pCity->getTeam(), false))
-						{
-							CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_GLOBAL_WARMING_NEAR_CITY", pCity->getNameKey());
-							gDLL->getInterfaceIFace()->addMessage(pCity->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_GLOBALWARMING", MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
-						}
-					}
-				}
-			}
-		}
-	}
+	//				CvCity* pCity = GC.getMapINLINE().findCity(pPlot->getX_INLINE(), pPlot->getY_INLINE());
+	//				if (pCity != NULL)
+	//				{
+	//					if (pPlot->isVisible(pCity->getTeam(), false))
+	//					{
+	//						CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_GLOBAL_WARMING_NEAR_CITY", pCity->getNameKey());
+	//						gDLL->getInterfaceIFace()->addMessage(pCity->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_GLOBALWARMING", MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 
