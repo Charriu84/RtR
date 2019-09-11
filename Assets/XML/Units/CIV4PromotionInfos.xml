@@ -3538,8 +3538,8 @@
 			<Description>TXT_KEY_PROMOTION_NAVIGATION2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<LayerAnimationPath>NONE</LayerAnimationPath>
-			<PromotionPrereq>PROMOTION_FLANKING1</PromotionPrereq>
-			<PromotionPrereqOr1>PROMOTION_NAVIGATION1</PromotionPrereqOr1>
+			<PromotionPrereq>PROMOTION_NAVIGATION1</PromotionPrereq>
+			<PromotionPrereqOr1></PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
@@ -4661,7 +4661,7 @@
 			<bShiftDown>0</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>,Art/Interface/Buttons/Promotions/Flanking1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,6,3</Button>
+			<Button>,Art/Interface/Buttons/Promotions/Flanking2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,7,3</Button>
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_NAVAL_DRILL3</Type>
