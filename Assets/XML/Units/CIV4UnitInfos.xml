@@ -3698,7 +3698,7 @@
 			<PrereqBuilding>NONE</PrereqBuilding>
 			<PrereqTech>TECH_IRON_WORKING</PrereqTech>
 			<TechTypes/>
-			<BonusType>NONE</BonusType>
+			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -7920,7 +7920,7 @@
 			<bAlwaysHostile>0</bAlwaysHostile>
 			<UnitClassUpgrades>
 				<UnitClassUpgrade>
-					<UnitClassUpgradeType>UNITCLASS_INFANTRY</UnitClassUpgradeType>
+					<UnitClassUpgradeType>UNITCLASS_RIFLEMAN</UnitClassUpgradeType>
 					<bUnitClassUpgrade>1</bUnitClassUpgrade>
 				</UnitClassUpgrade>
 			</UnitClassUpgrades>

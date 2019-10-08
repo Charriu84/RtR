@@ -7161,7 +7161,7 @@
 			<FreeStartEra>NONE</FreeStartEra>
 			<MaxStartEra>NONE</MaxStartEra>
 			<ObsoleteTech>TECH_ASSEMBLY_LINE</ObsoleteTech>
-			<PrereqTech>TECH_MYSTICISM</PrereqTech>
+			<PrereqTech>TECH_ARCHERY</PrereqTech>
 			<TechTypes/>
 			<Bonus>NONE</Bonus>
 			<PrereqBonuses/>

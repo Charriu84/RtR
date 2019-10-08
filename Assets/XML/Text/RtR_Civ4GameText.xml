@@ -84,6 +84,22 @@
     <Italian>Players can trade the same items with humans as with AI</Italian>
     <Spanish>Players can trade the same items with humans as with AI</Spanish>
   </TEXT>
+      <TEXT>
+        <Tag>TXT_KEY_TRAIT_CITY_UPKEEP_MODIFIER</Tag>
+        <English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%% City Upkeep</English>
+		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%% City Upkeep</French>
+		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%% City Upkeep</German>
+		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%% City Upkeep</Italian>
+		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%% City Upkeep</Spanish>
+    </TEXT>
+  <TEXT>
+        <Tag>TXT_KEY_MISC_TRAITS_MAINT</Tag>
+        <English>[SPACE][ICON_BULLET]Reduced City Upkeep</English>
+		<French>[SPACE][ICON_BULLET]Reduced City Upkeep</French>
+		<German>[SPACE][ICON_BULLET]Reduced City Upkeep</German>
+		<Italian>[SPACE][ICON_BULLET]Reduced City Upkeep</Italian>
+		<Spanish>[SPACE][ICON_BULLET]Reduced City Upkeep</Spanish>
+    </TEXT>
     <TEXT>
         <Tag>TXT_KEY_BUILDING_GERMAN_WERKSTATT_STRATEGY</Tag>
         <English>The Werkstatt is a German forge that also lowers the city maintanence cost</English>
