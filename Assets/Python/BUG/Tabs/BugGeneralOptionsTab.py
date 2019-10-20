@@ -22,7 +22,7 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 		left, center, right = self.addThreeColumnLayout(screen, column, "Top", True)
 		
-		#self.createGreatPersonGeneralPanel(screen, left)
+		self.createGreatPersonGeneralPanel(screen, left)
 		self.addSpacer(screen, left, "General1")
 		self.createTechSplashPanel(screen, left)
 		self.addSpacer(screen, left, "General2")
@@ -39,7 +39,7 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 	def createGreatPersonGeneralPanel(self, screen, panel):
 		self.addLabel(screen, panel, "ProgressBars", "Progress Bars:")
-		#self.addCheckboxTextDropdown(screen, panel, panel, "MainInterface__GPBar", "MainInterface__GPBar_Types")
+		self.addCheckboxTextDropdown(screen, panel, panel, "MainInterface__GPBar", "MainInterface__GPBar_Types")
 		#self.addCheckbox(screen, panel, "MainInterface__GPBar")
 		#self.addTextDropdown(screen, panel, panel, "MainInterface__GPBar_Types", True)
 		self.addCheckbox(screen, panel, "MainInterface__Combat_Counter")
@@ -79,8 +79,8 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addLabel(screen, panel, "Misc", "Misc:")
 		self.addCheckbox(screen, panel, "MainInterface__GoldRateWarning")
 		self.addCheckbox(screen, panel, "MainInterface__MinMax_Commerce")
-		#self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
 		#self.addCheckbox(screen, panel, "MainInterface__UnitMovementPointsFraction")
 		#self.addCheckbox(screen, panel, "MainInterface__StackMovementPoints")
+		self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
 		self.addTextDropdown(screen, panel, panel, "MainInterface__BuildIconSize", True)
 		self.addCheckbox(screen, panel, "MainInterface__CityArrows")

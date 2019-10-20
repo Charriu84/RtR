@@ -29,7 +29,7 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addSpacer(screen, left, "CityScreen3")
 		self.createGreatPersonBarPanel(screen, left)
 		self.addSpacer(screen, left, "CityScreen4")
-		#self.createProductionQueuePanel(screen, left)
+		self.createProductionQueuePanel(screen, left)
 		
 		#self.createCityBarPanel(screen, right)
 		self.addSpacer(screen, right, "CityScreen6")
@@ -113,12 +113,12 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 	def createMiscellaneousPanel(self, screen, panel):
 		self.addLabel(screen, panel, "Misc", "Miscellaneous:")
 		#self.addCheckbox(screen, panel, "MiscHover__BaseCommerce")
-		#self.addCheckbox(screen, panel, "CityScreen__FoodAssist")
-		#self.addCheckbox(screen, panel, "CityScreen__Anger_Counter")
+		self.addCheckbox(screen, panel, "CityScreen__FoodAssist")
+		self.addCheckbox(screen, panel, "CityScreen__Anger_Counter")
 		self.addCheckbox(screen, panel, "CityScreen__CultureTurns")
-		#self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
-		#self.addCheckbox(screen, panel, "CityScreen__OnlyPresentReligions")
 		#self.addCheckbox(screen, panel, "CityScreen__OnlyPresentCorporations")
+		self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
+		self.addCheckbox(screen, panel, "CityScreen__OnlyPresentReligions")
 		self.addTextDropdown(screen, panel, panel, "CityScreen__Specialists", True)
 		#self.addCheckbox(screen, panel, "MiscHover__RemoveSpecialist")
 		

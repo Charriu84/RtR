@@ -43,8 +43,8 @@ class BugMapOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addLabel(screen, right, "Misc", "Misc:")
 		self.addCheckbox(screen, right, "MainInterface__FieldOfView")
 		self.addCheckbox(screen, right, "MainInterface__FieldOfView_Remember", True)
-		#self.addCheckbox(screen, right, "EventSigns__Enabled")
 		#self.addCheckbox(screen, right, "Actions__IgnoreHarmlessBarbarians")
+		self.addCheckbox(screen, right, "EventSigns__Enabled")
 		
 		
 		#screen.attachHSeparator(column, column + "Sep1")
