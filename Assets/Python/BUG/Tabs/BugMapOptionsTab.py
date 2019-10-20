@@ -33,11 +33,11 @@ class BugMapOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 		self.addLabel(screen, center, "CityBar", "CityBar:")
 		self.addCheckbox(screen, center, "CityBar__AirportIcons")
-		#self.addCheckbox(screen, center, "CityBar__StarvationTurns")
+		self.addCheckbox(screen, center, "CityBar__StarvationTurns")
 		
-		#self.addLabel(screen, center, "TileHover", "Tile Hover:")
 		#self.addCheckbox(screen, center, "MiscHover__LatLongCoords")
-		#self.addCheckbox(screen, center, "MiscHover__PartialBuilds")
+		self.addLabel(screen, center, "TileHover", "Tile Hover:")
+		self.addCheckbox(screen, center, "MiscHover__PartialBuilds")
 		
 		
 		self.addLabel(screen, right, "Misc", "Misc:")

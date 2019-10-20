@@ -24,14 +24,14 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.createRawYieldsPanel(screen, left)
 		self.addSpacer(screen, left, "CityScreen1")
 		self.createHurryDetailPanel(screen, left)
-		#self.addSpacer(screen, left, "CityScreen2")
-		#self.createBuildingActualEffectsPanel(screen, left)
+		self.addSpacer(screen, left, "CityScreen2")
+		self.createBuildingActualEffectsPanel(screen, left)
 		self.addSpacer(screen, left, "CityScreen3")
 		self.createGreatPersonBarPanel(screen, left)
 		self.addSpacer(screen, left, "CityScreen4")
 		self.createProductionQueuePanel(screen, left)
 		
-		#self.createCityBarPanel(screen, right)
+		self.createCityBarPanel(screen, right)
 		self.addSpacer(screen, right, "CityScreen6")
 		self.createMiscellaneousPanel(screen, right)
 		
@@ -44,12 +44,12 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 	def createHurryDetailPanel(self, screen, panel):
 		self.addLabel(screen, panel, "HurryDetail", "Hurry Detail:")
 		left, right = self.addTwoColumnLayout(screen, panel, "HurryDetail", False)
-		#self.addCheckbox(screen, left, "CityBar__HurryAssist")
-		#self.addCheckbox(screen, right, "CityBar__HurryAssistIncludeCurrent")
+		self.addCheckbox(screen, left, "CityBar__HurryAssist")
+		self.addCheckbox(screen, right, "CityBar__HurryAssistIncludeCurrent")
 		self.addCheckbox(screen, left, "CityScreen__WhipAssist")
 		self.addCheckbox(screen, right, "CityScreen__WhipAssistOverflowCountCurrentProduction")
-		#self.addCheckbox(screen, left, "MiscHover__HurryOverflow")
-		#self.addCheckbox(screen, right, "MiscHover__HurryOverflowIncludeCurrent")
+		self.addCheckbox(screen, left, "MiscHover__HurryOverflow")
+		self.addCheckbox(screen, right, "MiscHover__HurryOverflowIncludeCurrent")
 		
 	def createBuildingActualEffectsPanel(self, screen, panel):
 		self.addLabel(screen, panel, "BuildingEffects", "Building Actual Effects in Hovers:")
@@ -69,7 +69,7 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addLabel(screen, panel, "GreatPersonBar", "Great Person Bar:")
 		self.addCheckbox(screen, panel, "CityScreen__GreatPersonTurns")
 		self.addCheckbox(screen, panel, "CityScreen__GreatPersonInfo")
-		#self.addCheckbox(screen, panel, "MiscHover__GreatPeopleRateBreakdown")
+		self.addCheckbox(screen, panel, "MiscHover__GreatPeopleRateBreakdown")
 		
 	def createProductionQueuePanel(self, screen, panel):
 		self.addLabel(screen, panel, "ProductionQueue", "Production Queue:")
@@ -112,7 +112,7 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 	def createMiscellaneousPanel(self, screen, panel):
 		self.addLabel(screen, panel, "Misc", "Miscellaneous:")
-		#self.addCheckbox(screen, panel, "MiscHover__BaseCommerce")
+		self.addCheckbox(screen, panel, "MiscHover__BaseCommerce")
 		self.addCheckbox(screen, panel, "CityScreen__FoodAssist")
 		self.addCheckbox(screen, panel, "CityScreen__Anger_Counter")
 		self.addCheckbox(screen, panel, "CityScreen__CultureTurns")

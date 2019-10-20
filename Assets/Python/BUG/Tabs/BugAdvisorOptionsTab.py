@@ -25,7 +25,7 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addTextDropdown(screen, leftL, leftR, "CustDomAdv__SpaceTop", True)
 		self.addTextDropdown(screen, leftL, leftR, "CustDomAdv__SpaceSides", True)
 		self.addTextDropdown(screen, leftL, leftR, "CustDomAdv__ProductionGrouping", True)
-		#self.addCheckbox(screen, left, "MiscHover__CDAZoomCityDetails")
+		self.addCheckbox(screen, left, "MiscHover__CDAZoomCityDetails")
 
 		self.addLabel(screen, left, "Finance_Advisor", "Finance [F2]:")
 		self.addCheckbox(screen, left, "Advisors__BugFinanceAdvisor")

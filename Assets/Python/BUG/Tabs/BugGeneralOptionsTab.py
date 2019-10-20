@@ -26,7 +26,7 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addSpacer(screen, left, "General1")
 		self.createTechSplashPanel(screen, left)
 		self.addSpacer(screen, left, "General2")
-		#self.createLeaderheadPanel(screen, left)
+		self.createLeaderheadPanel(screen, left)
 		
 		self.createAutoSavePanel(screen, center)
 		self.addSpacer(screen, center, "General3")
