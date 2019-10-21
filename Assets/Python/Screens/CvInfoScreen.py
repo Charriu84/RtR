@@ -22,6 +22,7 @@ import GameUtil
 import BugCore
 import BugUtil
 AdvisorOpt = BugCore.game.Advisors
+ScoreOpt = BugCore.game.Scores
 #BUG: Change Graphs - end
 
 # globals
@@ -1336,8 +1337,19 @@ class CvInfoScreen:
 			screen.setLabel(self.getNextWidgetName(), "", self.LOG_SCALE, CvUtil.FONT_CENTER_JUSTIFY, xShow, yText, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 	def getPlayerName(self, ePlayer):
+		if (ScoreOpt.isUsePlayerName()):
+			szPlayerName = gc.getPlayer(ePlayer).getName()
+		else:
+			szPlayerName = gc.getLeaderHeadInfo(gc.getPlayer(ePlayer).getLeaderType()).getDescription()
 
-		return gc.getPlayer(ePlayer).getName()
+		if (ScoreOpt.isShowBothNames()):
+			szPlayerName = szPlayerName + "/" + gc.getPlayer(ePlayer).getCivilizationShortDescription(0)
+		elif (ScoreOpt.isShowLeaderName()):
+			szPlayerName = szPlayerName
+		else:
+			szPlayerName = gc.getPlayer(ePlayer).getCivilizationShortDescription(0)
+
+		return szPlayerName
 #BUG: Change Graphs - end
 
 #############################################################################################################

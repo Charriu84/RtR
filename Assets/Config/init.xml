@@ -132,6 +132,7 @@
 	<load mod="TechWindow"/>
 	
 	<load mod="Not Just Another Game Clock"/>
+	<load mod="Advanced Scoreboard"/>
 	<load mod="Autolog"/>
 	<load mod="Unit Naming"/>
 	<load mod="FavoriteCivicDetector"/>
@@ -161,6 +162,7 @@
 		
 		<tab module="BugAdvisorOptionsTab"/>
 		
+		<tab module="BugScoreOptionsTab"/>
 		<tab module="BugNJAGCOptionsTab"/>
 		
 		<tab module="BugUnitNameOptionsTab"/>
