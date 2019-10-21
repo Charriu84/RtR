@@ -44,6 +44,11 @@
 				<choice id="Maximum" get="isGPBarTypesMax"/>
 			</list>
 			
+			<!-- Great General Progress Bar by NeverMind -->
+			<option id="Combat_Counter" key="Combat Counter" 
+					type="boolean" default="True" 
+					get="isShowGGProgressBar" dirtyBit="GameData"/>
+			
 			<!-- Min/Max Commerce Buttons by codewarrior -->
 			<option id="MinMax_Commerce" key="MinMax Commerce" 
 					type="boolean" default="True" 
