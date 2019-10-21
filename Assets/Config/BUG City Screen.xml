@@ -39,6 +39,11 @@
 				<!--choice id="All" get="isRawYieldsDefaultTilesAll"/-->
 			</list>
 			
+			<!-- FoodAssist by EmperorFool -->
+			<option id="FoodAssist" key="FoodAssist" 
+					type="boolean" default="True" 
+					get="isShowFoodAssist" dirtyBit="CityScreen"/>
+			
 			<!-- WhipAssist by EmperorFool, Dresden -->
 			<option id="WhipAssist" key="WhipAssist" 
 					type="boolean" default="True" 
@@ -59,6 +64,11 @@
 			<option id="GreatPersonInfo" key="Great Person Info" 
 					type="boolean" default="True" 
 					get="isShowCityGreatPersonInfo" dirtyBit="CityScreen"/>
+			
+			<!-- Anger Counter by Ruff_Hi -->
+			<option id="Anger_Counter" key="Anger Counter" 
+					type="boolean" default="True" 
+					get="isShowAngerCounter" dirtyBit="CityScreen"/>
 			
 			<!-- Specialist Stacker by TheLopez -->
 			<!-- Specialist Chevrons by Ruff_Hi -->

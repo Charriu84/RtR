@@ -3056,29 +3056,56 @@ class CvMainInterface:
 				screen.setStyle( "CityNameText", "Button_Stone_Style" )
 				screen.show( "CityNameText" )
 
-				if ( (iFoodDifference != 0) or not (pHeadSelectedCity.isFoodProduction() ) ):
-					if (iFoodDifference > 0):
-						szBuffer = localText.getText("INTERFACE_CITY_GROWING", (pHeadSelectedCity.getFoodTurnsLeft(), ))
+# BUG - Food Assist - start
+				if ( CityUtil.willGrowThisTurn(pHeadSelectedCity) or (iFoodDifference != 0) or not (pHeadSelectedCity.isFoodProduction() ) ):
+					if (CityUtil.willGrowThisTurn(pHeadSelectedCity)):
+						szBuffer = localText.getText("INTERFACE_CITY_GROWTH", ())
+					elif (iFoodDifference > 0):
+						szBuffer = localText.getText("INTERFACE_CITY_GROWING", (pHeadSelectedCity.getFoodTurnsLeft(), ))	
 					elif (iFoodDifference < 0):
-						szBuffer = localText.getText("INTERFACE_CITY_STARVING", ())
+						if (CityScreenOpt.isShowFoodAssist()):
+							iTurnsToStarve = pHeadSelectedCity.getFood() / -iFoodDifference + 1
+							if iTurnsToStarve > 1:
+								szBuffer = localText.getText("INTERFACE_CITY_SHRINKING", (iTurnsToStarve, ))
+							else:
+								szBuffer = localText.getText("INTERFACE_CITY_STARVING", ()) 
+						else:
+							szBuffer = localText.getText("INTERFACE_CITY_STARVING", ()) 
+# BUG - Food Assist - end
 					else:
-						szBuffer = localText.getText("INTERFACE_CITY_STAGNANT", ())
+						szBuffer = localText.getText("INTERFACE_CITY_STAGNANT", ())	
 
 					screen.setLabel( "PopulationText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, screen.centerX(512), iCityCenterRow1Y, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 					screen.setHitTest( "PopulationText", HitTestTypes.HITTEST_NOHIT )
 					screen.show( "PopulationText" )
 
 				if (not pHeadSelectedCity.isDisorder() and not pHeadSelectedCity.isFoodProduction()):
-
-					szBuffer = u"%d%c - %d%c" %(pHeadSelectedCity.getYieldRate(YieldTypes.YIELD_FOOD), gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar(), pHeadSelectedCity.foodConsumption(False, 0), CyGame().getSymbolID(FontSymbols.EATEN_FOOD_CHAR))
-					screen.setLabel( "PopulationInputText", "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, iCityCenterRow1X - 6, iCityCenterRow1Y, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-					screen.show( "PopulationInputText" )
-
+				
+# BUG - Food Assist - start
+					if (CityScreenOpt.isShowFoodAssist()):
+						iFoodYield = pHeadSelectedCity.getYieldRate(YieldTypes.YIELD_FOOD)
+						iFoodEaten = pHeadSelectedCity.foodConsumption(False, 0)
+						if iFoodYield == iFoodEaten:
+							szBuffer = localText.getText("INTERFACE_CITY_FOOD_STAGNATE", (iFoodYield, iFoodEaten))
+						elif iFoodYield > iFoodEaten:
+							szBuffer = localText.getText("INTERFACE_CITY_FOOD_GROW", (iFoodYield, iFoodEaten, iFoodYield - iFoodEaten))
+						else:
+							szBuffer = localText.getText("INTERFACE_CITY_FOOD_SHRINK", (iFoodYield, iFoodEaten, iFoodYield - iFoodEaten))
+					else:
+						szBuffer = u"%d%c - %d%c" %(pHeadSelectedCity.getYieldRate(YieldTypes.YIELD_FOOD), gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar(), pHeadSelectedCity.foodConsumption(False, 0), CyGame().getSymbolID(FontSymbols.EATEN_FOOD_CHAR))
+# BUG - Food Assist - end
+# BUG - Food Rate Hover - start
+					# draw label below
+					
 				else:
 
 					szBuffer = u"%d%c" %(iFoodDifference, gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar())
-					screen.setLabel( "PopulationInputText", "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, iCityCenterRow1X - 6, iCityCenterRow1Y, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-					screen.show( "PopulationInputText" )
+					# draw label below
+
+				screen.setLabel( "PopulationInputText", "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, iCityCenterRow1X - 6, iCityCenterRow1Y, -0.3, FontTypes.GAME_FONT, 
+						*BugDll.widget("WIDGET_FOOD_MOD_HELP", -1, -1) )
+				screen.show( "PopulationInputText" )
+# BUG - Food Rate Hover - end
 
 				if ((pHeadSelectedCity.badHealth(False) > 0) or (pHeadSelectedCity.goodHealth() >= 0)):
 					if (pHeadSelectedCity.healthRate(False, 0) < 0):
@@ -3101,7 +3128,6 @@ class CvMainInterface:
 						iExtraFood = -iFoodDifference
 					else:
 						iExtraFood = pHeadSelectedCity.getFood()
-					iFirst = float(iDeltaFood) / float(pHeadSelectedCity.growthThreshold())
 					screen.setBarPercentage( "PopulationBar", InfoBarTypes.INFOBAR_STORED, float(iDeltaFood) / pHeadSelectedCity.growthThreshold() )
 					screen.setBarPercentage( "PopulationBar", InfoBarTypes.INFOBAR_RATE, 0.0 )
 					if ( pHeadSelectedCity.growthThreshold() > iDeltaFood):
@@ -3111,7 +3137,6 @@ class CvMainInterface:
 					
 				else:
 
-					iFirst = float(pHeadSelectedCity.getFood()) / float(pHeadSelectedCity.growthThreshold())
 					screen.setBarPercentage( "PopulationBar", InfoBarTypes.INFOBAR_STORED, float(pHeadSelectedCity.getFood()) / pHeadSelectedCity.growthThreshold() )
 					if ( pHeadSelectedCity.growthThreshold() >  pHeadSelectedCity.getFood()):
 						screen.setBarPercentage( "PopulationBar", InfoBarTypes.INFOBAR_RATE, float(iFoodDifference) / (pHeadSelectedCity.growthThreshold() - pHeadSelectedCity.getFood()) )
@@ -3191,11 +3216,19 @@ class CvMainInterface:
 					else:
 						szBuffer = localText.getText("INTERFACE_CITY_HAPPY_NO_UNHAPPY", (pHeadSelectedCity.happyLevel(), ))
 
+# BUG - Anger Display - start
+					if (CityScreenOpt.isShowAngerCounter()
+					and pHeadSelectedCity.getTeam() == gc.getGame().getActiveTeam()):
+						iAngerTimer = max(pHeadSelectedCity.getHurryAngerTimer(), pHeadSelectedCity.getConscriptAngerTimer())
+						if iAngerTimer > 0:
+							szBuffer += u" (%i)" % iAngerTimer
+# BUG - Anger Display - end
+
 					screen.setLabel( "HappinessText", "Background", szBuffer, CvUtil.FONT_LEFT_JUSTIFY, xResolution - iCityCenterRow1X + 6, iCityCenterRow2Y, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_HELP_HAPPINESS, -1, -1 )
 					screen.show( "HappinessText" )
 
 				if (not(pHeadSelectedCity.isProductionProcess())):
-
+				
 					iNeeded = pHeadSelectedCity.getProductionNeeded()
 					iStored = pHeadSelectedCity.getProduction()
 					screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_STORED, float(iStored) / iNeeded )
