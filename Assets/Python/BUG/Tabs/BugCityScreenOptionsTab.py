@@ -118,7 +118,6 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, panel, "CityScreen__CultureTurns")
 		#self.addCheckbox(screen, panel, "CityScreen__OnlyPresentCorporations")
 		self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
-		self.addCheckbox(screen, panel, "CityScreen__OnlyPresentReligions")
 		self.addTextDropdown(screen, panel, panel, "CityScreen__Specialists", True)
 		#self.addCheckbox(screen, panel, "MiscHover__RemoveSpecialist")
 		

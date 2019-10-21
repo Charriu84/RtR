@@ -29,6 +29,10 @@ ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
 import GPUtil
+# BUG - Progress Bar - Tick Marks - start
+import ProgressBarUtil
+# BUG - Progress Bar - Tick Marks - end
+
 g_NumEmphasizeInfos = 0
 g_NumCityTabTypes = 0
 g_NumHurryInfos = 0
@@ -262,6 +266,33 @@ class CvMainInterface:
 			self.iField_View = DEFAULT_FIELD_OF_VIEW
 # BUG - field of view slider - end
 
+
+# BUG - Progress Bar - Tick Marks - start
+		xCoord = 268 + (self.xResolution - 1024) / 2
+		self.pBarResearchBar_n = ProgressBarUtil.ProgressBar("ResearchBar-Canvas", xCoord, 2, 487, iStackBarHeight, gc.getInfoTypeForString("COLOR_RESEARCH_RATE"), ProgressBarUtil.TICK_MARKS, True)
+		self.pBarResearchBar_n.addBarItem("ResearchBar")
+		self.pBarResearchBar_n.addBarItem("ResearchText")
+# BUG - Progress Bar - Tick Marks - end
+		
+# BUG - Progress Bar - Tick Marks - start
+		xCoord = 268 + (self.xResolution - 1440) / 2
+		xCoord += 6 + 84
+		self.pBarResearchBar_w = ProgressBarUtil.ProgressBar("ResearchBar-w-Canvas", xCoord, 2, 487, iStackBarHeight, gc.getInfoTypeForString("COLOR_RESEARCH_RATE"), ProgressBarUtil.TICK_MARKS, True)
+		self.pBarResearchBar_w.addBarItem("ResearchBar-w")
+		self.pBarResearchBar_w.addBarItem("ResearchText")
+# BUG - Progress Bar - Tick Marks - end
+
+# BUG - Progress Bar - Tick Marks - start
+		self.pBarPopulationBar = ProgressBarUtil.ProgressBar("PopulationBar-Canvas", iCityCenterRow1X, iCityCenterRow1Y-4, self.xResolution - (iCityCenterRow1X*2), iStackBarHeight, gc.getYieldInfo(YieldTypes.YIELD_FOOD).getColorType(), ProgressBarUtil.SOLID_MARKS, True)
+		self.pBarPopulationBar.addBarItem("PopulationBar")
+		self.pBarPopulationBar.addBarItem("PopulationText")
+		self.pBarProductionBar = ProgressBarUtil.ProgressBar("ProductionBar-Canvas", iCityCenterRow2X, iCityCenterRow2Y-4, self.xResolution - (iCityCenterRow2X*2), iStackBarHeight, gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getColorType(), ProgressBarUtil.TICK_MARKS, True)
+		self.pBarProductionBar.addBarItem("ProductionBar")
+		self.pBarProductionBar.addBarItem("ProductionText")
+		self.pBarProductionBar_Whip = ProgressBarUtil.ProgressBar("ProductionBar-Whip-Canvas", iCityCenterRow2X, iCityCenterRow2Y-4, self.xResolution - (iCityCenterRow2X*2), iStackBarHeight, gc.getInfoTypeForString("COLOR_YELLOW"), ProgressBarUtil.CENTER_MARKS, False)
+		self.pBarProductionBar_Whip.addBarItem("ProductionBar")
+		self.pBarProductionBar_Whip.addBarItem("ProductionText")
+# BUG - Progress Bar - Tick Marks - end
 
 		self.m_iNumPlotListButtonsPerRow = (self.xResolution - (iMultiListXL+iMultiListXR) - 68) / 34
 
@@ -2451,6 +2482,11 @@ class CvMainInterface:
 
 
 
+# BUG - Progress Bar - Tick Marks - start
+		self.pBarResearchBar_n.hide(screen)
+		self.pBarResearchBar_w.hide(screen)
+# BUG - Progress Bar - Tick Marks - end
+
 		bShift = CyInterface().shiftKey()
 		
 		xResolution = screen.getXResolution()
@@ -2563,6 +2599,8 @@ class CvMainInterface:
 				elif (gc.getPlayer(ePlayer).getCurrentResearch() != -1):
 
 					szText = CyGameTextMgr().getResearchStr(ePlayer)
+
+					szResearchBar = "ResearchBar"
 					screen.setText( "ResearchText", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, screen.centerX(512), 3, -0.4, FontTypes.GAME_FONT, WidgetTypes.WIDGET_RESEARCH, -1, -1 )
 					screen.show( "ResearchText" )
 
@@ -2570,19 +2608,26 @@ class CvMainInterface:
 					overflowResearch = (gc.getPlayer(ePlayer).getOverflowResearch() * gc.getPlayer(ePlayer).calculateResearchModifier(gc.getPlayer(ePlayer).getCurrentResearch()))/100
 					researchCost = gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getResearchCost(gc.getPlayer(ePlayer).getCurrentResearch())
 					researchRate = gc.getPlayer(ePlayer).calculateResearchRate(-1)
-
-					screen.setBarPercentage( "ResearchBar", InfoBarTypes.INFOBAR_STORED, float(researchProgress + overflowResearch) / researchCost )
+					
+					screen.setBarPercentage( szResearchBar, InfoBarTypes.INFOBAR_STORED, float(researchProgress + overflowResearch) / researchCost )
 					if ( researchCost >  researchProgress + overflowResearch):
-						screen.setBarPercentage( "ResearchBar", InfoBarTypes.INFOBAR_RATE, float(researchRate) / (researchCost - researchProgress - overflowResearch))
+						screen.setBarPercentage( szResearchBar, InfoBarTypes.INFOBAR_RATE, float(researchRate) / (researchCost - researchProgress - overflowResearch))
 					else:
-						screen.setBarPercentage( "ResearchBar", InfoBarTypes.INFOBAR_RATE, 0.0 )
+						screen.setBarPercentage( szResearchBar, InfoBarTypes.INFOBAR_RATE, 0.0 )
 
-					screen.show( "ResearchBar" )
+					screen.show( szResearchBar )
 
-		return 0
+# BUG - Progress Bar - Tick Marks - start
+					if MainOpt.isShowpBarTickMarks():
+						if szResearchBar == "ResearchBar":
+							self.pBarResearchBar_n.drawTickMarks(screen, researchProgress + overflowResearch, researchCost, researchRate, researchRate, False)
+						else:
+							self.pBarResearchBar_w.drawTickMarks(screen, researchProgress + overflowResearch, researchCost, researchRate, researchRate, False)
+# BUG - Progress Bar - Tick Marks - end
 
 	def updateTimeText( self ):
 
+		return 0
 		global g_szTimeText
 		
 		ePlayer = gc.getGame().getActivePlayer()
@@ -2689,6 +2734,12 @@ class CvMainInterface:
 		screen.hide( "CultureBar" )
 		screen.hide( "MaintenanceText" )
 		screen.hide( "MaintenanceAmountText" )
+
+# BUG - Progress Bar - Tick Marks - start
+		self.pBarPopulationBar.hide(screen)
+		self.pBarProductionBar.hide(screen)
+		self.pBarProductionBar_Whip.hide(screen)
+# BUG - Progress Bar - Tick Marks - end
 
 # BUG - Raw Commerce - start
 		screen.hide("RawYieldsTrade0")
@@ -2892,6 +2943,11 @@ class CvMainInterface:
 					
 				screen.show( "PopulationBar" )
 
+# BUG - Progress Bar - Tick Marks - start
+				if MainOpt.isShowpBarTickMarks():
+					self.pBarPopulationBar.drawTickMarks(screen, pHeadSelectedCity.getFood(), pHeadSelectedCity.growthThreshold(), iFoodDifference, iFoodDifference, False)
+# BUG - Progress Bar - Tick Marks - end
+
 				if (pHeadSelectedCity.getOrderQueueLength() > 0):
 					if (pHeadSelectedCity.isProductionProcess()):
 						szBuffer = pHeadSelectedCity.getProductionName()
@@ -2973,7 +3029,27 @@ class CvMainInterface:
 						screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE_EXTRA, float(iProductionDiffJustFood) / (iNeeded - iStored - iProductionDiffNoFood) )
 					else:
 						screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE_EXTRA, 0.0)
+
 					screen.show( "ProductionBar" )
+
+# BUG - Progress Bar - Tick Marks - start
+					if MainOpt.isShowpBarTickMarks():
+						if (pHeadSelectedCity.isProductionProcess()):
+							iFirst = 0
+							iRate = 0
+						elif (pHeadSelectedCity.isFoodProduction() and (iProductionDiffJustFood > 0)):
+							iFirst = pHeadSelectedCity.getCurrentProductionDifference(False, True)
+							iRate = pHeadSelectedCity.getCurrentProductionDifference(False, False)
+						else:
+							iFirst = pHeadSelectedCity.getCurrentProductionDifference(True, True)
+							iRate = pHeadSelectedCity.getCurrentProductionDifference(True, False)
+						self.pBarProductionBar.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, False)
+
+						HURRY_WHIP = gc.getInfoTypeForString("HURRY_POPULATION")
+						if pHeadSelectedCity.canHurry(HURRY_WHIP, False):
+							iRate = pHeadSelectedCity.hurryProduction(HURRY_WHIP) / pHeadSelectedCity.hurryPopulation(HURRY_WHIP)
+							self.pBarProductionBar_Whip.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, True)
+# BUG - Progress Bar - Tick Marks - end
 
 				iCount = 0
 
