@@ -4001,17 +4001,29 @@ class CvMainInterface:
 
 					szLeftBuffer = u""
 					szRightBuffer = u""
-
-					if ( (pHeadSelectedUnit.movesLeft() % gc.getMOVE_DENOMINATOR()) > 0 ):
-						iDenom = 1
-					else:
-						iDenom = 0
-					iCurrMoves = ((pHeadSelectedUnit.movesLeft() / gc.getMOVE_DENOMINATOR()) + iDenom )
+					
+# BUG - Unit Movement Fraction - start
 					szLeftBuffer = localText.getText("INTERFACE_PANE_MOVEMENT", ())
-					if (pHeadSelectedUnit.baseMoves() == iCurrMoves):
-						szRightBuffer = u"%d%c" %(pHeadSelectedUnit.baseMoves(), CyGame().getSymbolID(FontSymbols.MOVES_CHAR) )
+					if MainOpt.isShowUnitMovementPointsFraction():
+						szRightBuffer = u"%d%c" %(pHeadSelectedUnit.baseMoves(), CyGame().getSymbolID(FontSymbols.MOVES_CHAR))
+						if (pHeadSelectedUnit.movesLeft() == 0):
+							szRightBuffer = u"0/" + szRightBuffer
+						elif (pHeadSelectedUnit.movesLeft() == pHeadSelectedUnit.baseMoves() * gc.getMOVE_DENOMINATOR()):
+							pass
+						else:
+							fCurrMoves = float(pHeadSelectedUnit.movesLeft()) / gc.getMOVE_DENOMINATOR()
+							szRightBuffer = (u"%.1f/" % fCurrMoves) + szRightBuffer
 					else:
-						szRightBuffer = u"%d/%d%c" %(iCurrMoves, pHeadSelectedUnit.baseMoves(), CyGame().getSymbolID(FontSymbols.MOVES_CHAR) )
+						if ( (pHeadSelectedUnit.movesLeft() % gc.getMOVE_DENOMINATOR()) > 0 ):
+							iDenom = 1
+						else:
+							iDenom = 0
+						iCurrMoves = ((pHeadSelectedUnit.movesLeft() / gc.getMOVE_DENOMINATOR()) + iDenom )
+						if (pHeadSelectedUnit.baseMoves() == iCurrMoves):
+							szRightBuffer = u"%d%c" %(pHeadSelectedUnit.baseMoves(), CyGame().getSymbolID(FontSymbols.MOVES_CHAR) )
+						else:
+							szRightBuffer = u"%d/%d%c" %(iCurrMoves, pHeadSelectedUnit.baseMoves(), CyGame().getSymbolID(FontSymbols.MOVES_CHAR) )
+# BUG - Unit Movement Fraction - end
 
 					szBuffer = szLeftBuffer + "  " + szRightBuffer
 					screen.appendTableRow( "SelectedUnitText" )
