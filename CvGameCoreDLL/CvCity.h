@@ -14,6 +14,11 @@ class CvArea;
 class CvGenericBuilding;
 class CvArtInfoBuilding;
 
+// BUG - start
+void addGoodOrBad(int iValue, int& iGood, int& iBad);
+void subtractGoodOrBad(int iValue, int& iGood, int& iBad);
+// BUG - end
+
 class CvCity : public CvDLLEntity
 {
 
@@ -126,6 +131,9 @@ public:
 
 	bool canHurry(HurryTypes eHurry, bool bTestVisible = false) const;		// Exposed to Python
 	void hurry(HurryTypes eHurry);																						// Exposed to Python
+// BUG - Hurry Assist - start
+	bool hurryOverflow(HurryTypes eHurry, int* iProduction, int* iGold, bool bCountThisTurn = false) const;
+// BUG - Hurry Assist - end
 
 	UnitTypes getConscriptUnit() const;																// Exposed to Python
 	CvUnit* initConscriptedUnit();

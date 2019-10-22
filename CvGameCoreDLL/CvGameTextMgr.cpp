@@ -3132,6 +3132,32 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	if (iFoodDifference <= 0)
 	{
 		szString.append(gDLL->getText("TXT_KEY_CITY_BAR_GROWTH", pCity->getFood(), pCity->growthThreshold()));
+// BUG - Hurry Anger Turns - start
+	if (getBugOptionBOOL("CityBar__HurryAnger", true, "BUG_CITYBAR_HURRY_ANGER") && pCity->getOwnerINLINE() == GC.getGameINLINE().getActivePlayer())
+	{
+		iRate = pCity->getHurryAngerTimer();
+		if (iRate > 0)
+		{
+			int iPop = ((iRate - 1) / pCity->flatHurryAngerLength() + 1) * GC.getDefineINT("HURRY_POP_ANGER");
+			szTempBuffer.Format(L" (%d %c %d)", iPop, gDLL->getSymbolID(ANGRY_POP_CHAR), iRate);
+			szString.append(szTempBuffer);
+		}
+	}
+// BUG - Anger Anger Turns - end
+
+// BUG - Draft Anger Turns - start
+	if (getBugOptionBOOL("CityBar__DraftAnger", true, "BUG_CITYBAR_DRAFT_ANGER") && pCity->getOwnerINLINE() == GC.getGameINLINE().getActivePlayer())
+	{
+		iRate = pCity->getConscriptAngerTimer();
+		if (iRate > 0)
+		{
+			int iPop = ((iRate - 1) / pCity->flatConscriptAngerLength() + 1) * GC.getDefineINT("CONSCRIPT_POP_ANGER");
+			szTempBuffer.Format(L" (%d %c %d)", iPop, gDLL->getSymbolID(CITIZEN_CHAR), iRate);
+			szString.append(szTempBuffer);
+		}
+	}
+// BUG - Draft Anger Turns - end
+
 	}
 	else
 	{
@@ -3154,6 +3180,60 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		{
 			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_PRODUCTION", pCity->getProductionName(), pCity->getProduction(), pCity->getProductionNeeded()));
 		}
+
+// BUG - Hurry Assist - start
+	if (getBugOptionBOOL("CityBar__HurryAssist", true, "BUG_CITYBAR_HURRY_ASSIST") && pCity->getOwnerINLINE() == GC.getGameINLINE().getActivePlayer())
+	{
+		bool bFirstHurry = true;
+		for (iI = 0; iI < GC.getNumHurryInfos(); iI++)
+		{
+			if (pCity->canHurry((HurryTypes)iI))
+			{
+				if (bFirstHurry)
+				{
+					szString.append(NEWLINE);
+					szString.append("Hurry:");
+					bFirstHurry = false;
+				}
+				bFirst = true;
+				szString.append(L" (");
+				int iPopulation = pCity->hurryPopulation((HurryTypes)iI);
+				if (iPopulation > 0)
+				{
+					szTempBuffer.Format(L"%d %c", -iPopulation, gDLL->getSymbolID(CITIZEN_CHAR));
+					setListHelp(szString, NULL, szTempBuffer, L", ", bFirst);
+					bFirst = false;
+				}
+				int iGold = pCity->hurryGold((HurryTypes)iI);
+				if (iGold > 0)
+				{
+					szTempBuffer.Format(L"%d %c", -iGold, GC.getCommerceInfo(COMMERCE_GOLD).getChar());
+					setListHelp(szString, NULL, szTempBuffer, L", ", bFirst);
+					bFirst = false;
+				}
+				int iOverflowProduction = 0;
+				int iOverflowGold = 0;
+				if (pCity->hurryOverflow((HurryTypes)iI, &iOverflowProduction, &iOverflowGold, getBugOptionBOOL("CityBar__HurryAssistIncludeCurrent", false, "BUG_CITYBAR_HURRY_ASSIST_INCLUDE_CURRENT")))
+				{
+					if (iOverflowProduction > 0)
+					{
+						szTempBuffer.Format(L"%d %c", iOverflowProduction, GC.getYieldInfo(YIELD_PRODUCTION).getChar());
+						setListHelp(szString, NULL, szTempBuffer, L", ", bFirst);
+						bFirst = false;
+					}
+					if (iOverflowGold > 0)
+					{
+						szTempBuffer.Format(L"%d %c", iOverflowGold, GC.getCommerceInfo(COMMERCE_GOLD).getChar());
+						setListHelp(szString, NULL, szTempBuffer, L", ", bFirst);
+						bFirst = false;
+					}
+				}
+				szString.append(L")");
+			}
+		}
+	}
+// BUG - Hurry Assist - end
+
 	}
 
 	bFirst = true;

@@ -1864,6 +1864,36 @@ void CvDLLWidgetData::parseHurryHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 			}
 		}
 
+// BUG - Hurry Overflow - start
+		if (getBugOptionBOOL("MiscHover__HurryOverflow", true, "BUG_HURRY_OVERFLOW_HOVER"))
+		{
+			int iOverflowProduction = 0;
+			int iOverflowGold = 0;
+			if (pHeadSelectedCity->hurryOverflow((HurryTypes)(widgetDataStruct.m_iData1), &iOverflowProduction, &iOverflowGold, getBugOptionBOOL("MiscHover__HurryOverflowIncludeCurrent", false, "BUG_HURRY_OVERFLOW_HOVER_INCLUDE_CURRENT")))
+			{
+				if (iOverflowProduction > 0 || iOverflowGold > 0)
+				{
+					bFirst = true;
+					CvWStringBuffer szOverflowBuffer;
+					if (iOverflowProduction > 0)
+					{
+						szTempBuffer.Format(L"%d%c", iOverflowProduction, GC.getYieldInfo(YIELD_PRODUCTION).getChar());
+						setListHelp(szOverflowBuffer, NULL, szTempBuffer, L", ", bFirst);
+						bFirst = false;
+					}
+					if (iOverflowGold > 0)
+					{
+						szTempBuffer.Format(L"%d%c", iOverflowGold, GC.getCommerceInfo(COMMERCE_GOLD).getChar());
+						setListHelp(szOverflowBuffer, NULL, szTempBuffer, L", ", bFirst);
+						bFirst = false;
+					}
+					szBuffer.append(NEWLINE);
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HURRY_OVERFLOW", szOverflowBuffer));
+				}
+			}
+		}
+// BUG - Hurry Overflow - end
+
 		iHurryAngerLength = pHeadSelectedCity->hurryAngerLength((HurryTypes)(widgetDataStruct.m_iData1));
 
 		if (iHurryAngerLength > 0)
