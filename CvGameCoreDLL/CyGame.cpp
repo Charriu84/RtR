@@ -16,6 +16,10 @@
 #include "CvReplayInfo.h"
 #include "CyPlot.h"
 
+// BUG - EXE/DLL Paths - start
+#include "CvInitCore.h"
+// BUG - EXE/DLL Paths - end
+
 CyGame::CyGame() : m_pGame(NULL)
 {
 	m_pGame = &GC.getGameINLINE();

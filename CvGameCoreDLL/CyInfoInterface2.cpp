@@ -27,14 +27,14 @@ void CyInfoPythonInterface2()
 
 	python::class_<CvRouteModelInfo, python::bases<CvInfoBase> >("CvRouteModelInfo")
 
-		.def("getModelFile", &CvRouteModelInfo::getModelFile, "const TCHAR* ()")
-		.def("setModelFile", &CvRouteModelInfo::setModelFile, "void (const TCHAR* szVal)")
-		.def("getModelFileKey", &CvRouteModelInfo::getModelFileKey, "const TCHAR* ()")
-		.def("setModelFileKey", &CvRouteModelInfo::setModelFileKey, "void (const TCHAR* szVal)")
+		.def("getModelFile", &CvRouteModelInfo::getModelFile, "string ()")
+		.def("setModelFile", &CvRouteModelInfo::setModelFile, "void (string)")
+		.def("getModelFileKey", &CvRouteModelInfo::getModelFileKey, "string ()")
+		.def("setModelFileKey", &CvRouteModelInfo::setModelFileKey, "void (string)")
 
-		.def("getConnectString", &CvRouteModelInfo::getConnectString, "const TCHAR* ()")
-		.def("getModelConnectString", &CvRouteModelInfo::getModelConnectString, "const TCHAR* ()")
-		.def("getRotateString", &CvRouteModelInfo::getRotateString, "const TCHAR* ()")
+		.def("getConnectString", &CvRouteModelInfo::getConnectString, "string ()")
+		.def("getModelConnectString", &CvRouteModelInfo::getModelConnectString, "string ()")
+		.def("getRotateString", &CvRouteModelInfo::getRotateString, "string ()")
 		;
 
 	python::class_<CvCivilizationInfo, python::bases<CvInfoBase> >("CvCivilizationInfo")
@@ -43,8 +43,8 @@ void CyInfoPythonInterface2()
 		.def("getNumCityNames", &CvCivilizationInfo::getNumCityNames, "int ()")
 		.def("getNumLeaders", &CvCivilizationInfo::getNumLeaders, "int ()")
 
-		.def("getSelectionSoundScriptId", &CvCivilizationInfo::getSelectionSoundScriptId, "int ()")
-		.def("getActionSoundScriptId", &CvCivilizationInfo::getActionSoundScriptId, "int ()")
+		.def("getSelectionSoundScriptId", &CvCivilizationInfo::getSelectionSoundScriptId)
+		.def("getActionSoundScriptId", &CvCivilizationInfo::getActionSoundScriptId)
 
 		.def("isAIPlayable", &CvCivilizationInfo::isAIPlayable, "bool ()")
 		.def("isPlayable", &CvCivilizationInfo::isPlayable, "bool ()")
@@ -52,9 +52,9 @@ void CyInfoPythonInterface2()
 		.def("getShortDescription", &CvCivilizationInfo::pyGetShortDescription, "wstring ()")
 		.def("getShortDescriptionKey", &CvCivilizationInfo::pyGetShortDescriptionKey, "wstring ()")
 		.def("getAdjective", &CvCivilizationInfo::pyGetAdjective, "wstring ()")
-		.def("getFlagTexture", &CvCivilizationInfo::getFlagTexture, "const TCHAR* ()")
-		.def("getArtDefineTag", &CvCivilizationInfo::getArtDefineTag, "const TCHAR* ()")
-		.def("getButton", &CvCivilizationInfo::getButton, "const TCHAR* ()")
+		.def("getFlagTexture", &CvCivilizationInfo::getFlagTexture, "string ()")
+		.def("getArtDefineTag", &CvCivilizationInfo::getArtDefineTag, "string ()")
+		.def("getButton", &CvCivilizationInfo::getButton, "string ()")
 
 		.def("getDerivativeCiv", &CvCivilizationInfo::getDerivativeCiv, "int ()")
 
@@ -89,7 +89,7 @@ void CyInfoPythonInterface2()
 		.def("isDiploVote", &CvVictoryInfo::isDiploVote, "bool ()")
 		.def("isPermanent", &CvVictoryInfo::isPermanent, "bool ()")
 
-		.def("getMovie", &CvVictoryInfo::getMovie, "const TCHAR* ()")
+		.def("getMovie", &CvVictoryInfo::getMovie, "string ()")
 		;
 
 	python::class_<CvHurryInfo, python::bases<CvInfoBase> >("CvHurryInfo")
@@ -190,7 +190,7 @@ void CyInfoPythonInterface2()
 		.def("getVictoryDelayPercent", &CvGameSpeedInfo::getVictoryDelayPercent, "int ()")
 		.def("getNumTurnIncrements", &CvGameSpeedInfo::getNumTurnIncrements, "int ()")
 
-		.def("getGameTurnInfo", &CvGameSpeedInfo::getGameTurnInfo, python::return_value_policy<python::reference_existing_object>(), "GameTurnInfo (int iIndex)")
+		.def("getGameTurnInfo", &CvGameSpeedInfo::getGameTurnInfo, python::return_value_policy<python::reference_existing_object>(), "GameTurnInfo ()")
 		;
 
 	python::class_<CvTurnTimerInfo, python::bases<CvInfoBase> >("CvTurnTimerInfo")
@@ -205,8 +205,8 @@ void CyInfoPythonInterface2()
 		.def("getCost", &CvBuildInfo::getCost, "int ()")
 		.def("getTechPrereq", &CvBuildInfo::getTechPrereq, "int ()")
 		.def("getImprovement", &CvBuildInfo::getImprovement, "int ()")
-		.def("getRoute", &CvBuildInfo::getRoute, "RouteTypes ()")
-		.def("getEntityEvent", &CvBuildInfo::getEntityEvent, "EntityEventTypes ()")
+		.def("getRoute", &CvBuildInfo::getRoute, "int ()")
+		.def("getEntityEvent", &CvBuildInfo::getEntityEvent, "int ()")
 		.def("getMissionType", &CvBuildInfo::getMissionType, "int ()")
 
 		.def("isKill", &CvBuildInfo::isKill, "bool ()")
@@ -215,7 +215,7 @@ void CyInfoPythonInterface2()
 
 		.def("getFeatureTech", &CvBuildInfo::getFeatureTech, "int (int i)")
 		.def("getFeatureTime", &CvBuildInfo::getFeatureTime, "int (int i)")
-		.def("getFeatureProduction", &CvBuildInfo::getFeatureProduction, "int ()")
+		.def("getFeatureProduction", &CvBuildInfo::getFeatureProduction, "int (int i)")
 
 		.def("isFeatureRemove", &CvBuildInfo::isFeatureRemove, "bool (int i)")
 		;
@@ -238,7 +238,7 @@ void CyInfoPythonInterface2()
 		.def("isTech", &CvGoodyInfo::isTech, "bool ()")
 		.def("isBad", &CvGoodyInfo::isBad, "bool ()")
 
-		.def("getSound", &CvGoodyInfo::getSound, "const TCHAR* ()")
+		.def("getSound", &CvGoodyInfo::getSound, "string ()")
 		;
 
 	python::class_<CvRouteInfo, python::bases<CvInfoBase> >("CvRouteInfo")
@@ -304,7 +304,7 @@ void CyInfoPythonInterface2()
 		.def("isPermanent", &CvImprovementInfo::isPermanent, "bool ()")
 		.def("isOutsideBorders", &CvImprovementInfo::isOutsideBorders, "bool ()")
 
-		.def("getArtDefineTag", &CvImprovementInfo::getArtDefineTag, "const TCHAR* ()")
+		.def("getArtDefineTag", &CvImprovementInfo::getArtDefineTag, "string ()")
 
 		// Arrays
 
@@ -327,7 +327,7 @@ void CyInfoPythonInterface2()
 		;
 
 	python::class_<CvBonusClassInfo, python::bases<CvInfoBase> >("CvBonusClassInfo")
-		.def("getUniqueRange", &CvBonusClassInfo::getUniqueRange, "int ()")
+		.def("getUniqueRange", &CvBonusClassInfo::getUniqueRange)
 		;
 
 	python::class_<CvBonusInfo, python::bases<CvInfoBase> >("CvBonusInfo")
@@ -363,7 +363,7 @@ void CyInfoPythonInterface2()
 		.def("isNoRiverSide", &CvBonusInfo::isNoRiverSide, "bool ()")
 		.def("isNormalize", &CvBonusInfo::isNormalize, "bool ()")
 
-		.def("getArtDefineTag", &CvBonusInfo::getArtDefineTag, "const TCHAR* ()")
+		.def("getArtDefineTag", &CvBonusInfo::getArtDefineTag, "string ()")
 
 		// Arrays
 
@@ -373,8 +373,8 @@ void CyInfoPythonInterface2()
 		.def("isFeature", &CvBonusInfo::isFeature, "bool (int i)")
 		.def("isFeatureTerrain", &CvBonusInfo::isFeatureTerrain, "bool (int i)")
 
-		.def("getButton", &CvBonusInfo::getButton, "const TCHAR* ()")
-		.def("getArtInfo", &CvBonusInfo::getArtInfo,  python::return_value_policy<python::reference_existing_object>(), "const CvArtInfoUnit* (int i, EraTypes eEra, UnitArtStyleTypes eStyle)")
+		.def("getButton", &CvBonusInfo::getButton, "string ()")
+		.def("getArtInfo", &CvBonusInfo::getArtInfo,  python::return_value_policy<python::reference_existing_object>(), "CvArtInfoBonus ()")
 		;
 
 	python::class_<CvFeatureInfo, python::bases<CvInfoBase> >("CvFeatureInfo")
