@@ -81,6 +81,9 @@
 			<option id="UnitMovementPointsFraction" key="Unit Movement Points Fraction" 
 					type="boolean" default="True" 
 					get="isShowUnitMovementPointsFraction" dirtyBit="InfoPane"/>
+			<option id="StackMovementPoints" key="Stack Movement Points" 
+					type="boolean" default="True" 
+					get="isShowStackMovementPoints" dirtyBit="InfoPane"/>
 			
 			<!-- Build/Action Icon Size by EmperorFool -->
 			<list   id="BuildIconSize" key="Build Icon Size" 

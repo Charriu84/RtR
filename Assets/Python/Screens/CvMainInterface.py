@@ -3929,9 +3929,31 @@ class CvMainInterface:
 				pSelectedGroup = 0
 
 			if (CyInterface().getLengthSelectionList() > 1):
-
-				screen.setText( "SelectedUnitLabel", "Background", localText.getText("TXT_KEY_UNIT_STACK", (CyInterface().getLengthSelectionList(), )), CvUtil.FONT_LEFT_JUSTIFY, 18, yResolution - 137, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_UNIT_NAME, -1, -1 )
-
+				
+# BUG - Stack Movement Display - start
+				szBuffer = localText.getText("TXT_KEY_UNIT_STACK", (CyInterface().getLengthSelectionList(), ))
+				if MainOpt.isShowStackMovementPoints():
+					iMinMoves = 100000
+					iMaxMoves = 0
+					for i in range(CyInterface().getLengthSelectionList()):
+						pUnit = CyInterface().getSelectionUnit(i)
+						if (pUnit is not None):
+							iLoopMoves = pUnit.movesLeft()
+							if (iLoopMoves > iMaxMoves):
+								iMaxMoves = iLoopMoves
+							if (iLoopMoves < iMinMoves):
+								iMinMoves = iLoopMoves
+					if (iMinMoves == iMaxMoves):
+						fMinMoves = float(iMinMoves) / gc.getMOVE_DENOMINATOR()
+						szBuffer += u" %.1f%c" % (fMinMoves, CyGame().getSymbolID(FontSymbols.MOVES_CHAR))
+					else:
+						fMinMoves = float(iMinMoves) / gc.getMOVE_DENOMINATOR()
+						fMaxMoves = float(iMaxMoves) / gc.getMOVE_DENOMINATOR()
+						szBuffer += u" %.1f - %.1f%c" % (fMinMoves, fMaxMoves, CyGame().getSymbolID(FontSymbols.MOVES_CHAR))
+				
+				screen.setText( "SelectedUnitLabel", "Background", szBuffer, CvUtil.FONT_LEFT_JUSTIFY, 18, yResolution - 137, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_UNIT_NAME, -1, -1 )
+# BUG - Stack Movement Display - end
+				
 				if ((pSelectedGroup == 0) or (pSelectedGroup.getLengthMissionQueue() <= 1)):
 					if (pHeadSelectedUnit):
 						for i in range(gc.getNumUnitInfos()):
