@@ -481,6 +481,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseTechEntryHelp(widgetDataStruct, szBuffer);
 		break;
 
+// BUG - Trade Denial - start
+	case WIDGET_PEDIA_JUMP_TO_TECH_TRADE:
+		parseTechTradeEntryHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Trade Denial - end
+
 	case WIDGET_PEDIA_JUMP_TO_REQUIRED_TECH:
 		parseTechTreePrereq(widgetDataStruct, szBuffer, false);
 		break;
@@ -508,6 +514,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_PEDIA_JUMP_TO_BONUS:
 		parseBonusHelp(widgetDataStruct, szBuffer);
 		break;
+
+// BUG - Trade Denial - start
+	case WIDGET_PEDIA_JUMP_TO_BONUS_TRADE:
+		parseBonusTradeHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Trade Denial - end
 
 	case WIDGET_PEDIA_MAIN:
 		break;
@@ -3322,54 +3334,93 @@ void CvDLLWidgetData::parseSetPercentHelp(CvWidgetDataStruct &widgetDataStruct, 
 
 void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	//	Do not execute this if we are trying to contact ourselves...
-	if (widgetDataStruct.m_iData1 >= MAX_PLAYERS || GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCivilizationType() == NO_CIVILIZATION)
+	// do not execute if player is out of range
+	PlayerTypes ePlayer = (PlayerTypes) widgetDataStruct.m_iData1;
+	if (ePlayer >= MAX_PLAYERS)
 	{
 		return;
 	}
-	if (GC.getGameINLINE().getActivePlayer() == widgetDataStruct.m_iData1)
+
+	// do not execute if player is not a real civ
+	CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
+	if (kPlayer.getCivilizationType() == NO_CIVILIZATION)
+	{
+		return;
+	}
+
+	TeamTypes eTeam = (TeamTypes) kPlayer.getTeam();
+	CvTeamAI& kTeam = GET_TEAM(eTeam);
+
+	PlayerTypes eActivePlayer = GC.getGameINLINE().getActivePlayer();
+	TeamTypes eActiveTeam = (TeamTypes) GET_PLAYER(eActivePlayer).getTeam();
+	CvTeamAI& kActiveTeam = GET_TEAM(eActiveTeam);
+
+	if (GC.getGameINLINE().getActivePlayer() == ePlayer)
 	{
 		parseScoreHelp(widgetDataStruct, szBuffer);
 		return;
 	}
 
-	szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CONTACT_LEADER", GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getNameKey(), GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCivilizationShortDescription()));
+	szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CONTACT_LEADER", kPlayer.getNameKey(), kPlayer.getCivilizationShortDescription()));
 
 	szBuffer.append(NEWLINE);
-	GAMETEXT.parsePlayerTraits(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+	GAMETEXT.parsePlayerTraits(szBuffer, ePlayer);
 
-	if (!(GET_TEAM(GC.getGameINLINE().getActiveTeam()).isHasMet(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam())))
+	if (!(kActiveTeam.isHasMet(eTeam)))
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HAVENT_MET_CIV"));
 	}
 	else
 	{
-		if (!(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).isHuman()))
+		if (!(kPlayer.isHuman()))
 		{
-			if (!(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).AI_isWillingToTalk(GC.getGameINLINE().getActivePlayer())))
+			if (!(kPlayer.AI_isWillingToTalk(eActivePlayer)))
 			{
 				szBuffer.append(NEWLINE);
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_REFUSES_TO_TALK"));
 			}
 
+// BUG - start
+			// moved up here to match other leaderhead hovers
 			szBuffer.append(NEWLINE);
-			GAMETEXT.getAttitudeString(szBuffer, ((PlayerTypes)widgetDataStruct.m_iData1), GC.getGameINLINE().getActivePlayer());
+			GAMETEXT.getEspionageString(szBuffer, ePlayer, eActivePlayer);
 
-			szBuffer.append(NEWLINE);
-			GAMETEXT.getEspionageString(szBuffer, ((PlayerTypes)widgetDataStruct.m_iData1), GC.getGameINLINE().getActivePlayer());
+			//szBuffer.append(NEWLINE);
+			GAMETEXT.getAttitudeString(szBuffer, ePlayer, eActivePlayer);
 
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_CTRL_TRADE"));
+			// espionage moved above
+			// CTRL instructions moved below
+// BUG - end
 		}
+// BUG - Espionage for Humans - start
 		else
 		{
 			szBuffer.append(NEWLINE);
-			GAMETEXT.getEspionageString(szBuffer, ((PlayerTypes)widgetDataStruct.m_iData1), GC.getGameINLINE().getActivePlayer());
+			GAMETEXT.getEspionageString(szBuffer, ePlayer, eActivePlayer);
 		}
+// BUG - Espionage for Humans - end
 
-		if ((GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam() != GC.getGameINLINE().getActiveTeam()) && !(GET_TEAM(GC.getGameINLINE().getActiveTeam()).isAtWar(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam())))
+// BUG - Deals in Scoreboard - start
+		if (gDLL->ctrlKey())
 		{
-			if (GET_TEAM(GC.getGameINLINE().getActiveTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam()))
+			GAMETEXT.getActiveDealsString(szBuffer, ePlayer, eActivePlayer);
+		}
+// BUG - Deals in Scoreboard - end
+
+// BUG - Relations in Scoreboard - start
+		GAMETEXT.getAllRelationsString(szBuffer, eTeam);
+// BUG - Relations in Scoreboard - end
+
+// BUG - start
+		// moved from above to organize the hover text
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_CTRL_TRADE"));
+// BUG - end
+
+		if ((eTeam != eActiveTeam) && !(kActiveTeam.isAtWar(eTeam)))
+		{
+			if (kActiveTeam.canDeclareWar(eTeam))
 			{
 				szBuffer.append(NEWLINE);
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_ALT_DECLARE_WAR"));
@@ -3382,7 +3433,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		}
 	}
 
-	if (GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).isHuman())
+	if (kPlayer.isHuman())
 	{
 //		szBuffer += "\n(<SHIFT> to Send Chat Message)";
 		szBuffer.append(NEWLINE);
@@ -4076,6 +4127,19 @@ void CvDLLWidgetData::parseTechEntryHelp(CvWidgetDataStruct &widgetDataStruct, C
 	}
 }
 
+// BUG - Trade Denial - start
+void CvDLLWidgetData::parseTechTradeEntryHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	if (widgetDataStruct.m_iData2 == -1)
+	{
+		parseTechEntryHelp(widgetDataStruct, szBuffer);
+	}
+	else
+	{
+		GAMETEXT.setTechTradeHelp(szBuffer, (TechTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2, false, false, false, true, NO_TECH);
+	}
+}
+// BUG - Trade Denial - end
 
 void CvDLLWidgetData::parseTechPrereqHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
@@ -4420,6 +4484,20 @@ void CvDLLWidgetData::parseBonusHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 	}
 }
 
+// BUG - Trade Denial - start
+void CvDLLWidgetData::parseBonusTradeHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	if (widgetDataStruct.m_iData2 == -1)
+	{
+		parseBonusHelp(widgetDataStruct, szBuffer);
+	}
+	else
+	{
+		GAMETEXT.setBonusTradeHelp(szBuffer, (BonusTypes)widgetDataStruct.m_iData1, false, (PlayerTypes)widgetDataStruct.m_iData2);
+	}
+}
+// BUG - Trade Denial - end
+
 void CvDLLWidgetData::parseReligionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	if (widgetDataStruct.m_iData2 != 0)
@@ -4673,7 +4751,52 @@ void CvDLLWidgetData::parseKillDealHelp(CvWidgetDataStruct &widgetDataStruct, Cv
 		}
 	}
 
-	szBuffer.assign(szTemp);
+	szBuffer.append(szTemp);
+	
+// BUG - Kill Deal Info - start
+	if (pDeal != NULL)
+	{
+		szBuffer.append(NEWLINE);
+		GAMETEXT.getDealString(szBuffer, *pDeal, GC.getGameINLINE().getActivePlayer());
+
+		int iItem = widgetDataStruct.m_iData2;
+		if (iItem != -1)
+		{
+			const CLinkList<TradeData>* listTradeData = NULL;
+
+			if (iItem < pDeal->getLengthFirstTrades())
+			{
+				listTradeData = pDeal->getFirstTrades();
+			}
+			else
+			{
+				iItem -= pDeal->getLengthFirstTrades();
+				if (iItem < pDeal->getLengthSecondTrades())
+				{
+					listTradeData = pDeal->getSecondTrades();
+				}
+			}
+
+			if (listTradeData != NULL)
+			{
+				int iCount = 0;
+				for (CLLNode<TradeData>* pNode = listTradeData->head(); NULL != pNode; pNode = listTradeData->next(pNode))
+				{
+					if (iCount++ == iItem)
+					{
+						TradeData& kTradeData = pNode->m_data;
+						if (kTradeData.m_eItemType == TRADE_RESOURCES)
+						{
+							szBuffer.append(NEWLINE NEWLINE);
+							GAMETEXT.setBonusHelp(szBuffer, (BonusTypes)kTradeData.m_iData);
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+// BUG - Kill Deal Info - end
 }
 
 

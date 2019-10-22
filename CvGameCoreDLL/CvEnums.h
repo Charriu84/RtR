@@ -551,6 +551,11 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_HELP_FINANCE_SPECIALISTS,
 // BUG - Finance Advisor - end
 
+// BUG - Trade Denial - start
+	WIDGET_PEDIA_JUMP_TO_BONUS_TRADE,
+	WIDGET_PEDIA_JUMP_TO_TECH_TRADE,
+// BUG - Trade Denial - end
+
 // BUG - Foreign Advisor INFO Trade - start
 	WIDGET_TRADE_ROUTES,
 // BUG - Foreign Advisor INFO Trade - end
