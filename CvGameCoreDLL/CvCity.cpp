@@ -9579,6 +9579,42 @@ void CvCity::changeBuildingProductionTime(BuildingTypes eIndex, int iChange)
 }
 
 
+// BUG - Production Decay - start
+/*
+ * Returns true if the given building will decay this turn.
+ */
+bool CvCity::isBuildingProductionDecay(BuildingTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumBuildingInfos(), "eIndex expected to be < GC.getNumBuildingInfos()");
+	return isHuman() && getProductionBuilding() != eIndex && getBuildingProduction(eIndex) > 0 
+			&& 100 * getBuildingProductionTime(eIndex) >= GC.getDefineINT("BUILDING_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent();
+}
+
+/*
+ * Returns the amount by which the given building will decay once it reaches the limit.
+ * Ignores whether or not the building will actually decay this turn.
+ */
+int CvCity::getBuildingProductionDecay(BuildingTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumBuildingInfos(), "eIndex expected to be < GC.getNumBuildingInfos()");
+	int iProduction = getBuildingProduction(eIndex);
+	return iProduction - ((iProduction * GC.getDefineINT("BUILDING_PRODUCTION_DECAY_PERCENT")) / 100);
+}
+
+/*
+ * Returns the number of turns left before the given building will decay.
+ */
+int CvCity::getBuildingProductionDecayTurns(BuildingTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumBuildingInfos(), "eIndex expected to be < GC.getNumBuildingInfos()");
+	return std::max(0, (GC.getDefineINT("BUILDING_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent() + 99) / 100 - getBuildingProductionTime(eIndex)) + 1;
+}
+// BUG - Production Decay - end
+
+
 int CvCity::getProjectProduction(ProjectTypes eIndex) const																 
 {
 	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
@@ -9692,6 +9728,42 @@ void CvCity::changeUnitProductionTime(UnitTypes eIndex, int iChange)
 {
 	setUnitProductionTime(eIndex, (getUnitProductionTime(eIndex) + iChange));
 }
+
+
+// BUG - Production Decay - start
+/*
+ * Returns true if the given unit will decay this turn.
+ */
+bool CvCity::isUnitProductionDecay(UnitTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumUnitInfos(), "eIndex expected to be < GC.getNumUnitInfos()");
+	return isHuman() && getProductionUnit() != eIndex && getUnitProduction(eIndex) > 0 
+			&& 100 * getUnitProductionTime(eIndex) >= GC.getDefineINT("UNIT_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+}
+
+/*
+ * Returns the amount by which the given unit will decay once it reaches the limit.
+ * Ignores whether or not the unit will actually decay this turn.
+ */
+int CvCity::getUnitProductionDecay(UnitTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumUnitInfos(), "eIndex expected to be < GC.getNumUnitInfos()");
+	int iProduction = getUnitProduction(eIndex);
+	return iProduction - ((iProduction * GC.getDefineINT("UNIT_PRODUCTION_DECAY_PERCENT")) / 100);
+}
+
+/*
+ * Returns the number of turns left before the given unit will decay.
+ */
+int CvCity::getUnitProductionDecayTurns(UnitTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumUnitInfos(), "eIndex expected to be < GC.getNumUnitInfos()");
+	return std::max(0, (GC.getDefineINT("UNIT_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent() + 99) / 100 - getUnitProductionTime(eIndex)) + 1;
+}
+// BUG - Production Decay - end
 
 
 int CvCity::getGreatPeopleUnitRate(UnitTypes eIndex) const																 

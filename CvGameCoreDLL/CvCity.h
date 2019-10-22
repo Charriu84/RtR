@@ -731,6 +731,11 @@ public:
 	int getBuildingProductionTime(BuildingTypes eIndex) const;										// Exposed to Python
 	void setBuildingProductionTime(BuildingTypes eIndex, int iNewValue);		// Exposed to Python
 	void changeBuildingProductionTime(BuildingTypes eIndex, int iChange);		// Exposed to Python
+// BUG - Production Decay - start
+	bool isBuildingProductionDecay(BuildingTypes eIndex) const;														// Exposed to Python
+	int getBuildingProductionDecay(BuildingTypes eIndex) const;														// Exposed to Python
+	int getBuildingProductionDecayTurns(BuildingTypes eIndex) const;												// Exposed to Python
+// BUG - Production Decay - end
 
 	int getProjectProduction(ProjectTypes eIndex) const;								// Exposed to Python
 	void setProjectProduction(ProjectTypes eIndex, int iNewValue);					// Exposed to Python
@@ -746,6 +751,11 @@ public:
 	int getUnitProductionTime(UnitTypes eIndex) const;														// Exposed to Python
 	void setUnitProductionTime(UnitTypes eIndex, int iNewValue);						// Exposed to Python
 	void changeUnitProductionTime(UnitTypes eIndex, int iChange);						// Exposed to Python
+// BUG - Production Decay - start
+	bool isUnitProductionDecay(UnitTypes eIndex) const;														// Exposed to Python
+	int getUnitProductionDecay(UnitTypes eIndex) const;														// Exposed to Python
+	int getUnitProductionDecayTurns(UnitTypes eIndex) const;												// Exposed to Python
+// BUG - Production Decay - end
 
 	int getGreatPeopleUnitRate(UnitTypes eIndex) const;														// Exposed to Python
 	void setGreatPeopleUnitRate(UnitTypes eIndex, int iNewValue);

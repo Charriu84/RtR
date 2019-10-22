@@ -1839,6 +1839,23 @@ void CyCity::changeBuildingProductionTime(int /*BuildingTypes*/ eIndex, int iCha
 		m_pCity->changeBuildingProductionTime((BuildingTypes) eIndex, iChange);
 }
 
+// BUG - Production Decay - start
+bool CyCity::isBuildingProductionDecay(int /*BuildingTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->isBuildingProductionDecay((BuildingTypes)eIndex) : false;
+}
+
+int CyCity::getBuildingProductionDecay(int /*BuildingTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getBuildingProductionDecay((BuildingTypes)eIndex) : 0;
+}
+
+int CyCity::getBuildingProductionDecayTurns(int /*BuildingTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getBuildingProductionDecayTurns((BuildingTypes)eIndex) : 0;
+}
+// BUG - Production Decay - end
+
 int CyCity::getBuildingOriginalOwner(int /*BuildingTypes*/ iIndex)
 {
 	return m_pCity ? m_pCity->getBuildingOriginalOwner((BuildingTypes) iIndex) : -1;
@@ -1865,6 +1882,40 @@ void CyCity::changeUnitProduction(int /*UnitTypes*/ iIndex, int iChange)
 	if (m_pCity)
 		m_pCity->changeUnitProduction((UnitTypes) iIndex, iChange);
 }
+
+// BUG - Production Decay - start
+int CyCity::getUnitProductionTime(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getUnitProductionTime((UnitTypes)eIndex) : -1;
+}
+
+void CyCity::setUnitProductionTime(int /*UnitTypes*/ eIndex, int iNewValue)
+{
+	if (m_pCity)
+		m_pCity->setUnitProductionTime((UnitTypes)eIndex, iNewValue);
+}
+
+void CyCity::changeUnitProductionTime(int /*UnitTypes*/ eIndex, int iChange)
+{
+	if (m_pCity)
+		m_pCity->changeUnitProductionTime((UnitTypes) eIndex, iChange);
+}
+
+bool CyCity::isUnitProductionDecay(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->isUnitProductionDecay((UnitTypes)eIndex) : false;
+}
+
+int CyCity::getUnitProductionDecay(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getUnitProductionDecay((UnitTypes)eIndex) : 0;
+}
+
+int CyCity::getUnitProductionDecayTurns(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getUnitProductionDecayTurns((UnitTypes)eIndex) : 0;
+}
+// BUG - Production Decay - end
 
 int CyCity::getGreatPeopleUnitRate(int /*UnitTypes*/ iIndex)
 {
