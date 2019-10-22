@@ -3041,6 +3041,29 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			szString.append(GC.getRouteInfo(pPlot->getRevealedRouteType(GC.getGameINLINE().getActiveTeam(), true)).getDescription());
 		}
 
+// BUG - Partial Builds - start
+		if (pPlot->hasAnyBuildProgress() && getBugOptionBOOL("MiscHover__PartialBuilds", true, "BUG_PLOT_HOVER_PARTIAL_BUILDS"))
+		{
+			PlayerTypes ePlayer = GC.getGameINLINE().getActivePlayer();
+
+			for (int iI = 0; iI < GC.getNumBuildInfos(); iI++)
+			{
+				if (pPlot->getBuildProgress((BuildTypes)iI) > 0 && pPlot->canBuild((BuildTypes)iI, ePlayer))
+				{
+					int iTurns = pPlot->getBuildTurnsLeft((BuildTypes)iI, GC.getGame().getActivePlayer());
+					
+					if (iTurns > 0 && iTurns < MAX_INT)
+					{
+						szString.append(NEWLINE);
+						szString.append(GC.getBuildInfo((BuildTypes)iI).getDescription());
+						szString.append(L": ");
+						szString.append(gDLL->getText("TXT_KEY_ACTION_NUM_TURNS", iTurns));
+					}
+				}
+			}
+		}
+// BUG - Partial Builds - end
+
 		if (pPlot->getBlockadedCount(GC.getGameINLINE().getActiveTeam()) > 0)
 		{
 			szString.append(CvWString::format(SETCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT")));
@@ -9719,7 +9742,7 @@ void CvGameTextMgr::setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eRe
 	}
 }
 
-void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes eReligion, CvCity *pCity, bool bCityScreen, bool bForceReligion, bool bForceState, bool bNoStateReligion)
+void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes eReligion, CvCity *pCity, bool bCityBar, bool bForceReligion, bool bForceState, bool bNoStateReligion)
 {
 	int i;
 	CvWString szTempBuffer;
@@ -9737,7 +9760,7 @@ void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes
 
 	ReligionTypes eStateReligion = (bNoStateReligion ? NO_RELIGION : GET_PLAYER(pCity->getOwnerINLINE()).getStateReligion());
 
-	if (bCityScreen)
+	if (bCityBar)
 	{
 		szBuffer.append(CvWString::format(SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getReligionInfo(eReligion).getDescription()));
 		szBuffer.append(NEWLINE);
@@ -10050,7 +10073,7 @@ void CvGameTextMgr::setCorporationHelp(CvWStringBuffer &szBuffer, CorporationTyp
 	}
 }
 
-void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, CvCity *pCity, bool bCityScreen, bool bForceCorporation)
+void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, CvCity *pCity, bool bCityBar, bool bForceCorporation)
 {
 	if (pCity == NULL)
 	{
@@ -10059,7 +10082,7 @@ void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, Corporatio
 
 	CvCorporationInfo& kCorporation = GC.getCorporationInfo(eCorporation);
 
-	if (bCityScreen)
+	if (bCityBar)
 	{
 		szBuffer.append(CvWString::format(SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), kCorporation.getDescription()));
 		szBuffer.append(NEWLINE);
@@ -10163,7 +10186,7 @@ void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, Corporatio
 		bHandled = true;
 	}
 
-	if (bCityScreen)
+	if (bCityBar)
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_CORPORATION_BONUS_REQUIRED"));
