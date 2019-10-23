@@ -235,6 +235,9 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		break;
 
 	case WIDGET_HELP_DEFENSE:
+// BUG - Defense Hover - start
+		parseDefenseHelp(widgetDataStruct, szBuffer);
+// BUG - Defense Hover - end
 		break;
 
 	case WIDGET_HELP_HEALTH:
@@ -610,6 +613,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 
 	case WIDGET_MINIMAP_HIGHLIGHT:
 		break;
+
+// BUG - Food Rate Hover - start
+	case WIDGET_FOOD_MOD_HELP:
+		parseFoodModHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Food Rate Hover - end
 
 	case WIDGET_PRODUCTION_MOD_HELP:
 		parseProductionModHelp(widgetDataStruct, szBuffer);
@@ -3291,6 +3300,15 @@ void CvDLLWidgetData::parseChangeSpecialistHelp(CvWidgetDataStruct &widgetDataSt
 		{
 			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_REMOVE_SPECIALIST", GC.getSpecialistInfo((SpecialistTypes) widgetDataStruct.m_iData1).getTextKeyWide()));
 
+// BUG - Remove Specialist Hover - start
+			if (getBugOptionBOOL("MiscHover__RemoveSpecialist", true, "BUG_CITY_SCREEN_REMOVE_SPECIALIST_HOVER"))
+			{
+// BUG - Specialist Actual Effects - start
+				GAMETEXT.parseSpecialistHelpActual(szBuffer, ((SpecialistTypes)(widgetDataStruct.m_iData1)), pHeadSelectedCity, false, widgetDataStruct.m_iData2);
+// BUG - Specialist Actual Effects - end
+			}
+// BUG - Remove Specialist Hover - end
+
 			if (pHeadSelectedCity->getForceSpecialistCount((SpecialistTypes)(widgetDataStruct.m_iData1)) > 0)
 			{
 				szBuffer.append(NEWLINE);
@@ -4879,6 +4897,17 @@ void CvDLLWidgetData::doRefreshMilitaryAdvisor(CvWidgetDataStruct &widgetDataStr
 	gDLL->getPythonIFace()->callFunction(PYScreensModule, "refreshMilitaryAdvisor", argsList.makeFunctionArgs());
 }
 
+// BUG - Food Rate Hover - start
+void CvDLLWidgetData::parseFoodModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
+	if (NULL != pCity)
+	{
+		GAMETEXT.setFoodHelp(szBuffer, *pCity);
+	}
+}
+// BUG - Food Rate Hover - end
+
 void CvDLLWidgetData::parseProductionModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
@@ -4927,3 +4956,13 @@ void CvDLLWidgetData::parseTradeRoutes(CvWidgetDataStruct& widgetDataStruct, CvW
 }
 // BUG - Trade Hover - end
 
+// BUG - Defense Hover - start
+void CvDLLWidgetData::parseDefenseHelp(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+	CvCity* pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
+	if (NULL != pHeadSelectedCity)
+	{
+		GAMETEXT.setDefenseHelp(szBuffer, *pHeadSelectedCity);
+	}
+}
+// BUG - Defense Hover - end

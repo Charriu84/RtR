@@ -212,6 +212,9 @@ public:
 	void parseDescriptionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer, bool bMinimal);
 	void parseCloseScreenHelp(CvWStringBuffer &szBuffer);
 	void parseKillDealHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+// BUG - Food Rate Hover - start
+	void parseFoodModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+// BUG - Food Rate Hover - end
 	void parseProductionModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseLeaderheadHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseLeaderLineHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
@@ -222,6 +225,9 @@ public:
 // BUG - Trade Hover - start
 	void parseTradeRoutes(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 // BUG - Trade Hover - end
+// BUG - Defense Hover - start
+	void parseDefenseHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+// BUG - Defense Hover - end
 
 protected:
 	
