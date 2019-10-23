@@ -13042,6 +13042,105 @@ void CvGameTextMgr::setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city)
 }
 // BUG - Food Rate Hover - end
 
+// BUG - Building Additional Yield - start
+bool CvGameTextMgr::setBuildingAdditionalYieldHelp(CvWStringBuffer &szBuffer, const CvCity& city, YieldTypes eIndex, const CvWString& szStart, bool bStarted)
+{
+	CvYieldInfo& info = GC.getYieldInfo(eIndex);
+	CvWString szLabel;
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(GET_PLAYER(city.getOwnerINLINE()).getCivilizationType());
+
+	for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings((BuildingClassTypes)iI);
+
+		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
+		{
+			int iChange = city.getAdditionalYieldByBuilding(eIndex, eBuilding);
+
+			if (iChange != 0)
+			{
+				if (!bStarted)
+				{
+					szBuffer.append(szStart);
+					bStarted = true;
+				}
+
+				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
+				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iChange, info.getChar(), false, true);
+			}
+		}
+	}
+
+	return bStarted;
+}
+// BUG - Building Additional Yield - end
+
+// BUG - Building Additional Commerce - start
+bool CvGameTextMgr::setBuildingAdditionalCommerceHelp(CvWStringBuffer &szBuffer, const CvCity& city, CommerceTypes eIndex, const CvWString& szStart, bool bStarted)
+{
+	CvCommerceInfo& info = GC.getCommerceInfo(eIndex);
+	CvWString szLabel;
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(GET_PLAYER(city.getOwnerINLINE()).getCivilizationType());
+
+	for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings((BuildingClassTypes)iI);
+
+		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
+		{
+			int iChange = city.getAdditionalCommerceTimes100ByBuilding(eIndex, eBuilding);
+
+			if (iChange != 0)
+			{
+				if (!bStarted)
+				{
+					szBuffer.append(szStart);
+					bStarted = true;
+				}
+
+				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
+				setResumableValueTimes100ChangeHelp(szBuffer, szLabel, L": ", L"", iChange, info.getChar(), true);
+			}
+		}
+	}
+
+	return bStarted;
+}
+// BUG - Building Additional Commerce - end
+
+// BUG - Building Saved Maintenance - start
+bool CvGameTextMgr::setBuildingSavedMaintenanceHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted)
+{
+	CvCommerceInfo& info = GC.getCommerceInfo(COMMERCE_GOLD);
+	CvWString szLabel;
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(GET_PLAYER(city.getOwnerINLINE()).getCivilizationType());
+
+	for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings((BuildingClassTypes)iI);
+
+		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
+		{
+			int iChange = city.getSavedMaintenanceTimes100ByBuilding(eBuilding);
+			
+			if (iChange != 0)
+			{
+				if (!bStarted)
+				{
+					szBuffer.append(szStart);
+					bStarted = true;
+				}
+
+				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
+				setResumableValueTimes100ChangeHelp(szBuffer, szLabel, L": ", L"", iChange, info.getChar(), true);
+			}
+		}
+	}
+
+	return bStarted;
+}
+// BUG - Building Saved Maintenance - end
+
 void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
 	FAssertMsg(NO_PLAYER != city.getOwnerINLINE(), "City must have an owner");
@@ -13061,7 +13160,10 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		szBuffer.append(NEWLINE);
 	}
 
-	if (city.getCurrentProductionDifference(false, true) == 0)
+// BUG - Building Additional Production - start
+	bool bBuildingAdditionalYield = getBugOptionBOOL("MiscHover__BuildingAdditionalProduction", true, "BUG_BUILDING_ADDITIONAL_PRODUCTION_HOVER");
+	if (city.getCurrentProductionDifference(false, true) == 0 && !bBuildingAdditionalYield)
+// BUG - Building Additional Production - end
 	{
 		return;
 	}
@@ -13289,8 +13391,13 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	FAssertMsg(iModProduction == city.getCurrentProductionDifference(false, !bIsProcess), "Modified Production does not match actual value");
 
 	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_PROD_FINAL_YIELD", iModProduction));
-	szBuffer.append(NEWLINE);
 
+// BUG - Building Additional Production - start
+	if (bBuildingAdditionalYield && city.getOwnerINLINE() == GC.getGame().getActivePlayer())
+	{
+		setBuildingAdditionalYieldHelp(szBuffer, city, YIELD_PRODUCTION, DOUBLE_SEPARATOR);
+	}
+// BUG - Building Additional Production - end
 }
 
 
@@ -13619,7 +13726,10 @@ void CvGameTextMgr::buildHintsList(CvWStringBuffer& szBuffer)
 
 void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eCommerceType)
 {
-	if (NO_COMMERCE == eCommerceType || 0 == city.getCommerceRateTimes100(eCommerceType))
+// BUG - Building Additional Commerce - start
+	bool bBuildingAdditionalCommerce = getBugOptionBOOL("MiscHover__BuildingAdditionalCommerce", true, "BUG_BUILDING_ADDITIONAL_COMMERCE_HOVER");
+	if (NO_COMMERCE == eCommerceType || (0 == city.getCommerceRateTimes100(eCommerceType) && !bBuildingAdditionalCommerce))
+// BUG - Building Additional Commerce - end
 	{
 		return;
 	}
@@ -13639,12 +13749,19 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_SLIDER_PERCENT_FLOAT", owner.getCommercePercent(eCommerceType), city.getYieldRate(YIELD_COMMERCE), szRate.GetCString(), info.getChar()));
 	szBuffer.append(NEWLINE);
 
+// BUG - Base Commerce - start
+	bool bNeedSubtotal = false;
+// BUG - Base Commerce - end
+
 	int iSpecialistCommerce = city.getSpecialistCommerce(eCommerceType) + (city.getSpecialistPopulation() + city.getNumGreatPeople()) * owner.getSpecialistExtraCommerce(eCommerceType);
 	if (0 != iSpecialistCommerce)
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_SPECIALIST_COMMERCE", iSpecialistCommerce, info.getChar(), L"TXT_KEY_CONCEPT_SPECIALISTS"));
 		szBuffer.append(NEWLINE);
 		iBaseCommerceRate += 100 * iSpecialistCommerce;
+// BUG - Base Commerce - start
+		bNeedSubtotal = true;
+// BUG - Base Commerce - end
 	}
 
 	int iReligionCommerce = city.getReligionCommerce(eCommerceType);
@@ -13653,6 +13770,9 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_RELIGION_COMMERCE", iReligionCommerce, info.getChar()));
 		szBuffer.append(NEWLINE);
 		iBaseCommerceRate += 100 * iReligionCommerce;
+// BUG - Base Commerce - start
+		bNeedSubtotal = true;
+// BUG - Base Commerce - end
 	}
 
 	int iCorporationCommerce = city.getCorporationCommerce(eCommerceType);
@@ -13661,6 +13781,9 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_CORPORATION_COMMERCE", iCorporationCommerce, info.getChar()));
 		szBuffer.append(NEWLINE);
 		iBaseCommerceRate += 100 * iCorporationCommerce;
+// BUG - Base Commerce - start
+		bNeedSubtotal = true;
+// BUG - Base Commerce - end
 	}
 
 	int iBuildingCommerce = city.getBuildingCommerce(eCommerceType);
@@ -13669,6 +13792,9 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BUILDING_COMMERCE", iBuildingCommerce, info.getChar()));
 		szBuffer.append(NEWLINE);
 		iBaseCommerceRate += 100 * iBuildingCommerce;
+// BUG - Base Commerce - start
+		bNeedSubtotal = true;
+// BUG - Base Commerce - end
 	}
 
 	int iFreeCityCommerce = owner.getFreeCityCommerce(eCommerceType);
@@ -13677,8 +13803,19 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_FREE_CITY_COMMERCE", iFreeCityCommerce, info.getChar()));
 		szBuffer.append(NEWLINE);
 		iBaseCommerceRate += 100 * iFreeCityCommerce;
+// BUG - Base Commerce - start
+		bNeedSubtotal = true;
+// BUG - Base Commerce - end
 	}
 
+// BUG - Base Commerce - start
+		if (bNeedSubtotal && city.getCommerceRateModifier(eCommerceType) != 0 && getBugOptionBOOL("MiscHover__BaseCommerce", true, "BUG_CITY_SCREEN_BASE_COMMERCE_HOVER"))
+		{
+			CvWString szYield = CvWString::format(L"%d.%02d", iBaseCommerceRate/100, iBaseCommerceRate%100);
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_COMMERCE_SUBTOTAL_YIELD_FLOAT", info.getTextKeyWide(), szYield.GetCString(), info.getChar()));
+			szBuffer.append(NEWLINE);
+		}
+// BUG - Base Commerce - end
 
 	FAssertMsg(city.getBaseCommerceRateTimes100(eCommerceType) == iBaseCommerceRate, "Base Commerce rate does not agree with actual value");
 	
@@ -13814,7 +13951,13 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 
 	CvWString szYield = CvWString::format(L"%d.%02d", iModYield/100, iModYield%100);
 	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_COMMERCE_FINAL_YIELD_FLOAT", info.getTextKeyWide(), szYield.GetCString(), info.getChar()));
-	szBuffer.append(NEWLINE);
+
+// BUG - Building Additional Commerce - start
+	if (bBuildingAdditionalCommerce && city.getOwnerINLINE() == GC.getGame().getActivePlayer())
+	{
+		setBuildingAdditionalCommerceHelp(szBuffer, city, eCommerceType, DOUBLE_SEPARATOR);
+	}
+// BUG - Building Additional Commerce - end
 }
 
 void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType)
@@ -14095,10 +14238,59 @@ void CvGameTextMgr::parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city
 		}
 	}
 
-	if (city.getGreatPeopleRate() == 0)
+// BUG - Building Additional Great People - start
+	bool bBuildingAdditionalGreatPeople = getBugOptionBOOL("MiscHover__BuildingAdditionalGreatPeople", true, "BUG_BUILDING_ADDITIONAL_GREAT_PEOPLE_HOVER");
+	if (city.getGreatPeopleRate() == 0 && !bBuildingAdditionalGreatPeople)
+// BUG - Building Additional Great People - end
 	{
 		return;
 	}
+
+// BUG - Great People Rate Breakdown - start
+	if (getBugOptionBOOL("MiscHover__GreatPeopleRateBreakdown", true, "BUG_GREAT_PEOPLE_RATE_BREAKDOWN_HOVER"))
+	{
+		bool bFirst = true;
+		int iRate = 0;
+		for (int i = 0; i < GC.getNumSpecialistInfos(); i++)
+		{
+			int iCount = city.getSpecialistCount((SpecialistTypes)i) + city.getFreeSpecialistCount((SpecialistTypes)i);
+			if (iCount > 0)
+			{
+				iRate += iCount * GC.getSpecialistInfo((SpecialistTypes)i).getGreatPeopleRateChange();
+			}
+		}
+		if (iRate > 0)
+		{
+			if (bFirst)
+			{
+				szBuffer.append(SEPARATOR);
+				bFirst = false;
+			}
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_SPECIALIST_COMMERCE", iRate, gDLL->getSymbolID(GREAT_PEOPLE_CHAR), L"TXT_KEY_CONCEPT_SPECIALISTS"));
+		}
+		
+		iRate = 0;
+		for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+		{
+			int iCount = city.getNumBuilding((BuildingTypes)i);
+			if (iCount > 0)
+			{
+				iRate += iCount * GC.getBuildingInfo((BuildingTypes)i).getGreatPeopleRateChange();
+			}
+		}
+		if (iRate > 0)
+		{
+			if (bFirst)
+			{
+				szBuffer.append(SEPARATOR);
+				bFirst = false;
+			}
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BUILDING_COMMERCE", iRate, gDLL->getSymbolID(GREAT_PEOPLE_CHAR)));
+		}
+	}
+// BUG - Great People Rate Breakdown - end
 
 	szBuffer.append(SEPARATOR);
 	szBuffer.append(NEWLINE);
@@ -14200,8 +14392,46 @@ void CvGameTextMgr::parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city
 	FAssertMsg(iModGreatPeople == city.getGreatPeopleRate(), "Great person rate does not match actual value");
 
 	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_GREATPEOPLE_FINAL", iModGreatPeople));
-	szBuffer.append(NEWLINE);
+
+// BUG - Building Additional Great People - start
+	if (bBuildingAdditionalGreatPeople && city.getOwnerINLINE() == GC.getGame().getActivePlayer())
+	{
+		setBuildingAdditionalGreatPeopleHelp(szBuffer, city, DOUBLE_SEPARATOR);
+	}
+// BUG - Building Additional Great People - end
 }
+
+// BUG - Building Additional Great People - start
+bool CvGameTextMgr::setBuildingAdditionalGreatPeopleHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted)
+{
+	CvWString szLabel;
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(GET_PLAYER(city.getOwnerINLINE()).getCivilizationType());
+
+	for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings((BuildingClassTypes)iI);
+
+		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
+		{
+			int iChange = city.getAdditionalGreatPeopleRateByBuilding(eBuilding);
+			
+			if (iChange != 0)
+			{
+				if (!bStarted)
+				{
+					szBuffer.append(szStart);
+					bStarted = true;
+				}
+
+				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
+				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iChange, gDLL->getSymbolID(GREAT_PEOPLE_CHAR), false, true);
+			}
+		}
+	}
+
+	return bStarted;
+}
+// BUG - Building Additional Great People - end
 
 
 void CvGameTextMgr::parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& kPlayer)
@@ -16775,3 +17005,184 @@ void CvGameTextMgr::getCorporationDataForWB(bool bHeadquarters, std::vector<CvWB
 		mapCorporationData.push_back(CvWBData(i, strDescription, kInfo.getButton()));
 	}
 }
+
+// BUG - Defense Help - start
+
+/*
+	Defense = max(building, culture) + player
+
+	+50% from Buildings
+	+10% from Culture (60%)
+	+25% from Wonders
+	-----------------------
+	Total Defense: 85%
+	-----------------------
+	-37% from Bombardment
+	-----------------------
+	Net Defense: 48%
+	=======================
+	* Castle: +50%
+	=======================
+	+50% from Buildings
+	-----------------------
+	Total Bombard Defense: 50%
+	=======================
+	* Castle: +25%
+*/
+void CvGameTextMgr::setDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city)
+{
+	FAssertMsg(NO_PLAYER != city.getOwnerINLINE(), "City must have an owner");
+
+	bool bFirst = true;
+
+	// Buildings
+	int iBuildingDefense = city.getBuildingDefense();
+	if (iBuildingDefense != 0)
+	{
+		bFirst = false;
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BUILDING_DEFENSE", iBuildingDefense));
+	}
+
+	// Culture
+	int iCultureDefense = city.getNaturalDefense();
+	if (iCultureDefense != 0)
+	{
+		if (!bFirst)
+		{
+			szBuffer.append(NEWLINE);
+		}
+		else
+		{
+			bFirst = false;
+		}
+		if (iBuildingDefense == 0)
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_CULTURE_DEFENSE", iCultureDefense));
+		}
+		else
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_CULTURE_DEFENSE_PARTIAL", std::max(iCultureDefense, iBuildingDefense) - iBuildingDefense, iCultureDefense));
+		}
+	}
+
+	// Wonders (or other player sources in mods)
+	int iWonderDefense = GET_PLAYER(city.getOwnerINLINE()).getCityDefenseModifier();
+	if (iWonderDefense != 0)
+	{
+		if (!bFirst)
+		{
+			szBuffer.append(NEWLINE);
+		}
+		else
+		{
+			bFirst = false;
+		}
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_WONDER_DEFENSE", iWonderDefense));
+	}
+
+	// Total
+	int iDefense = city.getTotalDefense(false);
+	if (!bFirst)
+	{
+		szBuffer.append(SEPARATOR NEWLINE);
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_TOTAL_DEFENSE", iDefense));
+
+	// Damage and Net
+	int iDamage = GC.getMAX_CITY_DEFENSE_DAMAGE() * city.getDefenseDamage() / GC.getMAX_CITY_DEFENSE_DAMAGE();
+	if (iDamage != 0)
+	{
+		szBuffer.append(SEPARATOR NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_DEFENSE_DAMAGE", -iDamage));
+		szBuffer.append(SEPARATOR NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_NET_DEFENSE", std::max(0, iDefense - iDamage)));
+	}
+
+// BUG - Building Additional Defense - start
+	if (city.getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalDefense", true, "BUG_BUILDING_ADDITIONAL_DEFENSE_HOVER"))
+	{
+		setBuildingAdditionalDefenseHelp(szBuffer, city, SEPARATOR);
+	}
+// BUG - Building Additional Defense - end
+
+	// ==========================
+	// Bombardment Defense
+
+	szBuffer.append(DOUBLE_SEPARATOR NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_TOTAL_BOMBARD_DEFENSE", city.getBuildingBombardDefense()));
+
+// BUG - Building Additional Bombard Defense - start
+	if (city.getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalDefense", true, "BUG_BUILDING_ADDITIONAL_DEFENSE_HOVER"))
+	{
+		setBuildingAdditionalBombardDefenseHelp(szBuffer, city, SEPARATOR);
+	}
+// BUG - Building Additional Bombard Defense - end
+
+	// ==========================
+	// Air Defense - not worth it for just one building
+}
+// BUG - Defense Help - end
+
+// BUG - Building Additional Defense - start
+bool CvGameTextMgr::setBuildingAdditionalDefenseHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted)
+{
+	CvWString szLabel;
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(GET_PLAYER(city.getOwnerINLINE()).getCivilizationType());
+
+	for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings((BuildingClassTypes)iI);
+
+		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
+		{
+			int iChange = city.getAdditionalDefenseByBuilding(eBuilding);
+
+			if (iChange != 0)
+			{
+				if (!bStarted)
+				{
+					szBuffer.append(szStart);
+					bStarted = true;
+				}
+
+				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
+				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iChange, gDLL->getSymbolID(DEFENSE_CHAR), true, true);
+			}
+		}
+	}
+
+	return bStarted;
+}
+// BUG - Building Additional Defense - end
+
+// BUG - Building Additional Bombard Defense - start
+bool CvGameTextMgr::setBuildingAdditionalBombardDefenseHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted)
+{
+	CvWString szLabel;
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(GET_PLAYER(city.getOwnerINLINE()).getCivilizationType());
+
+	for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings((BuildingClassTypes)iI);
+
+		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
+		{
+			int iChange = city.getAdditionalBombardDefenseByBuilding(eBuilding);
+
+			if (iChange != 0)
+			{
+				if (!bStarted)
+				{
+					szBuffer.append(szStart);
+					bStarted = true;
+				}
+
+				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
+				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iChange, gDLL->getSymbolID(DEFENSE_CHAR), true, true);
+			}
+		}
+	}
+
+	return bStarted;
+}
+// BUG - Building Additional Bombard Defense - end
