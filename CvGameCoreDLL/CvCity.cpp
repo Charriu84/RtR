@@ -5548,6 +5548,108 @@ void CvCity::changeGreatPeopleProgress(int iChange)
 }
 
 
+// BUG - Building Additional Great People - start
+/*
+ * Returns the total additional great people rate that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalGreatPeopleRateByBuilding(BuildingTypes eBuilding) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	int iRate = getBaseGreatPeopleRate();
+	int iModifier = getTotalGreatPeopleRateModifier();
+	int iExtra = ((iRate + getAdditionalBaseGreatPeopleRateByBuilding(eBuilding)) * (iModifier + getAdditionalGreatPeopleRateModifierByBuilding(eBuilding)) / 100) - (iRate * iModifier / 100);
+
+	return iExtra;
+}
+
+/*
+ * Returns the additional great people rate that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	bool bObsolete = GET_TEAM(getTeam()).isObsoleteBuilding(eBuilding);
+	int iExtraRate = 0;
+
+	iExtraRate += kBuilding.getGreatPeopleRateChange();
+
+	// Specialists
+	if (!bObsolete)
+	{
+		for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
+		{
+			if (kBuilding.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
+			{
+				iExtraRate += getAdditionalBaseGreatPeopleRateBySpecialist((SpecialistTypes)iI, kBuilding.getFreeSpecialistCount((SpecialistTypes)iI));
+			}
+		}
+	}
+
+	return iExtraRate;
+}
+
+/*
+ * Returns the additional great people rate modifier that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalGreatPeopleRateModifierByBuilding(BuildingTypes eBuilding) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	bool bObsolete = GET_TEAM(getTeam()).isObsoleteBuilding(eBuilding);
+	int iExtraModifier = 0;
+
+	if (!bObsolete)
+	{
+		iExtraModifier += kBuilding.getGreatPeopleRateModifier();
+		iExtraModifier += kBuilding.getGlobalGreatPeopleRateModifier();
+	}
+
+	return iExtraModifier;
+}
+// BUG - Building Additional Great People - end
+
+
+// BUG - Specialist Additional Great People - start
+/*
+ * Returns the total additional great people rate that changing the number of the given specialist will provide/remove.
+ */
+int CvCity::getAdditionalGreatPeopleRateBySpecialist(SpecialistTypes eSpecialist, int iChange) const
+{
+	int iRate = getBaseGreatPeopleRate();
+	int iModifier = getTotalGreatPeopleRateModifier();
+	int iExtraRate = getAdditionalBaseGreatPeopleRateBySpecialist(eSpecialist, iChange);
+
+	int iExtra = ((iRate + iExtraRate) * iModifier / 100) - (iRate * iModifier / 100);
+
+	return iExtra;
+}
+
+/*
+ * Returns the additional great people rate that changing the number of the given specialist will provide/remove.
+ */
+int CvCity::getAdditionalBaseGreatPeopleRateBySpecialist(SpecialistTypes eSpecialist, int iChange) const
+{
+	FAssertMsg(eSpecialist >= 0, "eSpecialist expected to be >= 0");
+	FAssertMsg(eSpecialist < GC.getNumSpecialistInfos(), "eSpecialist expected to be < GC.getNumSpecialistInfos()");
+
+	return iChange * GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange();
+}
+// BUG - Specialist Additional Great People - end
+
+
 int CvCity::getNumWorldWonders() const
 {
 	return m_iNumWorldWonders;
@@ -5623,6 +5725,39 @@ void CvCity::changeGovernmentCenterCount(int iChange)
 	}
 }
 
+
+// BUG - Building Saved Maintenance - start
+/*
+ * Returns the rounded total additional gold from saved maintenance that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getSavedMaintenanceByBuilding(BuildingTypes eBuilding) const
+{
+	return getSavedMaintenanceTimes100ByBuilding(eBuilding) / 100;
+}
+
+/*
+ * Returns the total additional gold from saved maintenance times 100 that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	int iModifier = kBuilding.getMaintenanceModifier();
+	if (iModifier != 0 && !isDisorder() && !isWeLoveTheKingDay() && (getPopulation() > 0))
+	{
+		int iNewMaintenance = calculateBaseMaintenanceTimes100() * std::max(0, getMaintenanceModifier() + iModifier + 100) / 100;
+		return std::max(0, getMaintenanceTimes100() - iNewMaintenance);
+	}
+
+	return 0;
+}
+// BUG - Building Saved Maintenance - end
 
 int CvCity::getMaintenance() const
 {
@@ -6430,6 +6565,266 @@ void CvCity::updateExtraBuildingHappiness()
 	}
 }
 
+// BUG - Building Additional Happiness - start
+/*
+ * Returns the total additional happiness that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding) const
+{
+	int iGood = 0, iBad = 0, iAngryPop = 0;
+	return getAdditionalHappinessByBuilding(eBuilding, iGood, iBad, iAngryPop);
+}
+
+/*
+ * Returns the total additional happiness that adding one of the given buildings will provide
+ * and sets the good and bad levels individually and any resulting additional angry population.
+ *
+ * Doesn't reset iGood or iBad to zero.
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood, int& iBad, int& iAngryPop) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	int iI;
+	int iStarting = iGood - iBad;
+	int iStartingBad = iBad;
+
+	// Basic
+	addGoodOrBad(kBuilding.getHappiness(), iGood, iBad);
+
+	// Building Class
+	addGoodOrBad(getBuildingHappyChange((BuildingClassTypes)kBuilding.getBuildingClassType()), iGood, iBad);
+
+	// Other Building Classes
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(getCivilizationType());
+	for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		int iBuildingHappinessChanges = kBuilding.getBuildingHappinessChanges(iI);
+		if (iBuildingHappinessChanges != 0)
+		{
+			BuildingTypes eLoopBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings(iI);
+			if (eLoopBuilding != NO_BUILDING)
+			{
+				addGoodOrBad(iBuildingHappinessChanges * (getNumBuilding(eLoopBuilding) + (eBuilding == eLoopBuilding ? 1 : 0)), iGood, iBad);
+			}
+		}
+	}
+
+	// Player Building
+	addGoodOrBad(GET_PLAYER(getOwnerINLINE()).getExtraBuildingHappiness(eBuilding), iGood, iBad);
+
+	// Area
+	addGoodOrBad(kBuilding.getAreaHappiness(), iGood, iBad);
+
+	// Global
+	addGoodOrBad(kBuilding.getGlobalHappiness(), iGood, iBad);
+
+	// Religion
+	if (kBuilding.getReligionType() != NO_RELIGION && kBuilding.getReligionType() == GET_PLAYER(getOwnerINLINE()).getStateReligion())
+	{
+		iGood += kBuilding.getStateReligionHappiness();
+	}
+
+	// Bonus
+	for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		if ((hasBonus((BonusTypes)iI) || kBuilding.getFreeBonus() == iI) && kBuilding.getNoBonus() != iI)
+		{
+			addGoodOrBad(kBuilding.getBonusHappinessChanges(iI), iGood, iBad);
+		}
+	}
+
+	// Commerce
+	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+	{
+		addGoodOrBad(kBuilding.getCommerceHappiness(iI) * GET_PLAYER(getOwnerINLINE()).getCommercePercent((CommerceTypes)iI) / 100, iGood, iBad);
+	}
+
+	// War Weariness Modifier
+	int iWarWearinessModifier = kBuilding.getWarWearinessModifier() + kBuilding.getGlobalWarWearinessModifier();
+	if (iWarWearinessModifier != 0)
+	{
+		int iBaseAngerPercent = 0;
+
+		iBaseAngerPercent += getOvercrowdingPercentAnger();
+		iBaseAngerPercent += getNoMilitaryPercentAnger();
+		iBaseAngerPercent += getCulturePercentAnger();
+		iBaseAngerPercent += getReligionPercentAnger();
+		iBaseAngerPercent += getHurryPercentAnger();
+		iBaseAngerPercent += getConscriptPercentAnger();
+		iBaseAngerPercent += getDefyResolutionPercentAnger();
+		for (iI = 0; iI < GC.getNumCivicInfos(); iI++)
+		{
+			iBaseAngerPercent += GET_PLAYER(getOwnerINLINE()).getCivicPercentAnger((CivicTypes)iI);
+		}
+
+		int iCurrentAngerPercent = iBaseAngerPercent + getWarWearinessPercentAnger();
+		int iCurrentUnhappiness = iCurrentAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
+
+		int iNewWarAngerPercent = GET_PLAYER(getOwnerINLINE()).getWarWearinessPercentAnger();
+		iNewWarAngerPercent *= std::max(0, (iWarWearinessModifier + getWarWearinessModifier() + GET_PLAYER(getOwnerINLINE()).getWarWearinessModifier() + 100));
+		iNewWarAngerPercent /= 100;
+		int iNewAngerPercent = iBaseAngerPercent + iNewWarAngerPercent;
+		int iNewUnhappiness = iNewAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
+
+		iBad += iNewUnhappiness - iCurrentUnhappiness;
+	}
+
+	// No Unhappiness
+	if (kBuilding.isNoUnhappiness())
+	{
+		// override extra unhappiness and completely negate all existing unhappiness
+		iBad = iStartingBad - unhappyLevel();
+	}
+
+	// Effect on Angry Population
+	int iHappy = happyLevel();
+	int iUnhappy = unhappyLevel();
+	int iPop = getPopulation();
+	iAngryPop += range((iUnhappy + iBad) - (iHappy + iGood), 0, iPop) - range(iUnhappy - iHappy, 0, iPop);
+
+	return iGood - iBad - iStarting;
+}
+
+
+/*
+ * Returns the total additional health that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding) const
+{
+	int iGood = 0, iBad = 0, iSpoiledFood = 0;
+	return getAdditionalHealthByBuilding(eBuilding, iGood, iBad, iSpoiledFood);
+}
+
+/*
+ * Returns the total additional health that adding one of the given buildings will provide
+ * and sets the good and bad levels individually and any resulting additional spoiled food.
+ *
+ * Doesn't reset iGood or iBad to zero.
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, int& iBad, int& iSpoiledFood) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	int iI;
+	int iStarting = iGood - iBad;
+	int iStartingBad = iBad;
+
+	// Basic
+	addGoodOrBad(kBuilding.getHealth(), iGood, iBad);
+
+	// Building Class
+	addGoodOrBad(getBuildingHealthChange((BuildingClassTypes)kBuilding.getBuildingClassType()), iGood, iBad);
+
+	// Player Building
+	addGoodOrBad(GET_PLAYER(getOwnerINLINE()).getExtraBuildingHealth(eBuilding), iGood, iBad);
+
+	// Area
+	addGoodOrBad(kBuilding.getAreaHealth(), iGood, iBad);
+
+	// Global
+	addGoodOrBad(kBuilding.getGlobalHealth(), iGood, iBad);
+
+	// No Unhealthiness from Buildings
+	if (isBuildingOnlyHealthy())
+	{
+		// undo bad from this building
+		iBad = iStartingBad;
+	}
+	if (kBuilding.isBuildingOnlyHealthy())
+	{
+		// undo bad from this and all existing buildings
+		iBad = iStartingBad + totalBadBuildingHealth();
+	}
+
+	// Bonus
+	for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		if ((hasBonus((BonusTypes)iI) || kBuilding.getFreeBonus() == iI) && kBuilding.getNoBonus() != iI)
+		{
+			addGoodOrBad(kBuilding.getBonusHealthChanges(iI), iGood, iBad);
+		}
+	}
+
+	// Power
+	if (kBuilding.isPower() || kBuilding.isAreaCleanPower() || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)kBuilding.getPowerBonus())))
+	{
+		// adding power
+		if (!isPower())
+		{
+			addGoodOrBad(GC.getDefineINT("POWER_HEALTH_CHANGE"), iGood, iBad);
+
+			// adding dirty power
+			if (kBuilding.isDirtyPower())
+			{
+				addGoodOrBad(GC.getDefineINT("DIRTY_POWER_HEALTH_CHANGE"), iGood, iBad);
+			}
+		}
+		else
+		{
+			// replacing dirty power with clean power
+			if (isDirtyPower() && !kBuilding.isDirtyPower())
+			{
+				subtractGoodOrBad(GC.getDefineINT("DIRTY_POWER_HEALTH_CHANGE"), iGood, iBad);
+			}
+		}
+	}
+
+	// No Unhealthiness from Population
+	if (kBuilding.isNoUnhealthyPopulation())
+	{
+		iBad -= getPopulation();
+	}
+
+	// Effect on Spoiled Food
+	int iHealthy = goodHealth();
+	int iUnhealthy = badHealth();
+	iSpoiledFood -= std::min(0, (iHealthy + iGood) - (iUnhealthy + iBad)) - std::min(0, iHealthy - iUnhealthy);
+
+	return iGood - iBad - iStarting;
+}
+
+/*
+ * Adds iValue to iGood if it is positive or its negative to iBad if it is negative.
+ */
+void addGoodOrBad(int iValue, int& iGood, int& iBad)
+{
+	if (iValue > 0)
+	{
+		iGood += iValue;
+	}
+	else if (iValue < 0)
+	{
+		iBad -= iValue;
+	}
+}
+
+/*
+ * Subtracts iValue from iGood if it is positive or its negative from iBad if it is negative.
+ */
+void subtractGoodOrBad(int iValue, int& iGood, int& iBad)
+{
+	if (iValue > 0)
+	{
+		iGood -= iValue;
+	}
+	else if (iValue < 0)
+	{
+		iBad += iValue;
+	}
+}
+// BUG - Building Additional Happiness - end
+
 
 int CvCity::getExtraBuildingGoodHealth() const
 {
@@ -7055,6 +7450,20 @@ void CvCity::changeBuildingDefense(int iChange)
 	}
 }
 
+// BUG - Building Additional Defense - start
+int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	int iDefense = std::max(getBuildingDefense() + kBuilding.getDefenseModifier(), getNaturalDefense()) + GET_PLAYER(getOwnerINLINE()).getCityDefenseModifier() + kBuilding.getAllCityDefenseModifier();
+
+	// doesn't take bombardment into account
+	return iDefense - getTotalDefense(false);
+}
+// BUG - Building Additional Defense - end
+
 
 int CvCity::getBuildingBombardDefense() const
 {
@@ -7070,6 +7479,20 @@ void CvCity::changeBuildingBombardDefense(int iChange)
 		FAssert(getBuildingBombardDefense() >= 0);
 	}
 }
+
+// BUG - Building Additional Bombard Defense - start
+int CvCity::getAdditionalBombardDefenseByBuilding(BuildingTypes eBuilding) const
+{
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	int iBaseDefense = getBuildingBombardDefense();
+
+	// cap total bombard defense at 100
+	return std::min(kBuilding.getBombardDefenseModifier() + iBaseDefense, 100) - iBaseDefense;
+}
+// BUG - Building Additional Bombard Defense - end
 
 
 int CvCity::getFreeExperience() const
@@ -7864,6 +8287,193 @@ void CvCity::changeRiverPlotYield(YieldTypes eIndex, int iChange)
 }
 
 
+// BUG - Building Additional Yield - start
+/*
+ * Returns the total additional yield that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuilding) const
+{
+	int iRate = getBaseYieldRate(eIndex);
+	int iModifier = getBaseYieldRateModifier(eIndex);
+	int iExtra = ((iRate + getAdditionalBaseYieldRateByBuilding(eIndex, eBuilding)) * (iModifier + getAdditionalYieldRateModifierByBuilding(eIndex, eBuilding)) / 100) - (iRate * iModifier / 100);
+
+	return iExtra;
+}
+
+/*
+ * Returns the additional yield rate that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalBaseYieldRateByBuilding(YieldTypes eIndex, BuildingTypes eBuilding) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	bool bObsolete = GET_TEAM(getTeam()).isObsoleteBuilding(eBuilding);
+	int iExtraRate = 0;
+
+	if (!bObsolete)
+	{
+		if (kBuilding.getSeaPlotYieldChange(eIndex) != 0)
+		{
+			int iChange = kBuilding.getSeaPlotYieldChange(eIndex);
+			for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			{
+				if (isWorkingPlot(iI) && getCityIndexPlot(iI)->isWater())
+				{
+					iExtraRate += iChange;
+				}
+			}
+		}
+		if (kBuilding.getRiverPlotYieldChange(eIndex) != 0)
+		{
+			int iChange = kBuilding.getRiverPlotYieldChange(eIndex);
+			for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			{
+				if (isWorkingPlot(iI) && getCityIndexPlot(iI)->isRiver())
+				{
+					iExtraRate += iChange;
+				}
+			}
+		}
+		iExtraRate += kBuilding.getYieldChange(eIndex);
+		iExtraRate += getBuildingYieldChange((BuildingClassTypes)kBuilding.getBuildingClassType(), eIndex);
+
+		// Trade
+		int iPlayerTradeYieldModifier = GET_PLAYER(getOwnerINLINE()).getTradeYieldModifier(eIndex);
+		if (iPlayerTradeYieldModifier > 0 && (kBuilding.getTradeRouteModifier() != 0 || kBuilding.getForeignTradeRouteModifier() != 0))
+		{
+			int iTotalTradeYield = 0;
+			int iNewTotalTradeYield = 0;
+			int iTradeProfitDivisor = 10000;
+
+			for (int iI = 0; iI < getTradeRoutes(); ++iI)
+			{
+				CvCity* pCity = getTradeCity(iI);
+				if (pCity)
+				{
+					int iTradeProfit = getBaseTradeProfit(pCity);
+					int iTradeModifier = totalTradeModifier(pCity);
+					int iTradeYield = iTradeProfit * iTradeModifier / iTradeProfitDivisor * iPlayerTradeYieldModifier / 100;
+					iTotalTradeYield += iTradeYield;
+
+					iTradeModifier += kBuilding.getTradeRouteModifier();
+					if (pCity->getOwnerINLINE() != getOwnerINLINE())
+					{
+						iTradeModifier += kBuilding.getForeignTradeRouteModifier();
+					}
+					int iNewTradeYield = iTradeProfit * iTradeModifier / iTradeProfitDivisor * iPlayerTradeYieldModifier / 100;
+					iNewTotalTradeYield += iNewTradeYield;
+				}
+			}
+
+			iExtraRate += iNewTotalTradeYield - iTotalTradeYield;
+		}
+
+		// Specialists
+		for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
+		{
+			if (kBuilding.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
+			{
+				iExtraRate += getAdditionalBaseYieldRateBySpecialist(eIndex, (SpecialistTypes)iI, kBuilding.getFreeSpecialistCount((SpecialistTypes)iI));
+			}
+		}
+	}
+
+	return iExtraRate;
+}
+
+/*
+ * Returns the additional yield rate modifier that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalYieldRateModifierByBuilding(YieldTypes eIndex, BuildingTypes eBuilding) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	bool bObsolete = GET_TEAM(getTeam()).isObsoleteBuilding(eBuilding);
+	int iExtraModifier = 0;
+
+	if (!bObsolete)
+	{
+		iExtraModifier += kBuilding.getYieldModifier(eIndex);
+		if (!isPower())
+		{
+			if (kBuilding.isPower() || kBuilding.isAreaCleanPower() || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)kBuilding.getPowerBonus())))
+			{
+				for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+				{
+					iExtraModifier += getNumActiveBuilding((BuildingTypes)i) * GC.getBuildingInfo((BuildingTypes)i).getPowerYieldModifier(eIndex);
+				}
+			}
+		}
+		if (eIndex == YIELD_PRODUCTION)
+		{
+			iExtraModifier += kBuilding.getMilitaryProductionModifier();
+			iExtraModifier += kBuilding.getSpaceProductionModifier();
+			iExtraModifier += kBuilding.getGlobalSpaceProductionModifier();
+
+			int iMaxModifier = 0;
+			for (int i = 0; i < NUM_DOMAIN_TYPES; i++)
+			{
+				iMaxModifier = std::max(iMaxModifier, kBuilding.getDomainProductionModifier((DomainTypes)i));
+			}
+			iExtraModifier += iMaxModifier;
+		}
+		for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+		{
+			if (hasBonus((BonusTypes)iI))
+			{
+				iExtraModifier += kBuilding.getBonusYieldModifier(iI, eIndex);
+			}
+		}
+	}
+
+	return iExtraModifier;
+}
+// BUG - Building Additional Yield - end
+
+
+// BUG - Specialist Additional Yield - start
+/*
+ * Returns the total additional yield that changing the number of given specialists will provide/remove.
+ */
+int CvCity::getAdditionalYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
+{
+	int iRate = getBaseYieldRate(eIndex);
+	int iModifier = getBaseYieldRateModifier(eIndex);
+	int iExtra = ((iRate + getAdditionalBaseYieldRateBySpecialist(eIndex, eSpecialist, iChange)) * iModifier / 100) - (iRate * iModifier / 100);
+
+	return iExtra;
+}
+
+/*
+ * Returns the additional yield rate that changing the number of given specialists will provide/remove.
+ */
+int CvCity::getAdditionalBaseYieldRateBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
+	FAssertMsg(eSpecialist >= 0, "eSpecialist expected to be >= 0");
+	FAssertMsg(eSpecialist < GC.getNumSpecialistInfos(), "eSpecialist expected to be < GC.getNumSpecialistInfos()");
+	
+	CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eSpecialist);
+	return iChange * (kSpecialist.getYieldChange(eIndex) + GET_PLAYER(getOwnerINLINE()).getSpecialistExtraYield(eSpecialist, eIndex));
+}
+// BUG - Specialist Additional Yield - end
+
+
 int CvCity::getBaseYieldRate(YieldTypes eIndex)	const													
 {
 	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
@@ -8517,6 +9127,166 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 	return 0;
 }
 
+// BUG - Building Additional Commerce - start
+/*
+ * Returns the rounded total additional commerce that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ * Takes the NO_ESPIONAGE game option into account for CULTURE and ESPIONAGE.
+ */
+int CvCity::getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding) const
+{
+	return getAdditionalCommerceTimes100ByBuilding(eIndex, eBuilding) / 100;
+}
+
+/*
+ * Returns the total additional commerce times 100 that adding one of the given buildings will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ * Takes the NO_ESPIONAGE game option into account for CULTURE and ESPIONAGE.
+ */
+int CvCity::getAdditionalCommerceTimes100ByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding) const
+{
+	int iExtraRate = getAdditionalBaseCommerceRateByBuilding(eIndex, eBuilding);
+	int iExtraModifier = getAdditionalCommerceRateModifierByBuilding(eIndex, eBuilding);
+	if (iExtraRate == 0 && iExtraModifier == 0)
+	{
+		return 0;
+	}
+
+	int iRateTimes100 = getBaseCommerceRateTimes100(eIndex);
+	int iModifier = getTotalCommerceRateModifier(eIndex);
+	int iExtraTimes100 = ((iModifier + iExtraModifier) * (100 * iExtraRate + iRateTimes100) / 100) - (iModifier * iRateTimes100 / 100);
+
+	return iExtraTimes100;
+}
+
+/*
+ * Returns the additional base commerce rate constructing the given building will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ * Takes the NO_ESPIONAGE game option into account for CULTURE and ESPIONAGE.
+ */
+int CvCity::getAdditionalBaseCommerceRateByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding) const
+{
+	bool bNoEspionage = GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE);
+	if (bNoEspionage && eIndex == COMMERCE_ESPIONAGE)
+	{
+		return 0;
+	}
+
+	int iExtraRate = getAdditionalBaseCommerceRateByBuildingImpl(eIndex, eBuilding);
+	if (bNoEspionage && eIndex == COMMERCE_CULTURE)
+	{
+		iExtraRate += getAdditionalBaseCommerceRateByBuildingImpl(COMMERCE_ESPIONAGE, eBuilding);
+	}
+	return iExtraRate;
+}
+
+/*
+ * Returns the additional base commerce rate constructing the given building will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalBaseCommerceRateByBuildingImpl(CommerceTypes eIndex, BuildingTypes eBuilding) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_COMMERCE_TYPES, "eIndex expected to be < NUM_COMMERCE_TYPES");
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	bool bObsolete = GET_TEAM(getTeam()).isObsoleteBuilding(eBuilding);
+	int iExtraRate = 0;
+
+	iExtraRate += kBuilding.getObsoleteSafeCommerceChange(eIndex);
+	if (!bObsolete)
+	{
+		iExtraRate += kBuilding.getCommerceChange(eIndex);
+		iExtraRate += getBuildingCommerceChange((BuildingClassTypes)kBuilding.getBuildingClassType(), eIndex);
+		if (kBuilding.getReligionType() != NO_RELIGION)
+		{
+			if (kBuilding.getReligionType() == GET_PLAYER(getOwnerINLINE()).getStateReligion())
+			{
+				iExtraRate += GET_PLAYER(getOwnerINLINE()).getStateReligionBuildingCommerce(eIndex);
+			}
+		}
+		if (kBuilding.getGlobalReligionCommerce() != NO_RELIGION)
+		{
+			iExtraRate += GC.getReligionInfo((ReligionTypes)(kBuilding.getGlobalReligionCommerce())).getGlobalReligionCommerce(eIndex) * GC.getGameINLINE().countReligionLevels((ReligionTypes)(kBuilding.getGlobalReligionCommerce()));
+		}
+		if (kBuilding.getGlobalCorporationCommerce() != NO_CORPORATION)
+		{
+			iExtraRate += GC.getCorporationInfo((CorporationTypes)(kBuilding.getGlobalCorporationCommerce())).getHeadquarterCommerce(eIndex) * GC.getGameINLINE().countCorporationLevels((CorporationTypes)(kBuilding.getGlobalCorporationCommerce()));
+		}
+		// ignore double-time check since this assumes you are building it this turn
+
+		// Specialists
+		for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
+		{
+			if (kBuilding.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
+			{
+				iExtraRate += getAdditionalBaseCommerceRateBySpecialistImpl(eIndex, (SpecialistTypes)iI, kBuilding.getFreeSpecialistCount((SpecialistTypes)iI));
+			}
+		}
+	}
+	
+	return iExtraRate;
+}
+
+/*
+ * Returns the additional commerce rate modifier constructing the given building will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ * Takes the NO_ESPIONAGE game option into account for CULTURE and ESPIONAGE.
+ */
+int CvCity::getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_COMMERCE_TYPES, "eIndex expected to be < NUM_COMMERCE_TYPES");
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	bool bNoEspionage = GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE);
+	if (bNoEspionage && eIndex == COMMERCE_ESPIONAGE)
+	{
+		return 0;
+	}
+
+	int iExtraModifier = getAdditionalCommerceRateModifierByBuildingImpl(eIndex, eBuilding);
+	if (bNoEspionage && eIndex == COMMERCE_CULTURE)
+	{
+		iExtraModifier += getAdditionalCommerceRateModifierByBuildingImpl(COMMERCE_ESPIONAGE, eBuilding);
+	}
+	return iExtraModifier;
+}
+
+/*
+ * Returns the additional commerce rate modifier constructing the given building will provide.
+ *
+ * Doesn't check if the building can be constructed in this city.
+ */
+int CvCity::getAdditionalCommerceRateModifierByBuildingImpl(CommerceTypes eIndex, BuildingTypes eBuilding) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_COMMERCE_TYPES, "eIndex expected to be < NUM_COMMERCE_TYPES");
+	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
+	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
+
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	bool bObsolete = GET_TEAM(getTeam()).isObsoleteBuilding(eBuilding);
+	int iExtraModifier = 0;
+
+	if (!bObsolete)
+	{
+		iExtraModifier += kBuilding.getCommerceModifier(eIndex);
+		iExtraModifier += kBuilding.getGlobalCommerceModifier(eIndex);
+	}
+	
+	return iExtraModifier;
+}
+// BUG - Building Additional Commerce - end
+
 
 void CvCity::updateBuildingCommerce()
 {
@@ -8564,6 +9334,74 @@ void CvCity::changeSpecialistCommerce(CommerceTypes eIndex, int iChange)
 		updateCommerce(eIndex);
 	}
 }
+
+
+// BUG - Specialist Additional Commerce - start
+/*
+ * Returns the total additional commerce that changing the number of given specialists will provide/remove.
+ *
+ * Takes the NO_ESPIONAGE game option into account for CULTURE and ESPIONAGE.
+ */
+int CvCity::getAdditionalCommerceBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
+{
+	return getAdditionalCommerceTimes100BySpecialist(eIndex, eSpecialist, iChange) / 100;
+}
+
+/*
+ * Returns the total additional commerce times 100 that changing the number of given specialists will provide/remove.
+ *
+ * Takes the NO_ESPIONAGE game option into account for CULTURE and ESPIONAGE.
+ */
+int CvCity::getAdditionalCommerceTimes100BySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
+{
+	int iExtraRate = getAdditionalBaseCommerceRateBySpecialist(eIndex, eSpecialist, iChange);
+	if (iExtraRate == 0)
+	{
+		return 0;
+	}
+
+	int iRateTimes100 = getBaseCommerceRateTimes100(eIndex);
+	int iModifier = getTotalCommerceRateModifier(eIndex);
+	int iExtraTimes100 = (iModifier * (100 * iExtraRate + iRateTimes100) / 100) - (iModifier * iRateTimes100 / 100);
+
+	return iExtraTimes100;
+}
+
+/*
+ * Returns the additional base commerce rate that changing the number of given specialists will provide/remove.
+ *
+ * Takes the NO_ESPIONAGE game option into account for CULTURE and ESPIONAGE.
+ */
+int CvCity::getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
+{
+	bool bNoEspionage = GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE);
+	if (bNoEspionage && eIndex == COMMERCE_ESPIONAGE)
+	{
+		return 0;
+	}
+
+	int iExtraRate = getAdditionalBaseCommerceRateBySpecialistImpl(eIndex, eSpecialist, iChange);
+	if (bNoEspionage && eIndex == COMMERCE_CULTURE)
+	{
+		iExtraRate += getAdditionalBaseCommerceRateBySpecialistImpl(COMMERCE_ESPIONAGE, eSpecialist, iChange);
+	}
+	return iExtraRate;
+}
+
+/*
+ * Returns the additional base commerce rate that changing the number of given specialists will provide/remove.
+ */
+int CvCity::getAdditionalBaseCommerceRateBySpecialistImpl(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_COMMERCE_TYPES, "eIndex expected to be < NUM_COMMERCE_TYPES");
+	FAssertMsg(eSpecialist >= 0, "eSpecialist expected to be >= 0");
+	FAssertMsg(eSpecialist < GC.getNumSpecialistInfos(), "eSpecialist expected to be < GC.getNumSpecialistInfos()");
+
+	CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eSpecialist);
+	return iChange * (kSpecialist.getCommerceChange(eIndex) + GET_PLAYER(getOwnerINLINE()).getSpecialistExtraCommerce(eIndex));
+}
+// BUG - Specialist Additional Commerce - end
 
 
 int CvCity::getReligionCommerce(CommerceTypes eIndex) const												 

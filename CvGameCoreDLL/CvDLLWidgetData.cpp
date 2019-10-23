@@ -3868,6 +3868,13 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				swprintf(szTempBuffer, L" (%s%d%%)", ((iMaintenanceValue > 0) ? L"+" : L""), iMaintenanceValue);
 				szBuffer.append(szTempBuffer);
 			}
+
+// BUG - Building Saved Maintenance - start
+			if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingSavedMaintenance", true, "BUG_BUILDING_SAVED_MAINTENANCE_HOVER"))
+			{
+				GAMETEXT.setBuildingSavedMaintenanceHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
+			}
+// BUG - Building Saved Maintenance - end
 		}
 	}
 }
@@ -3881,6 +3888,13 @@ void CvDLLWidgetData::parseHealthHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 		GAMETEXT.setBadHealthHelp(szBuffer, *pHeadSelectedCity);
 		szBuffer.append(L"\n=======================\n");
 		GAMETEXT.setGoodHealthHelp(szBuffer, *pHeadSelectedCity);
+
+// BUG - Building Additional Health - start
+		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHealth", true, "BUG_BUILDING_ADDITIONAL_HEALTH_HOVER"))
+		{
+			GAMETEXT.setBuildingAdditionalHealthHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
+		}
+// BUG - Building Additional Health - end
 	}
 }
 
@@ -3947,6 +3961,13 @@ void CvDLLWidgetData::parseHappinessHelp(CvWidgetDataStruct &widgetDataStruct, C
 		GAMETEXT.setAngerHelp(szBuffer, *pHeadSelectedCity);
 		szBuffer.append(L"\n=======================\n");
 		GAMETEXT.setHappyHelp(szBuffer, *pHeadSelectedCity);
+
+// BUG - Building Additional Happiness - start
+		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHappiness", true, "BUG_BUILDING_ADDITIONAL_HAPPINESS_HOVER"))
+		{
+			GAMETEXT.setBuildingAdditionalHappinessHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
+		}
+// BUG - Building Additional Happiness - end
 	}
 }
 

@@ -183,12 +183,21 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("changeBaseGreatPeopleRate", &CyCity::changeBaseGreatPeopleRate)
 		.def("getGreatPeopleProgress", &CyCity::getGreatPeopleProgress, "int () - current great person progress")
 		.def("getGreatPeopleRateModifier", &CyCity::getGreatPeopleRateModifier, "int ()")
+// BUG - Building Additional Great People - start
+		.def("getAdditionalGreatPeopleRateByBuilding", &CyCity::getAdditionalGreatPeopleRateByBuilding, "int (int /*BuildingTypes*/)")
+		.def("getAdditionalBaseGreatPeopleRateByBuilding", &CyCity::getAdditionalBaseGreatPeopleRateByBuilding, "int (int /*BuildingTypes*/)")
+		.def("getAdditionalGreatPeopleRateModifierByBuilding", &CyCity::getAdditionalGreatPeopleRateModifierByBuilding, "int (int /*BuildingTypes*/)")
+// BUG - Building Additional Great People - end
 		.def("getNumWorldWonders", &CyCity::getNumWorldWonders, "int ()")
 		.def("getNumTeamWonders", &CyCity::getNumTeamWonders, "int ()")
 		.def("getNumNationalWonders", &CyCity::getNumNationalWonders, "int ()")
 		.def("getNumBuildings", &CyCity::getNumBuildings, "int ()")
 		.def("changeGreatPeopleProgress", &CyCity::changeGreatPeopleProgress, "void (int iChange) - adjusts great person progress by iChange")
 		.def("isGovernmentCenter", &CyCity::isGovernmentCenter, "bool () - is city the government center?")
+// BUG - Building Saved Maintenance - start
+		.def("getSavedMaintenanceByBuilding", &CyCity::getSavedMaintenanceByBuilding, "int (int /*BuildingTypes*/)")
+		.def("getSavedMaintenanceTimes100ByBuilding", &CyCity::getSavedMaintenanceTimes100ByBuilding, "int (int /*BuildingTypes*/)")
+// BUG - Building Saved Maintenance - end
 		.def("getMaintenance", &CyCity::getMaintenance, "int () - cities current maintenance cost")
 		.def("getMaintenanceTimes100", &CyCity::getMaintenanceTimes100, "int () - cities current maintenance cost")
 		.def("calculateDistanceMaintenance", &CyCity::calculateDistanceMaintenance, "int ()")
@@ -216,6 +225,12 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getFeatureGoodHealth", &CyCity::getFeatureGoodHealth, "int () - returns the good health provided by the feature this city is built on")
 		.def("getFeatureBadHealth", &CyCity::getFeatureBadHealth, "int () - returns the bad health provided by the feature this city is built on")
 		.def("getBuildingHealth", &CyCity::getBuildingHealth, "int (int eBuilding)")
+// BUG - Building Additional Health - start
+		.def("getAdditionalHealthByBuilding", &CyCity::getAdditionalHealthByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional healthiness minus additional unhealthiness")
+		.def("getAdditionalGoodHealthByBuilding", &CyCity::getAdditionalGoodHealthByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional healthiness")
+		.def("getAdditionalBadHealthByBuilding", &CyCity::getAdditionalBadHealthByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional unhealthiness")
+		.def("getAdditionalSpiledFoodByBuilding", &CyCity::getAdditionalSpoiledFoodByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional spoiled food")
+// BUG - Building Additional Health - end
 		.def("getPowerGoodHealth", &CyCity::getPowerGoodHealth, "int ()")
 		.def("getPowerBadHealth", &CyCity::getPowerBadHealth, "int ()")
 		.def("getBonusGoodHealth", &CyCity::getBonusGoodHealth, "int ()")
@@ -225,6 +240,12 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getBuildingGoodHappiness", &CyCity::getBuildingGoodHappiness, "int ()")
 		.def("getBuildingBadHappiness", &CyCity::getBuildingBadHappiness, "int ()")
 		.def("getBuildingHappiness", &CyCity::getBuildingHappiness, "int (int eBuilding)")
+// BUG - Building Additional Happiness - start
+		.def("getAdditionalHappinessByBuilding", &CyCity::getAdditionalHappinessByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional happiness minus additional unhappiness")
+		.def("getAdditionalGoodHappinessByBuilding", &CyCity::getAdditionalGoodHappinessByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional happiness")
+		.def("getAdditionalBadHappinessByBuilding", &CyCity::getAdditionalBadHappinessByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional unhappiness")
+		.def("getAdditionalAngryPopulationByBuilding", &CyCity::getAdditionalAngryPopulationByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional angry population")
+// BUG - Building Additional Happiness - end
 		.def("getExtraBuildingGoodHappiness", &CyCity::getExtraBuildingGoodHappiness, "int ()")
 		.def("getExtraBuildingBadHappiness", &CyCity::getExtraBuildingBadHappiness, "int ()")
 		.def("getFeatureGoodHappiness", &CyCity::getFeatureGoodHappiness, "int ()")
@@ -266,6 +287,13 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getTradeRouteModifier", &CyCity::getTradeRouteModifier, "int ()")
 		.def("getForeignTradeRouteModifier", &CyCity::getForeignTradeRouteModifier, "int ()")
 		.def("getBuildingDefense", &CyCity::getBuildingDefense, "int () - building defense")
+// BUG - Building Additional Defense - start
+		.def("getAdditionalDefenseByBuilding", &CyCity::getAdditionalDefenseByBuilding, "int (int /*BuildingTypes*/) - additional building defense")
+// BUG - Building Additional Defense - end
+		.def("getBuildingBombardDefense", &CyCity::getBuildingBombardDefense, "int () - building defense")
+// BUG - Building Additional Bombard Defense - start
+		.def("getAdditionalBombardDefenseByBuilding", &CyCity::getAdditionalBombardDefenseByBuilding, "int (int /*BuildingTypes*/) - additional building bombard defense")
+// BUG - Building Additional Bombard Defense - end
 		.def("getFreeExperience", &CyCity::getFreeExperience, "int () - # of free experience newly trained units receive")
 		.def("getCurrAirlift", &CyCity::getCurrAirlift, "int ()")
 		.def("getMaxAirlift", &CyCity::getMaxAirlift, "int ()")
@@ -315,6 +343,11 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getSeaPlotYield", &CyCity::getSeaPlotYield, "int (int /*YieldTypes*/) - total YieldType for water plots")
 		.def("getRiverPlotYield", &CyCity::getRiverPlotYield, "int (int /*YieldTypes*/) - total YieldType for river plots")
 
+// BUG - Building Additional Yield - start
+		.def("getAdditionalYieldByBuilding", &CyCity::getAdditionalYieldByBuilding, "int (int /*YieldTypes*/, int /*BuildingTypes*/) - total change of YieldType from adding one BuildingType")
+		.def("getAdditionalBaseYieldRateByBuilding", &CyCity::getAdditionalBaseYieldRateByBuilding, "int (int /*YieldTypes*/, int /*BuildingTypes*/) - base rate change of YieldType from adding one BuildingType")
+		.def("getAdditionalYieldRateModifierByBuilding", &CyCity::getAdditionalYieldRateModifierByBuilding, "int (int /*YieldTypes*/, int /*BuildingTypes*/) - rate modifier change of YieldType from adding one BuildingType")
+// BUG - Building Additional Yield - end
 
 		.def("getBaseYieldRate", &CyCity::getBaseYieldRate, "int (int /*YieldTypes*/) - base rate for YieldType")
 		.def("setBaseYieldRate", &CyCity::setBaseYieldRate, "int (int /*YieldTypes*/, int iNewValue) - sets the base rate for YieldType")
@@ -341,6 +374,12 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getProductionToCommerceModifier", &CyCity::getProductionToCommerceModifier, "int (int /*CommerceTypes*/) - value of production to commerce modifier")
 		.def("getBuildingCommerce", &CyCity::getBuildingCommerce, "int (int /*CommerceTypes*/) - total effect of cities buildings on CommerceTypes")
 		.def("getBuildingCommerceByBuilding", &CyCity::getBuildingCommerceByBuilding, "int (int /*CommerceTypes*/, BuildingTypes) - total value of CommerceType from BuildingTypes")
+// BUG - Building Additional Commerce - start
+		.def("getAdditionalCommerceByBuilding", &CyCity::getAdditionalCommerceByBuilding, "int (int /*CommerceTypes*/, int /*BuildingTypes*/) - rounded change of CommerceType from adding one BuildingType")
+		.def("getAdditionalCommerceTimes100ByBuilding", &CyCity::getAdditionalCommerceTimes100ByBuilding, "int (int /*CommerceTypes*/, int /*BuildingTypes*/) - total change of CommerceType from adding one BuildingType")
+		.def("getAdditionalBaseCommerceRateByBuilding", &CyCity::getAdditionalBaseCommerceRateByBuilding, "int (int /*CommerceTypes*/, int /*BuildingTypes*/) - base rate change of CommerceType from adding one BuildingType")
+		.def("getAdditionalCommerceRateModifierByBuilding", &CyCity::getAdditionalCommerceRateModifierByBuilding, "int (int /*CommerceTypes*/, int /*BuildingTypes*/) - rate modifier change of CommerceType from adding one BuildingType")
+// BUG - Building Additional Commerce - end
 		.def("getSpecialistCommerce", &CyCity::getSpecialistCommerce, "int (int /*CommerceTypes*/) - value of CommerceType adjustment from Specialists")
 		.def("changeSpecialistCommerce", &CyCity::changeSpecialistCommerce, "void (int /*CommerceTypes*/, iChange) - adjusts Specialist contribution to CommerceType by iChange")
 		.def("getReligionCommerce", &CyCity::getReligionCommerce, "int (int /*CommerceTypes*/) - effect on CommerceType by Religions")
@@ -406,6 +445,11 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getUnitProductionDecay", &CyCity::getUnitProductionDecay, "int (int /*UnitTypes*/ eIndex)")
 		.def("getUnitProductionDecayTurns", &CyCity::getUnitProductionDecayTurns, "int (int /*UnitTypes*/ eIndex)")
 // BUG - Production Decay - end
+// BUG - Project Production - start
+		.def("getProjectProduction", &CyCity::getProjectProduction, "int (int /*ProjectTypes*/ eIndex)")
+		.def("setProjectProduction", &CyCity::setProjectProduction, "void (int /*ProjectTypes*/ eIndex, int iNewValue)")
+		.def("changeProjectProduction", &CyCity::changeProjectProduction, "void (int /*ProjectTypes*/ eIndex, int iChange)")
+// BUG - Project Production - end
 		.def("getGreatPeopleUnitRate", &CyCity::getGreatPeopleUnitRate, "int (int /*UnitTypes*/ iIndex)")
 		.def("getGreatPeopleUnitProgress", &CyCity::getGreatPeopleUnitProgress, "int (int /*UnitTypes*/ iIndex)")
 		.def("setGreatPeopleUnitProgress", &CyCity::setGreatPeopleUnitProgress, "int (int /*UnitTypes*/ iIndex, int iNewValue)")
