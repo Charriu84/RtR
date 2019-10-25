@@ -116,7 +116,7 @@
 	<init module="TechUtil"/>
 	<init module="TradeUtil"/>
 	<init module="TraitUtil"/>
-	
+	<init module="UnitUtil"/>
     <gameutils module="WidgetUtil" handler="getWidgetHelp"/>
     
 	<event type="OnLoad" module="CvTechChooser" function="resetTechPrefs"/>
