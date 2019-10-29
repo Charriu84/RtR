@@ -134,6 +134,8 @@
 	
 	<load mod="Not Just Another Game Clock"/>
 	<load mod="Advanced Scoreboard"/>
+	<load mod="Plot List Enhancements"/>
+	
 	<load mod="FavoriteCivicDetector"/>
 	<load mod="Strategy Overlay"/>
 	
@@ -163,6 +165,7 @@
 		<tab module="BugScoreOptionsTab"/>
 		<tab module="BugNJAGCOptionsTab"/>
 		
+		<tab module="BugPleOptionsTab"/>
 		<tab module="BugSystemOptionsTab"/>
 		<tab module="BugCreditsOptionsTab"/>
 	</screen>
