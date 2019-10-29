@@ -130,6 +130,7 @@
 	<load mod="BUG Advisors"/>
 	
 	<load mod="Customizable Domestic Advisor"/>
+	<load mod="Better Espionage"/>
 	<load mod="TechWindow"/>
 	
 	<load mod="Not Just Another Game Clock"/>
