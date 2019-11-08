@@ -362,8 +362,6 @@ class BugEventManager(CvEventManager.CvEventManager):
 				except:
 					BugUtil.trace("Error in %s event handler %s", eventType, eventHandler)
 
-			print ("Done with handling")
-
 	def _handleConsumableEvent(self, eventType, argsList):
 		"""Handles events that can be consumed by the handlers, such as
 		keyboard or mouse events.
