@@ -16233,10 +16233,9 @@ void CvGameTextMgr::buildTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePla
 	szBuffer.append(gDLL->getText("TXT_KEY_BUG_TOTAL_TRADE_YIELD", szYield.GetCString()));
 	szBuffer.append(gDLL->getText("TXT_KEY_BUG_TOTAL_TRADE_ROUTES", iTotalRoutes));
 
-	int iAverage = 100 * iTotalYield / iTotalRoutes;
-
 	if (iTotalRoutes > 0)
 	{
+		int iAverage = 100 * iTotalYield / iTotalRoutes;
 		CvWString szAverage;
 		szAverage.Format(L"%d.%02d", iAverage / 100, iAverage % 100);
 		szBuffer.append(gDLL->getText("TXT_KEY_BUG_AVERAGE_TRADE_YIELD", szAverage.GetCString()));
