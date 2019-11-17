@@ -121,19 +121,7 @@ public:
 	DllExport bool hasReadyUnit(bool bAny = false) const;
 	DllExport bool hasAutoUnit() const;
 	DllExport bool hasBusyUnit() const;
-
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                       12/07/09                            Emperor Fool      */
-/*                                                                                              */
-/* Bugfix                                                                                       */
-/************************************************************************************************/
-	// Free Tech Popup Fix
-	bool isChoosingFreeTech() const;
-	void setChoosingFreeTech(bool bValue);
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                        END                                                  */
-/************************************************************************************************/
-
+	
 	DllExport void chooseTech(int iDiscover = 0, CvWString szText = "", bool bFront = false);				// Exposed to Python
 
 	int calculateScore(bool bFinal = false, bool bVictory = false);
@@ -1186,17 +1174,6 @@ protected:
 	//Plako for RBmod (monitor)
 	bool m_bPreviousConnected;
 	int m_iPreviousScore;
-	
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                       12/07/09                            Emperor Fool      */
-/*                                                                                              */
-/* Bugfix                                                                                       */
-/************************************************************************************************/
-	// Free Tech Popup Fix
-	bool m_bChoosingFreeTech;
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                        END                                                  */
-/************************************************************************************************/
 
 	PlayerTypes m_eID;
 	LeaderHeadTypes m_ePersonalityType;
