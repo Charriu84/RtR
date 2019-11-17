@@ -54,6 +54,8 @@ class BugMapOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addLabel(screen, panel, "Misc", "Misc:")
 		self.addCheckbox(screen, panel, "MainInterface__FieldOfView")
 		self.addCheckbox(screen, panel, "MainInterface__FieldOfView_Remember", True)
+		self.addCheckbox(screen, panel, "MiscHover__RemoveFeatureHealthEffects")
+		self.addCheckbox(screen, panel, "MiscHover__RemoveFeatureHealthEffectsCountOtherTiles", True)
 		
 	def createCityTileStatusPanel(self, screen, panel):
 		left, center, right = self.addThreeColumnLayout(screen, panel, "CityPlotsEnabled", True)

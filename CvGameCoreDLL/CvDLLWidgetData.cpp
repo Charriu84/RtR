@@ -2824,6 +2824,74 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				{
 					if (GC.getBuildInfo(eBuild).isFeatureRemove(pMissionPlot->getFeatureType()))
 					{
+// BUG - Feature Health - start
+						if (pMissionPlot->isCityRadius() && getBugOptionBOOL("MiscHover__RemoveFeatureHealthEffects", true, "BUG_REMOVE_FEATURE_HEALTH_EFFECTS"))
+						{
+							int iHealthPercent = GC.getFeatureInfo(pMissionPlot->getFeatureType()).getHealthPercent();
+
+							if (iHealthPercent != 0)
+							{
+								bool bCountOtherTiles = getBugOptionBOOL("MiscHover__RemoveFeatureHealthEffectsCountOtherTiles", true, "BUG_REMOVE_FEATURE_HEALTH_EFFECTS_COUNT_OTHER_TILES");
+								int iGoodPercentChange = 0;
+								int iBadPercentChange = 0;
+
+								if (iHealthPercent > 0)
+								{
+									iGoodPercentChange = - iHealthPercent;
+								}
+								else
+								{
+									iBadPercentChange = iHealthPercent;
+								}
+								for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+								{
+									CvPlot* pLoopPlot = plotCity(pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE(), iI);
+
+									if (pLoopPlot != NULL)
+									{
+										CvCity* pLoopCity = pLoopPlot->getPlotCity();
+
+										if (pLoopCity != NULL && pLoopCity->getTeam() == pHeadSelectedUnit->getTeam())
+										{
+											int iGood = 0, iBad = 0;
+
+											if (bCountOtherTiles)
+											{
+												int iCityGoodPercentChange = 0;
+												int iCityBadPercentChange = 0;
+
+												pLoopCity->calculateFeatureHealthPercentChange(iCityGoodPercentChange, iCityBadPercentChange, pMissionPlot);
+												pLoopCity->getAdditionalHealth(iCityGoodPercentChange, iCityBadPercentChange, iGood, iBad);
+												iGood = -iGood;
+												iBad = -iBad;
+												iCityGoodPercentChange += iGoodPercentChange;
+												iCityBadPercentChange += iBadPercentChange;
+												pLoopCity->getAdditionalHealth(iCityGoodPercentChange, iCityBadPercentChange, iGood, iBad);
+											}
+											else
+											{
+												pLoopCity->getAdditionalHealth(iGoodPercentChange, iBadPercentChange, iGood, iBad);
+											}
+											if (iGood != 0 || iBad != 0)
+											{
+												int iSpoiledFood = pLoopCity->getAdditionalSpoiledFood(iGood, iBad);
+												int iStarvation = pLoopCity->getAdditionalStarvation(iSpoiledFood);
+												bool bStarted = false;
+
+												CvWStringBuffer szFeatureEffects;
+												bStarted = GAMETEXT.setResumableGoodBadChangeHelp(szFeatureEffects, L"", L"", L"", iGood, gDLL->getSymbolID(HEALTHY_CHAR), iBad, gDLL->getSymbolID(UNHEALTHY_CHAR), false, false, bStarted);
+												bStarted = GAMETEXT.setResumableValueChangeHelp(szFeatureEffects, L"", L"", L"", iSpoiledFood, gDLL->getSymbolID(EATEN_FOOD_CHAR), false, false, bStarted);
+												bStarted = GAMETEXT.setResumableValueChangeHelp(szFeatureEffects, L"", L"", L"", iStarvation, gDLL->getSymbolID(BAD_FOOD_CHAR), false, false, bStarted);
+												szBuffer.append(NEWLINE);
+												szBuffer.append(gDLL->getText("TXT_KEY_ACTION_CHANGE_IN_CITY", szFeatureEffects.getCString(), pLoopCity->getNameKey()));
+											}
+										}
+									}
+								}
+							}
+						}
+// BUG - Feature Health - end
+
 						iProduction = pMissionPlot->getFeatureProduction(eBuild, pHeadSelectedUnit->getTeam(), &pCity);
 
 						if (iProduction > 0)
