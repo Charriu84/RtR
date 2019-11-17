@@ -140,6 +140,54 @@ Debug\CvArtFileMgr.obj: CvArtFileMgr.cpp \
 	.\CyGlobalContext.h \
 	.\CvArtFileMgr.h \
 	.\CvXMLLoadUtility.h
+Debug\CvBugOptions.obj: CvBugOptions.cpp \
+	.\CvGameCoreDLL.h \
+	.\FAssert.h \
+	.\CvGameCoreDLLDefNew.h \
+	.\FDataStreamBase.h \
+	.\FFreeListArrayBase.h \
+	.\FFreeListTrashArray.h \
+	.\FFreeListArray.h \
+	.\CvString.h \
+	.\CvEnums.h \
+	.\CvDefines.h \
+	.\CvStructs.h \
+	.\CvDLLUtilityIFaceBase.h \
+	.\LinkedList.h \
+	.\CvPlayerAI.h \
+	.\CvPlayer.h \
+	.\CvCityAI.h \
+	.\CvCity.h \
+	.\CvDLLEntity.h \
+	.\CvUnitAI.h \
+	.\CvUnit.h \
+	.\CvSelectionGroupAI.h \
+	.\CvSelectionGroup.h \
+	.\CvPlotGroup.h \
+	.\CvTalkingHeadMessage.h \
+	.\AI_defines.h \
+	.\CvGameCoreUtils.h \
+	.\CvGlobals.h \
+	.\CvMap.h \
+	.\CvArea.h \
+	.\CvPlot.h \
+	.\CvGameAI.h \
+	.\CvGame.h \
+	.\CvDeal.h \
+	.\CvRandom.h \
+	.\CyArgsList.h \
+	.\FProfiler.h \
+	.\CyCity.h \
+	.\CvInfos.h \
+	.\CvTeamAI.h \
+	.\CvTeam.h \
+	.\CvDLLPythonIFaceBase.h \
+	.\CvDllEntity.h \
+	.\CvDLLEntityIFaceBase.h \
+	.\CyGlobalContext.h \
+	.\CvArtFileMgr.h \
+	.\FVariableSystem.h \
+	.\CvBugOptions.h
 Debug\CvCity.obj: CvCity.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -396,7 +444,9 @@ Debug\CvDLLButtonPopup.obj: CvDLLButtonPopup.cpp \
 	.\CvEventReporter.h \
 	.\CvStatistics.h \
 	.\CvDllPythonEvents.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\BugMod.h \
+	.\CvBugOptions.h
 Debug\CvDLLEntity.obj: CvDLLEntity.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -646,7 +696,9 @@ Debug\CvDLLWidgetData.obj: CvDLLWidgetData.cpp \
 	.\CvDllPythonEvents.h \
 	.\CvDLLWidgetData.h \
 	.\CvPopupInfo.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\BugMod.h \
+	.\CvBugOptions.h
 Debug\CvEventReporter.obj: CvEventReporter.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -803,7 +855,8 @@ Debug\CvGame.obj: CvGame.cpp \
 	.\CvDllPythonEvents.h \
 	.\CvMessageControl.h \
 	.\CvDLLInterfaceIFaceBase.h \
-	.\CvDLLEngineIFaceBase.h
+	.\CvDLLEngineIFaceBase.h \
+	.\BugMod.h
 Debug\CvGameAI.obj: CvGameAI.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -1001,7 +1054,8 @@ Debug\CvGameInterface.obj: CvGameInterface.cpp \
 	.\CvDLLFAStarIFaceBase.h \
 	.\FAStarNode.h \
 	.\CvGameTextMgr.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\CvBugOptions.h
 Debug\CvGameTextMgr.obj: CvGameTextMgr.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -1052,7 +1106,8 @@ Debug\CvGameTextMgr.obj: CvGameTextMgr.cpp \
 	.\CvDLLInterfaceIFaceBase.h \
 	.\CvDLLSymbolIFaceBase.h \
 	.\CvXMLLoadUtility.h \
-	.\CvPopupInfo.h
+	.\CvPopupInfo.h \
+	.\CvBugOptions.h
 Debug\CvGlobals.obj: CvGlobals.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -1104,7 +1159,9 @@ Debug\CvGlobals.obj: CvGlobals.cpp \
 	.\CvInfoWater.h \
 	.\CvGameTextMgr.h \
 	.\FVariableSystem.h \
-	.\CvInitCore.h
+	.\CvInitCore.h \
+	.\BugMod.h \
+	.\CvBugOptions.h
 Debug\CvHallOfFameInfo.obj: CvHallOfFameInfo.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -1298,7 +1355,9 @@ Debug\CvInitCore.obj: CvInitCore.cpp \
 	.\CyGlobalContext.h \
 	.\CvArtFileMgr.h \
 	.\CvInitCore.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\BugMod.h \
+	.\CvDLLIniParserIFaceBase.h
 Debug\CvMap.obj: CvMap.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -2009,7 +2068,8 @@ Debug\CvSelectionGroup.obj: CvSelectionGroup.cpp \
 	.\CySelectionGroup.h \
 	.\CvEventReporter.h \
 	.\CvStatistics.h \
-	.\CvDllPythonEvents.h
+	.\CvDllPythonEvents.h \
+	.\CvBugOptions.h
 Debug\CvSelectionGroupAI.obj: CvSelectionGroupAI.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -2397,7 +2457,8 @@ Debug\CvUnit.obj: CvUnit.cpp \
 	.\CvStatistics.h \
 	.\CvDllPythonEvents.h \
 	.\CvDLLFAStarIFaceBase.h \
-	.\CvPopupInfo.h
+	.\CvPopupInfo.h \
+	.\CvBugOptions.h
 Debug\CvUnitAI.obj: CvUnitAI.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -5173,6 +5234,54 @@ Release\CvArtFileMgr.obj: CvArtFileMgr.cpp \
 	.\CyGlobalContext.h \
 	.\CvArtFileMgr.h \
 	.\CvXMLLoadUtility.h
+Release\CvBugOptions.obj: CvBugOptions.cpp \
+	.\CvGameCoreDLL.h \
+	.\FAssert.h \
+	.\CvGameCoreDLLDefNew.h \
+	.\FDataStreamBase.h \
+	.\FFreeListArrayBase.h \
+	.\FFreeListTrashArray.h \
+	.\FFreeListArray.h \
+	.\CvString.h \
+	.\CvEnums.h \
+	.\CvDefines.h \
+	.\CvStructs.h \
+	.\CvDLLUtilityIFaceBase.h \
+	.\LinkedList.h \
+	.\CvPlayerAI.h \
+	.\CvPlayer.h \
+	.\CvCityAI.h \
+	.\CvCity.h \
+	.\CvDLLEntity.h \
+	.\CvUnitAI.h \
+	.\CvUnit.h \
+	.\CvSelectionGroupAI.h \
+	.\CvSelectionGroup.h \
+	.\CvPlotGroup.h \
+	.\CvTalkingHeadMessage.h \
+	.\AI_defines.h \
+	.\CvGameCoreUtils.h \
+	.\CvGlobals.h \
+	.\CvMap.h \
+	.\CvArea.h \
+	.\CvPlot.h \
+	.\CvGameAI.h \
+	.\CvGame.h \
+	.\CvDeal.h \
+	.\CvRandom.h \
+	.\CyArgsList.h \
+	.\FProfiler.h \
+	.\CyCity.h \
+	.\CvInfos.h \
+	.\CvTeamAI.h \
+	.\CvTeam.h \
+	.\CvDLLPythonIFaceBase.h \
+	.\CvDllEntity.h \
+	.\CvDLLEntityIFaceBase.h \
+	.\CyGlobalContext.h \
+	.\CvArtFileMgr.h \
+	.\FVariableSystem.h \
+	.\CvBugOptions.h
 Release\CvCity.obj: CvCity.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -5429,7 +5538,9 @@ Release\CvDLLButtonPopup.obj: CvDLLButtonPopup.cpp \
 	.\CvEventReporter.h \
 	.\CvStatistics.h \
 	.\CvDllPythonEvents.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\BugMod.h \
+	.\CvBugOptions.h
 Release\CvDLLEntity.obj: CvDLLEntity.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -5679,7 +5790,9 @@ Release\CvDLLWidgetData.obj: CvDLLWidgetData.cpp \
 	.\CvDllPythonEvents.h \
 	.\CvDLLWidgetData.h \
 	.\CvPopupInfo.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\BugMod.h \
+	.\CvBugOptions.h
 Release\CvEventReporter.obj: CvEventReporter.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -5836,7 +5949,8 @@ Release\CvGame.obj: CvGame.cpp \
 	.\CvDllPythonEvents.h \
 	.\CvMessageControl.h \
 	.\CvDLLInterfaceIFaceBase.h \
-	.\CvDLLEngineIFaceBase.h
+	.\CvDLLEngineIFaceBase.h \
+	.\BugMod.h
 Release\CvGameAI.obj: CvGameAI.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -6034,7 +6148,8 @@ Release\CvGameInterface.obj: CvGameInterface.cpp \
 	.\CvDLLFAStarIFaceBase.h \
 	.\FAStarNode.h \
 	.\CvGameTextMgr.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\CvBugOptions.h
 Release\CvGameTextMgr.obj: CvGameTextMgr.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -6085,7 +6200,8 @@ Release\CvGameTextMgr.obj: CvGameTextMgr.cpp \
 	.\CvDLLInterfaceIFaceBase.h \
 	.\CvDLLSymbolIFaceBase.h \
 	.\CvXMLLoadUtility.h \
-	.\CvPopupInfo.h
+	.\CvPopupInfo.h \
+	.\CvBugOptions.h
 Release\CvGlobals.obj: CvGlobals.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -6137,7 +6253,9 @@ Release\CvGlobals.obj: CvGlobals.cpp \
 	.\CvInfoWater.h \
 	.\CvGameTextMgr.h \
 	.\FVariableSystem.h \
-	.\CvInitCore.h
+	.\CvInitCore.h \
+	.\BugMod.h \
+	.\CvBugOptions.h
 Release\CvHallOfFameInfo.obj: CvHallOfFameInfo.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -6331,7 +6449,9 @@ Release\CvInitCore.obj: CvInitCore.cpp \
 	.\CyGlobalContext.h \
 	.\CvArtFileMgr.h \
 	.\CvInitCore.h \
-	.\CvMessageControl.h
+	.\CvMessageControl.h \
+	.\BugMod.h \
+	.\CvDLLIniParserIFaceBase.h
 Release\CvMap.obj: CvMap.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -7042,7 +7162,8 @@ Release\CvSelectionGroup.obj: CvSelectionGroup.cpp \
 	.\CySelectionGroup.h \
 	.\CvEventReporter.h \
 	.\CvStatistics.h \
-	.\CvDllPythonEvents.h
+	.\CvDllPythonEvents.h \
+	.\CvBugOptions.h
 Release\CvSelectionGroupAI.obj: CvSelectionGroupAI.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \
@@ -7430,7 +7551,8 @@ Release\CvUnit.obj: CvUnit.cpp \
 	.\CvStatistics.h \
 	.\CvDllPythonEvents.h \
 	.\CvDLLFAStarIFaceBase.h \
-	.\CvPopupInfo.h
+	.\CvPopupInfo.h \
+	.\CvBugOptions.h
 Release\CvUnitAI.obj: CvUnitAI.cpp \
 	.\CvGameCoreDLL.h \
 	.\FAssert.h \

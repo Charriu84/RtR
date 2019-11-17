@@ -1367,6 +1367,7 @@ void CvDLLWidgetData::doContactCiv(CvWidgetDataStruct &widgetDataStruct)
 	{
 		if (GET_TEAM(GC.getGameINLINE().getActiveTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam()))
 		{
+			//Charriu for RB ask for war declaration on alt+click
 			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_DECLAREWARMOVE);
 			if (NULL != pInfo)
 			{
@@ -3779,7 +3780,7 @@ void CvDLLWidgetData::parseFlagHelp(CvWidgetDataStruct &widgetDataStruct, CvWStr
 
 	// unofficial patch
 	szBuffer.append(szTempBuffer);
-	szBuffer.append(L"Unofficial 3.19 Patch v1.50");
+	szBuffer.append(L"Unofficial 3.19 Patch v1.60");
 
 	// separator line
 	szBuffer.append(NEWLINE L"==============================" NEWLINE);
