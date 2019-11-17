@@ -172,6 +172,10 @@ public:
 	int getMissionData1(int iNode) const;																														// Exposed to Python
 	int getMissionData2(int iNode) const;																														// Exposed to Python
 
+// BUG - All Units Actions - start
+	bool allMatch(UnitTypes eUnit) const;
+// BUG - All Units Actions - end
+
 	// for serialization
 	virtual void read(FDataStreamBase* pStream);
 	virtual void write(FDataStreamBase* pStream);

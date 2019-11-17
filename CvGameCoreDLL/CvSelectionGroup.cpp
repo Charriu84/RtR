@@ -4566,6 +4566,33 @@ void CvSelectionGroup::deactivateHeadMission()
 		}
 	}
 }
+
+// BUG - All Units Actions - start
+bool CvSelectionGroup::allMatch(UnitTypes eUnit) const
+{
+	FAssertMsg(eUnit >= 0, "eUnit expected to be >= 0");
+	FAssertMsg(eUnit < GC.getNumUnitInfos(), "eUnit expected to be < GC.getNumUnitInfos()");
+
+	CLLNode<IDInfo>* pUnitNode = headUnitNode();
+	CvUnit* pLoopUnit;
+
+	FAssertMsg(pUnitNode != NULL, "headUnitNode() expected to be non-NULL");
+
+	while (pUnitNode != NULL)
+	{
+		pLoopUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = nextUnitNode(pUnitNode);
+
+		if (pLoopUnit->getUnitType() != eUnit)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+// BUG - All Units Actions - end
+
 // BUG - Safe Move - start
 void CvSelectionGroup::checkLastPathPlot(CvPlot* pPlot)
 {
