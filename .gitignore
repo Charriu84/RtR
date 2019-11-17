@@ -6,3 +6,5 @@
 /CvGameCoreDLL/Release
 /CvGameCoreDLL/temp_files
 /UserSettings
+*.sdf
+*.suo
