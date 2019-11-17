@@ -2085,7 +2085,7 @@ void createTestFontString(CvWStringBuffer& szString)
 {
 	int iI;
 	szString.assign(L"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[×]^_`abcdefghijklmnopqrstuvwxyz\n");
-	//szString.append(L"{}~\\ßÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞŸßàáâãäåæçèéêëìíîïğñòóôõö÷øùúûüışÿ¿¡«»°ŠŒšœ™©®€£¢”‘“…’");
+	szString.append(L"{}~\\ßÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞŸßàáâãäåæçèéêëìíîïğñòóôõö÷øùúûüışÿ¿¡«»°ŠŒšœ™©®€£¢”‘“…’");
 	for (iI=0;iI<NUM_YIELD_TYPES;++iI)
 		szString.append(CvWString::format(L"%c", GC.getYieldInfo((YieldTypes) iI).getChar()));
 
@@ -3103,14 +3103,25 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			{
 				if (pPlot->getBuildProgress((BuildTypes)iI) > 0 && pPlot->canBuild((BuildTypes)iI, ePlayer))
 				{
-					int iTurns = pPlot->getBuildTurnsLeft((BuildTypes)iI, GC.getGame().getActivePlayer());
+					BuildTypes eBuild = (BuildTypes)iI;
+					int iTurns = pPlot->getBuildTurnsLeft(eBuild, GC.getGame().getActivePlayer());
 					
 					if (iTurns > 0 && iTurns < MAX_INT)
 					{
 						szString.append(NEWLINE);
-						szString.append(GC.getBuildInfo((BuildTypes)iI).getDescription());
+						if (eBuild == eBestBuild)
+						{
+							bBestPartiallyBuilt = true;
+							szString.append(CvWString::format(SETCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
+						}
+						szString.append(GC.getBuildInfo(eBuild).getDescription());
 						szString.append(L": ");
 						szString.append(gDLL->getText("TXT_KEY_ACTION_NUM_TURNS", iTurns));
+						
+						if (eBuild == eBestBuild)
+						{
+							szString.append(CvWString::format(ENDCOLR));
+						}
 					}
 				}
 			}
@@ -7486,18 +7497,20 @@ void CvGameTextMgr::setBuildingActualEffects(CvWStringBuffer &szBuffer, CvWStrin
 		// Happiness
 		int iGood = 0;
 		int iBad = 0;
-		int iAngryPop = 0;
-		int iHappiness = pCity->getAdditionalHappinessByBuilding(eBuilding, iGood, iBad, iAngryPop);
+		pCity->getAdditionalHappinessByBuilding(eBuilding, iGood, iBad);
+		int iAngryPop = pCity->getAdditionalAngryPopuplation(iGood, iBad);
 		bStarted = setResumableGoodBadChangeHelp(szBuffer, szStart, L": ", L"", iGood, gDLL->getSymbolID(HAPPY_CHAR), iBad, gDLL->getSymbolID(UNHAPPY_CHAR), false, bNewLine, bStarted);
 		bStarted = setResumableValueChangeHelp(szBuffer, szStart, L": ", L"", iAngryPop, gDLL->getSymbolID(ANGRY_POP_CHAR), false, bNewLine, bStarted);
 
 		// Health
 		iGood = 0;
 		iBad = 0;
-		int iSpoiledFood = 0;
-		int iHealth = pCity->getAdditionalHealthByBuilding(eBuilding, iGood, iBad, iSpoiledFood);
+		pCity->getAdditionalHealthByBuilding(eBuilding, iGood, iBad);
+		int iSpoiledFood = pCity->getAdditionalSpoiledFood(iGood, iBad);
+		int iStarvation = pCity->getAdditionalStarvation(iSpoiledFood);
 		bStarted = setResumableGoodBadChangeHelp(szBuffer, szStart, L": ", L"", iGood, gDLL->getSymbolID(HEALTHY_CHAR), iBad, gDLL->getSymbolID(UNHEALTHY_CHAR), false, bNewLine, bStarted);
 		bStarted = setResumableValueChangeHelp(szBuffer, szStart, L": ", L"", iSpoiledFood, gDLL->getSymbolID(EATEN_FOOD_CHAR), false, bNewLine, bStarted);
+		bStarted = setResumableValueChangeHelp(szBuffer, szStart, L": ", L"", iStarvation, gDLL->getSymbolID(BAD_FOOD_CHAR), false, bNewLine, bStarted);
 
 		// Yield
 		int aiYields[NUM_YIELD_TYPES];
@@ -9821,11 +9834,14 @@ bool CvGameTextMgr::setBuildingAdditionalHealthHelp(CvWStringBuffer &szBuffer, c
 
 		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
 		{
-			int iGood = 0, iBad = 0, iSpoiledFood = 0;
-			int iChange = city.getAdditionalHealthByBuilding(eBuilding, iGood, iBad, iSpoiledFood);
+			int iGood = 0, iBad = 0;
+			int iChange = city.getAdditionalHealthByBuilding(eBuilding, iGood, iBad);
 
 			if (iGood != 0 || iBad != 0)
 			{
+				int iSpoiledFood = city.getAdditionalSpoiledFood(iGood, iBad);
+				int iStarvation = city.getAdditionalStarvation(iSpoiledFood);
+
 				if (!bStarted)
 				{
 					szBuffer.append(szStart);
@@ -9835,6 +9851,7 @@ bool CvGameTextMgr::setBuildingAdditionalHealthHelp(CvWStringBuffer &szBuffer, c
 				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
 				bool bStartedLine = setResumableGoodBadChangeHelp(szBuffer, szLabel, L": ", L"", iGood, gDLL->getSymbolID(HEALTHY_CHAR), iBad, gDLL->getSymbolID(UNHEALTHY_CHAR), false, true);
 				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iSpoiledFood, gDLL->getSymbolID(EATEN_FOOD_CHAR), false, true, bStartedLine);
+				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iStarvation, gDLL->getSymbolID(BAD_FOOD_CHAR), false, true, bStartedLine);
 			}
 		}
 	}
@@ -10249,11 +10266,13 @@ bool CvGameTextMgr::setBuildingAdditionalHappinessHelp(CvWStringBuffer &szBuffer
 
 		if (eBuilding != NO_BUILDING && city.canConstruct(eBuilding, false, true, false))
 		{
-			int iGood = 0, iBad = 0, iAngryPop = 0;
-			int iChange = city.getAdditionalHappinessByBuilding(eBuilding, iGood, iBad, iAngryPop);
+			int iGood = 0, iBad = 0;
+			int iChange = city.getAdditionalHappinessByBuilding(eBuilding, iGood, iBad);
 
 			if (iGood != 0 || iBad != 0)
 			{
+				int iAngryPop = city.getAdditionalAngryPopuplation(iGood, iBad);
+
 				if (!bStarted)
 				{
 					szBuffer.append(szStart);

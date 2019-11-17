@@ -5752,7 +5752,7 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 	if (iModifier != 0 && !isDisorder() && !isWeLoveTheKingDay() && (getPopulation() > 0))
 	{
 		int iNewMaintenance = calculateBaseMaintenanceTimes100() * std::max(0, getMaintenanceModifier() + iModifier + 100) / 100;
-		return std::max(0, getMaintenanceTimes100() - iNewMaintenance);
+		return getMaintenanceTimes100() - iNewMaintenance;
 	}
 
 	return 0;
@@ -6368,11 +6368,65 @@ int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, i
 	return iGood - iBad - iStarting;
 }
 // BUG - Feature Health - end
+
+// BUG - Actual Effects - start
+/*
+ * Returns the additional angry population caused by the given happiness changes.
+ *
+ * Positive values for iBad mean an increase in unhappiness.
+ */
+int CvCity::getAdditionalAngryPopuplation(int iGood, int iBad) const
+{
+	int iHappy = happyLevel();
+	int iUnhappy = unhappyLevel();
+	int iPop = getPopulation();
+
+	return range((iUnhappy + iBad) - (iHappy + iGood), 0, iPop) - range(iUnhappy - iHappy, 0, iPop);
+}
+
+/*
+ * Returns the additional spoiled food caused by the given health changes.
+ *
+ * Positive values for iBad mean an increase in unhealthiness.
+ */
+int CvCity::getAdditionalSpoiledFood(int iGood, int iBad) const
+{
+	int iHealthy = goodHealth();
+	int iUnhealthy = badHealth();
+	int iRate = iHealthy - iUnhealthy;
+
+	return std::min(0, iRate) - std::min(0, iRate + iGood - iBad);
+}
+
+/*
+ * Returns the additional starvation caused by the given spoiled food.
+ */
+int CvCity::getAdditionalStarvation(int iSpoiledFood) const
+{
+	int iFood = getYieldRate(YIELD_FOOD) - foodConsumption();
+
+	if (iSpoiledFood > 0)
+	{
+		if (iFood <= 0)
 		{
-			setInfoDirty(true);
+			return iSpoiledFood;
+		}
+		else if (iSpoiledFood > iFood)
+		{
+			return iSpoiledFood - iFood;
 		}
 	}
+	else if (iSpoiledFood < 0)
+	{
+		if (iFood < 0)
+		{
+			return std::max(iFood, iSpoiledFood);
+		}
+	}
+
+	return 0;
 }
+// BUG - Actual Effects - start
 
 
 int CvCity::getBuildingGoodHealth() const
@@ -6718,8 +6772,8 @@ void CvCity::updateExtraBuildingHappiness()
  */
 int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding) const
 {
-	int iGood = 0, iBad = 0, iAngryPop = 0;
-	return getAdditionalHappinessByBuilding(eBuilding, iGood, iBad, iAngryPop);
+	int iGood = 0, iBad = 0;
+	return getAdditionalHappinessByBuilding(eBuilding, iGood, iBad);
 }
 
 /*
@@ -6729,7 +6783,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding) const
  * Doesn't reset iGood or iBad to zero.
  * Doesn't check if the building can be constructed in this city.
  */
-int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood, int& iBad, int& iAngryPop) const
+int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood, int& iBad) const
 {
 	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
 	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
@@ -6827,12 +6881,6 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		iBad = iStartingBad - unhappyLevel();
 	}
 
-	// Effect on Angry Population
-	int iHappy = happyLevel();
-	int iUnhappy = unhappyLevel();
-	int iPop = getPopulation();
-	iAngryPop += range((iUnhappy + iBad) - (iHappy + iGood), 0, iPop) - range(iUnhappy - iHappy, 0, iPop);
-
 	return iGood - iBad - iStarting;
 }
 
@@ -6844,18 +6892,18 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
  */
 int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding) const
 {
-	int iGood = 0, iBad = 0, iSpoiledFood = 0;
-	return getAdditionalHealthByBuilding(eBuilding, iGood, iBad, iSpoiledFood);
+	int iGood = 0, iBad = 0;
+	return getAdditionalHealthByBuilding(eBuilding, iGood, iBad);
 }
 
 /*
  * Returns the total additional health that adding one of the given buildings will provide
- * and sets the good and bad levels individually and any resulting additional spoiled food.
+ * and sets the good and bad levels individually and any resulting additional spoiled food and starvation.
  *
- * Doesn't reset iGood or iBad to zero.
+ * Doesn't reset iGood, iBad, iSpoiledFood, iStarvation to zero.
  * Doesn't check if the building can be constructed in this city.
  */
-int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, int& iBad, int& iSpoiledFood) const
+int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, int& iBad) const
 {
 	FAssertMsg(eBuilding >= 0, "eBuilding expected to be >= 0");
 	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
@@ -6930,11 +6978,6 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	{
 		iBad -= getPopulation();
 	}
-
-	// Effect on Spoiled Food
-	int iHealthy = goodHealth();
-	int iUnhealthy = badHealth();
-	iSpoiledFood -= std::min(0, (iHealthy + iGood) - (iUnhealthy + iBad)) - std::min(0, iHealthy - iUnhealthy);
 
 	return iGood - iBad - iStarting;
 }
@@ -8563,7 +8606,11 @@ int CvCity::getAdditionalYieldRateModifierByBuilding(YieldTypes eIndex, Building
 	if (!bObsolete)
 	{
 		iExtraModifier += kBuilding.getYieldModifier(eIndex);
-		if (!isPower())
+		if (isPower())
+		{
+			iExtraModifier += kBuilding.getPowerYieldModifier(eIndex);
+		}
+		else
 		{
 			if (kBuilding.isPower() || kBuilding.isAreaCleanPower() || (kBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)kBuilding.getPowerBonus())))
 			{
