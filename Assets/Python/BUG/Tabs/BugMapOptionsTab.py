@@ -46,6 +46,8 @@ class BugMapOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 	def createTileHoverPanel(self, screen, panel):
 		self.addLabel(screen, panel, "TileHover", "Tile Hover:")
+		self.addCheckbox(screen, panel, "MiscHover__PlotWorkingCity")
+		self.addCheckbox(screen, panel, "MiscHover__PlotRecommendedBuild")
 		self.addCheckbox(screen, panel, "MiscHover__PartialBuilds")
 		
 	def createMiscellaneousPanel(self, screen, panel):

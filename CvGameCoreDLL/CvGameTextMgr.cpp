@@ -3063,6 +3063,37 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			szString.append(GC.getRouteInfo(pPlot->getRevealedRouteType(GC.getGameINLINE().getActiveTeam(), true)).getDescription());
 		}
 
+
+// BUG - Recommended Build - start
+		BuildTypes eBestBuild = NO_BUILD;
+		bool bBestPartiallyBuilt = false;
+
+		if (getBugOptionBOOL("MiscHover__PlotRecommendedBuild", true, "BUG_PLOT_HOVER_RECOMMENDED_BUILD"))
+		{
+			CvCity* pWorkingCity = pPlot->getWorkingCity();
+
+			if (pWorkingCity != NULL && pWorkingCity->getOwnerINLINE() == GC.getGameINLINE().getActivePlayer())
+			{
+				eBestBuild = pWorkingCity->AI_getBestBuild(pWorkingCity->getCityPlotIndex(pPlot));
+
+				if (eBestBuild != NO_BUILD)
+				{
+					CvBuildInfo& kBestBuild = GC.getBuildInfo(eBestBuild);
+					ImprovementTypes ePlotImprovement = pPlot->getImprovementType();
+
+					if (ePlotImprovement != NO_IMPROVEMENT && ePlotImprovement == kBestBuild.getImprovement())
+					{
+						eBestBuild = NO_BUILD;
+					}
+					else if (kBestBuild.getRoute() != NO_ROUTE && (pPlot->isWater() || kBestBuild.getRoute() == pPlot->getRouteType()))
+					{
+						eBestBuild = NO_BUILD;
+					}
+				}
+			}
+		}
+// BUG - Recommended Build - end
+
 // BUG - Partial Builds - start
 		if (pPlot->hasAnyBuildProgress() && getBugOptionBOOL("MiscHover__PartialBuilds", true, "BUG_PLOT_HOVER_PARTIAL_BUILDS"))
 		{
@@ -3085,6 +3116,16 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			}
 		}
 // BUG - Partial Builds - end
+
+// BUG - Recommended Build - start
+		if (eBestBuild != NO_BUILD && !bBestPartiallyBuilt)
+		{
+			szString.append(NEWLINE);
+			szString.append(CvWString::format(SETCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
+			szString.append(GC.getBuildInfo(eBestBuild).getDescription());
+			szString.append(ENDCOLR);
+		}
+// BUG - Recommended Build - end
 
 		if (pPlot->getBlockadedCount(GC.getGameINLINE().getActiveTeam()) > 0)
 		{

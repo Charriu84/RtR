@@ -24,6 +24,10 @@
 		</section>
 		
 		<section id="Plot">
+			<option id="PlotWorkingCity" key="Plot Working City" 
+					type="boolean" default="True" dll="6"/>
+			<option id="PlotRecommendedBuild" key="Plot Recommended Build" 
+					type="boolean" default="True" dll="6"/>
 			<option id="PartialBuilds" key="Plot Partial Builds" 
 					type="boolean" default="True"/>
 		</section>
