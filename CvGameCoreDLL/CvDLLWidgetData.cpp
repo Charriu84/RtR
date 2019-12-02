@@ -1374,6 +1374,7 @@ void CvDLLWidgetData::doContactCiv(CvWidgetDataStruct &widgetDataStruct)
 				pInfo->setData1(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam());
 				pInfo->setData2(0);
 				pInfo->setData3(0);
+				pInfo->setFlags(1);
 				pInfo->setOption1(false);
 				pInfo->setOption2(true);
 				gDLL->getInterfaceIFace()->addPopup(pInfo);
