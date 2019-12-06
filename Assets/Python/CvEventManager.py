@@ -845,15 +845,16 @@ class CvEventManager:
 		city, iPlayer = argsList
 		iOwner = city.findHighestCulture()
 
+		#Removed by Charriu, because the Partisans event was removed by Krill
 		# Partisans!
-		if city.getPopulation > 1 and iOwner != -1 and iPlayer != -1:
-			owner = gc.getPlayer(iOwner)
-			if not owner.isBarbarian() and owner.getNumCities() > 0:
-				if gc.getTeam(owner.getTeam()).isAtWar(gc.getPlayer(iPlayer).getTeam()):
-					if gc.getNumEventTriggerInfos() > 0: # prevents mods that don't have events from getting an error
-						iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(),'EVENTTRIGGER_PARTISANS')
-						if iEvent != -1 and gc.getGame().isEventActive(iEvent) and owner.getEventTriggerWeight(iEvent) < 0:
-							triggerData = owner.initTriggeredData(iEvent, true, -1, city.getX(), city.getY(), iPlayer, city.getID(), -1, -1, -1, -1)
+		#if city.getPopulation > 1 and iOwner != -1 and iPlayer != -1:
+		#	owner = gc.getPlayer(iOwner)
+		#	if not owner.isBarbarian() and owner.getNumCities() > 0:
+		#		if gc.getTeam(owner.getTeam()).isAtWar(gc.getPlayer(iPlayer).getTeam()):
+		#			if gc.getNumEventTriggerInfos() > 0: # prevents mods that don't have events from getting an error
+		#				iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(),'EVENTTRIGGER_PARTISANS')
+		#				if iEvent != -1 and gc.getGame().isEventActive(iEvent) and owner.getEventTriggerWeight(iEvent) < 0:
+		#					triggerData = owner.initTriggeredData(iEvent, true, -1, city.getX(), city.getY(), iPlayer, city.getID(), -1, -1, -1, -1)
 
 		CvUtil.pyPrint("City Razed Event: %s" %(city.getName(),))
 
