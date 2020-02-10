@@ -6370,7 +6370,12 @@ void CvGame::doHolyCity()
 			}
 		}
 	}
-	//Charriu for RtR mod equalize religion spread in late starts
+	//Charriu for RtR mod equalize religion spread in late starts Start
+	if (getElapsedGameTurns() > 5 && !isOption(GAMEOPTION_ADVANCED_START))
+	{
+		return;
+	}
+
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
@@ -6393,7 +6398,7 @@ void CvGame::doHolyCity()
 				
 				for (iJ = 0; iJ < GC.getNumUnitClassInfos(); iJ++)
 				{
-					UnitTypes eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(GET_PLAYER(eBestPlayer).getCivilizationType()).getCivilizationUnits(iJ)));
+					UnitTypes eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getCivilizationUnits(iJ)));
 
 					if (eLoopUnit != NO_UNIT)
 					{
@@ -6430,6 +6435,7 @@ void CvGame::doHolyCity()
 			}
 		}
 	}
+	//Charriu for RtR mod equalize religion spread in late starts End
 }
 
 
