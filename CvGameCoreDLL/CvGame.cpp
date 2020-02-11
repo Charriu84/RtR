@@ -6376,6 +6376,11 @@ void CvGame::doHolyCity()
 		return;
 	}
 
+	if (foundedReligions.size() == 0)
+	{
+		return;
+	}
+
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
