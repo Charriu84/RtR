@@ -3107,6 +3107,7 @@ m_pbFeatureImpassable(NULL),
 m_piPrereqAndTechs(NULL),
 m_piPrereqOrBonuses(NULL),
 m_piProductionTraits(NULL),
+m_piDirectProductionTraits(NULL),
 m_piFlavorValue(NULL),
 m_piTerrainAttackModifier(NULL),
 m_piTerrainDefenseModifier(NULL),
@@ -3159,6 +3160,7 @@ CvUnitInfo::~CvUnitInfo()
 	SAFE_DELETE_ARRAY(m_piPrereqAndTechs);
 	SAFE_DELETE_ARRAY(m_piPrereqOrBonuses);
 	SAFE_DELETE_ARRAY(m_piProductionTraits);
+	SAFE_DELETE_ARRAY(m_piDirectProductionTraits);
 	SAFE_DELETE_ARRAY(m_piFlavorValue);
 	SAFE_DELETE_ARRAY(m_piTerrainAttackModifier);
 	SAFE_DELETE_ARRAY(m_piTerrainDefenseModifier);
@@ -3786,6 +3788,13 @@ int CvUnitInfo::getProductionTraits(int i) const
 	return m_piProductionTraits ? m_piProductionTraits[i] : -1;
 }
 
+int CvUnitInfo::getDirectProductionTraits(int i) const			
+{
+	FAssertMsg(i < GC.getNumTraitInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piDirectProductionTraits ? m_piDirectProductionTraits[i] : 0;
+}
+
 int CvUnitInfo::getFlavorValue(int i) const				
 {
 	FAssertMsg(i < GC.getNumFlavorTypes(), "Index out of bounds");
@@ -4294,6 +4303,10 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 	m_piProductionTraits = new int[GC.getNumTraitInfos()];
 	stream->Read(GC.getNumTraitInfos(), m_piProductionTraits);
 
+	SAFE_DELETE_ARRAY(m_piDirectProductionTraits);
+	m_piDirectProductionTraits = new int[GC.getNumTraitInfos()];
+	stream->Read(GC.getNumTraitInfos(), m_piDirectProductionTraits);
+
 	SAFE_DELETE_ARRAY(m_piFlavorValue);
 	m_piFlavorValue = new int[GC.getNumFlavorTypes()];
 	stream->Read(GC.getNumFlavorTypes(), m_piFlavorValue);
@@ -4581,6 +4594,7 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNUM_UNIT_AND_TECH_PREREQS(), m_piPrereqAndTechs);
 	stream->Write(GC.getNUM_UNIT_PREREQ_OR_BONUSES(), m_piPrereqOrBonuses);
 	stream->Write(GC.getNumTraitInfos(), m_piProductionTraits);
+	stream->Write(GC.getNumTraitInfos(), m_piDirectProductionTraits);
 	stream->Write(GC.getNumFlavorTypes(), m_piFlavorValue);
 	stream->Write(GC.getNumTerrainInfos(), m_piTerrainAttackModifier);
 	stream->Write(GC.getNumTerrainInfos(), m_piTerrainDefenseModifier);
@@ -4838,6 +4852,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	}
 
 	pXML->SetVariableListTagPair(&m_piProductionTraits, "ProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
+	pXML->SetVariableListTagPair(&m_piDirectProductionTraits, "DirectProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
 
 	pXML->SetVariableListTagPair(&m_piFlavorValue, "Flavors", GC.getFlavorTypes(), GC.getNumFlavorTypes());
 
@@ -5133,7 +5148,8 @@ CvSpecialUnitInfo::CvSpecialUnitInfo() :
 m_bValid(false),
 m_bCityLoad(false),
 m_pbCarrierUnitAITypes(NULL),
-m_piProductionTraits(NULL)
+m_piProductionTraits(NULL),
+m_piDirectProductionTraits(NULL)
 {
 }
 
@@ -5148,6 +5164,7 @@ CvSpecialUnitInfo::~CvSpecialUnitInfo()
 {
 	SAFE_DELETE_ARRAY(m_pbCarrierUnitAITypes);
 	SAFE_DELETE_ARRAY(m_piProductionTraits);
+	SAFE_DELETE_ARRAY(m_piDirectProductionTraits);
 }
 
 bool CvSpecialUnitInfo::isValid() const
@@ -5176,6 +5193,13 @@ int CvSpecialUnitInfo::getProductionTraits(int i) const
 	return m_piProductionTraits ? m_piProductionTraits[i] : -1;
 }
 
+int CvSpecialUnitInfo::getDirectProductionTraits(int i) const		
+{
+	FAssertMsg(i < GC.getNumTraitInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piDirectProductionTraits ? m_piDirectProductionTraits[i] : 0;
+}
+
 bool CvSpecialUnitInfo::read(CvXMLLoadUtility* pXML)
 {
 	if (!CvInfoBase::read(pXML))
@@ -5189,6 +5213,7 @@ bool CvSpecialUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_pbCarrierUnitAITypes, "CarrierUnitAITypes", sizeof(GC.getUnitAIInfo((UnitAITypes)0)), NUM_UNITAI_TYPES);
 
 	pXML->SetVariableListTagPair(&m_piProductionTraits, "ProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
+	pXML->SetVariableListTagPair(&m_piDirectProductionTraits, "DirectProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
 
 	return true;
 }
@@ -6909,6 +6934,7 @@ m_bAllowsNukes(false),
 m_piPrereqAndTechs(NULL),
 m_piPrereqOrBonuses(NULL),
 m_piProductionTraits(NULL),
+m_piDirectProductionTraits(NULL),
 m_piHappinessTraits(NULL),
 m_piSeaPlotYieldChange(NULL),
 m_piRiverPlotYieldChange(NULL),
@@ -6959,6 +6985,7 @@ CvBuildingInfo::~CvBuildingInfo()
 	SAFE_DELETE_ARRAY(m_piPrereqAndTechs);
 	SAFE_DELETE_ARRAY(m_piPrereqOrBonuses);
 	SAFE_DELETE_ARRAY(m_piProductionTraits);
+	SAFE_DELETE_ARRAY(m_piDirectProductionTraits);
 	SAFE_DELETE_ARRAY(m_piHappinessTraits);
 	SAFE_DELETE_ARRAY(m_piSeaPlotYieldChange);
 	SAFE_DELETE_ARRAY(m_piRiverPlotYieldChange);
@@ -7870,6 +7897,13 @@ int CvBuildingInfo::getProductionTraits(int i) const
 	return m_piProductionTraits ? m_piProductionTraits[i] : -1;
 }
 
+int CvBuildingInfo::getDirectProductionTraits(int i) const		
+{
+	FAssertMsg(i < GC.getNumTraitInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piDirectProductionTraits ? m_piDirectProductionTraits[i] : 0;
+}
+
 int CvBuildingInfo::getHappinessTraits(int i) const		
 {
 	FAssertMsg(i < GC.getNumTraitInfos(), "Index out of bounds");
@@ -8143,6 +8177,10 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_piProductionTraits);
 	m_piProductionTraits = new int[GC.getNumTraitInfos()];
 	stream->Read(GC.getNumTraitInfos(), m_piProductionTraits);
+
+	SAFE_DELETE_ARRAY(m_piDirectProductionTraits);
+	m_piDirectProductionTraits = new int[GC.getNumTraitInfos()];
+	stream->Read(GC.getNumTraitInfos(), m_piDirectProductionTraits);
 
 	SAFE_DELETE_ARRAY(m_piHappinessTraits);
 	m_piHappinessTraits = new int[GC.getNumTraitInfos()];
@@ -8440,6 +8478,7 @@ void CvBuildingInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNUM_BUILDING_AND_TECH_PREREQS(), m_piPrereqAndTechs);
 	stream->Write(GC.getNUM_BUILDING_PREREQ_OR_BONUSES(), m_piPrereqOrBonuses);
 	stream->Write(GC.getNumTraitInfos(), m_piProductionTraits);
+	stream->Write(GC.getNumTraitInfos(), m_piDirectProductionTraits);
 	stream->Write(GC.getNumTraitInfos(), m_piHappinessTraits);
 	stream->Write(NUM_YIELD_TYPES, m_piSeaPlotYieldChange);
 	stream->Write(NUM_YIELD_TYPES, m_piRiverPlotYieldChange);
@@ -8634,6 +8673,7 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 	}
 
 	pXML->SetVariableListTagPair(&m_piProductionTraits, "ProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
+	pXML->SetVariableListTagPair(&m_piDirectProductionTraits, "DirectProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
 
 	pXML->SetVariableListTagPair(&m_piHappinessTraits, "HappinessTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
 
@@ -9069,7 +9109,8 @@ m_iObsoleteTech(NO_TECH),
 m_iTechPrereq(NO_TECH),
 m_iTechPrereqAnyone(NO_TECH),
 m_bValid(false),
-m_piProductionTraits(NULL)
+m_piProductionTraits(NULL),
+m_piDirectProductionTraits(NULL)
 {
 }
 
@@ -9083,6 +9124,7 @@ m_piProductionTraits(NULL)
 CvSpecialBuildingInfo::~CvSpecialBuildingInfo()
 {
 	SAFE_DELETE_ARRAY(m_piProductionTraits);
+	SAFE_DELETE_ARRAY(m_piDirectProductionTraits);
 }
 
 int CvSpecialBuildingInfo::getObsoleteTech( void ) const
@@ -9114,6 +9156,13 @@ int CvSpecialBuildingInfo::getProductionTraits(int i) const
 	return m_piProductionTraits ? m_piProductionTraits[i] : -1;
 }
 
+int CvSpecialBuildingInfo::getDirectProductionTraits(int i) const		
+{
+	FAssertMsg(i < GC.getNumTraitInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piDirectProductionTraits ? m_piDirectProductionTraits[i] : 0;
+}
+
 bool CvSpecialBuildingInfo::read(CvXMLLoadUtility* pXML)
 {
 	CvString szTextVal;
@@ -9132,6 +9181,7 @@ bool CvSpecialBuildingInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bValid, "bValid");
 
 	pXML->SetVariableListTagPair(&m_piProductionTraits, "ProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
+	pXML->SetVariableListTagPair(&m_piDirectProductionTraits, "DirectProductionTraits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
 
 	return true;
 }

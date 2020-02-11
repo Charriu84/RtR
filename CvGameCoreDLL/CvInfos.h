@@ -927,6 +927,7 @@ public:
 	int getPrereqAndTechs(int i) const;				// Exposed to Python
 	int getPrereqOrBonuses(int i) const;				// Exposed to Python
 	int getProductionTraits(int i) const;				// Exposed to Python
+	int getDirectProductionTraits(int i) const;				// Exposed to Python
 	int getFlavorValue(int i) const;				// Exposed to Python
 	int getTerrainAttackModifier(int i) const;				// Exposed to Python
 	int getTerrainDefenseModifier(int i) const;				// Exposed to Python
@@ -1109,6 +1110,7 @@ protected:
 	int* m_piPrereqAndTechs;
 	int* m_piPrereqOrBonuses;
 	int* m_piProductionTraits;
+	int* m_piDirectProductionTraits;
 	int* m_piFlavorValue;
 	int* m_piTerrainAttackModifier;
 	int* m_piTerrainDefenseModifier;
@@ -1239,6 +1241,7 @@ public:
 
 	bool isCarrierUnitAIType(int i) const; 		// Exposed to Python
 	int getProductionTraits(int i) const;				// Exposed to Python
+	int getDirectProductionTraits(int i) const;				// Exposed to Python
 
 	bool read(CvXMLLoadUtility* pXML);
 
@@ -1252,6 +1255,7 @@ protected:
 	// Arrays
 	bool* m_pbCarrierUnitAITypes;
 	int* m_piProductionTraits;
+	int* m_piDirectProductionTraits;
 
 };
 
@@ -1735,6 +1739,7 @@ public:
 	int getPrereqAndTechs(int i) const;				// Exposed to Python
 	int getPrereqOrBonuses(int i) const;				// Exposed to Python
 	int getProductionTraits(int i) const;				// Exposed to Python
+	int getDirectProductionTraits(int i) const;				// Exposed to Python
 	int getHappinessTraits(int i) const;				// Exposed to Python
 	int getBuildingHappinessChanges(int i) const;				// Exposed to Python
 	int getPrereqNumOfBuildingClass(int i) const;				// Exposed to Python
@@ -1888,6 +1893,7 @@ protected:
 	int* m_piPrereqAndTechs;
 	int* m_piPrereqOrBonuses;
 	int* m_piProductionTraits;
+	int* m_piDirectProductionTraits;
 	int* m_piHappinessTraits;
 	int* m_piSeaPlotYieldChange;
 	int* m_piRiverPlotYieldChange;
@@ -1954,6 +1960,7 @@ public:
 	// Arrays
 
 	int getProductionTraits(int i) const;				// Exposed to Python
+	int getDirectProductionTraits(int i) const;				// Exposed to Python
 
 	bool read(CvXMLLoadUtility* pXML);
 
@@ -1969,6 +1976,7 @@ protected:
 	// Arrays
 
 	int* m_piProductionTraits;
+	int* m_piDirectProductionTraits;
 
 };
 

@@ -5720,6 +5720,8 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 		}
 	}
 
+	iProductionNeeded -= getDirectProductionModifier(eUnit);
+
 	return std::max(1, iProductionNeeded);
 }
 
@@ -5755,6 +5757,8 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
 		iProductionNeeded /= 100;
 	}
+
+	iProductionNeeded -= getDirectProductionModifier(eBuilding);
 
 	return std::max(1, iProductionNeeded);
 }
@@ -5864,6 +5868,45 @@ int CvPlayer::getProductionModifier(ProjectTypes eProject) const
 	}
 
 	return iMultiplier;
+}
+
+int CvPlayer::getDirectProductionModifier(UnitTypes eUnit) const
+{
+	int iAdd = 0;
+	
+	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
+	{
+		if (hasTrait((TraitTypes)iI))
+		{
+			iAdd += GC.getUnitInfo(eUnit).getDirectProductionTraits(iI);
+
+			if (GC.getUnitInfo(eUnit).getSpecialUnitType() != NO_SPECIALUNIT)
+			{
+				iAdd += GC.getSpecialUnitInfo((SpecialUnitTypes) GC.getUnitInfo(eUnit).getSpecialUnitType()).getDirectProductionTraits(iI);
+			}
+		}
+	}
+
+	return iAdd;
+}
+
+int CvPlayer::getDirectProductionModifier(BuildingTypes eBuilding) const
+{
+	int iAdd = 0;
+	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
+	{
+		if (hasTrait((TraitTypes)iI))
+		{
+			iAdd += GC.getBuildingInfo(eBuilding).getDirectProductionTraits(iI);
+
+			if (GC.getBuildingInfo(eBuilding).getSpecialBuildingType() != NO_SPECIALBUILDING)
+			{
+				iAdd += GC.getSpecialBuildingInfo((SpecialBuildingTypes) GC.getBuildingInfo(eBuilding).getSpecialBuildingType()).getDirectProductionTraits(iI);
+			}
+		}
+	}
+
+	return iAdd;
 }
 
 int CvPlayer::getBuildingClassPrereqBuilding(BuildingTypes eBuilding, BuildingClassTypes ePrereqBuildingClass, int iExtra) const
@@ -14618,7 +14661,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 			{
 				return -1;
 			}
-
+			//TODO Here
 			iCost *= 100;
 			iCost /= std::max(1, 100 + pCity->getProductionModifier(eUnit));
 		}

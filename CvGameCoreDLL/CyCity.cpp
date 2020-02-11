@@ -318,6 +318,11 @@ int CyCity::getProductionModifier()
 	return m_pCity ? m_pCity->getProductionModifier() : -1;
 }
 
+int CyCity::getDirectProductionModifier()
+{
+	return m_pCity ? m_pCity->getDirectProductionModifier() : -1;
+}
+
 int CyCity::getCurrentProductionDifference(bool bIgnoreFood, bool bOverflow)
 {
 	return m_pCity ? m_pCity->getCurrentProductionDifference(bIgnoreFood, bOverflow) : -1;
@@ -331,6 +336,16 @@ int CyCity::getUnitProductionModifier(int /*UnitTypes*/ iUnit)
 int CyCity::getBuildingProductionModifier(int /*BuildingTypes*/ iBuilding)
 {
 	return m_pCity ? m_pCity->getProductionModifier((BuildingTypes)iBuilding) : -1;
+}
+
+int CyCity::getUnitDirectProductionModifier(int /*UnitTypes*/ iUnit)
+{
+	return m_pCity ? m_pCity->getDirectProductionModifier((UnitTypes)iUnit) : -1;
+}
+
+int CyCity::getBuildingDirectProductionModifier(int /*BuildingTypes*/ iBuilding)
+{
+	return m_pCity ? m_pCity->getDirectProductionModifier((BuildingTypes)iBuilding) : -1;
 }
 
 int CyCity::getProjectProductionModifier(int /*ProjectTypes*/ eProject)											

@@ -3064,6 +3064,37 @@ int CvCity::getProductionModifier() const
 	return 0;
 }
 
+int CvCity::getDirectProductionModifier() const
+{
+	CLLNode<OrderData>* pOrderNode = headOrderQueueNode();
+
+	if (pOrderNode != NULL)
+	{
+		switch (pOrderNode->m_data.eOrderType)
+		{
+		case ORDER_TRAIN:
+			return getDirectProductionModifier((UnitTypes)(pOrderNode->m_data.iData1));
+			break;
+
+		case ORDER_CONSTRUCT:
+			return getDirectProductionModifier((BuildingTypes)(pOrderNode->m_data.iData1));
+			break;
+
+		case ORDER_CREATE:
+			break;
+
+		case ORDER_MAINTAIN:
+			break;
+
+		default:
+			FAssertMsg(false, "pOrderNode->m_data.eOrderType failed to match a valid option");
+			break;
+		}
+	}
+
+	return 0;
+}
+
 
 int CvCity::getProductionModifier(UnitTypes eUnit) const
 {
@@ -3093,6 +3124,15 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 			iMultiplier += GET_PLAYER(getOwnerINLINE()).getStateReligionUnitProductionModifier();
 		}
 	}
+
+	return std::max(0, iMultiplier);
+}
+
+int CvCity::getDirectProductionModifier(UnitTypes eUnit) const
+{
+	int iI;
+
+	int iMultiplier = GET_PLAYER(getOwnerINLINE()).getDirectProductionModifier(eUnit);
 
 	return std::max(0, iMultiplier);
 }
@@ -3127,6 +3167,12 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 	return std::max(0, iMultiplier);
 }
 
+int CvCity::getDirectProductionModifier(BuildingTypes eBuilding) const
+{
+	int iMultiplier = GET_PLAYER(getOwnerINLINE()).getDirectProductionModifier(eBuilding);
+
+	return std::max(0, iMultiplier);
+}
 
 int CvCity::getProductionModifier(ProjectTypes eProject) const
 {
