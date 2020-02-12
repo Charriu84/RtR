@@ -3428,14 +3428,7 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 
 			if (GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait) != 0)
 			{
-				if (GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait) == 100)
-				{
-					szText = gDLL->getText("TXT_KEY_TRAIT_DOUBLE_SPEED");
-				}
-				else
-				{
-					szText = gDLL->getText("TXT_KEY_TRAIT_PRODUCTION_MODIFIER", GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait));
-				}
+				szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait));
 				setListHelp(szHelpString, szText.GetCString(), GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDescription(), L", ", (GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait) != iLast));
 				iLast = GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait);
 			}
@@ -3474,14 +3467,8 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 
 				if (GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait) != 0)
 				{
-					if (GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait) == 100)
-					{
-						szText = gDLL->getText("TXT_KEY_TRAIT_DOUBLE_SPEED");
-					}
-					else
-					{
-						szText = gDLL->getText("TXT_KEY_TRAIT_PRODUCTION_MODIFIER", GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait));
-					}
+					szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait));
+					
 					CvWString szUnit;
 					szUnit.Format(L"<link=literal>%s</link>", GC.getUnitInfo(eLoopUnit).getDescription());
 					setListHelp(szHelpString, szText.GetCString(), szUnit, L", ", (GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait) != iLast));
@@ -3510,14 +3497,7 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 
 			if (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait) != 0)
 			{
-				if (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait) == 100)
-				{
-					szText = gDLL->getText("TXT_KEY_TRAIT_DOUBLE_SPEED");
-				}
-				else
-				{
-					szText = gDLL->getText("TXT_KEY_TRAIT_PRODUCTION_MODIFIER", GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait));
-				}
+				szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait));
 				setListHelp(szHelpString, szText.GetCString(), GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDescription(), L", ", (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait) != iLast));
 				iLast = GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait);
 			}
@@ -3557,14 +3537,7 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 
 				if (GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait) != 0)
 				{
-					if (GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait) == 100)
-					{
-						szText = gDLL->getText("TXT_KEY_TRAIT_DOUBLE_SPEED");
-					}
-					else
-					{
-						szText = gDLL->getText("TXT_KEY_TRAIT_PRODUCTION_MODIFIER", GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait));
-					}
+					szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait));
 
 					CvWString szBuilding;
 					szBuilding.Format(L"<link=literal>%s</link>", GC.getBuildingInfo(eLoopBuilding).getDescription());
@@ -6246,16 +6219,8 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 
 			if (GC.getUnitInfo(eUnit).getDirectProductionTraits((TraitTypes)i) != 0)
 			{
-				if (GC.getUnitInfo(eUnit).getDirectProductionTraits((TraitTypes)i) == 100)
-				{
-					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_DOUBLE_SPEED_TRAIT", GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
-				}
-				else
-				{
-					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", GC.getUnitInfo(eUnit).getDirectProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
-				}
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getUnitInfo(eUnit).getDirectProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 			}
 		}
 	}
@@ -7680,16 +7645,8 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, BuildingTypes eBu
 
 			if (kBuilding.getDirectProductionTraits((TraitTypes)i) != 0)
 			{
-				if (kBuilding.getDirectProductionTraits((TraitTypes)i) == 100)
-				{
-					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_DOUBLE_SPEED_TRAIT", GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
-				}
-				else
-				{
-					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", kBuilding.getDirectProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
-				}
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", kBuilding.getDirectProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 			}
 		}
 
@@ -11574,7 +11531,7 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 
 				if (0 != unit.getDirectProductionTraits(i))
 				{
-					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_PROD_TRAIT", iTraitMod, unit.getTextKeyWide(), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_DIRECT_PROD_TRAIT", iTraitMod, unit.getTextKeyWide(), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 					szBuffer.append(NEWLINE);
 				}
 			}
@@ -11636,7 +11593,7 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 
 				if (0 != building.getDirectProductionTraits(i))
 				{
-					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_PROD_TRAIT", iTraitMod, building.getTextKeyWide(), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_DIRECT_PROD_TRAIT", iTraitMod, building.getTextKeyWide(), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 					szBuffer.append(NEWLINE);
 				}
 			}

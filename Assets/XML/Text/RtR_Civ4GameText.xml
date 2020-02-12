@@ -251,5 +251,21 @@
 			<German>Naval Drill 4</German>
 			<Italian>Naval Drill 4</Italian>
 			<Spanish>Naval Drill 4</Spanish>
-    </TEXT>
+  </TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER</Tag>
+    <English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%d1[ICON_PRODUCTION] reduction of[SPACE]</English>
+    <French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%d1[ICON_PRODUCTION] reduction of[SPACE]</French>
+    <German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%d1[ICON_PRODUCTION] Reduktion f&#252;r:[SPACE]</German>
+    <Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]%d1[ICON_PRODUCTION] reduction of[SPACE]</Italian>
+    <Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%d1[ICON_PRODUCTION] reduction of[SPACE]</Spanish>
+  </TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_MISC_HELP_DIRECT_PROD_TRAIT</Tag>
+    <English>[ICON_BULLET]%D1[ICON_PRODUCTION] reduction for %s2_unit_or_building by %s3_trait leader</English>
+    <French>[ICON_BULLET]%D1[ICON_PRODUCTION] reduction for %s2_unit_or_building by %s3_trait leader</French>
+    <German>[ICON_BULLET]%D1[ICON_PRODUCTION] Reduktion f&#252;r %s2_unit_or_building f&#252;r %s3:2_trait Staatsoberhaupt</German>
+    <Italian>[ICON_BULLET]%D1[ICON_PRODUCTION] reduction for %s2_unit_or_building by %s3_trait leader</Italian>
+    <Spanish>[ICON_BULLET]%D1[ICON_PRODUCTION] reduction for %s2_unit_or_building by %s3_trait leader</Spanish>
+  </TEXT>
 </Civ4GameText>
