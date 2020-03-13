@@ -237,7 +237,7 @@ public:
 	void assignVassal(TeamTypes eVassal, bool bSurrender) const;																// Exposed to Python
 	void freeVassal(TeamTypes eVassal) const;																// Exposed to Python
 
-	bool isCapitulated() const;
+	bool isCapitulated() const;																				// Exposed to Python
 
 	int getRouteChange(RouteTypes eIndex) const;																				// Exposed to Python
 	void changeRouteChange(RouteTypes eIndex, int iChange);												// Exposed to Python
