@@ -80,10 +80,10 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("setProduction", &CyCity::setProduction, "void (int iNewValue)")
 		.def("changeProduction", &CyCity::changeProduction, "void (int iChange)")
 		.def("getProductionModifier", &CyCity::getProductionModifier, "int () - multiplier (if any) for item being produced")
+		.def("getDirectProductionModifier", &CyCity::getProductionModifier, "int () - bonus (if any) for item being produced")
 		.def("getCurrentProductionDifference", &CyCity::getCurrentProductionDifference, "int (bool bIgnoreFood, bool bOverflow)")
-		.def("getUnitProductionModifier", &CyCity::getUnitProductionModifier, "int (UnitID) - production multiplier for UnitID")
-		.def("getBuildingProductionModifier", &CyCity::getBuildingProductionModifier, "int (BuildingID) - production multiplier for BuildingID")
-		.def("getProjectProductionModifier", &CyCity::getProductionModifier, "int (int /*ProjectTypes*/ eProject)")
+		.def("getUnitDirectProductionModifier", &CyCity::getUnitProductionModifier, "int (int (UnitTypes) iUnit) - production bonus for UnitID")
+		.def("getBuildingDirectProductionModifier", &CyCity::getBuildingProductionModifier, "int (int (BuildingTypes) iBuilding) - production bonus for BuildingID")
 
 		.def("getExtraProductionDifference", &CyCity::getExtraProductionDifference, "int (int iExtra)")
 

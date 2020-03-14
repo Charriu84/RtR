@@ -124,6 +124,10 @@ public:
 	int getProductionModifier(BuildingTypes eBuilding) const;											// Exposed to Python
 	int getProductionModifier(ProjectTypes eProject) const;												// Exposed to Python
 
+	int getDirectProductionModifier() const;																						// Exposed to Python
+	int getDirectProductionModifier(UnitTypes eUnit) const;															// Exposed to Python
+	int getDirectProductionModifier(BuildingTypes eBuilding) const;											// Exposed to Python
+
 	int getOverflowProductionDifference(int iProductionNeeded, int iProduction, int iProductionModifier, int iDiff, int iModifiedProduction) const;
 	int getProductionDifference(int iProductionNeeded, int iProduction, int iProductionModifier, bool bFoodProduction, bool bOverflow) const;
 	int getCurrentProductionDifference(bool bIgnoreFood, bool bOverflow) const;				// Exposed to Python

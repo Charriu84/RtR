@@ -4018,6 +4018,13 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 				setListHelp(szHelpString, szText.GetCString(), GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDescription(), L", ", (GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getProductionTraits(eTrait) != iLast));
 				iLast = GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getProductionTraits(eTrait);
 			}
+
+			if (GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait) != 0)
+			{
+				szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait));
+				setListHelp(szHelpString, szText.GetCString(), GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDescription(), L", ", (GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait) != iLast));
+				iLast = GC.getSpecialUnitInfo((SpecialUnitTypes) iI).getDirectProductionTraits(eTrait);
+			}
 		}
 
 		// Unit Classes
@@ -4050,6 +4057,16 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 					setListHelp(szHelpString, szText.GetCString(), szUnit, L", ", (GC.getUnitInfo(eLoopUnit).getProductionTraits(eTrait) != iLast));
 					iLast = GC.getUnitInfo(eLoopUnit).getProductionTraits(eTrait);
 				}
+
+				if (GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait) != 0)
+				{
+					szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait));
+					
+					CvWString szUnit;
+					szUnit.Format(L"<link=literal>%s</link>", GC.getUnitInfo(eLoopUnit).getDescription());
+					setListHelp(szHelpString, szText.GetCString(), szUnit, L", ", (GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait) != iLast));
+					iLast = GC.getUnitInfo(eLoopUnit).getDirectProductionTraits(eTrait);
+				}
 			}
 		}
 
@@ -4069,6 +4086,13 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 				}
 				setListHelp(szHelpString, szText.GetCString(), GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDescription(), L", ", (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getProductionTraits(eTrait) != iLast));
 				iLast = GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getProductionTraits(eTrait);
+			}
+
+			if (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait) != 0)
+			{
+				szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait));
+				setListHelp(szHelpString, szText.GetCString(), GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDescription(), L", ", (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait) != iLast));
+				iLast = GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getDirectProductionTraits(eTrait);
 			}
 		}
 
@@ -4102,6 +4126,16 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 					szBuilding.Format(L"<link=literal>%s</link>", GC.getBuildingInfo(eLoopBuilding).getDescription());
 					setListHelp(szHelpString, szText.GetCString(), szBuilding, L", ", (GC.getBuildingInfo(eLoopBuilding).getProductionTraits(eTrait) != iLast));
 					iLast = GC.getBuildingInfo(eLoopBuilding).getProductionTraits(eTrait);
+				}
+
+				if (GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait) != 0)
+				{
+					szText = gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait));
+
+					CvWString szBuilding;
+					szBuilding.Format(L"<link=literal>%s</link>", GC.getBuildingInfo(eLoopBuilding).getDescription());
+					setListHelp(szHelpString, szText.GetCString(), szBuilding, L", ", (GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait) != iLast));
+					iLast = GC.getBuildingInfo(eLoopBuilding).getDirectProductionTraits(eTrait);
 				}
 			}
 		}
@@ -7042,6 +7076,12 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 					szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", GC.getUnitInfo(eUnit).getProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 				}
 			}
+
+			if (GC.getUnitInfo(eUnit).getDirectProductionTraits((TraitTypes)i) != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", GC.getUnitInfo(eUnit).getDirectProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
+			}
 		}
 	}
 
@@ -8679,6 +8719,12 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 					szBuffer.append(NEWLINE);
 					szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_MODIFIER_TRAIT", kBuilding.getProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 				}
+			}
+
+			if (kBuilding.getDirectProductionTraits((TraitTypes)i) != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_TRAIT_DIRECT_PRODUCTION_MODIFIER", kBuilding.getDirectProductionTraits((TraitTypes)i), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 			}
 		}
 
@@ -13450,6 +13496,12 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 					szBuffer.append(NEWLINE);
 					iBaseModifier += iTraitMod;
 				}
+
+				if (0 != unit.getDirectProductionTraits(i))
+				{
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_DIRECT_PROD_TRAIT", iTraitMod, unit.getTextKeyWide(), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
+					szBuffer.append(NEWLINE);
+				}
 			}
 		}
 
@@ -13505,6 +13557,12 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_PROD_TRAIT", iTraitMod, building.getTextKeyWide(), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
 					szBuffer.append(NEWLINE);
 					iBaseModifier += iTraitMod;
+				}
+
+				if (0 != building.getDirectProductionTraits(i))
+				{
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_DIRECT_PROD_TRAIT", iTraitMod, building.getTextKeyWide(), GC.getTraitInfo((TraitTypes)i).getTextKeyWide()));
+					szBuffer.append(NEWLINE);
 				}
 			}
 		}

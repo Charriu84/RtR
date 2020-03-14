@@ -328,6 +328,7 @@ void CyInfoPythonInterface1()
 		.def("getPrereqAndTechs", &CvUnitInfo::getPrereqAndTechs, "int (int i)")
 		.def("getPrereqOrBonuses", &CvUnitInfo::getPrereqOrBonuses, "int (int i)")
 		.def("getProductionTraits", &CvUnitInfo::getProductionTraits, "int (int i)")
+		.def("getDirectProductionTraits", &CvUnitInfo::getDirectProductionTraits, "int (int i)")
 		.def("getFlavorValue", &CvUnitInfo::getFlavorValue, "int (int i)")
 		.def("getTerrainAttackModifier", &CvUnitInfo::getTerrainAttackModifier, "int (int i)")
 		.def("getTerrainDefenseModifier", &CvUnitInfo::getTerrainDefenseModifier, "int (int i)")
@@ -377,6 +378,7 @@ void CyInfoPythonInterface1()
 
 		.def("isCarrierUnitAIType", &CvSpecialUnitInfo::isCarrierUnitAIType, "bool (int i)")
 		.def("getProductionTraits", &CvSpecialUnitInfo::getProductionTraits, "int (int i)")
+		.def("getDirectProductionTraits", &CvSpecialUnitInfo::getDirectProductionTraits, "int (int i)")
 		;
 
 	python::class_<CvCivicOptionInfo, python::bases<CvInfoBase> >("CvCivicOptionInfo")
@@ -611,6 +613,7 @@ void CyInfoPythonInterface1()
 		.def("getPrereqAndTechs", &CvBuildingInfo::getPrereqAndTechs, "int (int i)")
 		.def("getPrereqOrBonuses", &CvBuildingInfo::getPrereqOrBonuses, "int (int i)")
 		.def("getProductionTraits", &CvBuildingInfo::getProductionTraits, "int (int i)")
+		.def("getDirectProductionTraits", &CvBuildingInfo::getDirectProductionTraits, "int (int i)")
 		.def("getHappinessTraits", &CvBuildingInfo::getHappinessTraits, "int (int i)")
 		.def("getBuildingHappinessChanges", &CvBuildingInfo::getBuildingHappinessChanges, "int (int i)")
 		.def("getPrereqNumOfBuildingClass", &CvBuildingInfo::getPrereqNumOfBuildingClass, "int (int i)")
@@ -635,5 +638,6 @@ void CyInfoPythonInterface1()
 		// Arrays
 
 		.def("getProductionTraits", &CvSpecialBuildingInfo::getProductionTraits, "int (int i)")
+		.def("getDirectProductionTraits", &CvSpecialBuildingInfo::getDirectProductionTraits, "int (int i)")
 		;
 }

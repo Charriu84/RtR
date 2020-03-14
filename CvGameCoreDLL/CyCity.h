@@ -88,10 +88,13 @@ public:
 	void setProduction(int iNewValue);
 	void changeProduction(int iChange);
 	int getProductionModifier();
+	int getDirectProductionModifier();
 	int getCurrentProductionDifference(bool bIgnoreFood, bool bOverflow);
 	int getUnitProductionModifier(int /*UnitTypes*/ iUnit);
 	int getBuildingProductionModifier(int /*BuildingTypes*/ iBuilding);
-	int getProjectProductionModifier(int /*ProjectTypes*/ eProject);											 
+	int getProjectProductionModifier(int /*ProjectTypes*/ eProject);	
+	int getUnitDirectProductionModifier(int /*UnitTypes*/ iUnit);
+	int getBuildingDirectProductionModifier(int /*BuildingTypes*/ iBuilding);
 
 	int getExtraProductionDifference(int iExtra);
 

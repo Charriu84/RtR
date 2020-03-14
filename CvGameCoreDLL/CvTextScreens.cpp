@@ -283,6 +283,23 @@ CvString CvTextScreen::buildLeaderInfoHelp( LeaderTypes eLeader, CivilizationTyp
 						(GC.getSpecialUnitInfo()[iI].m_piProductionTraits[*traitIter] != iLast));
 					iLast = GC.getSpecialUnitInfo()[iI].m_piProductionTraits[*traitIter];
 				}
+
+				if (GC.getSpecialUnitInfo()[iI].m_piDirectProductionTraits[*traitIter] != 0)
+				{
+					if (GC.getSpecialUnitInfo()[iI].m_piDirectProductionTraits[*traitIter] == 100)
+					{
+						sprintf(szTempBuffer, "\n  %cHalf Cost ", FC_BULLETPOINT);
+					}
+					else
+					{
+						sprintf(szTempBuffer, "\n  %c%d%% Faster Construction ", FC_BULLETPOINT, 
+							GC.getSpecialUnitInfo()[iI].m_piDirectProductionTraits[*traitIter]);
+					}
+					setListHelp(szHelpString, szTempBuffer, 
+						GC.getSpecialUnitInfo()[iI].getDescription(), ", ", 
+						(GC.getSpecialUnitInfo()[iI].m_piDirectProductionTraits[*traitIter] != iLast));
+					iLast = GC.getSpecialUnitInfo()[iI].m_piDirectProductionTraits[*traitIter];
+				}
 			}
 			// Unit Classes
 			if (eCivilization != NO_CIVILIZATION)
@@ -309,6 +326,23 @@ CvString CvTextScreen::buildLeaderInfoHelp( LeaderTypes eLeader, CivilizationTyp
 								(GC.getUnitInfo()[eLoopUnit].m_piProductionTraits[*traitIter] != iLast));
 							iLast = GC.getUnitInfo()[eLoopUnit].m_piProductionTraits[*traitIter];
 						}
+
+						if (GC.getUnitInfo()[eLoopUnit].m_piDirectProductionTraits[*traitIter] != 0)
+						{
+							if (GC.getUnitInfo()[eLoopUnit].m_piDirectProductionTraits[*traitIter] == 100)
+							{
+								sprintf(szTempBuffer, "\n  %cHalf Cost ", FC_BULLETPOINT);
+							}
+							else
+							{
+								sprintf(szTempBuffer, "\n  %c%d%% Faster Construction ", FC_BULLETPOINT, 
+									GC.getUnitInfo()[eLoopUnit].m_piDirectProductionTraits[*traitIter]);
+							}
+							setListHelp(szHelpString, szTempBuffer, 
+								GC.getUnitInfo()[eLoopUnit].getDescription(), ", ", 
+								(GC.getUnitInfo()[eLoopUnit].m_piDirectProductionTraits[*traitIter] != iLast));
+							iLast = GC.getUnitInfo()[eLoopUnit].m_piDirectProductionTraits[*traitIter];
+						}
 					}
 				}
 			}
@@ -329,6 +363,21 @@ CvString CvTextScreen::buildLeaderInfoHelp( LeaderTypes eLeader, CivilizationTyp
 					}
 					setListHelp(szHelpString, szTempBuffer, GC.getSpecialBuildingInfo()[iI].getDescription(), ", ", (GC.getSpecialBuildingInfo()[iI].m_piProductionTraits[*traitIter] != iLast));
 					iLast = GC.getSpecialBuildingInfo()[iI].m_piProductionTraits[*traitIter];
+				}
+
+				if (GC.getSpecialBuildingInfo()[iI].m_piDirectProductionTraits[*traitIter] != 0)
+				{
+					if (GC.getSpecialBuildingInfo()[iI].m_piDirectProductionTraits[*traitIter] == 100)
+					{
+						sprintf(szTempBuffer, "\n  %cHalf Cost ", FC_BULLETPOINT);
+					}
+					else
+					{
+						sprintf(szTempBuffer, "\n  %c%d%% Faster Construction ", FC_BULLETPOINT, 
+							GC.getSpecialBuildingInfo()[iI].m_piDirectProductionTraits[*traitIter]);
+					}
+					setListHelp(szHelpString, szTempBuffer, GC.getSpecialBuildingInfo()[iI].getDescription(), ", ", (GC.getSpecialBuildingInfo()[iI].m_piDirectProductionTraits[*traitIter] != iLast));
+					iLast = GC.getSpecialBuildingInfo()[iI].m_piDirectProductionTraits[*traitIter];
 				}
 			}
 			// Buildings
@@ -353,6 +402,21 @@ CvString CvTextScreen::buildLeaderInfoHelp( LeaderTypes eLeader, CivilizationTyp
 							}
 							setListHelp(szHelpString, szTempBuffer, GC.getBuildingInfo()[eLoopBuilding].getDescription(), ", ", (GC.getBuildingInfo()[eLoopBuilding].m_piProductionTraits[*traitIter] != iLast));
 							iLast = GC.getBuildingInfo()[eLoopBuilding].m_piProductionTraits[*traitIter];
+						}
+
+						if (GC.getBuildingInfo()[eLoopBuilding].m_piDirectProductionTraits[*traitIter] != 0)
+						{
+							if (GC.getBuildingInfo()[eLoopBuilding].m_piDirectProductionTraits[*traitIter] == 100)
+							{
+								sprintf(szTempBuffer, "\n  %cHalf Cost ", FC_BULLETPOINT);
+							}
+							else
+							{
+								sprintf(szTempBuffer, "\n  %c%d%% Faster Construction ", FC_BULLETPOINT, 
+									GC.getBuildingInfo()[eLoopBuilding].m_piDirectProductionTraits[*traitIter]);
+							}
+							setListHelp(szHelpString, szTempBuffer, GC.getBuildingInfo()[eLoopBuilding].getDescription(), ", ", (GC.getBuildingInfo()[eLoopBuilding].m_piDirectProductionTraits[*traitIter] != iLast));
+							iLast = GC.getBuildingInfo()[eLoopBuilding].m_piDirectProductionTraits[*traitIter];
 						}
 					}
 				}
