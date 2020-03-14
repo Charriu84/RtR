@@ -365,7 +365,7 @@ class CvInfoScreen:
 		self.STATS_TOP_CHART_W_COL_1 = 76
 
 		self.iNumTopChartCols = 2
-		self.iNumTopChartRows = 4
+		self.iNumTopChartRows = 6
 
 		self.X_LEADER_NAME = self.X_STATS_TOP_CHART
 		self.Y_LEADER_NAME = self.Y_STATS_TOP_CHART - 40
@@ -2635,6 +2635,10 @@ class CvInfoScreen:
 
 		iNumCitiesRazed = CyStatistics().getPlayerNumCitiesRazed(self.iActivePlayer)
 
+		iNumTechResearched = self.pActivePlayer.getTotalBeakersFromTech()
+
+		iNumTechTraded = self.pActiveTeam.getTechTradingCount()
+
 		iNumReligionsFounded = 0
 		for iReligionLoop in range(gc.getNumReligionInfos()):
 			if (CyStatistics().getPlayerReligionFounded(self.iActivePlayer, iReligionLoop)):
@@ -2721,17 +2725,29 @@ class CvInfoScreen:
 
 		iRow = 1
 		iCol = 0
+		screen.setTableText(szTopChart, iCol, iRow, "Beakers earned", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		iCol = 1
+		screen.setTableText(szTopChart, iCol, iRow, str(iNumTechResearched), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+		iRow = 2
+		iCol = 0
+		screen.setTableText(szTopChart, iCol, iRow, "Beakers traded", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		iCol = 1
+		screen.setTableText(szTopChart, iCol, iRow, str(iNumTechTraded), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+		iRow = 3
+		iCol = 0
 		screen.setTableText(szTopChart, iCol, iRow, self.TEXT_CITIES_BUILT, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 		iCol = 1
 		screen.setTableText(szTopChart, iCol, iRow, str(iNumCitiesBuilt), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 
-		iRow = 2
+		iRow = 4
 		iCol = 0
 		screen.setTableText(szTopChart, iCol, iRow, self.TEXT_CITIES_RAZED, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 		iCol = 1
 		screen.setTableText(szTopChart, iCol, iRow, str(iNumCitiesRazed), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-
-		iRow = 3
+		
+		iRow = 5
 		iCol = 0
 		screen.setTableText(szTopChart, iCol, iRow, self.TEXT_NUM_RELIGIONS_FOUNDED, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 		iCol = 1

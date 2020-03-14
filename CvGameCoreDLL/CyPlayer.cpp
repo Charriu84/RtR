@@ -1395,6 +1395,11 @@ bool CyPlayer::isMinorCiv()
 	return m_pPlayer ? m_pPlayer->isMinorCiv() : false;
 }
 
+int CyPlayer::getTotalBeakersFromTech()
+{
+	return m_pPlayer ? m_pPlayer->getTotalBeakersFromTech() : -1;
+}
+
 bool CyPlayer::isAlive() 
 {
 	return m_pPlayer ? m_pPlayer->isAlive() : false;

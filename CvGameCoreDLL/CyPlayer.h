@@ -328,6 +328,7 @@ public:
 	int getWondersScore();
 	int getTechScore();
 	int getTotalTimePlayed();
+	int getTotalBeakersFromTech();
 	bool isMinorCiv();
 	bool isAlive();
 	bool isEverAlive();
