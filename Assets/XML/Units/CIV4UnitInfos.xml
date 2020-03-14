@@ -85,7 +85,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>-1</iCost>
@@ -271,7 +271,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>-1</iCost>
@@ -449,7 +449,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>-1</iCost>
@@ -627,7 +627,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>-1</iCost>
@@ -808,13 +808,13 @@
 			<TechTypes/>
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
-			<ProductionTraits/>
-      <DirectProductionTraits>
-        <DirectProductionTrait>
-          <ProductionTraitType>TRAIT_IMPERIALIST</ProductionTraitType>
-          <iDirectProductionTrait>35</iDirectProductionTrait>
-        </DirectProductionTrait>
-      </DirectProductionTraits>
+			<ProductionTraits>
+				<ProductionTrait>
+					<ProductionTraitType>TRAIT_IMPERIALIST</ProductionTraitType>
+					<iProductionTrait>50</iProductionTrait>
+				</ProductionTrait>
+			</ProductionTraits>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>0</iCost>
@@ -1074,9 +1074,9 @@
 				<ProductionTrait>
 					<ProductionTraitType>TRAIT_EXPANSIVE</ProductionTraitType>
 					<iProductionTrait>35</iProductionTrait>
-        </ProductionTrait>
+				</ProductionTrait>
 			</ProductionTraits>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -1262,7 +1262,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -1442,7 +1442,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>15</iCost>
@@ -1610,7 +1610,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -1787,7 +1787,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_ESPIONAGE</FlavorType>
@@ -1970,7 +1970,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -2138,7 +2138,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -2306,7 +2306,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -2474,7 +2474,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -2642,7 +2642,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -2810,7 +2810,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -2978,7 +2978,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -3159,13 +3159,8 @@
 			<TechTypes/>
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
-      <ProductionTraits>
-        <ProductionTrait>
-          <ProductionTraitType>TRAIT_IMPERIALIST</ProductionTraitType>
-          <iProductionTrait>0</iProductionTrait>
-        </ProductionTrait>
-      </ProductionTraits>
-      <DirectProductionTraits/>
+			<ProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>15</iCost>
@@ -3351,7 +3346,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>15</iCost>
@@ -3541,7 +3536,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -3726,7 +3721,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -3920,7 +3915,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -4118,7 +4113,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>40</iCost>
@@ -4308,7 +4303,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>35</iCost>
@@ -4503,7 +4498,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>35</iCost>
@@ -4703,7 +4698,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>35</iCost>
@@ -4895,7 +4890,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>15</iCost>
@@ -5098,7 +5093,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>70</iCost>
@@ -5300,7 +5295,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>70</iCost>
@@ -5512,7 +5507,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>70</iCost>
@@ -5708,7 +5703,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>35</iCost>
@@ -5905,7 +5900,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>35</iCost>
@@ -6107,7 +6102,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>30</iCost>
@@ -6303,7 +6298,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>35</iCost>
@@ -6495,7 +6490,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -6683,7 +6678,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -6869,7 +6864,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -7054,7 +7049,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -7235,7 +7230,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -7429,205 +7424,205 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
-      <Flavors/>
-      <iAIWeight>0</iAIWeight>
-      <iCost>80</iCost>
-      <iHurryCostModifier>0</iHurryCostModifier>
-      <iAdvancedStartCost>100</iAdvancedStartCost>
-      <iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
-      <iMinAreaSize>-1</iMinAreaSize>
-      <iMoves>1</iMoves>
-      <bNoRevealMap>0</bNoRevealMap>
-      <iAirRange>0</iAirRange>
-      <iAirUnitCap>0</iAirUnitCap>
-      <iDropRange>0</iDropRange>
-      <iNukeRange>-1</iNukeRange>
-      <iWorkRate>0</iWorkRate>
-      <iBaseDiscover>0</iBaseDiscover>
-      <iDiscoverMultiplier>0</iDiscoverMultiplier>
-      <iBaseHurry>0</iBaseHurry>
-      <iHurryMultiplier>0</iHurryMultiplier>
-      <iBaseTrade>0</iBaseTrade>
-      <iTradeMultiplier>0</iTradeMultiplier>
-      <iGreatWorkCulture>0</iGreatWorkCulture>
-      <iEspionagePoints>0</iEspionagePoints>
-      <TerrainImpassables/>
-      <FeatureImpassables/>
-      <TerrainPassableTechs/>
-      <FeaturePassableTechs/>
-      <iCombat>9</iCombat>
-      <iCombatLimit>100</iCombatLimit>
-      <iAirCombat>0</iAirCombat>
-      <iAirCombatLimit>0</iAirCombatLimit>
-      <iXPValueAttack>4</iXPValueAttack>
-      <iXPValueDefense>2</iXPValueDefense>
-      <iFirstStrikes>0</iFirstStrikes>
-      <iChanceFirstStrikes>0</iChanceFirstStrikes>
-      <iInterceptionProbability>0</iInterceptionProbability>
-      <iEvasionProbability>0</iEvasionProbability>
-      <iWithdrawalProb>0</iWithdrawalProb>
-      <iCollateralDamage>0</iCollateralDamage>
-      <iCollateralDamageLimit>0</iCollateralDamageLimit>
-      <iCollateralDamageMaxUnits>0</iCollateralDamageMaxUnits>
-      <iCityAttack>0</iCityAttack>
-      <iCityDefense>0</iCityDefense>
-      <iAnimalCombat>0</iAnimalCombat>
-      <iHillsAttack>0</iHillsAttack>
-      <iHillsDefense>0</iHillsDefense>
-      <TerrainNatives/>
-      <FeatureNatives/>
-      <TerrainAttacks/>
-      <TerrainDefenses/>
-      <FeatureAttacks/>
-      <FeatureDefenses/>
-      <UnitClassAttackMods/>
-      <UnitClassDefenseMods/>
-      <UnitCombatMods/>
-      <UnitCombatCollateralImmunes/>
-      <DomainMods/>
-      <BonusProductionModifiers/>
-      <iBombRate>0</iBombRate>
-      <iBombardRate>0</iBombardRate>
-      <SpecialCargo>NONE</SpecialCargo>
-      <DomainCargo>NONE</DomainCargo>
-      <iCargo>0</iCargo>
-      <iConscription>4</iConscription>
-      <iCultureGarrison>7</iCultureGarrison>
-      <iExtraCost>0</iExtraCost>
-      <iAsset>3</iAsset>
-      <iPower>9</iPower>
-      <UnitMeshGroups>
-        <iGroupSize>3</iGroupSize>
-        <fMaxSpeed>1.75</fMaxSpeed>
-        <fPadTime>1</fPadTime>
-        <iMeleeWaveSize>3</iMeleeWaveSize>
-        <iRangedWaveSize>0</iRangedWaveSize>
-        <UnitMeshGroup>
-          <iRequired>1</iRequired>
-          <EarlyArtDefineTag>ART_DEF_UNIT_ETHIOPIAN_OROMO_WARRIOR_ORANGE</EarlyArtDefineTag>
-        </UnitMeshGroup>
-        <UnitMeshGroup>
-          <iRequired>1</iRequired>
-          <EarlyArtDefineTag>ART_DEF_UNIT_ETHIOPIAN_OROMO_WARRIOR_BLUE</EarlyArtDefineTag>
-        </UnitMeshGroup>
-        <UnitMeshGroup>
-          <iRequired>1</iRequired>
-          <EarlyArtDefineTag>ART_DEF_UNIT_ETHIOPIAN_OROMO_WARRIOR_GREEN</EarlyArtDefineTag>
-        </UnitMeshGroup>
-      </UnitMeshGroups>
-      <FormationType>FORMATION_TYPE_DEFAULT</FormationType>
-      <HotKey/>
-      <bAltDown>0</bAltDown>
-      <bShiftDown>0</bShiftDown>
-      <bCtrlDown>0</bCtrlDown>
-      <iHotKeyPriority>0</iHotKeyPriority>
-      <FreePromotions>
-        <FreePromotion>
-          <PromotionType>PROMOTION_DRILL2</PromotionType>
-          <bFreePromotion>1</bFreePromotion>
-        </FreePromotion>
-        <FreePromotion>
-          <PromotionType>PROMOTION_DRILL4</PromotionType>
-          <bFreePromotion>1</bFreePromotion>
-        </FreePromotion>
-      </FreePromotions>
-      <LeaderPromotion>NONE</LeaderPromotion>
-      <iLeaderExperience>0</iLeaderExperience>
-    </UnitInfo>
-    <UnitInfo>
-      <Class>UNITCLASS_RIFLEMAN</Class>
-      <Type>UNIT_RIFLEMAN</Type>
-      <UniqueNames/>
-      <Special>NONE</Special>
-      <Capture>NONE</Capture>
-      <Combat>UNITCOMBAT_GUN</Combat>
-      <Domain>DOMAIN_LAND</Domain>
-      <DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
-      <Invisible>NONE</Invisible>
-      <SeeInvisible>NONE</SeeInvisible>
-      <Description>TXT_KEY_UNIT_RIFLEMAN</Description>
-      <Civilopedia>TXT_KEY_UNIT_RIFLEMAN_PEDIA</Civilopedia>
-      <Strategy>TXT_KEY_UNIT_RIFLEMAN_STRATEGY</Strategy>
-      <Advisor>ADVISOR_MILITARY</Advisor>
-      <bAnimal>0</bAnimal>
-      <bFood>0</bFood>
-      <bNoBadGoodies>0</bNoBadGoodies>
-      <bOnlyDefensive>0</bOnlyDefensive>
-      <bNoCapture>0</bNoCapture>
-      <bQuickCombat>0</bQuickCombat>
-      <bRivalTerritory>0</bRivalTerritory>
-      <bMilitaryHappiness>1</bMilitaryHappiness>
-      <bMilitarySupport>1</bMilitarySupport>
-      <bMilitaryProduction>1</bMilitaryProduction>
-      <bPillage>1</bPillage>
-      <bSpy>0</bSpy>
-      <bSabotage>0</bSabotage>
-      <bDestroy>0</bDestroy>
-      <bStealPlans>0</bStealPlans>
-      <bInvestigate>0</bInvestigate>
-      <bCounterSpy>0</bCounterSpy>
-      <bFound>0</bFound>
-      <bGoldenAge>0</bGoldenAge>
-      <bInvisible>0</bInvisible>
-      <bFirstStrikeImmune>0</bFirstStrikeImmune>
-      <bNoDefensiveBonus>0</bNoDefensiveBonus>
-      <bIgnoreBuildingDefense>1</bIgnoreBuildingDefense>
-      <bCanMoveImpassable>0</bCanMoveImpassable>
-      <bCanMoveAllTerrain>0</bCanMoveAllTerrain>
-      <bFlatMovementCost>0</bFlatMovementCost>
-      <bIgnoreTerrainCost>0</bIgnoreTerrainCost>
-      <bNukeImmune>0</bNukeImmune>
-      <bPrereqBonuses>0</bPrereqBonuses>
-      <bPrereqReligion>0</bPrereqReligion>
-      <bMechanized>0</bMechanized>
-      <bSuicide>0</bSuicide>
-      <bHiddenNationality>0</bHiddenNationality>
-      <bAlwaysHostile>0</bAlwaysHostile>
-      <UnitClassUpgrades>
-        <UnitClassUpgrade>
-          <UnitClassUpgradeType>UNITCLASS_INFANTRY</UnitClassUpgradeType>
-          <bUnitClassUpgrade>1</bUnitClassUpgrade>
-        </UnitClassUpgrade>
-      </UnitClassUpgrades>
-      <UnitClassTargets/>
-      <UnitCombatTargets/>
-      <UnitClassDefenders/>
-      <UnitCombatDefenders/>
-      <FlankingStrikes/>
-      <UnitAIs>
-        <UnitAI>
-          <UnitAIType>UNITAI_ATTACK</UnitAIType>
-          <bUnitAI>1</bUnitAI>
-        </UnitAI>
-        <UnitAI>
-          <UnitAIType>UNITAI_RESERVE</UnitAIType>
-          <bUnitAI>1</bUnitAI>
-        </UnitAI>
-        <UnitAI>
-          <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
-          <bUnitAI>1</bUnitAI>
-        </UnitAI>
-      </UnitAIs>
-      <NotUnitAIs/>
-      <Builds/>
-      <ReligionSpreads/>
-      <CorporationSpreads/>
-      <GreatPeoples/>
-      <Buildings/>
-      <ForceBuildings/>
-      <HolyCity>NONE</HolyCity>
-      <ReligionType>NONE</ReligionType>
-      <StateReligion>NONE</StateReligion>
-      <PrereqReligion>NONE</PrereqReligion>
-      <PrereqCorporation>NONE</PrereqCorporation>
-      <PrereqBuilding>NONE</PrereqBuilding>
-      <PrereqTech>TECH_RIFLING</PrereqTech>
-      <TechTypes/>
-      <BonusType>NONE</BonusType>
-      <PrereqBonuses/>
-      <ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
+			<Flavors/>
+			<iAIWeight>0</iAIWeight>
+			<iCost>80</iCost>
+			<iHurryCostModifier>0</iHurryCostModifier>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iMinAreaSize>-1</iMinAreaSize>
+			<iMoves>1</iMoves>
+			<bNoRevealMap>0</bNoRevealMap>
+			<iAirRange>0</iAirRange>
+			<iAirUnitCap>0</iAirUnitCap>
+			<iDropRange>0</iDropRange>
+			<iNukeRange>-1</iNukeRange>
+			<iWorkRate>0</iWorkRate>
+			<iBaseDiscover>0</iBaseDiscover>
+			<iDiscoverMultiplier>0</iDiscoverMultiplier>
+			<iBaseHurry>0</iBaseHurry>
+			<iHurryMultiplier>0</iHurryMultiplier>
+			<iBaseTrade>0</iBaseTrade>
+			<iTradeMultiplier>0</iTradeMultiplier>
+			<iGreatWorkCulture>0</iGreatWorkCulture>
+			<iEspionagePoints>0</iEspionagePoints>
+			<TerrainImpassables/>
+			<FeatureImpassables/>
+			<TerrainPassableTechs/>
+			<FeaturePassableTechs/>
+			<iCombat>9</iCombat>
+			<iCombatLimit>100</iCombatLimit>
+			<iAirCombat>0</iAirCombat>
+			<iAirCombatLimit>0</iAirCombatLimit>
+			<iXPValueAttack>4</iXPValueAttack>
+			<iXPValueDefense>2</iXPValueDefense>
+			<iFirstStrikes>0</iFirstStrikes>
+			<iChanceFirstStrikes>0</iChanceFirstStrikes>
+			<iInterceptionProbability>0</iInterceptionProbability>
+			<iEvasionProbability>0</iEvasionProbability>
+			<iWithdrawalProb>0</iWithdrawalProb>
+			<iCollateralDamage>0</iCollateralDamage>
+			<iCollateralDamageLimit>0</iCollateralDamageLimit>
+			<iCollateralDamageMaxUnits>0</iCollateralDamageMaxUnits>
+			<iCityAttack>0</iCityAttack>
+			<iCityDefense>0</iCityDefense>
+			<iAnimalCombat>0</iAnimalCombat>
+			<iHillsAttack>0</iHillsAttack>
+			<iHillsDefense>0</iHillsDefense>
+			<TerrainNatives/>
+			<FeatureNatives/>
+			<TerrainAttacks/>
+			<TerrainDefenses/>
+			<FeatureAttacks/>
+			<FeatureDefenses/>
+			<UnitClassAttackMods/>
+			<UnitClassDefenseMods/>
+			<UnitCombatMods/>
+			<UnitCombatCollateralImmunes/>
+			<DomainMods/>
+			<BonusProductionModifiers/>
+			<iBombRate>0</iBombRate>
+			<iBombardRate>0</iBombardRate>
+			<SpecialCargo>NONE</SpecialCargo>
+			<DomainCargo>NONE</DomainCargo>
+			<iCargo>0</iCargo>
+			<iConscription>4</iConscription>
+			<iCultureGarrison>7</iCultureGarrison>
+			<iExtraCost>0</iExtraCost>
+			<iAsset>3</iAsset>
+			<iPower>9</iPower>
+			<UnitMeshGroups>
+				<iGroupSize>3</iGroupSize>
+				<fMaxSpeed>1.75</fMaxSpeed>
+				<fPadTime>1</fPadTime>
+				<iMeleeWaveSize>3</iMeleeWaveSize>
+				<iRangedWaveSize>0</iRangedWaveSize>
+				<UnitMeshGroup>
+					<iRequired>1</iRequired>
+					<EarlyArtDefineTag>ART_DEF_UNIT_ETHIOPIAN_OROMO_WARRIOR_ORANGE</EarlyArtDefineTag>
+				</UnitMeshGroup>
+				<UnitMeshGroup>
+					<iRequired>1</iRequired>
+					<EarlyArtDefineTag>ART_DEF_UNIT_ETHIOPIAN_OROMO_WARRIOR_BLUE</EarlyArtDefineTag>
+				</UnitMeshGroup>
+				<UnitMeshGroup>
+					<iRequired>1</iRequired>
+					<EarlyArtDefineTag>ART_DEF_UNIT_ETHIOPIAN_OROMO_WARRIOR_GREEN</EarlyArtDefineTag>
+				</UnitMeshGroup>
+			</UnitMeshGroups>
+			<FormationType>FORMATION_TYPE_DEFAULT</FormationType>
+			<HotKey/>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<FreePromotions>
+				<FreePromotion>
+					<PromotionType>PROMOTION_DRILL2</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+				<FreePromotion>
+					<PromotionType>PROMOTION_DRILL4</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+			</FreePromotions>
+			<LeaderPromotion>NONE</LeaderPromotion>
+			<iLeaderExperience>0</iLeaderExperience>
+		</UnitInfo>
+		<UnitInfo>
+			<Class>UNITCLASS_RIFLEMAN</Class>
+			<Type>UNIT_RIFLEMAN</Type>
+			<UniqueNames/>
+			<Special>NONE</Special>
+			<Capture>NONE</Capture>
+			<Combat>UNITCOMBAT_GUN</Combat>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
+			<Invisible>NONE</Invisible>
+			<SeeInvisible>NONE</SeeInvisible>
+			<Description>TXT_KEY_UNIT_RIFLEMAN</Description>
+			<Civilopedia>TXT_KEY_UNIT_RIFLEMAN_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_RIFLEMAN_STRATEGY</Strategy>
+			<Advisor>ADVISOR_MILITARY</Advisor>
+			<bAnimal>0</bAnimal>
+			<bFood>0</bFood>
+			<bNoBadGoodies>0</bNoBadGoodies>
+			<bOnlyDefensive>0</bOnlyDefensive>
+			<bNoCapture>0</bNoCapture>
+			<bQuickCombat>0</bQuickCombat>
+			<bRivalTerritory>0</bRivalTerritory>
+			<bMilitaryHappiness>1</bMilitaryHappiness>
+			<bMilitarySupport>1</bMilitarySupport>
+			<bMilitaryProduction>1</bMilitaryProduction>
+			<bPillage>1</bPillage>
+			<bSpy>0</bSpy>
+			<bSabotage>0</bSabotage>
+			<bDestroy>0</bDestroy>
+			<bStealPlans>0</bStealPlans>
+			<bInvestigate>0</bInvestigate>
+			<bCounterSpy>0</bCounterSpy>
+			<bFound>0</bFound>
+			<bGoldenAge>0</bGoldenAge>
+			<bInvisible>0</bInvisible>
+			<bFirstStrikeImmune>0</bFirstStrikeImmune>
+			<bNoDefensiveBonus>0</bNoDefensiveBonus>
+			<bIgnoreBuildingDefense>1</bIgnoreBuildingDefense>
+			<bCanMoveImpassable>0</bCanMoveImpassable>
+			<bCanMoveAllTerrain>0</bCanMoveAllTerrain>
+			<bFlatMovementCost>0</bFlatMovementCost>
+			<bIgnoreTerrainCost>0</bIgnoreTerrainCost>
+			<bNukeImmune>0</bNukeImmune>
+			<bPrereqBonuses>0</bPrereqBonuses>
+			<bPrereqReligion>0</bPrereqReligion>
+			<bMechanized>0</bMechanized>
+			<bSuicide>0</bSuicide>
+			<bHiddenNationality>0</bHiddenNationality>
+			<bAlwaysHostile>0</bAlwaysHostile>
+			<UnitClassUpgrades>
+				<UnitClassUpgrade>
+					<UnitClassUpgradeType>UNITCLASS_INFANTRY</UnitClassUpgradeType>
+					<bUnitClassUpgrade>1</bUnitClassUpgrade>
+				</UnitClassUpgrade>
+			</UnitClassUpgrades>
+			<UnitClassTargets/>
+			<UnitCombatTargets/>
+			<UnitClassDefenders/>
+			<UnitCombatDefenders/>
+			<FlankingStrikes/>
+			<UnitAIs>
+				<UnitAI>
+					<UnitAIType>UNITAI_ATTACK</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+				<UnitAI>
+					<UnitAIType>UNITAI_RESERVE</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+				<UnitAI>
+					<UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+			</UnitAIs>
+			<NotUnitAIs/>
+			<Builds/>
+			<ReligionSpreads/>
+			<CorporationSpreads/>
+			<GreatPeoples/>
+			<Buildings/>
+			<ForceBuildings/>
+			<HolyCity>NONE</HolyCity>
+			<ReligionType>NONE</ReligionType>
+			<StateReligion>NONE</StateReligion>
+			<PrereqReligion>NONE</PrereqReligion>
+			<PrereqCorporation>NONE</PrereqCorporation>
+			<PrereqBuilding>NONE</PrereqBuilding>
+			<PrereqTech>TECH_RIFLING</PrereqTech>
+			<TechTypes/>
+			<BonusType>NONE</BonusType>
+			<PrereqBonuses/>
+			<ProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>110</iCost>
@@ -7813,7 +7808,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>110</iCost>
@@ -8008,7 +8003,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -8206,7 +8201,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>100</iCost>
@@ -8392,7 +8387,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>120</iCost>
@@ -8591,7 +8586,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>140</iCost>
@@ -8777,7 +8772,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>150</iCost>
@@ -8962,7 +8957,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>220</iCost>
@@ -9151,7 +9146,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>160</iCost>
@@ -9337,7 +9332,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>160</iCost>
@@ -9526,7 +9521,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>200</iCost>
@@ -9712,7 +9707,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>25</iCost>
@@ -9898,7 +9893,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>25</iCost>
@@ -10093,7 +10088,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>25</iCost>
@@ -10293,7 +10288,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -10486,7 +10481,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -10689,7 +10684,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -10880,7 +10875,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>30</iCost>
@@ -11071,7 +11066,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>30</iCost>
@@ -11271,7 +11266,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -11470,7 +11465,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -11679,7 +11674,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -11879,7 +11874,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>90</iCost>
@@ -12069,7 +12064,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>90</iCost>
@@ -12256,7 +12251,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -12483,7 +12478,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>100</iCost>
@@ -12687,7 +12682,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>100</iCost>
@@ -12881,7 +12876,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>120</iCost>
@@ -13080,7 +13075,7 @@
 			<BonusType>BONUS_HORSE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>120</iCost>
@@ -13271,7 +13266,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -13467,7 +13462,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -13657,7 +13652,7 @@
 			<BonusType>BONUS_OIL</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>180</iCost>
@@ -13851,7 +13846,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>100</iCost>
@@ -14041,7 +14036,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>240</iCost>
@@ -14231,7 +14226,7 @@
 			<BonusType>BONUS_OIL</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>160</iCost>
@@ -14413,7 +14408,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -14599,7 +14594,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -14791,7 +14786,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -14973,7 +14968,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>100</iCost>
@@ -15155,7 +15150,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>125</iCost>
@@ -15342,7 +15337,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>150</iCost>
@@ -15528,7 +15523,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>200</iCost>
@@ -15725,7 +15720,7 @@
 					<iProductionTrait>35</iProductionTrait>
 				</ProductionTrait>
 			</ProductionTraits>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>30</iCost>
@@ -15914,7 +15909,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -16118,7 +16113,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -16340,7 +16335,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -16573,7 +16568,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>60</iCost>
@@ -16778,7 +16773,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -16969,7 +16964,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -17170,7 +17165,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -17374,7 +17369,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>90</iCost>
@@ -17561,7 +17556,7 @@
 			<BonusType>BONUS_IRON</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>120</iCost>
@@ -17758,7 +17753,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>120</iCost>
@@ -17950,7 +17945,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>125</iCost>
@@ -18145,7 +18140,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>200</iCost>
@@ -18333,7 +18328,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>225</iCost>
@@ -18515,7 +18510,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>260</iCost>
@@ -18705,7 +18700,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>220</iCost>
@@ -18896,7 +18891,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>150</iCost>
@@ -19081,7 +19076,7 @@
 			<BonusType>BONUS_URANIUM</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>200</iCost>
@@ -19265,7 +19260,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>175</iCost>
@@ -19438,7 +19433,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>80</iCost>
@@ -19615,7 +19610,7 @@
 			<BonusType>BONUS_OIL</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>100</iCost>
@@ -19792,7 +19787,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>150</iCost>
@@ -19969,7 +19964,7 @@
 			<BonusType>BONUS_OIL</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>140</iCost>
@@ -20150,7 +20145,7 @@
 				<BonusType>NONE</BonusType>
 			</PrereqBonuses>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>200</iCost>
@@ -20327,7 +20322,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>50</iCost>
@@ -20499,7 +20494,7 @@
 			<BonusType>BONUS_URANIUM</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>200</iCost>
@@ -20671,7 +20666,7 @@
 			<BonusType>BONUS_URANIUM</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors/>
 			<iAIWeight>0</iAIWeight>
 			<iCost>450</iCost>
@@ -20901,7 +20896,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_RELIGION</FlavorType>
@@ -21117,7 +21112,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_CULTURE</FlavorType>
@@ -21342,7 +21337,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_SCIENCE</FlavorType>
@@ -21553,7 +21548,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_GOLD</FlavorType>
@@ -21766,7 +21761,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_PRODUCTION</FlavorType>
@@ -21991,7 +21986,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_MILITARY</FlavorType>
@@ -22219,7 +22214,7 @@
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
-      <DirectProductionTraits/>
+			<DirectProductionTraits/>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_ESPIONAGE</FlavorType>
