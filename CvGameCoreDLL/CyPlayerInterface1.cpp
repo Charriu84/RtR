@@ -320,6 +320,7 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("isExtendedGame", &CyPlayer::isExtendedGame, "bool ()")
 		.def("isFoundedFirstCity", &CyPlayer::isFoundedFirstCity, "bool ()")
 		.def("getTotalBeakersFromTech", &CyPlayer::getTotalBeakersFromTech, "int ()")
+		.def("getTotalBeakersTradedAway", &CyPlayer::getTotalBeakersTradedAway, "int ()")
 
 		.def("isStrike", &CyPlayer::isStrike, "bool ()")
 

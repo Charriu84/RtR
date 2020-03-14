@@ -695,6 +695,8 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	{
 	case TRADE_TECHNOLOGIES:
 		GET_TEAM(GET_PLAYER(eToPlayer).getTeam()).setHasTech(((TechTypes)trade.m_iData), true, eToPlayer, true, true);
+		GET_PLAYER(eFromPlayer).changeTotalBeakersTradedAway(GC.getTechInfo((TechTypes)trade.m_iData).getResearchCost());
+		
 		GET_TEAM(GET_PLAYER(eToPlayer).getTeam()).setNoTradeTech(((TechTypes)trade.m_iData), true);
 
 		for (iI = 0; iI < MAX_PLAYERS; iI++)

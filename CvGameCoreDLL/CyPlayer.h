@@ -329,6 +329,7 @@ public:
 	int getTechScore();
 	int getTotalTimePlayed();
 	int getTotalBeakersFromTech();
+	int getTotalBeakersTradedAway();
 	bool isMinorCiv();
 	bool isAlive();
 	bool isEverAlive();

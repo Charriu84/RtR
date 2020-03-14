@@ -473,6 +473,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iInflationModifier = 0;
 	m_uiStartTime = 0;
 	m_iTotalBeakersFromTech = 0;
+	m_iTotalBeakersTradedAway = 0;
 
 	m_bAlive = false;
 	m_bEverAlive = false;
@@ -9572,6 +9573,21 @@ void CvPlayer::changeTotalBeakersFromTech(int iChange)
 	}
 }
 
+int CvPlayer::getTotalBeakersTradedAway() const		 
+{
+	return m_iTotalBeakersTradedAway;
+}
+
+
+void CvPlayer::changeTotalBeakersTradedAway(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iTotalBeakersTradedAway += iChange;
+		FAssert(getTotalBeakersTradedAway() >= 0);
+	}
+}
+
 int CvPlayer::getCombatExperience() const
 {
 	return m_iCombatExperience;
@@ -15945,6 +15961,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iTechScore);
 	pStream->Read(&m_iCombatExperience);
 	pStream->Read(&m_iTotalBeakersFromTech);
+	pStream->Read(&m_iTotalBeakersTradedAway);
 
 	pStream->Read(&m_bAlive);
 	pStream->Read(&m_bEverAlive);
@@ -16410,6 +16427,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(m_iTechScore);
 	pStream->Write(m_iCombatExperience);
 	pStream->Write(m_iTotalBeakersFromTech);
+	pStream->Write(m_iTotalBeakersTradedAway);
 
 	pStream->Write(m_bAlive);
 	pStream->Write(m_bEverAlive);

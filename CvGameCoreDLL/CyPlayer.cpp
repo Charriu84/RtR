@@ -1400,6 +1400,11 @@ int CyPlayer::getTotalBeakersFromTech()
 	return m_pPlayer ? m_pPlayer->getTotalBeakersFromTech() : -1;
 }
 
+int CyPlayer::getTotalBeakersTradedAway()
+{
+	return m_pPlayer ? m_pPlayer->getTotalBeakersTradedAway() : -1;
+}
+
 bool CyPlayer::isAlive() 
 {
 	return m_pPlayer ? m_pPlayer->isAlive() : false;

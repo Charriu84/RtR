@@ -430,6 +430,8 @@ class CvInfoScreen:
 		self.TEXT_IMP_EXP_MEASURE = (u"  %c" % CyGame().getSymbolID(FontSymbols.BULLET_CHAR)) + localText.getText("TXT_KEY_DEMO_SCREEN_ECONOMY_MEASURE", ())
 
 		self.TEXT_TIME_PLAYED = localText.getText("TXT_KEY_INFO_SCREEN_TIME_PLAYED", ())
+		self.TEXT_BEAKERS_RESEARCHED = localText.getText("TXT_KEY_INFO_SCREEN_TOTAL_BEAKERS_RESEARCHED", ())
+		self.TEXT_BEAKERS_TRADED_AWAY = localText.getText("TXT_KEY_INFO_SCREEN_TOTAL_BEAKERS_TRADED_AWAY", ())
 		self.TEXT_CITIES_BUILT = localText.getText("TXT_KEY_INFO_SCREEN_CITIES_BUILT", ())
 		self.TEXT_CITIES_RAZED = localText.getText("TXT_KEY_INFO_SCREEN_CITIES_RAZED", ())
 		self.TEXT_NUM_GOLDEN_AGES = localText.getText("TXT_KEY_INFO_SCREEN_NUM_GOLDEN_AGES", ())
@@ -2637,7 +2639,7 @@ class CvInfoScreen:
 
 		iNumTechResearched = self.pActivePlayer.getTotalBeakersFromTech()
 
-		iNumTechTraded = self.pActiveTeam.getTechTradingCount()
+		iNumTechTraded = self.pActivePlayer.getTotalBeakersTradedAway()
 
 		iNumReligionsFounded = 0
 		for iReligionLoop in range(gc.getNumReligionInfos()):
@@ -2725,13 +2727,13 @@ class CvInfoScreen:
 
 		iRow = 1
 		iCol = 0
-		screen.setTableText(szTopChart, iCol, iRow, "Beakers earned", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.setTableText(szTopChart, iCol, iRow, self.TEXT_BEAKERS_RESEARCHED, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 		iCol = 1
 		screen.setTableText(szTopChart, iCol, iRow, str(iNumTechResearched), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 
 		iRow = 2
 		iCol = 0
-		screen.setTableText(szTopChart, iCol, iRow, "Beakers traded", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.setTableText(szTopChart, iCol, iRow, self.TEXT_BEAKERS_TRADED_AWAY, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 		iCol = 1
 		screen.setTableText(szTopChart, iCol, iRow, str(iNumTechTraded), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 

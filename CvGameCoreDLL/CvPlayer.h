@@ -590,6 +590,8 @@ public:
 	void changeWondersScore(int iChange);	// Exposed to Python  
 	DllExport int getTotalBeakersFromTech() const;																																				// Exposed to Python
 	void changeTotalBeakersFromTech(int iChange);																																	// Exposed to Python  
+	DllExport int getTotalBeakersTradedAway() const;																																				// Exposed to Python
+	void changeTotalBeakersTradedAway(int iChange);																																	// Exposed to Python  
 
 	int getCombatExperience() const; 	// Exposed to Python  
 	void setCombatExperience(int iExperience);   // Exposed to Python
@@ -1161,6 +1163,7 @@ protected:
 	int m_iPopRushHurryCount;
 	int m_iInflationModifier;
 	int m_iTotalBeakersFromTech;
+	int m_iTotalBeakersTradedAway;
 
 	uint m_uiStartTime;  // XXX save these?
 
