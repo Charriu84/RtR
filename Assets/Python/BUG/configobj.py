@@ -502,29 +502,29 @@ class Section(dict):
     # Extra methods - not in a normal dictionary
     
     def clearKeyComments(self, key):
-    	"""Clears all comments for the given key."""
-    	if key in self.scalars or key in self.sections:
+        """Clears all comments for the given key."""
+        if key in self.scalars or key in self.sections:
             self.comments[key] = []
             self.inline_comments[key] = ''
     
     def addKeyComment(self, key, comment=None):
-    	"""Adds the given text as a single-line comment with a leading '# '."""
-    	if key in self.scalars or key in self.sections:
-	    	if comment is None:
-	    		comment = ''
-	    	elif comment == '':
-	    		comment = '#'
-	    	else:
-	    		comment = '# ' + comment
-    		self.comments.setdefault(key, []).append(comment)
+        """Adds the given text as a single-line comment with a leading '# '."""
+        if key in self.scalars or key in self.sections:
+            if comment is None:
+                comment = ''
+            elif comment == '':
+                comment = '#'
+            else:
+                comment = '# ' + comment
+            self.comments.setdefault(key, []).append(comment)
 
     def setInlineKeyComment(self, key, comment):
-    	"""Sets the given text as the single inline comment with a leading '# '."""
-    	if key in self.scalars or key in self.sections:
-    		if comment:
-    			self.inline_comments[key] = '# ' + comment
-    		else:
-    			self.inline_comments[key] = ''
+        """Sets the given text as the single inline comment with a leading '# '."""
+        if key in self.scalars or key in self.sections:
+            if comment:
+                self.inline_comments[key] = '# ' + comment
+            else:
+                self.inline_comments[key] = ''
 
     def dict(self):
         """
@@ -1884,23 +1884,23 @@ class ConfigObj(Section):
         self.initial_comment = []
     
     def addInitialComment(self, comment=None):
-    	if comment is None:
-    		self.initial_comment.append('')
-    	elif comment == '':
-    		self.initial_comment.append('#')
-    	else:
-    		self.initial_comment.append('# ' + comment)
+        if comment is None:
+            self.initial_comment.append('')
+        elif comment == '':
+            self.initial_comment.append('#')
+        else:
+            self.initial_comment.append('# ' + comment)
     
-	def clearFinalComment(self):
-		self.final_comment = []
+    def clearFinalComment(self):
+        self.final_comment = []
     
     def addFinalComment(self, comment=None):
-    	if comment is None:
-    		self.final_comment.append('')
-    	elif comment == '':
-    		self.final_comment.append('#')
-    	else:
-    		self.final_comment.append('# ' + comment)
+        if comment is None:
+            self.final_comment.append('')
+        elif comment == '':
+            self.final_comment.append('#')
+        else:
+            self.final_comment.append('# ' + comment)
 
     def write(self, outfile=None, section=None):
         """

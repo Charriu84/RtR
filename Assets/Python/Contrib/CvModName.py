@@ -8,26 +8,26 @@ civName = "BtS"
 civVersion = "3.13-3.19"
 
 def getName():
-	return modName
+    return modName
 
 def getDisplayName():
-	return displayName
+    return displayName
 
 def getVersion():
-	return modVersion
+    return modVersion
 
 def getNameAndVersion():
-	return modName + " " + modVersion
+    return modName + " " + modVersion
 
 def getDisplayNameAndVersion():
-	return displayName + " " + modVersion
+    return displayName + " " + modVersion
 
 
 def getCivName():
-	return civName
+    return civName
 
 def getCivVersion():
-	return civVersion
+    return civVersion
 
 def getCivNameAndVersion():
-	return civName + " " + civVersion
+    return civName + " " + civVersion

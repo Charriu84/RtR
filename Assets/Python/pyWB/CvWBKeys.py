@@ -1,7 +1,7 @@
 
 """ Lists of TXT_KEY's. This lists will be checked to write
-		the keys instead of raw names into the Worldbuilder saves.
-		The list requires a manual update if some szenario will be changed.
+        the keys instead of raw names into the Worldbuilder saves.
+        The list requires a manual update if some szenario will be changed.
 """
 
 # Desc and ShortDesc
