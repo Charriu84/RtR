@@ -279,6 +279,9 @@ public:
 
 	int setCivPassword(int ePlayer, const char *pNewPw, const char *pAdminPw);
 	bool isDiploScreenUp() const;
+	//PBMod start
+	void doControlWithoutWidget(int /*ControlTypes*/ eControl) const;
+	//PBMod end
 	void sendTurnCompletePB(int iPlayer);
 	std::wstring getModPath();
 	int unzipModUpdate(std::wstring zipFilename);

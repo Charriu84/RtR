@@ -394,6 +394,15 @@ class CvGameUtils:
 		eWidgetType, iData1, iData2, bOption = argsList
 		if (iData1 == 302016):
 			return localText.getText("TXT_KEY_MOD_UNPAUSE_DESC", ())
+		#PBmod start
+		if (iData1 == 47292):
+			if (iData2 == 1):
+				return localText.getText("TXT_KEY_MOD_F9_DESELECT_OPPONENTS", ())
+			if (iData2 == 2):
+				return localText.getText("TXT_KEY_MOD_F9_SELECT_ALL", ())
+			if (iData2 == 3):
+				return localText.getText("TXT_KEY_MOD_F9_SELECT_BY_F4", ())
+		#PBmod end
 		return u""
 		
 	def getUpgradePriceOverride(self, argsList):

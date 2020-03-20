@@ -567,7 +567,8 @@ public:
 	DllExport void handleDiplomacySetAIComment(DiploCommentTypes eComment) const;
 	// PB Mod
 	DllExport bool isDiploScreenUp() const;
-	DllExport int delayedPythonCall(int milliseconds, int arg1 = -1, int arg2 = -1); // Starts new thread
+	void doControlWithoutWidget(ControlTypes eControl) const;
+    int delayedPythonCall(int milliseconds, int arg1 = -1, int arg2 = -1); // Starts new thread
 	int delayedPythonCall2(); // Called by other thread
 	void fixTradeRoutes();
 	// PB Mod END

@@ -1377,6 +1377,7 @@ void CvDLLWidgetData::doContactCiv(CvWidgetDataStruct &widgetDataStruct)
 				pInfo->setFlags(1);
 				pInfo->setOption1(false);
 				pInfo->setOption2(true);
+				pInfo->setFlags(1);
 				gDLL->getInterfaceIFace()->addPopup(pInfo);
 			}
 		}

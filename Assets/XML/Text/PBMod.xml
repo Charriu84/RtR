@@ -138,6 +138,94 @@
 		<Spanish>Toggle pause</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_MOD_POPUP_WARNING_STACK_ATTACK</Tag>
+		<English>Attention, the stack attack option is active!</English>
+		<French>Attention, the stack attack option is active!</French>
+		<German>Achtung, der Stack-Angriff (=Angriff mit allen Einheiten eines Stacks) ist aktiviert!</German>
+		<Italian>Attention, the stack attack option is active!</Italian>
+		<Spanish>Attention, the stack attack option is active!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_F9_DESELECT_OPPONENTS</Tag>
+		<English>Unselect graphs of other players.</English>
+		<French>Unselect graphs of other players.</French>
+		<German>Alle anderen Graphen ausblenden.</German>
+		<Italian>Unselect graphs of other players.</Italian>
+		<Spanish>Unselect graphs of other players.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_F9_SELECT_ALL</Tag>
+		<English>Select all graphs.</English>
+		<French>Select all graphs.</French>
+		<German>Alle Graphen einblenden.</German>
+		<Italian>Select all graphs.</Italian>
+		<Spanish>Select all graphs.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_F9_SELECT_BY_F4</Tag>
+		<English>Reduce graphs on selected nations on Foreign Advisor [COLOR_HIGHLIGHT_TEXT]&lt;F4&gt;[COLOR_REVERT].</English>
+		<French>Reduce graphs on selected nations on Foreign Advisor [COLOR_HIGHLIGHT_TEXT]&lt;F4&gt;[COLOR_REVERT].</French>
+		<German>Auf im Auslandsberater [COLOR_HIGHLIGHT_TEXT]&lt;F4&gt;[COLOR_REVERT] ausgew&#228;hlte Nationen einschr&#228;nken.</German>
+		<Italian>Reduce graphs on selected nations on Foreign Advisor [COLOR_HIGHLIGHT_TEXT]&lt;F4&gt;[COLOR_REVERT].</Italian>
+		<Spanish>Reduce graphs on selected nations on Foreign Advisor [COLOR_HIGHLIGHT_TEXT]&lt;F4&gt;[COLOR_REVERT].</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_CORP_FACTOR1</Tag>
+		<English>Corp. output modificator</English>
+		<French>Corp. output modificator</French>
+		<German>KG-Ertragsmodifikator</German>
+		<Italian>Corp. output modificator</Italian>
+		<Spanish>Corp. output modificator</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_CORP_FACTOR2</Tag>
+		<English>Distribution in own</English>
+		<French>Distribution in own</French>
+		<German>Verbreitung in eigenen</German>
+		<Italian>Distribution in own</Italian>
+		<Spanish>Distribution in own</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_CORP_FACTOR3</Tag>
+		<English>and foreign cities</English>
+		<French>and foreign cities</French>
+		<German>und fremden St&#228;dten</German>
+		<Italian>and foreign cities</Italian>
+		<Spanish>and foreign cities</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_CORP_FACTOR4</Tag>
+		<English>influence output of corporation</English>
+		<French>influence output of corporation</French>
+		<German>beinflusst den Ertrag der KG</German>
+		<Italian>influence output of corporation</Italian>
+		<Spanish>influence output of corporation</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_CORP_FACTOR5</Tag>
+		<English>Cities with corp</English>
+		<French>Cities with corp</French>
+		<German>St&#228;dte mit KG</German>
+		<Italian>Cities with corp</Italian>
+		<Spanish>Cities with corp</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLAYER_OPTION_MODDER_1</Tag>
+		<English>Show resource icons</English>
+		<French>Show resource icons</French>
+		<German>Ressourcensymbole automatisch einblenden</German>
+		<Italian>Show resource icons</Italian>
+		<Spanish>Show resource icons</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLAYER_OPTION_MODDER_1_HELP</Tag>
+		<English>Show resource icons at each login</English>
+		<French>Show resource icons at each login</French>
+		<German>Aktiviert beim Login die Anzeige der Ressoucren-Icons</German>
+		<Italian>Show resource icons at each login</Italian>
+		<Spanish>Show resource icons at each login</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_MOD_</Tag>
 		<English></English>
 		<French></French>
