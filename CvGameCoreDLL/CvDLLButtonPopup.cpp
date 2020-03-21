@@ -136,12 +136,21 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 			}
 		}
 		else if (pPopupReturn->getButtonClicked() == 2)
-		{
-			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU);
-			if (NULL != pInfo)
-			{
-				pInfo->setData1(2);
-				gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
+		{ 
+			if( GC.getGameINLINE().isPitboss() ){
+				CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU_KI);
+				if (NULL != pInfo)
+				{
+					pInfo->setData1(10005);
+					gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
+				}
+			}else{
+				CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRM_MENU);
+				if (NULL != pInfo)
+				{
+					pInfo->setData1(2);
+					gDLL->getInterfaceIFace()->addPopup(pInfo, GC.getGameINLINE().getActivePlayer(), true);
+				}
 			}
 		}
 		else if (pPopupReturn->getButtonClicked() == 3)
