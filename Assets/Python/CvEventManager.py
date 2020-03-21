@@ -30,10 +30,6 @@ localText = CyTranslator()
 PyPlayer = PyHelpers.PyPlayer
 PyInfo = PyHelpers.PyInfo
 
-#webserver = MyTCPServer(('127.0.0.1', 13373), MyTCPServerHandler)
-#webserver = ThreadedTCPServer(('',13373), service)
-#thread.start_new_thread(webserver.serve_forever, ())
-#t = Thread(target=webserver.serve_forever); t.start()
 #PBMod start
 iPlayerOptionCheck = 0  # Triggers for == 1, decrements for >= 0
 #PBMod end

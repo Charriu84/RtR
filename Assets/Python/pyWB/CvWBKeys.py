@@ -1,7 +1,7 @@
 
 """ Lists of TXT_KEY's. This lists will be checked to write
-        the keys instead of raw names into the Worldbuilder saves.
-        The list requires a manual update if some szenario will be changed.
+		the keys instead of raw names into the Worldbuilder saves.
+		The list requires a manual update if some szenario will be changed.
 """
 
 # Desc and ShortDesc
@@ -31,9 +31,12 @@ try:
     CityKeys.extend(CvWBKeys_auto.CityKeys)
 
     del sys.modules['CvWBKeys_auto']  # Module not needed anymore
-except Exception, e:
-    raise(e)
-    pass
+except:
+    print("Import of CvWBKeys_auto.py failed.")
+
+# except Exception as e:  # Wrong syntaxt in Python 2.4
+#    raise(e)
+#    pass
 
 
 # Some city keys are used as Civ/Leader keys, too.

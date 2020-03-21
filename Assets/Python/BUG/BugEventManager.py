@@ -445,6 +445,9 @@ class BugEventManager(CvEventManager.CvEventManager):
         """
         Checks for active player turn begin/end.
         """
+        if CyGame().isPitbossHost():
+            return
+
         eState = CyInterface().getEndTurnState()
         if eState == EndTurnButtonStates.END_TURN_GO:
             self.checkActivePlayerTurnStart()

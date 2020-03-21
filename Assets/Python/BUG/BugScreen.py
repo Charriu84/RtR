@@ -137,6 +137,9 @@ class BugScreen:
         if len(self.tabs) <= 2:
             return
 
+        if CyGame().isPitbossHost():
+            return
+
         # calculate the total width allowed for the tab labels
         # not the last label is 'right' justified
         sparewidth = self.tabs[len(self.tabs) - 1].X - self.tabs[0].X

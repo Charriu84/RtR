@@ -5,6 +5,7 @@ import CvUtil
 from array import *
 
 from CvWBKeys import *
+
 try:
     import CvPlatyBuilderScreen
     WITH_PLATY = True
@@ -1996,7 +1997,7 @@ class CvSignDesc:
         f.write("\tplotX=%d\n" %(sign.getPlot().getX(),))
         f.write("\tplotY=%d\n" %(sign.getPlot().getY(),))
         f.write("\tplayerType=%d\n" %(sign.getPlayerType(),))
-        f.write("\tcaption=%s\n" %(sign.getCaption(),))
+        f.write("\tcaption=%s\n" %(sign.getCaption().encode('utf-8'),))
         f.write("EndSign\n")
 
     def read(self, f):
@@ -2029,7 +2030,7 @@ class CvSignDesc:
 
             v = parser.findTokenValue(toks, "caption")
             if v!=-1:
-                self.szCaption = v
+                self.szCaption = v.decode('utf-8').encode('cp1252')
                 continue
 
             if parser.findTokenValue(toks, "EndSign")!=-1:
@@ -2075,6 +2076,7 @@ class CvWBDesc:
         if WITH_PLATY:
             backup_bPython =  CvPlatyBuilderScreen.bPython
             CvPlatyBuilderScreen.bPython = False
+
         global teamTechs
         global cityBuildings
         global bFirstWrite
@@ -2158,7 +2160,7 @@ class CvWBDesc:
         else:
             bFirstWrite = False;
 
-        if WITH_PLATY:    
+        if WITH_PLATY:
             CvPlatyBuilderScreen.bPython = backup_bPython
         """ End, Restore buildings and techs """
 
