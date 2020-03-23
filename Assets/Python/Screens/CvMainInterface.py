@@ -5290,6 +5290,12 @@ class CvMainInterface:
                 MainOpt.setFieldOfView(self.iField_View)
 # BUG - field of view slider - end
 
+        if (inputClass.getData1() == 302016):
+            # Cause crash on PB server is host os is Linux
+            #gc.sendPause(-1)
+            # Workaround.
+            gc.sendChat("RemovePause", ChatTargetTypes.CHATTARGET_ALL)
+
         return 0
     
 # BUG - Raw Yields - start
