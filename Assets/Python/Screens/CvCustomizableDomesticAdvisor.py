@@ -763,7 +763,9 @@ class CvCustomizableDomesticAdvisor:
         # Location of Split Empire Button; make sure it leaves enough room for exit text
         self.SPLIT_NAME = "DomesticSplit"
         nExitTextWidth = CyInterface().determineWidth(localText.getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper())
+        nPauseTextWidth = CyInterface().determineWidth(localText.getText("TXT_KEY_MOD_UNPAUSE", ()).upper())
         self.X_SPLIT = self.X_EXIT - 50 - nExitTextWidth
+        self.X_SPLITPAUSE = self.X_EXIT - 50 - nPauseTextWidth
         self.Y_SPLIT = self.Y_TEXT - 8
 
 # BUG - Colony Split - end
@@ -900,6 +902,8 @@ class CvCustomizableDomesticAdvisor:
         # Text Buttons
         screen.setText(self.EXIT_NAME, "Background", localText.getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper(), CvUtil.FONT_RIGHT_JUSTIFY, self.X_EXIT, self.Y_EXIT, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 
+        # Unpause MOD
+        screen.setText("DomesticUnpause", "Background", localText.getText("TXT_KEY_MOD_UNPAUSE", ()).upper(), CvUtil.FONT_LEFT_JUSTIFY, self.X_SPLITPAUSE, self.Y_EXIT, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 301311, 2013 )
         x = self.X_SPECIAL + self.PAGES_DD_W + 10
 
         # Buttons to switch screens
@@ -2421,6 +2425,16 @@ class CvCustomizableDomesticAdvisor:
             elif (inputClass.getFunctionName() == self.SPLIT_NAME):
                 screen = CyGInterfaceScreen( "DomesticAdvisor", CvScreenEnums.DOMESTIC_ADVISOR )
                 screen.hideScreen()
+
+            # Remove Pause
+            if (inputClass.getData1() == 301311):
+                if( gc.getGame().isPaused() and not CyGame().isPitbossHost() ):
+                    # Cause crash on PB server is host os is Linux
+                    #gc.sendPause(-1)
+                    # Workaround.
+                    gc.sendChat("RemovePause", ChatTargetTypes.CHATTARGET_ALL)
+                    screen = CyGInterfaceScreen( "DomesticAdvisor", CvScreenEnums.DOMESTIC_ADVISOR )
+                    screen.hideScreen()
 
 # BUG - Colony Split - end
 
