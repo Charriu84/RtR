@@ -214,7 +214,7 @@ def onSwitchHotSeatPlayer(argsList):
 # BUG - end
 
 class CvMainInterface:
-    # Added either by PBMod or RtR Start
+    # Added either by PBMod
     def __init__ (self) :
         self.iScoreRows = 20    ## Score Board
         self.iScoreWidth = 100
@@ -223,7 +223,7 @@ class CvMainInterface:
         self.diploScreenActive = False
         self.pauseActive = CyGame().isPaused()
 
-    # Added either by PBMod or RtR End
+    # Added either by PBMod
 # BUG - start
         global g_mainInterface
         g_mainInterface = self
@@ -1279,7 +1279,7 @@ class CvMainInterface:
             CyInterface().setDirty(InterfaceDirtyBits.GlobeInfo_DIRTY_BIT, False)
             self.updateGlobeviewButtons()
 
-        # Added either by PBMod or RtR Start
+        # Added either by PBMod
         """
         Add unpause button if diplo screen is open.
         It's important to redraw the button just if the state
