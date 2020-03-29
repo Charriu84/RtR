@@ -1413,6 +1413,14 @@
 		<Italian>Possibili Forme di Governo Favorite</Italian>
 		<Spanish>Possible Favorite Civics</Spanish>
 	</TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_ABBR_PER_TURN</Tag>
+    <English>/ T</English>
+    <French>/ T</French>
+    <German>/ R</German>
+    <Italian>/ t</Italian>
+    <Spanish>/ T</Spanish>
+  </TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVICOPTION_ABBR_GOVERNMENT</Tag>
 		<English>Govt</English>

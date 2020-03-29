@@ -526,6 +526,8 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
                            u"%c" %(CyGame().getSymbolID(FontSymbols.RELIGION_CHAR)), 
                            u"%c" %(CyGame().getSymbolID(FontSymbols.TRADE_CHAR)),
                            u"%c%c" %(CyGame().getSymbolID(FontSymbols.TRADE_CHAR),gc.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()),
+                           u"%c" % gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar(),
+                           u"%c" % gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar() + BugUtil.getPlainText("TXT_KEY_ABBR_PER_TURN"),
                            BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_GOVERNMENT"),
                            BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_LEGAL"),
                            BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_LABOR"),
@@ -667,6 +669,24 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
             itemName = self.getNextWidgetName()
             screen.attachTextGFC(infoPanelName, itemName, szTradeYield, FontTypes.GAME_FONT, 
                                  *BugDll.widget("WIDGET_TRADE_ROUTES", self.iActiveLeader, iLoopPlayer))
+            if not BugDll.isPresent():
+                # Trade has no useful widget so disable hit testing.
+                screen.setHitTest(itemName, HitTestTypes.HITTEST_NOHIT)
+
+            # Gold
+            iGold = objLoopPlayer.AI_maxGoldTrade(self.iActiveLeader)
+            iGoldPerTurn = objLoopPlayer.AI_maxGoldPerTurnTrade(self.iActiveLeader)
+            szGold = u"%d %c" % (iGold, gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar())
+            szGoldPerTurn = u"%d %c" % (iGoldPerTurn, gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()) + BugUtil.getPlainText("TXT_KEY_ABBR_PER_TURN")
+
+            itemName = self.getNextWidgetName()
+            screen.attachTextGFC(infoPanelName, itemName, szGold, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+            if not BugDll.isPresent():
+                # Trade has no useful widget so disable hit testing.
+                screen.setHitTest(itemName, HitTestTypes.HITTEST_NOHIT)
+
+            itemName = self.getNextWidgetName()
+            screen.attachTextGFC(infoPanelName, itemName, szGoldPerTurn, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
             if not BugDll.isPresent():
                 # Trade has no useful widget so disable hit testing.
                 screen.setHitTest(itemName, HitTestTypes.HITTEST_NOHIT)
