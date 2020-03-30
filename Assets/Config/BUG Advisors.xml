@@ -31,6 +31,9 @@
 				<choice id="Smilies" get="isShowGlanceSmilies"/>
 				<choice id="Both" get="isShowGlanceNumbers isShowGlanceSmilies"/>
 			</list>
+			<option id="EFAImprovedActive" key="EFA Improved Active" 
+					type="boolean" default="True" 
+					get="isUseImprovedEFAActive"/>
 			<option id="EFAImprovedInfo" key="EFA Improved Info" 
 					type="boolean" default="True" 
 					get="isUseImprovedEFAInfo"/>

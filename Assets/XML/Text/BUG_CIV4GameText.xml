@@ -1378,7 +1378,7 @@
 		<Spanish>(%d1 &#215; %s2[ICON_GOLD])</Spanish>
 	</TEXT>
 
-	<!-- Foreign Advisor Info Screen Header Text
+	<!-- Foreign Advisor Info and Active Screen Header Text
 	
 		 All the entries except POSSIBLE_FAV_CIVICS must be kept 
 		 short so that everything lines up properly. 4-6 letters 
@@ -1460,6 +1460,62 @@
 		<German>Religion</German>
 		<Italian>Religione</Italian>
 		<Spanish>Religi&#243;n</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ABBR_OPEN_BORDER</Tag>
+		<English>OB</English>
+		<French>Lp</French>
+		<German>OG</German>
+		<Italian>Dp</Italian>
+		<Spanish>Af</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ABBR_DEFENSIVE_PACT</Tag>
+		<English>Def Pact</English>
+		<French>Pacte de d&#233;fense</French>
+		<German>Verteidigungsb&#252;ndnis</German>
+		<Italian>Alleanza difensiva</Italian>
+		<Spanish>Acuerdo de protecci&#243;n</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ABBR_VASSAL</Tag>
+		<English>Vassal</English>
+		<French>Vassal</French>
+		<German>Vasall</German>
+		<Italian>Vassallo</Italian>
+		<Spanish>Vassal</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ABBR_PERMANENT_ALLIANCE</Tag>
+		<English>Alliance</English>
+		<French>Alliance</French>
+		<German>Allianz</German>
+		<Italian>Alleanza</Italian>
+		<Spanish>Alianza</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ABBR_PEACE_TREATY</Tag>
+		<English>Peace</English>
+		<French>Peace</French>
+		<German>Frieden</German>
+		<Italian>Pace</Italian>
+		<Spanish>Peace</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ABBR_OTHER_DEALS</Tag>
+		<English>Other</English>
+		<French>Other</French>
+		<German>Andere</German>
+		<Italian>Altri</Italian>
+		<Spanish>Other</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>ACTIVE_SCREEN_TURNS</Tag>
+		<English>(%d1 T)</English>
+		<French>(%d1 T)</French>
+		<German>(%d1 R)</German>
+		<Italian>(%d1 T)</Italian>
+		<Spanish>(%d1 T)</Spanish>
 	</TEXT>
 	
 	<!-- Customizable Domestic Advisor -->

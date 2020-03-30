@@ -69,6 +69,22 @@
 		<Spanish>Select how to display AI attitudes on the GLANCE tab: numbers, smilies, or both.</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__EFAIMPROVEDACTIVE_TEXT</Tag>
+		<English>Improved Active Tab</English>
+		<French>Improved Active Tab</French>
+		<German>BUG Active</German>
+		<Italian>Scheda Informazioni migliorata</Italian>
+		<Spanish>Improved Active Tab</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__EFAIMPROVEDACTIVE_HOVER</Tag>
+		<English>When checked, uses improved Foreign Advisor 'Active' tab instead of default.</English>
+		<French>When checked, uses improved Foreign Advisor 'Active' tab instead of default.</French>
+		<German>Zeigt die Informationen auf der entsprechenden Seite des Auslandsberaters übersichtlicher an</German>
+		<Italian>Quando è selezionato, utilizza la versione migliorata della scheda Informazioni del Consigliere Estero al posto di quella standard.</Italian>
+		<Spanish>When checked, uses improved Foreign Advisor 'Active' tab instead of default.</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__EFAIMPROVEDINFO_TEXT</Tag>
 		<English>Improved Info Tab</English>
 		<French>Improved Info Tab</French>

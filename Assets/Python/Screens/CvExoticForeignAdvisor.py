@@ -58,6 +58,56 @@ def ExoticForPrint (stuff):
     stuff = "ExoForAdv: " + stuff
     BugUtil.debug(stuff)
 
+class ActiveDealHelper:
+    def __init__(self):
+        self.dealID              = -1
+        self.cancelTurns         = ""
+        self.activePlayerTrade   = ""
+        self.otherPlayerTrade    = ""
+        self.completeTrade       = ""
+
+    def setCancelTurns(self, deal, iLeader):
+        if AdvisorOpt.isShowDealTurnsLeft():
+            if BugDll.isPresent():
+                if not deal.isCancelable(iLeader, False):
+                    if deal.isCancelable(iLeader, True):
+                        self.cancelTurns = u" %s" % BugUtil.getText("ACTIVE_SCREEN_TURNS", (deal.turnsToCancel(iLeader),))
+            else:
+                iTurns = DealUtil.Deal(deal).turnsToCancel(iLeader)
+                if iTurns > 0:
+                    self.cancelTurns = u" %s" % BugUtil.getText("ACTIVE_SCREEN_TURNS", (iTurns,))
+
+    def setOtherTrade(self, deal, iActiveLeader):
+        firstTradeIsActivePlayer = deal.getFirstPlayer() == iActiveLeader
+        firstTradeString = ""
+        secondTradeString = ""
+
+        for tradeItemIndex in range(deal.getLengthFirstTrades()):
+            if (deal.getFirstTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_RESOURCES):
+                firstTradeString += u"%c" % gc.getBonusInfo(deal.getFirstTrade(tradeItemIndex).iData).getChar()
+            if (deal.getFirstTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN):
+                firstTradeString += u"%d %c" % (deal.getFirstTrade(tradeItemIndex).iData, gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()) + BugUtil.getPlainText("TXT_KEY_ABBR_PER_TURN")
+
+        for tradeItemIndex in range(deal.getLengthSecondTrades()):
+            if (deal.getSecondTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_RESOURCES):
+                secondTradeString += u"%c" % gc.getBonusInfo(deal.getSecondTrade(tradeItemIndex).iData).getChar()
+            if (deal.getSecondTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN):
+                secondTradeString += u"%d %c" % (deal.getSecondTrade(tradeItemIndex).iData, gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()) + BugUtil.getPlainText("TXT_KEY_ABBR_PER_TURN")
+
+        if (deal.getFirstPlayer() == iActiveLeader):
+            self.activePlayerTrade = firstTradeString
+            self.otherPlayerTrade = secondTradeString
+        else:
+            self.activePlayerTrade = secondTradeString
+            self.otherPlayerTrade = firstTradeString
+
+        if self.activePlayerTrade and self.otherPlayerTrade:
+            self.completeTrade = "Give " + self.activePlayerTrade + "\nReceive " + self.otherPlayerTrade
+        elif not self.activePlayerTrade and self.otherPlayerTrade:
+            self.completeTrade = self.activePlayerTrade + " \nReceive " + self.otherPlayerTrade
+        elif self.activePlayerTrade and not self.otherPlayerTrade:
+            self.completeTrade = "Give " + self.activePlayerTrade + "\n " + self.otherPlayerTrade
+
 # this class is shared by both the resource and technology foreign advisors
 class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
     "Exotic Foreign Advisor Screen"
@@ -344,8 +394,14 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
             else:
                 screen.setText (szTextId, "", u"<font=4>" + localText.getColorText (self.TXT_KEY_DICT[szScreen], (), gc.getInfoTypeForString ("COLOR_YELLOW")).upper() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_FOREIGN_ADVISOR, -1, -1)
             xLink += self.DX_LINK
-    
+
     def drawActive (self, bInitial):
+        if AdvisorOpt.isUseImprovedEFAActive():
+            self.drawActiveImproved(bInitial)
+        else:
+            self.drawActiveOriginal(bInitial)
+    
+    def drawActiveOriginal (self, bInitial):
         screen = self.getScreen()
 
         # Get the Players
@@ -412,6 +468,211 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
                     screen.appendListBoxString(dealPanelName, szDealText, WidgetTypes.WIDGET_DEAL_KILL, deal.getID(), -1, CvUtil.FONT_LEFT_JUSTIFY)
                     iRow += 1
 
+    def drawActiveImproved (self, bInitial):
+        screen = self.getScreen()
+
+        # Some spacing variables to help with the layout
+        iOutsideGap = 6
+        iInsideGap = 10
+        iBetweenGap = iOutsideGap - 2
+        iHeaderHeight = 32
+
+        # Header
+        headerBackgroundPanelName = self.getNextWidgetName()
+        iLeft = iOutsideGap
+        iTop = 50 + iOutsideGap
+        iWidth = self.W_SCREEN - (2 * iOutsideGap)
+        iHeight = iHeaderHeight + (2 * iInsideGap)
+        screen.addPanel(headerBackgroundPanelName, "", "", True, False, iLeft, iTop, iWidth, iHeight, PanelStyles.PANEL_STYLE_MAIN)
+
+        headerPanelName = self.getNextWidgetName()
+        iLeft = iLeft + iInsideGap
+        iTop = iTop + iInsideGap
+        iWidth = iWidth - (2 * iInsideGap)
+        iHeight = iHeaderHeight
+        screen.addPanel(headerPanelName, "", "", False, True, iLeft, iTop, iWidth, iHeight, PanelStyles.PANEL_STYLE_EMPTY)
+
+        iOffset = 0
+
+        for headerText in (BugUtil.getPlainText("TXT_KEY_FOREIGN_ADVISOR_ABBR_LEADER"),
+                           BugUtil.getPlainText("TXT_KEY_ABBR_OPEN_BORDER"),
+                           BugUtil.getPlainText("TXT_KEY_ABBR_DEFENSIVE_PACT"),
+                           BugUtil.getPlainText("TXT_KEY_ABBR_VASSAL"),
+                           BugUtil.getPlainText("TXT_KEY_ABBR_PEACE_TREATY"),
+                           BugUtil.getPlainText("TXT_KEY_ABBR_OTHER_DEALS")):
+            itemName = self.getNextWidgetName()
+            screen.attachTextGFC(headerPanelName, itemName, headerText, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+            screen.setHitTest(itemName, HitTestTypes.HITTEST_NOHIT)
+            iOffset = iOffset + 65
+
+        # Main
+        mainBackgroundPanelName = self.getNextWidgetName()
+        iLeft = iOutsideGap
+        iTop = iTop + iHeaderHeight + iInsideGap + iBetweenGap
+        iWidth = self.W_SCREEN - (2 * iOutsideGap)
+        iHeight = self.H_SCREEN - 100 - (2 * iOutsideGap) - iBetweenGap - iHeaderHeight - (2 * iInsideGap)
+        screen.addPanel(mainBackgroundPanelName, "", "", True, False, iLeft, iTop, iWidth, iHeight, PanelStyles.PANEL_STYLE_MAIN)
+
+        mainPanelName = self.getNextWidgetName()
+        iLeft = iLeft + iInsideGap
+        iTop = iTop + iInsideGap
+        iWidth = iWidth - (2 * iInsideGap)
+        iHeight = iHeight - (2 * iInsideGap)
+        screen.addPanel(mainPanelName, "", "", True, True, iLeft, iTop, iWidth, iHeight, PanelStyles.PANEL_STYLE_EMPTY)
+
+        #maxOtherTrade = self.getMaxOtherTradeCount()        
+        # loop through all other players and add their rows; show known first
+        lKnownPlayers = []
+        for iLoopPlayer in range(gc.getMAX_PLAYERS()):
+            if (iLoopPlayer != self.iActiveLeader):
+                objLoopPlayer = gc.getPlayer(iLoopPlayer)
+                if (self.objActiveTeam.isHasMet(objLoopPlayer.getTeam()) or gc.getGame().isDebugMode()):
+                    lKnownPlayers.append(iLoopPlayer)
+        for iLoopPlayer in lKnownPlayers:
+            self.drawActiveImprovedRow(screen, mainPanelName, iLoopPlayer, PanelStyles.PANEL_STYLE_OUT)
+
+    def drawActiveImprovedRow (self, screen, mainPanelName, iLoopPlayer, ePanelStyle):
+        objLoopPlayer = gc.getPlayer(iLoopPlayer)
+        iLoopTeam = objLoopPlayer.getTeam()
+        objLoopTeam = gc.getTeam(iLoopTeam)
+        bIsActivePlayer = (iLoopPlayer == self.iActiveLeader)
+        if (objLoopPlayer.isAlive()
+            and not objLoopPlayer.isBarbarian()
+            and not objLoopPlayer.isMinorCiv()):
+            
+            openBorderDeal = False
+            defensivePactDeal = False
+            vassalDeal = False
+            peaceDeal = False
+            otherDeal = []
+
+            for i in range(gc.getGame().getIndexAfterLastDeal()):
+                deal = gc.getGame().getDeal(i)
+
+                if (deal.getFirstPlayer() == iLoopPlayer and deal.getSecondPlayer() == self.iActiveLeader and not deal.isNone()) or (deal.getSecondPlayer() == iLoopPlayer and deal.getFirstPlayer() == self.iActiveLeader):
+                    for dealItemIndex in range(deal.getLengthFirstTrades()):
+                        if (deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_OPEN_BORDERS):
+                            openBorderDeal = ActiveDealHelper()
+                            openBorderDeal.dealID = deal.getID()
+                            openBorderDeal.setCancelTurns(deal, self.iActiveLeader)
+                        elif (deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_DEFENSIVE_PACT):
+                            defensivePactDeal = ActiveDealHelper()
+                            defensivePactDeal.dealID = deal.getID()
+                            defensivePactDeal.setCancelTurns(deal, self.iActiveLeader)
+                        elif (deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_SURRENDER or deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_VASSAL):
+                            vassalDeal = ActiveDealHelper()
+                            vassalDeal.dealID = deal.getID()
+                            vassalDeal.setCancelTurns(deal, self.iActiveLeader)
+                        elif (deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_PEACE_TREATY):
+                            peaceDeal = ActiveDealHelper()
+                            peaceDeal.dealID = deal.getID()
+                            peaceDeal.setCancelTurns(deal, self.iActiveLeader)
+                        elif (self.isOtherTrade(deal, dealItemIndex)):
+                            dealContained = False
+                            for otherDealIndex in range(len(otherDeal)):
+                                if (deal.getID() == otherDeal[otherDealIndex].dealID):
+                                    dealContained = True;
+                                    break
+
+                            if (peaceDeal and peaceDeal.dealID == deal.getID()):
+                                dealContained = True;
+                                peaceDeal.setOtherTrade(deal, self.iActiveLeader)
+
+                            if (dealContained == False):
+                                dealHelper = ActiveDealHelper()
+                                dealHelper.dealID = deal.getID()
+                                dealHelper.setCancelTurns(deal, self.iActiveLeader)
+                                dealHelper.setOtherTrade(deal, self.iActiveLeader)
+                                otherDeal.append(dealHelper)
+
+
+            objLeaderHead = gc.getLeaderHeadInfo (objLoopPlayer.getLeaderType())
+            
+            # Player panel
+            playerPanelName = self.getNextWidgetName()
+            szPlayerLabel = "" # objLoopPlayer.getName()
+            screen.attachPanel(mainPanelName, playerPanelName, szPlayerLabel, "", False, True, ePanelStyle)
+
+            itemName = self.getNextWidgetName()
+            screen.attachImageButton(playerPanelName, itemName, objLeaderHead.getButton(), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_LEADERHEAD, iLoopPlayer, self.iActiveLeader, False)
+            #screen.setHitTest(itemName, HitTestTypes.HITTEST_NOHIT)
+                    
+            infoPanelName = self.getNextWidgetName()
+            screen.attachPanel(playerPanelName, infoPanelName, "", "", False, False, PanelStyles.PANEL_STYLE_EMPTY)
+
+            # Open Borders
+            itemName = self.getNextWidgetName()
+            if (openBorderDeal):
+                szOpenBorderStr = u"%c" %(CyGame().getSymbolID(FontSymbols.OPEN_BORDERS_CHAR)) + str(openBorderDeal.cancelTurns)
+                screen.attachTextGFC(infoPanelName, itemName, szOpenBorderStr, FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, openBorderDeal.dealID, -1)
+            else:
+                screen.attachTextGFC(infoPanelName, itemName, "", FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, -1, -1)
+
+            # Defensive Pacts
+            itemName = self.getNextWidgetName()
+            if (defensivePactDeal):
+                szdefensivePactStr = u"%c" %(CyGame().getSymbolID(FontSymbols.DEFENSIVE_PACT_CHAR)) + str(defensivePactDeal.cancelTurns)
+                screen.attachTextGFC(infoPanelName, itemName, szdefensivePactStr, FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, defensivePactDeal.dealID, -1)
+            else:
+                screen.attachTextGFC(infoPanelName, itemName, "", FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, -1, -1)
+
+            # Vassal
+            itemName = self.getNextWidgetName()
+            if (vassalDeal):
+                szVassalStr = u"%c" %(CyGame().getSymbolID(FontSymbols.BULLET_CHAR)) + str(vassalDeal.cancelTurns)
+                screen.attachTextGFC(infoPanelName, itemName, szVassalStr, FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, vassalDeal.dealID, -1)
+            else:
+                screen.attachTextGFC(infoPanelName, itemName, "", FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, -1, -1)
+
+            # Peace deal
+            itemName = self.getNextWidgetName()
+            if (peaceDeal):
+                szPeaceStr = peaceDeal.completeTrade + smallSymbol(FontSymbols.PEACE_CHAR) + str(peaceDeal.cancelTurns) 
+                screen.attachTextGFC(infoPanelName, itemName, szPeaceStr, FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, peaceDeal.dealID, -1)
+            else:
+                screen.attachTextGFC(infoPanelName, itemName, "", FontTypes.GAME_FONT, WidgetTypes.WIDGET_DEAL_KILL, -1, -1)
+
+            otherDealCount = len(otherDeal)
+            # Other deal
+            if (otherDealCount != 0):
+                for otherDealIndex in range(otherDealCount):
+                    itemName = self.getNextWidgetName()
+                    if (otherDealIndex < otherDealCount):
+                        szOtherStr = otherDeal[otherDealIndex].completeTrade + "\n" + str(otherDeal[otherDealIndex].cancelTurns)
+                        
+                        screen.attachListBoxGFC(infoPanelName, itemName, "", TableStyles.TABLE_STYLE_STANDARD)
+                        screen.enableSelect(itemName, False)
+                        screen.appendListBoxString(itemName, szOtherStr, WidgetTypes.WIDGET_DEAL_KILL, otherDeal[otherDealIndex].dealID, -1, CvUtil.FONT_CENTER_JUSTIFY)
+                    else:
+                        screen.attachListBoxGFC(infoPanelName, itemName, "", TableStyles.TABLE_STYLE_STANDARD)
+                        screen.enableSelect(itemName, False)
+                        screen.appendListBoxString(itemName, "", WidgetTypes.WIDGET_DEAL_KILL, -1, -1, CvUtil.FONT_CENTER_JUSTIFY)
+
+    def isOtherTrade(self, deal, dealItemIndex):
+        firstTrade = False
+        if (dealItemIndex < deal.getLengthFirstTrades()):
+            firstTrade = (deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_RESOURCES or deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN)
+        secondTrade = False
+        if (dealItemIndex < deal.getLengthSecondTrades()):
+            secondTrade = (deal.getSecondTrade(dealItemIndex).ItemType == TradeableItems.TRADE_RESOURCES or deal.getSecondTrade(dealItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN)
+        return firstTrade or secondTrade
+
+    def getMaxOtherTradeCount(self):
+        maxOtherTrade = 0
+        for iLoopPlayer in range(gc.getMAX_PLAYERS()):
+            if (gc.getPlayer(iLoopPlayer).isAlive() and iLoopPlayer != self.iActiveLeader and not gc.getPlayer(iLoopPlayer).isBarbarian() and  not gc.getPlayer(iLoopPlayer).isMinorCiv()):
+                if (gc.getTeam(gc.getPlayer(iLoopPlayer).getTeam()).isHasMet(gc.getPlayer(self.iActiveLeader).getTeam()) or gc.getGame().isDebugMode()):
+                    nDeals = 0              
+                    for i in range(gc.getGame().getIndexAfterLastDeal()):
+                        deal = gc.getGame().getDeal(i)
+                        for dealItemIndex in range(deal.getLengthFirstTrades()):
+                            if ((deal.getFirstPlayer() == iLoopPlayer and deal.getSecondPlayer() == self.iActiveLeader) or (deal.getSecondPlayer() == iLoopPlayer and deal.getFirstPlayer() == self.iActiveLeader)):
+                                if (deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_RESOURCES or deal.getFirstTrade(dealItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN or deal.getSecondTrade(dealItemIndex).ItemType == TradeableItems.TRADE_RESOURCES or deal.getSecondTrade(dealItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN):
+                                    nDeals += 1
+                                
+                    if nDeals > maxOtherTrade:
+                        maxOtherTrade = nDeals
+        return maxOtherTrade
 #   RJG Start
     def drawRelations (self, bInitial):
         screen = self.getScreen()
