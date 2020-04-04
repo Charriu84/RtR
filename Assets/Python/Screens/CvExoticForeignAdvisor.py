@@ -585,6 +585,24 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
                                 dealHelper.setOtherTrade(deal, self.iActiveLeader)
                                 otherDeal.append(dealHelper)
 
+                    for dealItemIndex in range(deal.getLengthSecondTrades()):
+                        if (self.isOtherTrade(deal, dealItemIndex)):
+                            dealContained = False
+                            for otherDealIndex in range(len(otherDeal)):
+                                if (deal.getID() == otherDeal[otherDealIndex].dealID):
+                                    dealContained = True;
+                                    break
+
+                            if (peaceDeal and peaceDeal.dealID == deal.getID()):
+                                dealContained = True;
+                                peaceDeal.setOtherTrade(deal, self.iActiveLeader)
+
+                            if (dealContained == False):
+                                dealHelper = ActiveDealHelper()
+                                dealHelper.dealID = deal.getID()
+                                dealHelper.setCancelTurns(deal, self.iActiveLeader)
+                                dealHelper.setOtherTrade(deal, self.iActiveLeader)
+                                otherDeal.append(dealHelper)
 
             objLeaderHead = gc.getLeaderHeadInfo (objLoopPlayer.getLeaderType())
             
