@@ -193,6 +193,12 @@ class CvMilitaryAdvisor:
         if self.W_SCREEN < 1024:
             self.W_SCREEN = 1024
             self.L_SCREEN = 0
+        else:
+            offset = (self.W_SCREEN - self.W_LEADERS) / 2
+            self.X_GROUP_LIST = 20 + offset
+            self.X_MAP = 20 + offset
+            self.X_LEADERS = 20 + offset
+            self.X_TEXT = 625 + offset 
         
         self.X_EXIT = self.W_SCREEN - 30
         #self.Y_EXIT = 726
