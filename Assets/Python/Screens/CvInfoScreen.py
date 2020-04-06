@@ -7,6 +7,7 @@ from CvPythonExtensions import *
 import CvScreenEnums
 import CvUtil
 import ScreenInput
+import Popup as PyPopup
 
 import string
 #import time
@@ -104,6 +105,10 @@ class CvInfoScreen:
         for t in self.RANGE_SCORES:
             self.scoreCache.append(None)
 
+        self.smallestScoreIncrease = []
+        for t in self.RANGE_SCORES:
+            self.smallestScoreIncrease.append(None)
+
         self.GRAPH_H_LINE = "GraphHLine"
         self.GRAPH_V_LINE = "GraphVLine"
 
@@ -167,6 +172,8 @@ class CvInfoScreen:
         self.Graph_Status_3in1 = 2
         self.Graph_Status_Current = self.Graph_Status_1in1
         self.Graph_Status_Prior = self.Graph_Status_7in1
+        self.TurnGridOn = True
+        self.ScoreGridOn = True
 #       self.BIG_GRAPH = False
 
 # the 7-in-1 graphs are layout out as follows:
@@ -710,6 +717,9 @@ class CvInfoScreen:
         self.sGraph3in1 = self.getNextWidgetName()
         self.sGraph1in1 = self.getNextWidgetName()
 
+        self.sTurnGrid = self.getNextWidgetName()
+        self.sScoreGrid = self.getNextWidgetName()
+
         self.sPlayerTextWidget = [0] * gc.getMAX_CIV_PLAYERS()
         for i in range(gc.getMAX_CIV_PLAYERS()):
             self.sPlayerTextWidget[i] = self.getNextWidgetName()
@@ -815,6 +825,8 @@ class CvInfoScreen:
             screen.setText(self.sGraph1in1, "", "1/1", CvUtil.FONT_CENTER_JUSTIFY, 22,  90, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
             screen.setText(self.sGraph3in1, "", "3/1", CvUtil.FONT_CENTER_JUSTIFY, 22, 110, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
             screen.setText(self.sGraph7in1, "", "7/1", CvUtil.FONT_CENTER_JUSTIFY, 22, 130, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+            screen.setText(self.sTurnGrid, "", "Turns", CvUtil.FONT_CENTER_JUSTIFY, 22, 170, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+            screen.setText(self.sScoreGrid, "", "Score", CvUtil.FONT_CENTER_JUSTIFY, 22, 190, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
         screen.setLabel(self.getNextWidgetName(), "", self.BUG_GRAPH_HELP, CvUtil.FONT_CENTER_JUSTIFY, self.X_TITLE, self.Y_EXIT - 40, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
@@ -858,6 +870,7 @@ class CvInfoScreen:
             if (maxPlayer < p):
                 maxPlayer = p
 
+        self.smallestScoreIncrease[scoreType] = 99999
         # Compute the scores
         self.scoreCache[scoreType] = []
         for p in range(maxPlayer + 1):
@@ -871,7 +884,10 @@ class CvInfoScreen:
                 thisTurn    = CyGame().getGameTurn()
                 turn    = firstTurn
                 while (turn <= thisTurn):
-                    self.scoreCache[scoreType][p].append(self.computeHistory(scoreType, p, turn))
+                    scoreValue = self.computeHistory(scoreType, p, turn)
+                    self.scoreCache[scoreType][p].append(scoreValue)
+                    if (self.smallestScoreIncrease[scoreType] > scoreValue):
+                        self.smallestScoreIncrease[scoreType] = scoreValue
                     turn += 1
 
         return
@@ -1141,6 +1157,42 @@ class CvInfoScreen:
 #       self.timer.log("drawGraph - max, min")
 #       self.timer.start()
 
+        color = 5#3 is good 5 6
+        oldX = -1
+        turn = lastTurn 
+
+        if (self.TurnGridOn):
+            while (turn >= firstTurn):
+                if self.Graph_Status_Current == self.Graph_Status_1in1:
+                    iSmooth = self.iGraph_Smoothing_1in1
+                else:
+                    iSmooth = self.iGraph_Smoothing_7in1
+
+                x = int(xFactor * (turn - firstTurn))
+
+                if x < oldX - iSmooth:
+                    self.drawLine(screen, zsGRAPH_CANVAS_ID, oldX, 0, oldX, iH_GRAPH, color, False)
+                    oldX = x
+                elif (oldX == -1):
+                    oldX = x
+
+                turn -= 1
+
+        scoreIndex = 0
+        minScore = (max - min) / iH_GRAPH
+        x = int(xFactor * (lastTurn - firstTurn))
+        #popup = PyPopup.PyPopup()
+        #popup.setBodyString( 'Hello World' + str(minScore))
+        #popup.launch()
+
+        if (self.ScoreGridOn):
+            while scoreIndex < iH_GRAPH:            
+                if AdvisorOpt.isGraphsLogScale():
+                    y = iH_GRAPH - int(yFactor * (self.getLog10(scoreIndex * minScore) - self.getLog10(min)))
+                else:
+                    y = iH_GRAPH - int(yFactor * ((scoreIndex * minScore) - min))
+                self.drawLine(screen, zsGRAPH_CANVAS_ID, 0, scoreIndex, x, scoreIndex, color, False)
+                scoreIndex += 10
         # Draw the lines
         for p in self.aiPlayersMet:
 
@@ -3143,6 +3195,14 @@ class CvInfoScreen:
                 elif szWidgetName == self.sGraph7in1:
                     self.Graph_Status_Current = self.Graph_Status_7in1
                     self.Graph_Status_Prior = self.Graph_Status_Current
+                    self.drawGraphs()
+
+                if szWidgetName == self.sTurnGrid:
+                    self.TurnGridOn = not self.TurnGridOn
+                    self.drawGraphs()
+
+                if szWidgetName == self.sScoreGrid:
+                    self.ScoreGridOn = not self.ScoreGridOn
                     self.drawGraphs()
 
                 for i in range(gc.getMAX_CIV_PLAYERS()):
