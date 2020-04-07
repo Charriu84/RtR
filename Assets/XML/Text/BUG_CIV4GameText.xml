@@ -1254,6 +1254,33 @@
 		<Spanish>Smooth Factor %d1_Num</Spanish>
 	</TEXT>
 
+  <TEXT>
+    <Tag>TXT_KEY_GRAPH_SCALING</Tag>
+    <English>Scaling %d1_Num</English>
+    <French>Scaling %d1_Num</French>
+    <German>Skalierung %d1_Num</German>
+    <Italian>Scaling %d1_Num</Italian>
+    <Spanish>Scaling %d1_Num</Spanish>
+  </TEXT>
+
+  <TEXT>
+    <Tag>TXT_KEY_GRAPH_TURNS</Tag>
+    <English>Turns</English>
+    <French>Turns</French>
+    <German>Runden</German>
+    <Italian>Turns</Italian>
+    <Spanish>Turns</Spanish>
+  </TEXT>
+
+  <TEXT>
+    <Tag>TXT_KEY_GRAPH_SCORE</Tag>
+    <English>Score</English>
+    <French>Score</French>
+    <German>Punkte</German>
+    <Italian>Score</Italian>
+    <Spanish>Score</Spanish>
+  </TEXT>
+
 	<!-- Maze Map Stuff -->
 	
 	<TEXT>

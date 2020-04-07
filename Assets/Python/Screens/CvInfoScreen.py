@@ -167,9 +167,11 @@ class CvInfoScreen:
         self.Graph_Status_3in1 = 2
         self.Graph_Status_Current = self.Graph_Status_1in1
         self.Graph_Status_Prior = self.Graph_Status_7in1
+#BUG: Grid for Graphs - start
         self.TurnGridOn = True
         self.ScoreGridOn = True
         self.ScoreScale = 1
+#BUG: Grid for Graphs - end
 #       self.BIG_GRAPH = False
 
 # the 7-in-1 graphs are layout out as follows:
@@ -713,8 +715,10 @@ class CvInfoScreen:
         self.sGraph3in1 = self.getNextWidgetName()
         self.sGraph1in1 = self.getNextWidgetName()
 
+#BUG: Grid for Graphs - start
         self.sTurnGrid = self.getNextWidgetName()
         self.sScoreGrid = self.getNextWidgetName()
+#BUG: Grid for Graphs - end
 
         self.sPlayerTextWidget = [0] * gc.getMAX_CIV_PLAYERS()
         for i in range(gc.getMAX_CIV_PLAYERS()):
@@ -796,14 +800,17 @@ class CvInfoScreen:
                     screen.addPullDownString(self.szGraphDropdownWidget_3in1[i], self.sGraphText[0][j], j, j, self.iGraph_3in1[i] == j )
                 screen.hide(self.szGraphDropdownWidget_3in1[i])
 
+#BUG: Grid for Graphs - start
             self.szScoreScaleDropdownWidget = self.getNextWidgetName()
             screen.addDropDownBoxGFC(self.szScoreScaleDropdownWidget, self.W_DEMO_DROPDOWN + 60, iY_SMOOTH_DROPDOWN, self.W_DEMO_DROPDOWN + 50, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 1", 1, 1, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 2", 1, 2, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 5", 1, 5, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 10", 1, 10, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 20", 1, 20, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 50", 1, 50, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (1,)), 1, 1, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (2,)), 1, 2, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (5,)), 1, 5, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (10,)), 1, 10, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (20,)), 1, 20, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (50,)), 1, 50, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (100,)), 1, 100, False )
+#BUG: Grid for Graphs - end
 
         if not AdvisorOpt.isGraphs():
             self.iGraph_Smoothing = 0
@@ -830,8 +837,8 @@ class CvInfoScreen:
             screen.setText(self.sGraph1in1, "", "1/1", CvUtil.FONT_CENTER_JUSTIFY, 22,  90, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
             screen.setText(self.sGraph3in1, "", "3/1", CvUtil.FONT_CENTER_JUSTIFY, 22, 110, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
             screen.setText(self.sGraph7in1, "", "7/1", CvUtil.FONT_CENTER_JUSTIFY, 22, 130, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-            screen.setText(self.sTurnGrid, "", "Turns", CvUtil.FONT_CENTER_JUSTIFY, 22, 170, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-            screen.setText(self.sScoreGrid, "", "Score", CvUtil.FONT_CENTER_JUSTIFY, 22, 190, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+            screen.setText(self.sTurnGrid, "", localText.getText("TXT_KEY_GRAPH_TURNS", ()), CvUtil.FONT_CENTER_JUSTIFY, 22, 170, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+            screen.setText(self.sScoreGrid, "", localText.getText("TXT_KEY_GRAPH_SCORE", ()), CvUtil.FONT_CENTER_JUSTIFY, 22, 190, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
         screen.setLabel(self.getNextWidgetName(), "", self.BUG_GRAPH_HELP, CvUtil.FONT_CENTER_JUSTIFY, self.X_TITLE, self.Y_EXIT - 40, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
@@ -1158,6 +1165,7 @@ class CvInfoScreen:
 #       self.timer.log("drawGraph - max, min")
 #       self.timer.start()
 
+#BUG: Grid for Graphs - start
         color = 5
         oldX = -1
         turn = lastTurn 
@@ -1180,7 +1188,6 @@ class CvInfoScreen:
                 turn -= 1
 
         scoreIndex = 0
-        minScore = (max - min) / iH_GRAPH
         x = int(xFactor * (lastTurn - firstTurn))
 
         if (self.ScoreGridOn):
@@ -1191,6 +1198,8 @@ class CvInfoScreen:
                     y = iH_GRAPH - int(yFactor * ((scoreIndex) - min))
                 self.drawLine(screen, zsGRAPH_CANVAS_ID, 0, y, x, y, color, False)
                 scoreIndex += self.ScoreScale
+#BUG: Grid for Graphs - end
+
         # Draw the lines
         for p in self.aiPlayersMet:
 
@@ -3121,6 +3130,7 @@ class CvInfoScreen:
                 elif (szWidgetName == self.szGraphSmoothingDropdownWidget_7in1):
                     self.iGraph_Smoothing_7in1 = iSelected
                     self.drawGraphs()
+#BUG: Grid for Graphs - start
                 elif (szWidgetName == self.szScoreScaleDropdownWidget):
                     if (iSelected == 0):
                         self.ScoreScale = 1
@@ -3144,7 +3154,7 @@ class CvInfoScreen:
                         self.ScoreScale = 100
                     
                     self.drawGraphs()
-
+#BUG: Grid for Graphs - end
                 for i in range(3):
                     if (szWidgetName == self.szGraphDropdownWidget_3in1[i]):
                         self.iGraph_3in1[i] = iSelected
@@ -3218,6 +3228,7 @@ class CvInfoScreen:
                     self.Graph_Status_Prior = self.Graph_Status_Current
                     self.drawGraphs()
 
+#BUG: Grid for Graphs - start
                 if szWidgetName == self.sTurnGrid:
                     self.TurnGridOn = not self.TurnGridOn
                     self.drawGraphs()
@@ -3225,6 +3236,7 @@ class CvInfoScreen:
                 if szWidgetName == self.sScoreGrid:
                     self.ScoreGridOn = not self.ScoreGridOn
                     self.drawGraphs()
+#BUG: Grid for Graphs - end
 
                 for i in range(gc.getMAX_CIV_PLAYERS()):
                     if szWidgetName == self.sPlayerTextWidget[i]:
