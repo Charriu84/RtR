@@ -7,7 +7,6 @@ from CvPythonExtensions import *
 import CvScreenEnums
 import CvUtil
 import ScreenInput
-import Popup as PyPopup
 
 import string
 #import time
@@ -105,10 +104,6 @@ class CvInfoScreen:
         for t in self.RANGE_SCORES:
             self.scoreCache.append(None)
 
-        self.smallestScoreIncrease = []
-        for t in self.RANGE_SCORES:
-            self.smallestScoreIncrease.append(None)
-
         self.GRAPH_H_LINE = "GraphHLine"
         self.GRAPH_V_LINE = "GraphVLine"
 
@@ -174,6 +169,7 @@ class CvInfoScreen:
         self.Graph_Status_Prior = self.Graph_Status_7in1
         self.TurnGridOn = True
         self.ScoreGridOn = True
+        self.ScoreScale = 1
 #       self.BIG_GRAPH = False
 
 # the 7-in-1 graphs are layout out as follows:
@@ -800,6 +796,15 @@ class CvInfoScreen:
                     screen.addPullDownString(self.szGraphDropdownWidget_3in1[i], self.sGraphText[0][j], j, j, self.iGraph_3in1[i] == j )
                 screen.hide(self.szGraphDropdownWidget_3in1[i])
 
+            self.szScoreScaleDropdownWidget = self.getNextWidgetName()
+            screen.addDropDownBoxGFC(self.szScoreScaleDropdownWidget, self.W_DEMO_DROPDOWN + 60, iY_SMOOTH_DROPDOWN, self.W_DEMO_DROPDOWN + 50, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 1", 1, 1, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 2", 1, 2, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 5", 1, 5, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 10", 1, 10, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 20", 1, 20, False )
+            screen.addPullDownString(self.szScoreScaleDropdownWidget, "Scaling 50", 1, 50, False )
+
         if not AdvisorOpt.isGraphs():
             self.iGraph_Smoothing = 0
 
@@ -870,7 +875,6 @@ class CvInfoScreen:
             if (maxPlayer < p):
                 maxPlayer = p
 
-        self.smallestScoreIncrease[scoreType] = 99999
         # Compute the scores
         self.scoreCache[scoreType] = []
         for p in range(maxPlayer + 1):
@@ -884,10 +888,7 @@ class CvInfoScreen:
                 thisTurn    = CyGame().getGameTurn()
                 turn    = firstTurn
                 while (turn <= thisTurn):
-                    scoreValue = self.computeHistory(scoreType, p, turn)
-                    self.scoreCache[scoreType][p].append(scoreValue)
-                    if (self.smallestScoreIncrease[scoreType] > scoreValue):
-                        self.smallestScoreIncrease[scoreType] = scoreValue
+                    self.scoreCache[scoreType][p].append(self.computeHistory(scoreType, p, turn))
                     turn += 1
 
         return
@@ -1157,7 +1158,7 @@ class CvInfoScreen:
 #       self.timer.log("drawGraph - max, min")
 #       self.timer.start()
 
-        color = 5#3 is good 5 6
+        color = 5
         oldX = -1
         turn = lastTurn 
 
@@ -1181,9 +1182,6 @@ class CvInfoScreen:
         scoreIndex = 0
         minScore = (max - min) / iH_GRAPH
         x = int(xFactor * (lastTurn - firstTurn))
-        #popup = PyPopup.PyPopup()
-        #popup.setBodyString( 'Hello World' + str(minScore))
-        #popup.launch()
 
         if (self.ScoreGridOn):
             while scoreIndex < max:            
@@ -1192,7 +1190,7 @@ class CvInfoScreen:
                 else:
                     y = iH_GRAPH - int(yFactor * ((scoreIndex) - min))
                 self.drawLine(screen, zsGRAPH_CANVAS_ID, 0, y, x, y, color, False)
-                scoreIndex += 1
+                scoreIndex += self.ScoreScale
         # Draw the lines
         for p in self.aiPlayersMet:
 
@@ -3122,6 +3120,29 @@ class CvInfoScreen:
 
                 elif (szWidgetName == self.szGraphSmoothingDropdownWidget_7in1):
                     self.iGraph_Smoothing_7in1 = iSelected
+                    self.drawGraphs()
+                elif (szWidgetName == self.szScoreScaleDropdownWidget):
+                    if (iSelected == 0):
+                        self.ScoreScale = 1
+
+                    elif (iSelected == 1):
+                        self.ScoreScale = 2
+
+                    elif (iSelected == 2):
+                        self.ScoreScale = 5
+
+                    elif (iSelected == 3):
+                        self.ScoreScale = 10
+
+                    elif (iSelected == 4):
+                        self.ScoreScale = 20
+
+                    elif (iSelected == 5):
+                        self.ScoreScale = 50
+
+                    elif (iSelected == 6):
+                        self.ScoreScale = 100
+                    
                     self.drawGraphs()
 
                 for i in range(3):
