@@ -693,6 +693,8 @@ class CvInfoScreen:
             self.bPlayerInclude = [True] * gc.getMAX_CIV_PLAYERS()
 #BUG: Change Graphs - end
 
+        self.TurnGridOn = AdvisorOpt.isGridsForGraphsDefaultOn()
+        self.ScoreGridOn = AdvisorOpt.isGridsForGraphsDefaultOn()
         self.drawPermanentGraphWidgets()
         self.drawGraphs()
 

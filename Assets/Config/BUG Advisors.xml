@@ -84,6 +84,9 @@
 			<option id="BugGraphsLogScale" key="Log Scale" 
 					type="boolean" default="False" 
 					get="isGraphsLogScale"/>
+			<option id="BugGridsForGraphsDefaultOn" key="Grids for Graphs Default On" 
+					type="boolean" default="True" 
+					get="isGridsForGraphsDefaultOn"/>
 			<option id="BugStatsTab" key="Improvements" 
 					type="boolean" default="True" 
 					get="isShowImprovements"/>

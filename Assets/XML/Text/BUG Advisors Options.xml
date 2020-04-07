@@ -300,6 +300,22 @@
 		<Spanish>When checked, displays graphs are displayed in Log(10) scale.</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGGRIDSFORGRAPHSDEFAULTON_TEXT</Tag>
+		<English>Grids for Graphs Default On</English>
+		<French>Grids for Graphs Default On</French>
+		<German>Grids for Graphs Default On</German>
+		<Italian>Grids for Graphs Default On</Italian>
+		<Spanish>Grids for Graphs Default On</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGGRIDSFORGRAPHSDEFAULTON_HOVER</Tag>
+		<English>When checked, the grids for graphs are on as a default.</English>
+		<French>When checked, the grids for graphs are on as a default.</French>
+		<German>When checked, the grids for graphs are on as a default.</German>
+		<Italian>When checked, the grids for graphs are on as a default.</Italian>
+		<Spanish>When checked, the grids for graphs are on as a default.</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGINFOWONDERS_TEXT</Tag>
 		<English>Wonders tab</English>
 		<French>Wonders tab</French>
