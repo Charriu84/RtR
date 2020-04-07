@@ -1186,13 +1186,13 @@ class CvInfoScreen:
         #popup.launch()
 
         if (self.ScoreGridOn):
-            while scoreIndex < iH_GRAPH:            
+            while scoreIndex < max:            
                 if AdvisorOpt.isGraphsLogScale():
-                    y = iH_GRAPH - int(yFactor * (self.getLog10(scoreIndex * minScore) - self.getLog10(min)))
+                    y = iH_GRAPH - int(yFactor * (self.getLog10(scoreIndex) - self.getLog10(min)))
                 else:
-                    y = iH_GRAPH - int(yFactor * ((scoreIndex * minScore) - min))
-                self.drawLine(screen, zsGRAPH_CANVAS_ID, 0, scoreIndex, x, scoreIndex, color, False)
-                scoreIndex += 10
+                    y = iH_GRAPH - int(yFactor * ((scoreIndex) - min))
+                self.drawLine(screen, zsGRAPH_CANVAS_ID, 0, y, x, y, color, False)
+                scoreIndex += 1
         # Draw the lines
         for p in self.aiPlayersMet:
 
