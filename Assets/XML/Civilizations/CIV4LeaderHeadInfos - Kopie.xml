@@ -18912,6 +18912,11 @@
 			<iTechTradeKnownPercent>80</iTechTradeKnownPercent>
 			<iMaxGoldTradePercent>5</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
+			<iCultureVictoryWeight>25</iCultureVictoryWeight>
+			<iSpaceVictoryWeight>5</iSpaceVictoryWeight>
+			<iConquestVictoryWeight>40</iConquestVictoryWeight>
+			<iDominationVictoryWeight>50</iDominationVictoryWeight>
+			<iDiplomacyVictoryWeight>0</iDiplomacyVictoryWeight>
 			<iMaxWarRand>100</iMaxWarRand>
 			<iMaxWarNearbyPowerRatio>110</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>80</iMaxWarDistantPowerRatio>
@@ -19195,6 +19200,10 @@
 					<MemoryType>MEMORY_EVENT_BAD_TO_US</MemoryType>
 					<iMemoryRand>50</iMemoryRand>
 				</MemoryDecay>
+				<MemoryDecay>
+					<MemoryType>MEMORY_INQUISITION</MemoryType>
+					<iMemoryRand>25</iMemoryRand>
+				</MemoryDecay>
 			</MemoryDecays>
 			<MemoryAttitudePercents>
 				<MemoryAttitudePercent>
@@ -19308,6 +19317,10 @@
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_LIBERATED_CITIES</MemoryType>
 					<iMemoryAttitudePercent>150</iMemoryAttitudePercent>
+				</MemoryAttitudePercent>
+				<MemoryAttitudePercent>
+					<MemoryType>MEMORY_INQUISITION</MemoryType>
+					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 			</MemoryAttitudePercents>
 			<NoWarAttitudeProbs>

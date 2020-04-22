@@ -446,5 +446,13 @@
 			<NoShaderNIF>art/LeaderHeads/Jose_SanMartin/Jose_SanMartin.nif</NoShaderNIF>
 			<BackgroundKFM>Art/LeaderHeads/Jose_SanMartin/Jose_SanMartin_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_NEBUCHADREZZAR</Type>
+			<Button>Art/Leaderheads/Nebuchadrezzar/Nebuchadrezzar_btn.dds</Button>
+			<NIF>Art/LeaderHeads/Nebuchadrezzar/montezuma.nif</NIF>
+			<KFM>Art/LeaderHeads/Nebuchadrezzar/montezuma.kfm</KFM>
+			<NoShaderNIF>Art/LeaderHeads/Nebuchadrezzar/montezuma_noshader.nif</NoShaderNIF>
+			<BackgroundKFM>Art/LeaderHeads/Nebuchadrezzar/montezuma_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
 	</LeaderheadArtInfos>
 </Civ4ArtDefines>

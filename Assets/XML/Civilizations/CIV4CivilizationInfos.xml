@@ -445,6 +445,10 @@
 					<LeaderName>LEADER_HAMMURABI</LeaderName>
 					<bLeaderAvailability>1</bLeaderAvailability>
 				</Leader>
+				<Leader>
+					<LeaderName>LEADER_NEBUCHADREZZAR</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
 			</Leaders>
 			<DerivativeCiv>CIVILIZATION_PERSIA</DerivativeCiv>
 			<CivilizationSelectionSound>AS3D_BABYLON_SELECT</CivilizationSelectionSound>
