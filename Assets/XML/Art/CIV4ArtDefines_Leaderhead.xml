@@ -438,5 +438,13 @@
 			<NoShaderNIF>Art/Leaderheads/LieuYe/asoka_noshader.nif</NoShaderNIF>
 			<BackgroundKFM>Art/Leaderheads/LieuYe/catherine_bg.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SAN_MARTIN</Type>
+			<Button>Art/Leaderheads/Jose_SanMartin/SanMartin.dds</Button>
+			<NIF>Art/LeaderHeads/Jose_SanMartin/Jose_SanMartin.nif</NIF>
+			<KFM>Art/LeaderHeads/Jose_SanMartin/Jose_SanMartin.kfm</KFM>
+			<NoShaderNIF>art/LeaderHeads/Jose_SanMartin/Jose_SanMartin.nif</NoShaderNIF>
+			<BackgroundKFM>Art/LeaderHeads/Jose_SanMartin/Jose_SanMartin_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
 	</LeaderheadArtInfos>
 </Civ4ArtDefines>

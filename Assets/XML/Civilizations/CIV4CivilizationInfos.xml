@@ -3504,6 +3504,10 @@
 					<LeaderName>LEADER_ISABELLA</LeaderName>
 					<bLeaderAvailability>1</bLeaderAvailability>
 				</Leader>
+				<Leader>
+					<LeaderName>LEADER_SAN_MARTIN</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
 			</Leaders>
 			<DerivativeCiv>CIVILIZATION_AMERICA</DerivativeCiv>
 			<CivilizationSelectionSound>AS3D_SPAIN_SELECT</CivilizationSelectionSound>
