@@ -805,13 +805,9 @@ class CvInfoScreen:
 #BUG: Grid for Graphs - start
             self.szScoreScaleDropdownWidget = self.getNextWidgetName()
             screen.addDropDownBoxGFC(self.szScoreScaleDropdownWidget, self.W_DEMO_DROPDOWN + 60, iY_SMOOTH_DROPDOWN, self.W_DEMO_DROPDOWN + 50, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (1,)), 1, 1, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (2,)), 1, 2, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (5,)), 1, 5, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (10,)), 1, 10, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (20,)), 1, 20, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (50,)), 1, 50, False )
-            screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (100,)), 1, 100, False )
+            for i in range(9):
+                dropdownScaleValue =int((math.pow(i%3,2)+1)*math.pow(10,(math.floor(i/3))))
+                screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (dropdownScaleValue,)), 1, dropdownScaleValue, False )
 #BUG: Grid for Graphs - end
 
         if not AdvisorOpt.isGraphs():
@@ -3134,27 +3130,7 @@ class CvInfoScreen:
                     self.drawGraphs()
 #BUG: Grid for Graphs - start
                 elif (szWidgetName == self.szScoreScaleDropdownWidget):
-                    if (iSelected == 0):
-                        self.ScoreScale = 1
-
-                    elif (iSelected == 1):
-                        self.ScoreScale = 2
-
-                    elif (iSelected == 2):
-                        self.ScoreScale = 5
-
-                    elif (iSelected == 3):
-                        self.ScoreScale = 10
-
-                    elif (iSelected == 4):
-                        self.ScoreScale = 20
-
-                    elif (iSelected == 5):
-                        self.ScoreScale = 50
-
-                    elif (iSelected == 6):
-                        self.ScoreScale = 100
-                    
+                    self.ScoreScale = int((math.pow(iSelected%3,2)+1)*math.pow(10,(math.floor(iSelected/3))))
                     self.drawGraphs()
 #BUG: Grid for Graphs - end
                 for i in range(3):
