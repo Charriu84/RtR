@@ -18,17 +18,6 @@ localText = CyTranslator()
 
 iPlayerOptionCheck = 0  # Triggers for == 1, decrements for >= 0
 
-def check_stack_attack():
-    iPlayer = gc.getGame().getActivePlayer()
-    if (iPlayer != -1
-            # and not CyGame().isPitbossHost() and CyGame().isPitboss()
-            and gc.getPlayer(iPlayer).isOption(PlayerOptionTypes.PLAYEROPTION_STACK_ATTACK)):
-        szBody = localText.getText("TXT_KEY_MOD_POPUP_WARNING_STACK_ATTACK", ())
-        popupInfo = CyPopupInfo()
-        popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_TEXT)
-        popupInfo.setText(szBody)
-        popupInfo.addPopup(iPlayer)
-
 def check_show_ressources():
     iPlayer = gc.getGame().getActivePlayer()
     if (iPlayer != -1
@@ -76,7 +65,6 @@ def integrate(eventManager, _EVENT_FUNCTION_MAP):
         if iPlayerOptionCheck > 0:
             iPlayerOptionCheck -= 1
             if iPlayerOptionCheck == 0:
-                check_stack_attack()
                 check_show_ressources()
 
     eventManager.addEventHandler('OnLoad', _onLoadGame)

@@ -960,7 +960,6 @@ class CvEventManager:
         if iPlayerOptionCheck > 0:
             iPlayerOptionCheck -= 1
             if iPlayerOptionCheck == 0:
-                check_stack_attack()
                 check_show_ressources()
         #PBmod end
                 
@@ -1108,17 +1107,6 @@ class CvEventManager:
         iStartYear = popupReturn.getSpinnerWidgetValue(int(0))
         CvScreensInterface.getWorldBuilderScreen().setStartYearCB(iStartYear)
         return
-
-def check_stack_attack():
-    iPlayer = gc.getGame().getActivePlayer()
-    if (iPlayer != -1
-            # and not CyGame().isPitbossHost() and CyGame().isPitboss()
-            and gc.getPlayer(iPlayer).isOption(PlayerOptionTypes.PLAYEROPTION_STACK_ATTACK)):
-        szBody = localText.getText("TXT_KEY_MOD_POPUP_WARNING_STACK_ATTACK", ())
-        popupInfo = CyPopupInfo()
-        popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_TEXT)
-        popupInfo.setText(szBody)
-        popupInfo.addPopup(iPlayer)
 
 def check_show_ressources():
     iPlayer = gc.getGame().getActivePlayer()
