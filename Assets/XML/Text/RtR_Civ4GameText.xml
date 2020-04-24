@@ -222,11 +222,11 @@
     </TEXT>
 	   <TEXT>
         <Tag>TXT_KEY_BUILDING_AMERICAN_ARMOURY_STRATEGY</Tag>
-        <English>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</English>
-		    <French>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</French>
-    <German>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</German>
-    <Italian>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Italian>
-    <Spanish>Melee units built in Armouries will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Spanish>
+        <English>Melee units built in Armories will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</English>
+	    <French>Melee units built in Armories will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</French>
+        <German>Melee units built in Armories will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</German>
+        <Italian>Melee units built in Armories will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Italian>
+        <Spanish>Melee units built in Armories will always have access to two promotions! And if combined with the Charismatic trait, so will tanks, gunpowder and mounted units without any other factors!</Spanish>
     </TEXT>
 	<TEXT>
         <Tag>TXT_KEY_PROMOTION_NAVAL_SENTRY</Tag>

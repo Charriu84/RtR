@@ -17816,24 +17816,24 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_AMERICAN_ARMOURY</Tag>
-		<English>Armoury</English>
+		<English>Armory</English>
 		<French>
-			<Text>Armoury</Text>
+			<Text>Armory</Text>
 			<Gender>Male</Gender>
 			<Plural>0:1</Plural>
 		</French>
 		<German>
-			<Text>Armoury</Text>
+			<Text>Armory</Text>
 			<Gender>Neuter</Gender>
 			<Plural>0</Plural>
 		</German>
 		<Italian>
-			<Text>Armoury</Text>
+			<Text>Armory</Text>
 			<Gender>Female</Gender>
 			<Plural>0:1</Plural>
 		</Italian>
 		<Spanish>
-			<Text>Armoury</Text>
+			<Text>Armory</Text>
 			<Gender>Male</Gender>
 			<Plural>0:1</Plural>
 		</Spanish>

@@ -435,10 +435,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CHANGED_BUILDING_AMERICAN_ARMOURY_PEDIA</Tag>
-		<English>[COLOR_BUILDING_TEXT]Armouries[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</English>
-		<French>[COLOR_BUILDING_TEXT]Armouries[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</French>
-		<German>[COLOR_BUILDING_TEXT]Armouries[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</German>
-		<Italian>[COLOR_BUILDING_TEXT]Armouries[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</Italian>
-		<Spanish>[COLOR_BUILDING_TEXT]Armouries[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</Spanish>
+		<English>[COLOR_BUILDING_TEXT]Armories[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</English>
+		<French>[COLOR_BUILDING_TEXT]Armories[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</French>
+		<German>[COLOR_BUILDING_TEXT]Armories[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</German>
+		<Italian>[COLOR_BUILDING_TEXT]Armories[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</Italian>
+		<Spanish>[COLOR_BUILDING_TEXT]Armories[COLOR_REVERT], the American replacements for [COLOR_BUILDING_TEXT]Barracks[COLOR_REVERT], gives extra XP to melee, mounted, gunpowder and armor units built in this city.</Spanish>
 	</TEXT>
 </Civ4GameText>
