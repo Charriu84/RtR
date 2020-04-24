@@ -170,7 +170,7 @@ class CvInfoScreen:
 #BUG: Grid for Graphs - start
         self.TurnGridOn = True
         self.ScoreGridOn = True
-        self.ScoreScale = 1
+        self.ScoreScale = [1, 1, 1, 1, 1, 1, 1]
 #BUG: Grid for Graphs - end
 #       self.BIG_GRAPH = False
 
@@ -803,11 +803,16 @@ class CvInfoScreen:
                 screen.hide(self.szGraphDropdownWidget_3in1[i])
 
 #BUG: Grid for Graphs - start
-            self.szScoreScaleDropdownWidget = self.getNextWidgetName()
-            screen.addDropDownBoxGFC(self.szScoreScaleDropdownWidget, self.W_DEMO_DROPDOWN + 60, iY_SMOOTH_DROPDOWN, self.W_DEMO_DROPDOWN + 50, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-            for i in range(9):
-                dropdownScaleValue =int((math.pow(i%3,2)+1)*math.pow(10,(math.floor(i/3))))
-                screen.addPullDownString(self.szScoreScaleDropdownWidget, localText.getText("TXT_KEY_GRAPH_SCALING", (dropdownScaleValue,)), 1, dropdownScaleValue, False )
+            self.szScoreScaleDropdownWidget = [""] * self.NUM_SCORES
+
+            self.ScoreScale = [1, 1, 1, 1, 1, 1, 1]
+            for i in range(self.NUM_SCORES):
+                self.szScoreScaleDropdownWidget[i] = self.getNextWidgetName()
+                screen.addDropDownBoxGFC(self.szScoreScaleDropdownWidget[i], self.W_DEMO_DROPDOWN + 60, iY_SMOOTH_DROPDOWN, self.W_DEMO_DROPDOWN - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+                for iScales in range(9):
+                    dropdownScaleValue =int((math.pow(iScales%3,2)+1)*math.pow(10,(math.floor(iScales/3))))
+                    screen.addPullDownString(self.szScoreScaleDropdownWidget[i], localText.getText("TXT_KEY_GRAPH_SCALING", (dropdownScaleValue,)), 1, dropdownScaleValue, False )
+                screen.hide(self.szScoreScaleDropdownWidget[i])
 #BUG: Grid for Graphs - end
 
         if not AdvisorOpt.isGraphs():
@@ -975,6 +980,9 @@ class CvInfoScreen:
             for i in range(7):
                 screen.hide(self.sGraphTextHeadingWidget[i])
                 screen.hide(self.sGraphPanelWidget[i])
+#BUG: Grid for Graphs - start
+                screen.hide(self.szScoreScaleDropdownWidget[i])
+#BUG: Grid for Graphs - end
 
             for i in range(3):
                 screen.hide(self.szGraphDropdownWidget_3in1[i])
@@ -1195,7 +1203,7 @@ class CvInfoScreen:
                 else:
                     y = iH_GRAPH - int(yFactor * ((scoreIndex) - min))
                 self.drawLine(screen, zsGRAPH_CANVAS_ID, 0, y, x, y, color, False)
-                scoreIndex += self.ScoreScale
+                scoreIndex += self.ScoreScale[iGraphID]
 #BUG: Grid for Graphs - end
 
         # Draw the lines
@@ -1247,6 +1255,10 @@ class CvInfoScreen:
         # draw the chart text
         if AdvisorOpt.isGraphs():
             if self.Graph_Status_Current == self.Graph_Status_1in1:
+#BUG: Grid for Graphs - start
+                screen.show(self.szScoreScaleDropdownWidget[vGraphID_Locn])
+                screen.moveToFront(self.szScoreScaleDropdownWidget[vGraphID_Locn])
+#BUG: Grid for Graphs - end
                 iY_GRAPH_TITLE = iY_GRAPH + 10
             else:
                 iY_GRAPH_TITLE = iY_GRAPH + 5
@@ -3129,9 +3141,10 @@ class CvInfoScreen:
                     self.iGraph_Smoothing_7in1 = iSelected
                     self.drawGraphs()
 #BUG: Grid for Graphs - start
-                elif (szWidgetName == self.szScoreScaleDropdownWidget):
-                    self.ScoreScale = int((math.pow(iSelected%3,2)+1)*math.pow(10,(math.floor(iSelected/3))))
-                    self.drawGraphs()
+                for i in range(7):
+                    if (szWidgetName == self.szScoreScaleDropdownWidget[i]):
+                        self.ScoreScale[i] = int((math.pow(iSelected%3,2)+1)*math.pow(10,(math.floor(iSelected/3))))
+                        self.drawGraphs()
 #BUG: Grid for Graphs - end
                 for i in range(3):
                     if (szWidgetName == self.szGraphDropdownWidget_3in1[i]):
