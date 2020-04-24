@@ -1,0 +1,664 @@
+Full Change log here:
+
+    Change log 4.1.1.6
+
+    Traits:
+
+    [spoiler]Financial: +1 commerce on all non-river tiles that have 2+ commerce. +100% production of Bank. +35% production of Library, Market.
+
+    Expansive: +2 health per city. +35% production of Worker, Work Boat. +100% production of Market, Aqueduct, Grocer, Harbor.
+
+    Creative: +2 culture per city. +100% production of Theatre. +35% production of Library, Observatory.
+
+    Charismatic: +2 happiness. +1 happiness from Broadcast Tower. -25% XP needed for promotions. +100% production of Colosseum, +35% production of Library.
+
+    Protective: Free Drill 1, Drill 3 promotion for archery and gunpowder units. +100 production of Granary, Walls.
+
+    Imperialistic: +50% production of Settlers. +100% Great General points. +100% production of Custom Houses. -10% city maintenance [Numerical bonus not shown in interface. Bonus is multiplicative with other maintenance modifiers. Final displayed city maintenance value is correct and includes this bonus.]
+
+    Aggressive: Free C1 promo for melee and gunpowder units. -25% city maintenance [Numerical Bonus not shown in interface. Bonus is multiplicative with other maintenance modifiers. Final displayed city maintenance value is correct and includes this bonus.] +100% production of Barracks, Stable, Drydock.
+
+    Philosophical: +150% Great Person production, +100% production of University.
+
+    Industrious: +50% wonder production. Does not apply to Pyramids. +100% production of Forge. +35% production of Bank, University. -15% civic maintenance.
+
+    Organized, Spiritual: No change from BtS[/spoiler]
+
+
+    Civs:
+
+    [spoiler]Civ: start tech 1/start tech 2. UB: building replacement: name. Effects changed from standard building (in RtR). UU: unit replacement. Name. Effects changed from standard unit (in RtR).
+
+    America: Agriculture/Fishing. UB: Barracks replacement: Armoury. +1XP to Gunpowder, +1XP to Mounted, +1XP to Armour, +2XP to Melee. UU: Musket replacement. Minuteman. Starts with Guerrilla 1 and Woodsman 1.
+
+    Arabia: Mysticism/Agriculture. UB: Library replacement: Madrassa. 2 Priest slots, 4 culture, cost 70. UU: Knight replacement: Camel Archer. starts with March. Does not require Horse.
+
+    Aztecs: Hunting/Mysticism. UB: Courthouse replacement: Sacrificial Alter. 50% anger duration after sacrificing population, +2 priest slots, +1 happy requires Monotheism, cost 90. UU: Sword replacement. Jaguar Warrior. Starts with Woodsman 2.
+
+    Babylon: Agriculture/The Wheel. UB:  Granary replacement: Garden. Requires Agriculture, cost 45, +1 health, no bonus production from trait. UU: Archer replacement. Bowman. +50% against melee,  no free strike, starts with Drill 1 and 2.
+
+    Byzantium: Fishing/Mysticism. UB: Barracks replacement. Hippodrome. +1 happy from iron, horse. UU: Trebuchet replacement. Counterweight Trebuchet. Strength 7. +40% city attack. Starts with Accuracy.
+
+    Carthage: Fishing/Mining. UB: Harbour replacement: Cothon. +1 trade route. UU: Horse Archer replacement. Numidian Cavalry. +35% against melee, -35% against spearmen.
+
+    Celts: Hunting/Mysticism. UB: Wall replacement: Dun. Free Guerrilla 2 promotion to units built in this city, no trait production modifier. UU: Sword replacement. Gallic Warrior. Starts with Guerilla 2.
+
+    China: Agriculture/Mining. UB: Theatre replacement: Pavilion. Available at Aesthetics. UU: Crossbow replacement. Chokonu. Causes Collateral Damage (max 60%), +2 free strikes. Requires Machinery (Does not require Construction)
+
+    Dutch: Fishing/Agriculture. UB: Customs House replacement: Dike. +1 commerce from river tiles, +1 trade route. Cost 120. UU: Galleon replacement. East Indiaman. Strength 6.
+
+    Egypt: The Wheel/Agriculture. UB: Monument replacement: Obelisk. +2 Priest slots. UU: Chariot replacement. War Chariot. Strength 5. -25% against archers. Flank attack against Catapults (3 units, max 100%).
+
+    England: Fishing/Mining. UB: Bank replacement: Stock Exchange. +15% science. UU: Rifle replacement. Redcoat. +25% against gunpowder units, starts with Amphibious.
+
+    Ethiopia: Hunting/Mining. UB: Monument replacement. 1 Merchant slot; gives sentry to units built in this city. UU: Musket replacement. Oromo warrior. Starts with Drill 2 and Drill 4.
+
+    France: Agriculture/The Wheel. UB: Observatory replacement: Salon. +1 free specialist. UU: Musket replacement. Musketeer. +1 movement point.
+
+    Germany: Hunting/Mining. UB: Forge replacement: Werkstatt. -25% city maintenance. UU: Grenadier replacement. Strosstrupp. Strength 14.
+
+    Greece: Hunting/Fishing. UB: Colosseum replacement: Odeon. +1XP to all land units in addition to base Colosseum XP. UU: Axe replacement. Phalanx. +100% defence against chariots.
+
+    Holy Roman Empire: Hunting/Mysticism. UB: Courthouse replacement: Rathaus. -75% city maintenance. UU: Longbow replacement. Landskneckt. +50% against Mounted units.
+
+    Inca: Agriculture/Mysticism. UB: Granary replacement: Terrace, +1 culture, cost 45 hammers, No trait production modifier. UU: Warrior replacement: Quechua. +100% against archery units.
+
+    India: Mysticism/Mining. UB: Granary replacement: Harrapan Granary, +1 happy, +1 health, cost 45 hammers, no bonus production from trait. UU: Pike replacement. Urukku Pikeman. Strength 8.
+
+    Japan: Fishing/The Wheel. UB: Harbour replacement. Nanban Harbour. +2XP for land units. UU: Maceman replacement. Samurai. Requires only Machinery (Does not require Civil Service) Starts with Drill 2.
+
+    Khmer: Mining/Hunting. UB: Aqueduct replacement: Baray. +1 food, +1 culture, +1 Artist slot. Cost 80. UU: War Elephant replacement. Ballistaphant (I don't know the actual name). Targets mounted first outside of cities. Can construct baray.
+
+    Korea: Agriculture/Mining. UB: University replacement. Seowan: +40% research, cost 150. UU: Catapult replacement. Hwacha. +50% against Melee units. Can kill.
+
+    Mali: The Wheel/Mining. UB: Forge replacement: Mint. +10% gold, +10% beakers. UU: Archer replacement. Skirmisher. Strength 4, -40% against archers.
+
+    Maya: Mysticism/Mining. UB: Colosseum replacement: Ball Court. +4 Happiness. UU: Spear replacement. Holkan. Strength 5.
+
+    Mongolia: Hunting/The Wheel. UB: Stables replacement: Ger. +1 culture, +4XP to mounted units, requires Archery, +100% production with horse, no trait production modifier. UU: Horse Archer replacement. Keshik. +1 free strike. Ignores terrain movement costs.
+
+    Civs: Native America: Hunting/Agriculture. UB: Monument replacement: Totem Pole. +3XP to Archery units, +1XP to Gunpowder units. Requires Archery, Obsoletes at Assembly Line. UU: scout replacement. Tracker. Starts with Woodsman 3, can create Totem Pole. Upgrades to Explorer and Musketman
+
+    Ottomans: The Wheel/Agriculture. UB:  Aqueduct replacement: Hammam. +2 happy, cost 80. UU: Musket replacement. Janissary. +25% against mounted, archery, melee units.
+
+    Persia: Hunting/Agriculture. UB: Market replacement: Satrap Court. -25% city maintenance. UU: Chariot replacement. Immortal. +15% withdraw. 1 Free strike. Starts with March.
+
+    Portugal: Fishing/Mining. UB: Customs house replacement: Feitoria. Water tiles +1 commerce, cost 120. UU: Caravel replacement. Carrack. 4 movement, 2 transport capacity.
+
+    Rome: Fishing/Mining. UB: Market replacement: Forum. +35% GPP. UU: Sword replacement. Preatorian. Strength 7, cost 40 hammers.
+
+    Russia: Hunting/Mining. UB: University replacement: Research Institute. Cost 120 hammers. Free Scientist. UU: Cavalry replacement. Cossack. +50% against Mounted units.
+
+    Spain: Mysticism/Fishing. UB: Castle Replacement. Citadel. -20% city maintenance. +2 culture. No espionage bonus. +2XP to siege units. Does not obsolete. Does not require Walls. UU: Cuirassier replacement. Conquestador. +50% against melee units. Can build Citadel.
+
+    Sumeria: The Wheel/Agriculture. UB: Courthouse replacement: Ziggarut. Available at Writing. Cost 90. UU: axe replacement. Vulture. Strength 6. 25% bonus against melee. 5% bonus against axemen.
+
+    Vikings: Hunting/Fishing. UB: Lighthouse replacement: Trading Post. Builds water units +25% faster. UU: Maceman replacement: Berserker. Starts with Amphibious.
+
+    Zulu: Agriculture/Hunting. UB: Barracks replacement: Ikhanda: -20% city maintenance. +100% production with iron. No production modifier from trait. UU: Spear replacement: Impi: -40% against archers, 2 moves
+    [/spoiler]
+
+
+    Leaders:
+
+    [spoiler]New leader LieuYe - ORG/PRO
+    New leader San Martin - CHM/CRE
+    New leader Nebuchadrezzar - IND/PHI[/spoiler]
+
+
+    Civics: Government civics:
+
+    [spoiler]Police State: Available at Military Science. Medium cost. +25% production of Military Units. -50% War Weariness. [/spoiler]
+
+
+    Legal Civics:
+
+    [spoiler]Vassalage: Provides free support for military units (only affects  Pacifism unit cost). Requires Feudalism. Medium upkeep.
+
+    Bureaucracy: Effect unchanged. High Cost.
+
+    Nationhood: Effect unchanged. No upkeep.
+
+    Emancipation: +100% Improvement Upgrade Rate Modifier. +1 food, -1 commerce from Town. iAnarchyLength = 0 (does not cause anarchy to revolt to this civic). Requires Constitution. Low upkeep.[/spoiler]
+
+
+    Labor Civics:
+
+    [spoiler]Slavery: 30h for the 1st pop, 20h for the 2nd pop and subsequent pops. So, 30/50/70/90. [On Quick speed, that's 20/33/46/60.]
+
+    Serfdom: +75% Worker Speed, +1h for Watermills and Windmills. Unlimited Scientist, Artist and Merchant slots. Requires Feudalism. Medium upkeep. Labor civic.
+
+    Caste System: +1h for workshops. Unlimited Scientist, Artist and Merchant slots. Requires Code of Laws. Medium upkeep. Labor civic.
+
+    Environmentalism: +4 health, +2 health from public transport. +2 gold per specialist, +1 hammer from lumber mill. +3 hammers, +2 commerce from forest preserves. Unlimited Scientist, Artist and Merchant slots. Requires Chemistry. High upkeep. [/spoiler]
+
+
+    Economy Civics:
+
+    [spoiler]Mercantilism: +1 free specialist, Medium Cost, requires Banking.
+
+    Free Market: No longer provides -25% Corporate Costs. Now provides +25% Trade Route Yield.
+
+    State Property: Effect unchanged. Medium cost.
+
+    Free Speech: +1 commerce from villages, +3 commerce from towns, +100% Culture, Low cost, requires Economics.[/spoiler]
+
+
+    Buildings:
+
+    [spoiler]Barracks: +1 culture, +3XP to land units. Cost 60 hammers.
+
+    Colosseum: +1 happy, +1 happy per 20% culture slider, +1XP to melee, archery, mounted and siege units. Requires Construction. Cost 80 hammers, Bonus XP applies to all Colosseum UB.
+
+    Jails: now -50% War Weariness.
+
+    Castles (and replacement UB): no longer decrease bombardment rate of catapults or trebuchets. Obsolete at Corporation (Except defensive bonus). Requires Walls. No trait or resource production bonus. Cost 80 hammers.
+
+    Temple: now requires Meditation (plus religion in city, no longer requires Priesthood)
+
+    Lighthouse: +1XP to naval units. +1 food from water domain tiles. Require Sailing. Cost 60 hammers.
+
+    Harbour: +2XP to naval units. +1 health from crab, clam, fish, +50% trade route yield. Requires Compass. Cost 80 hammers.
+
+    Customshouse: +3XP to naval units, +100% Foreign trade route yield. Requires Economics. Cost 120 hammers.
+
+    Drydock: +7XP to naval units. +50% production of naval units. -1 health. Requires Steel. Cost 120 hammers.[/spoiler]
+
+
+    Wonders, Projects:
+
+    [spoiler]Wonder Resource Modifiers: All wonders that had +100% production with a specific resource now only have +50% production with that resource.
+
+    Moai: +4XP to naval units.
+
+    Rushmore: Now -50% WW, (from -25%).
+
+    Red Cross: 200h.
+
+    West Point: 550h, +5XP. Now requires a lvl 5 unit (17XP/13XP for Charismatic).
+
+    Great Lighthouse: Now +1 trade route instead of +2 trade routes, enabled at Masonry, but needs lighthouse and Sailing (no functional change in the tech requirements but makes F6 look less cluttered).
+
+    SoZ: no WW effect. Now +3XP, 200 hammers, no building prerequisites. No longer gets +100% production from Ivory. Can be built on Medieval starts and earlier.
+
+    Taj Mahal: Triggers Golden Age, +2 Great Artist points/turn, requires Nationalism (No production bonus from marble)
+
+    Mausoleum of Maussollos: +50% Golden Age length. Cost 450 hammers. Requires Calendar. Obsoletes at Nationalism (No production bonus from marble)
+
+    The Internet: Now a wonder. 2k cost, +15% beakers in every city, +2 scientist gpp, double production speed with copper. No longer a project.
+
+    Cristo Redentur: +100% SPI production, -50% Anarchy instead of -100%.
+
+    SDI: Removed from the game
+
+    Religious Shrines: Buddhist, Hindu and Jewish Shrines can only be built in Ancient start games. Confucian shrine can only be built in Classical and Ancient start games. Taoist, Muslim and Christian shrines can only be built in Medieval, Classical, and Ancient start games.[/spoiler]
+
+
+    Base unit changes:
+
+    [spoiler]Scouts: Require no tech. Every player starts with a scout instead of a warrior.
+
+    Swordsman (and all replacements): +50% city attack
+
+    Archer (and all replacements): +30% defense against Swordsmen.
+
+    War Elephants: Strength 7, +50% vs. Mounted units. Requires Iron, Iron Working, Horseback Riding, Construction.
+
+    Trebuchet: Now requires Machinery, instead of Engineering.
+
+    Crossbowman: Strength 6, 1 free strike, +50% against melee units, +25% defense against macemen. Archery unit, requires iron, Archery, Machinery, and Construction. iCollateralDamageLimit: 40%; iCollateralDamageMaxUnits: 3 (causes maximum 40hp damage through collateral, collateral damage hits maximum 3 units)
+
+    Maceman: Melee unit, strength 8, +50% against melee, +25% against cities, cost 70 hammers, requires Civil Service, Machinery, [copper or iron].
+
+    Airship: Cannot see submarines
+
+    SAM Infantry: 75% interception chance (up form 40%)
+
+    Marine: Requires Assembly Line, Fascism, Rifling.
+
+    Paratrooper: Requires Assembly Line, Fascism, Flight.
+
+    Mobile Artillery: Can now load guided Missiles and Tac Nukes (as Submarines and Missile Cruisers do). No longer require oil.
+
+    Gunships: decreased to 3 moves.
+
+    ICBM: No longer unlimited range, but long enough so that they will out distance your army and navy easily, and they can be rebased. Loses the nuke tag. Does not need Manhattern project to be built.
+
+        iCost: 450h
+        iAirCombatLimit: 75
+        iAirCombat: 160
+        iCollateralDamageLimit: 75%
+        iCollateralDamageMaxUnits: 12
+        iAirRange: 36
+
+
+
+    Tactical Nukes: Now S80 1shot units that can bombard units, cause collateral damage to 5 units, cannot be intercepted. Loses the nuke tag. Does not need Manhattern project to be built. Full list of changes:
+
+        iCost: 200h
+        iAirCombatLimit: 75
+        iAirCombat: 80
+        iCollateralDamageLimit: 75%
+        iCollateralDamageMaxUnits: 5
+        iAirRange: 4
+
+
+
+    Guided Missiles: Can bombard units, tiles and cultural defence, cause collateral damage to 2 units, cannot be intercepted. Full list of changes (underline means original stat, for comparison):
+
+        iCost: 60h
+        iBombRate: 16
+        iAirCombatLimit: 75
+        iAirCombat: 40
+        iCollateralDamage: 100
+        iCollateralDamageLimit: 50%
+        iCollateralDamageMaxUnits: 1
+        iAirRange: 4
+
+
+
+
+    Flanking: Flanking strength (used to calculate damage from flanking strikes) or all units reduced by 50%.[/spoiler]
+
+
+    Naval units, promotion and mechanic changes:
+
+    Promotions and mechanics:
+
+    [spoiler]Ocean: Now costs 3 movement points to enter.
+
+    Circumnavigation: +1 movement point on naval units, individual achievement completed by unfogging a single tile on each row and/or column of the map on which the map wraps.
+
+    Coastal Blockade now has a range of 1 square around the blockader, instead of 3 squares.
+
+    Drill 1, Drill 2, Drill 3 Drill 4 Flanking 1, Flanking 2, Sentry: No longer available to Naval units.
+
+    Sentry: Requires Combat 3 OR Flanking 2 OR Naval Flanking 2 OR Navigation 2.
+
+    Navigation 1: Requires no prior promotion. +1 movement. +1 free strike chance.
+
+    Navigation 2: Requires Navigation 1. +1 movement. +1 free strike.
+
+    New promotion: Naval Flanking 1: Requires no prior promotion. +10% withdrawal chance. -1 terrain movement cost.
+
+    New promotion: Naval Flanking 2: Requires Naval Flanking 1. +30% withdrawal chance. +20% Collateral Damage Reduction.
+
+    New promotion: Naval Drill 3: Requires Navigation 2 OR Naval Flanking 2. +2 free strike chances. -20% collateral damage.
+
+    New promotion: Naval Drill 4: Requires Naval Drill 3. +2 free strikes. -20% collateral damage.
+
+    New promotion: Naval Sentry: +1 vision range. Requires Naval Flanking 2 or Navigation 2.[/spoiler]
+
+
+    Naval unit changes:
+
+    [spoiler]Work boat: Base movement 2. Ignores terrain movement cost.
+
+    Galley: Base movement 1. Starts with Navigation 1.
+
+    Trireme: Base movement 1. Starts with Navigation 1.
+
+    Caravel: Base movement 2. Starts with Navigation 1. Strength 4, -30% against galleys and triremes, 1 capacity (can transport any units). Cost 60 hammers, requires Optics. Remove ability to enter cultural borders.
+
+    Carrack: Base movement 3. Starts with Navigation 1. Strength 4, -30% against galleys and triremes, 2 capacity. Remove ability to enter cultural borders. Cost 60 hammers, requires Optics.
+
+    Galleon: Base movement 3. Starts with Navigation 1.
+
+    East Indiaman: Base movement 3. Starts with Navigation 1. Lower to 3 capacity, remove ability to enter culture without OB.
+
+    Privateer: Base movement 3. Starts with Navigation 1, Sentry. +65% attack against Ships of the Line. Requires Optics and Paper, Upgrades to Transport (not Destroyer). (Removed ability [to attack without war declaration] and [hidden nationality].)
+
+    Frigate: Base movement 3. Starts with Navigation 1. Upgrades to Transport (not Destroyer).
+
+    Ship of the Line: Base movement 3. iCollateraldamage = 75, iCollateraldamagelimit = 70 (ie 30% hp max damage from collateral), iCollateralDamageLimit = 5. Cost 120 hammers.
+
+    Ironclad: Base movement 1. Starts with Navigation 1. Cannot enter Ocean (except within own borders). 1 free strike, strength 12, no defensive bonus, requires iron, coal, Steel and Steam Power, costs 120 hammers.
+
+    Transport: Base movement 3. Starts with Navigation 1, Navigation 2. Ignores terrain movement cost. Requires  Artillery (not Combustion) (requires Oil OR Uranium)
+
+    Destroyer: Base movement 6. Starts with Naval Flanking 1. Requires Artillery (not Combustion) (requires Oil OR Uranium)
+
+    Battleship: Base movement 4.
+
+    Carrier: Base movement 4.
+
+    Submarine: Base movement 4. Ignores terrain movement costs.
+
+    Attack Submarine: Base movement 5. Ignores terrain movement costs.
+
+    Missile cruiser: Base movement 4.
+
+    Stealth Destroyer: Base movement 6. Starts with Naval Flanking 1. [/spoiler]
+
+
+    Barbarians:
+
+    [spoiler]Barbarians: Barbarian Animals: Wolf: unchanged.
+    Lion: Strength 1, 1 move. +100% against Melee.
+    Panther: Strength 1, 2 move, starts with woodsman 2 promotion.
+    Bear: Strength 1, 1 move, +200% against Melee.
+    Scout: +200% against barbarian animals. Require no tech. Every player starts with a scout instead of a warrior.
+    All difficulty levels adjusted: Human barbarian units are created from turn 40, barb cities can be created beginning from turn 50[/spoiler]
+
+
+    Technology:
+
+    [spoiler]Adjusted tech cost is now calculated by ((log(cost of tech) / log (40) - 1) * (1.2X + 0.3), where X=iResearchPercent in CIV4WorldInfo.XML, and then modified by difficulty level. For further information, please see This spreadsheet for a saveable version of tech cost calculator (Thanks to Sevenspirits for the initial version of this spreadsheet and this mechanic)
+
+    Known tech bonus no longer scales with total player number. Scales depending on the tech era of the most advanced player in the game:
+
+    Ancient: No bonus
+    Classical: +2% per met player with tech, max +60% (no further bonus after 30 players)
+    Medieval: +4% per met player with tech, max +60% (no further bonus after 15 players)
+    Renaissance: +6% per met player with tech, max +60% (no further bonus after 10 players)
+    Industrial: +8% per met player with tech, max +80% (no further bonus after 10 players)
+    Modern: +8% per met player with tech, max +80% (no further bonus after 10 players)
+    Future: +8% per met player with tech, max +80% (no further bonus after 10 players)
+
+    Techs: Fishing, Agriculture, The Wheel, Hunting, Mysticism and Mining: base cost changed to 45.
+
+    Hunting: Enables pastures. No longer enables camps.
+
+    Animal Husbandry: Enables camps. No longer enables pastures.
+
+    Archery: Base tech cost decreased from 60 to 40.
+
+    Astronomy: Mandatory prerequisites: Code of Laws, Calendar, Optics.
+
+    Alphabet: No longer enables tech trading, allows Open Borders. Base cost reduced to 250.
+
+    Metal Casting: Base cost reduced to 300.
+
+    Writing: Enables Map trading, no longer enables OB.
+
+    Philosophy: Mandatory Prerequisite: Priesthood, Monotheism. Optional prerequisites: Drama, Code of Laws.
+
+    Meditation: Base tech cost increased to 100
+
+    Paper: enables Tech Trading. Mandatory Prerequisite: Metal Casting. Optional prerequisites: Theology, Civil Service.
+
+    Democracy: Base tech cost reduced from 2800 to 2100
+
+    Utopia (Communism): Base tech cost reduced from 2800 to 2100
+
+    Fascism: Base tech cost reduced from 2100 to 1800. Mandatory Prerequisite: Democracy. Option prerequisites: Utopia (Communism).
+
+    Industrialism: Mandatory prerequisites: Electricity, Fascism. Optional Prerequisite: Assembly Line[/spoiler]
+
+
+    All medieval and earlier techs are untradeable:
+
+    [spoiler]The untradeable techs are as follows: Fishing, The Wheel, Agriculture, Hunting, Mysticism, Mining, Sailing, Pottery, Animal Husbandry, Archery, Meditation, Polytheism, Masonry, Horseback Riding, Priesthood, Monotheism, Bronze Working, Writing, Metal Casting, Iron Working, Aesthetics, Mathematics, Alphabet, Monarchy, Compass, Literature, Calendar, Construction, Currency, Machinery, Drama, Engineering, Code of Laws, Feudalism, Optics, Music, Philosophy, Civil Service, Theology, Divine Right, Paper, Guilds, Banking[/spoiler]
+
+
+    Late Era start games:
+
+    [spoiler]Era starts: (Changes from base BtS, found in CIV4EraInfos.xml)
+
+    Classical: 2 settlers, 100% tech cost
+    Medi: 80% tech cost
+    Ren: 70% tech cost
+    Industrial: 40% tech cost
+    Modern: 30% tech cost
+    Future: No changes[/spoiler]
+
+
+    Espionage:
+
+    [spoiler]Active missions removed.
+
+    Spies now spawn with "Secretive", and cannot see tiles except the one they're standing on.
+
+    The No Espionage game option now works properly:
+
+        GSpy points are converted into Great Merchant points.
+        Espionage no longer gets converted into culture.
+        Cultural expansion now happens at normal values.
+        Spies cannot be built.
+        Graphs are always visible on contact.
+
+    [/spoiler]
+
+
+    Tile Changes:
+
+    [spoiler]Lumber Mills: Available at Machinery. +1 hammer, +1 commerce, +1 commerce from river (not corner plots)
+
+    Watermills: +1 base hammers, no longer receives +1h at Rep Parts.
+
+    Workshops: +1 base hammers, no longer receives +1h at Chemistry or Guilds. +1 hammer from Engineering.
+
+    Mines: +1 base hammer at Rep Parts.
+
+    Quarry: +1 base hammer at Rep Parts.
+
+    Whaling Boats: Enabled at Sailing.
+
+    Villages: Cannot be destroyed by air bomb mission or pillaged. Also provides access and tile yields to Copper, Iron, Oil, Coal, Aluminium and Uranium. (Can still be improved over by workers)
+
+    Towns: Cannot be destroyed by air bomb mission. Also provides access and tile yields to Copper, Iron, Oil, Coal, Aluminium and Uranium. (Can still be improved over by workers). Acts as cities. [Identical functionality as forts, for the purposes of rebasing air units, canals, city defense and city attack promotions etc].[/spoiler]
+
+
+    Game Mechanics:
+
+    [spoiler]The Draft: Rifles now cost 2 pop to draft. A city must now end a draft at size 6 instead of size 5 (So size 8 to draft a rifle, size 7 to draft a musket).
+
+    Corporations: Completely removed from the game.
+
+    Culture required to achieve legendary border pop on Quick Speed changed from 25000 to 33000.
+
+    Peace Treaty Length reduced to 5 turns.
+
+    New game options: No City Trading, No Map Trading, and No Wonder resource production modifiers now available in custom game set up.
+
+    No City Trading: Unable to trade cities, cities appear untradable in diplomacy screen
+    No Map Trading: Maps appear untradable in diplomacy screen
+    No Wonder resource modifiers: Resources do not affect world wonder or world project construction speeds.
+    No Immediate Peace (Peace treaty negotiations are only possible after 5 turns)
+    True AI Diplo: All single player trade items are also available in MP[/spoiler]
+
+
+    Events: THESE HAVE NOW BEEN FIXED! PLEASE TEST ACCORDINGLY, THERE MAY STILL BE BUGS!
+
+    [spoiler]The following events have been removed from the game:
+
+    Negative Events:
+    1. Forest Fire
+    5. Washed out
+    10 Careless apprentice
+    11. Famine
+    12. Slave revolt
+    15. Farm Bandits
+    18. Fugitive
+    19. Pestilence
+    21. Faux Pas
+    22. Joyous Wedding
+    23. Wedding Feud
+    24. Left at the Altar
+    26. Tornado
+    29. Looters
+    30. Brothers in need
+    31. Hurricane
+    32. Cyclone
+    33. Tsunami
+    34. Monsoon
+    35. Blizzard
+    36. Volcano
+    37. Dust Bowl
+    42. Clunker Coal
+    43. Sour crude
+    50. Mining accident
+    52. Setbacks
+    54. Great depression
+    55. Bermuda triangle
+    70. Influenza
+    71. Solo Flight
+    77. Ancient Olympics
+    78. Modern Olympics
+    80. Earth day
+    92. Cigarette Smoker
+    93. Heroic Gesture
+    94. Great Mediator
+    99. The Huns
+    100. The Vandals
+    101. the Goths
+    102. The Philistines
+    103. The Vedic Aryans
+    104. Holy ritual
+    132. Spoiled grain
+    135. Industrial fire
+    155. Slave revolt warning
+    160. Defecting agent
+    161. Jail
+    162. Spy discovered
+    163. Nuclear protests
+    165. Broken Dam
+    169. Toxcatl
+    170. Dissident Priest
+    172. Rogue station
+    174. Impeachment
+
+    Remove (Too good):
+    9. Hymns and sculptures
+    20. Marathon
+    28. Bards tale
+    64. Federal reserve
+    139. Partisans
+    167. Golden Buddha
+
+    Quests (Too good):
+    13. Blessed sea
+    121. Harbomaster
+    125. Sports league
+    149. Guns Butter
+    151. Overwhelm
+    152. Corporate expansion
+    153. Hostile takeover[/spoiler]
+
+
+    Miscellaneous:
+
+    [spoiler]AP Resolutions: Declare War (on a non-member), Force Peace (between two members), Religious victory, and Assign City are no longer eligible resolution actions.
+
+    Fail-gold: You never get fail-gold if you also completed the wonder somewhere else (so no National Wonder fail-gold, or doubling up on a wonder to guarantee yourself a paycheck. The game still informs you that you received "0 gold" from your hammers).
+
+    Hut techs: Can only gain techs from the first three rows of the tech screen:
+
+    Fishing, Sailing, Wheel, Pottery, Agriculture, Animal Husbandry, Hunting, Archery, Mysticism, Masonry, Priesthood, Mining, Bronze Working, Writing.
+
+    Toroidal maps: Now return city maintenance as if the map were Cylindrical.
+
+    Maximum number of players is now 40, up from 18.
+
+    Circumnavigation requires 55% water on the map, otherwise it is disabled. Circumnavigation is no longer a "First to" bonus, but will grant +1 movement to naval units to each player as they individually navigate the map and complete the necessary conditions.[/spoiler]
+
+    BUG integration
+    [spoiler]BUG fully integrated
+    New BUG feature "Grid for graphs"
+    New BUG feature improved Active Screen[/spoiler]
+
+    Included additional bug fixes:
+
+    [spoiler]Trade route turn order bug.
+
+    Foreign trade route cities lost permanently when your city using those routes is destroyed (fix is taken from BTS unofficial patch).
+
+    Build culture double production.
+
+    Build wealth/research/culture + production automation double production.
+
+    Proposed trades including cities, where the cities no longer exist to be trades, are not cancelled (note: I consider this a bug because proposed trades are already cancelled if a player lacks the requisite e.g. resources/gold. could be considered not a bug).
+
+    Production decay counter on a type of build (e.g. axeman) is not reset after completing one if the next item in the queue is of the same type (fix is taken from BTS unofficial patch).
+
+    Feature growth/disappearance rates, and bonus discovery (mine pop) rates, do not scale with game speed.
+
+    Diplomacy Pausing: Diplomacy windows do not occur on game login whilst the game is paused.
+
+    Autosaves: Autosaves are generated at login and log out; log out saves are saved to a folder specified within the global defines XML file. Default location is C:\temp.
+
+    Additional alterations have been made to enable hosting of games on the pitboss server belonging to Zulan. These changes are detailed here[/spoiler]
+
+    Added bugfixes from Unoffical Patch https://forums.civfanatics.com/threads/unofficial-patch-for-3-19.324024/:
+
+[spoiler]CvCity::init - Building a city on floodplains no longer removes floodplains, they'll still be there if city is destroyed (from Mongoose SDK)
+    CvCity::getProductionModifier (three versions of this function) - Changed to allow mods to create negative production modifiers (thanks NotSoGood)
+    CvCity::setBuildingHealthChange - Fixed several copy/paste and logic bugs affecting bonus building health from events, especially after city conquest (thanks Emperor Fool)
+    CvCity::setBuildingHappyChange - Fixed several logic bugs affecting bonus building health from events, especially after city conquest
+    CvCity - Added function getNumActiveWorldWonders()
+    CvCity::PopOrder - Fixed issue introduced by prior attempt to fix handling of buildings with player limits. Building classes which set iMaxPlayerInstances should now work correctly regardless of what iExtraPlayerInstances is set to. (thanks ztjal)
+    CvCityAI::AI_yieldValue - Fixed issue causing city governor and AI to heavily weight food when building gold or any other form of commerce. Produced unexpected and poor results for human player, did not help AI either.
+    CvCityAI::AI_doHurry - Fixed several bugs where AI would incorrectly think it was getting a great deal on a pop/gold rush when it was actually doing the other kind of rush. (thanks Pep)
+    CvPlayerAI::AI_isFinancialTrouble, CvCityAI::AI_updateBestBuild, and CvPlayerAI::AI_getMinFoundValue - Fixed bug in calculating expenses when AI has negative gold per turn
+    CvCityAI::AI_cityThreat - Fixed bug when AI is running crush strategy, wrong int was divided
+    CvCityAI::AI_neededDefenders - Improved efficiency and minor tweaks
+    CvCityAI::AI_chooseProduction - Fixed bug reducing AI production of workers, and a similar issue for barb players producing too many
+    CvDLLButtonPopup::launchFreeColonyPopup - Removed cities whose liberation player you are at war with from popup.
+    CvPlayer and CvDLLWidgetData - Fixed bug where you could acquire unlimited free techs from Oracle or Liberalism (thanks Emperor Fool)
+    isPotentialEnemy in CvGameCoreUtils - Fixed bug leading to AI launching invasions when unable to declare war, troops eventually got bounced when war was declared
+    CvGameTextMgr::setBuildingHelp - Fixed issue in mods with display of exposing spies text for buildings which lower espionage defense (thanks Afforess)
+    CvGameTextMgr (many places) - Fixed issues where unhappiness and unhealthiness from civics or buildings would incorrectly show up as -(unhappy face) instead of +(unhappy face) in several circumstances. (Thanks EmporerFool, Grave, Afforess)
+    CvGameTextMgr - Game will now properly display info for buildings which generate unhappiness in an area or globally, or produce state religion unhappiness (should these ever come up in mods)
+    CvPlayer::canFound - Changed handling of founding on water tiles so that Python callback has final say if it is turned on
+    CvPlayer::removeBuildingClass - Fixed issue with removing buildings when building class was maxed out for some mods (thanks EF)
+    CvPlayer::canTradeItem - You can now ask AI members of your own team to change religion or civics (thanks denev)
+    CvPlayerAI::AI_civicValue - Fixed crash bug in multi-player simultaneous turns games created by necessary re-timing of AI_doSplit (thanks to TheOnlyDJCat for debugging help)
+    CvPlayerAI::AI_conquerCity - Fixed bug where cityAcquiredAndKept event reported wrong player in some circumstances (thanks Maniac)
+    CvPlayerAI::AI_targetGold - Fixed bug causing AI to not bother with budgeting for expenses for first 40 turns of scenarios and advanced start games
+    CvPlayerAI::AI_foundValue - Added missing division for iClaimThrehsold (thanks denev)
+    CvPlayerAI::AI_unitValue - Stealth boats do not make good escorts since they often don't defend, so AI is now very unlikely to use them as escorts for transports.
+    CvPlayerAI::AI_getHealthWeight - Fixed bug for mods where civics with negative iExtraHealth were evaluated incorrectly (thanks phungus420)
+    CvPlayerAI::AI_getHappinessWeight - Fixed bug for mods where civics with negative happiness effects from troops, largest cities, or war weariness were evaluated incorrectly
+    CvPlayerAI::AI_bestPlotEspionage - relevant weights are 0, +- 50, +- 100, so comparison for Agg AI should be < 51 instead of < 50
+    CvPlayerAI::AI_changePeacetimeTradeValue and CvPlayerAI::AI_changePeacetimeGrantValue - AIs you haven't met yet will no longer get angry at you for trading with their worst enemy (thanks Sephi)
+    CvPlayerAI::AI_doDiplo - Fixed issue where team is sneak attack ready but hasn't declared war, AI would still demand tribute. If other team accepted, it blocked war declaration for 10 turns but AI still launched invasion and was then bounced when it could eventually declare.
+    CvPlayerAI::AI_getStrategyHash - Fixed incorrect counting of destroyers as mobile anti-air
+    CvPlayerAI::AI_getTotalFloatingDefendersNeeded - Fixed poor decision by AI if it has captured one or two cities on someone else's continent, it would minimally defend its new cities
+    CvPlayerAI::AI_getStrategyHash - Fixed several bugs where player ID was used where team ID was intended
+    CvPlayerAI::AI_targetCityValue - Fixed issues with valuation of cities with inactive world wonders, multi-holy-cities
+    CvPlayerAI::AI_commerceWeight - Improved valuation of generating culture in human player cities when culture bar is > 50% (ie, player probably going for cultural victory)
+    CvPlayerAI::AI_bestTech - Fixed potential rare crash bug in mods where units with no transport capacity can upgrade to units with transport capacity (thanks Afforess)
+    CvPlayerAI::AI_missionaryValue - Fixed copy and past bug causing overvaluation of missionaries for AIs going for cultural victory early in the game.
+    CvPlayerAI::AI_unitValue - Fixed potential crash bug in looking up AI_unitValue for UNITAI_MISSIONARY units without passing a valid CvArea*
+    CvSelectionGroup::continueMission - Fixed issue causing units with multiple orders to forget their later orders under certain circumstances. (thanks Pep)
+    CvTeam::doTurn - Added barbarian passive tech fix from Mongoose SDK
+    CvTeam::shareCounters - Fixed bug causing inappropriate overflow research and effectively free techs when forming a Permanent Alliance
+    CvTeam::addTeam - Fixed bug where, if civs A and B join in a permanent alliance, they get the max of A and B's espionage points against C but C just keeps its point against A and loses its points to B if that's higher
+    CvTeam::shareCounters - Fixed bug in permanent alliances when No Tech Brokering is turned on, where a civ would often become unable to trade a tech they had researched after entering a permanent alliance.
+    CvTeamAI::AI_doWar - use bFinancesProLimitedWar for limited war calc instead of max war version
+    CvTeamAI::AI_calculateAreaAIType - Fixed incorrect index usage (thanks cephalo)
+    CvUnit::convert - Fixed potential issue in mods where units with transport capacity might upgrade to units without (from Mongoose SDK)
+    CvUnit::shouldLoadOnMove - Fixed issue with all terrain land units moving onto water tiles with transports in them (from Mongoose SDK)
+    CvUnit::canMoveInto - Removed strange behavior where setting a unit to be unable to enter a terrain type would be overridden by features (forrest, fallout) (thanks TC01)
+    CvUnit::isIntruding - Kept 3.17 unofficial patch feature that vassal spies are never caught in master's territory
+    CvUnit::canAirDefend - Land units which are on transports can no longer defend against air attacks (from Mongoose SDK)
+    CvUnit::collateralCombat - Kept 3.17 unofficial patch feature which allows mods to enables barrage promotions for collateral damage units
+    CvUnit::canSpread - Moved Python cannot spread callback to end of function where it belongs, will speed up those mods which use this callback a little
+    CvUnit::canRangeStrikeAt - Added check for whether target plot is visible (thanks God-Emperor)
+    CvUnitAI::AI_spreadReligionAirlift and CvUnitAI::AI_spreadCorporationAirlift - AI will no longer airlift multiple of the same kind of missionary or executive to the same target spread city on the same turn
+    CvUnitAI::AI_paradrop - fixed bug with valuation of terrain bonuses causing paradrops to avoid bonuses in some circumstances when intention is clearly to encourage landing on bonuses and pillaging
+    CvUnitAI::AI_settleMove - fixed bug when settler cannot reach a city site in an area (blocked by mountains, other player). Caused settler to wait infinitely in city instead of loading into transport.
+    CvUnitAI::AI_assaultSeaMove - Fixed bug where unit type was used when unit AI type was intended
+    CvUnitAI::AI_specialSeaTransportMissionary - Fixed minor bug in valuation for executives[/spoiler]
+
+    Observer mode
+
+    [spoiler]Observer mode is functional but disabled due to bandwidth issues. Requires pitboss logging enabled, and for the host to  run the observer program. Observer mode is then accessible at a preset web address. Only available in Pitboss, additional server side applications required for functionality, available from teh following links.
+
+    Pitboss Observer: https://github.com/novice-rb/observer
+    Pitboss Portal: https://github.com/novice-rb/pitboss-portal[/spoiler]
+
+    And thanks to Charriu in implementing the Game options and sorting out the DLL for this version of the mod :)
+
+History:
+
+5.0.0.0
+    - Civs: Native America: Hunting/Agriculture. UB: Monument replacement: Totem Pole. +3XP to Archery units, +1XP to Gunpowder units. Requires Archery, Obsoletes at Assembly Line. UU: scout replacement. Tracker. Starts with Woodsman 3, can create Totem Pole. Upgrades to Explorer and Musketman
+    - Customshouse: no functional change, the change log was wrong.
+    - Remove New Game option: No Immediate Peace Treaties. Was unfixable. Peace treaties length is still at 5 turns
+    - New leader LieuYe - ORG/PRO
+    - New leader San Martin - CHM/CRE
+    - New leader Nebuchadrezzar - IND/PHI
+    - Leader Kublai Khan back to AGG/CRE
+    - BUG integration
+    - BUG: Grids for graphs feature
