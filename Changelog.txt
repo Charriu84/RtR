@@ -555,7 +555,7 @@ Full Change log here:
     BUG integration
     [spoiler]BUG fully integrated
     New BUG feature "Grid for graphs"
-    New BUG feature improved Active Screen[/spoiler]
+    New BUG feature improved Active advisor screen[/spoiler]
 
     Included additional bug fixes:
 
@@ -660,5 +660,7 @@ History:
     - New leader San Martin - CHM/CRE
     - New leader Nebuchadrezzar - IND/PHI
     - Leader Kublai Khan back to AGG/CRE
-    - BUG integration
+    - BUG and BULL integration
     - BUG: Grids for graphs feature
+    - BUG: New improved Active advisor screen
+    - BUG came with additional Bugfixes from the Unoffical Patch
