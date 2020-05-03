@@ -81,6 +81,7 @@ credits = [
             "Cyneheard - Balancing, Coding",
             "T-hawk - Coding, Circumnavigation, Torodial Maintenance fix",
             "Novice - Coding, Bugfixes",
+            "AGDM - Coding"
             "Plako - Coding, No City Trading option",
             "Charriu - Coding, Integration of BUG, Testing",
 ]
