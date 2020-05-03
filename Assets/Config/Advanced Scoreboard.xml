@@ -39,7 +39,7 @@
 					get="isScoreDeltaIncludeCurrentTurn" set="setScoreDeltaIncludeCurrentTurn" dirtyBit="Score"/>
 			
 			<list   id="DisplayName" key="Display Name" 
-					type="int" default="2" listType="string" 
+					type="int" default="3" listType="string" 
 					get="getDisplayName" set="setDisplayName" dirtyBit="Score">
 				<choice id="Leader" get="isShowLeaderName" set="setShowLeaderName"/>
 				<choice id="Civilization" get="isShowCivName" set="setShowCivName"/>
