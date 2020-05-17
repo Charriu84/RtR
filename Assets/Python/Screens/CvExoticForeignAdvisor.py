@@ -86,13 +86,13 @@ class ActiveDealHelper:
             if (deal.getFirstTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_RESOURCES):
                 firstTradeString += u"%c" % gc.getBonusInfo(deal.getFirstTrade(tradeItemIndex).iData).getChar()
             if (deal.getFirstTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN):
-                firstTradeString += u"%d %c" % (deal.getFirstTrade(tradeItemIndex).iData, gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()) + BugUtil.getPlainText("TXT_KEY_ABBR_PER_TURN")
+                firstTradeString += u"%d %c" % (deal.getFirstTrade(tradeItemIndex).iData, 8504)
 
         for tradeItemIndex in range(deal.getLengthSecondTrades()):
             if (deal.getSecondTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_RESOURCES):
                 secondTradeString += u"%c" % gc.getBonusInfo(deal.getSecondTrade(tradeItemIndex).iData).getChar()
             if (deal.getSecondTrade(tradeItemIndex).ItemType == TradeableItems.TRADE_GOLD_PER_TURN):
-                secondTradeString += u"%d %c" % (deal.getSecondTrade(tradeItemIndex).iData, gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()) + BugUtil.getPlainText("TXT_KEY_ABBR_PER_TURN")
+                secondTradeString += u"%d %c" % (deal.getSecondTrade(tradeItemIndex).iData, 8504)
 
         if (deal.getFirstPlayer() == iActiveLeader):
             self.activePlayerTrade = firstTradeString
@@ -806,7 +806,7 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
                            u"%c" %(CyGame().getSymbolID(FontSymbols.TRADE_CHAR)),
                            u"%c%c" %(CyGame().getSymbolID(FontSymbols.TRADE_CHAR),gc.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()),
                            u"%c" % gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar(),
-                           u"%c" % gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar() + BugUtil.getPlainText("TXT_KEY_ABBR_PER_TURN"),
+                           u"%c" % (8504),
                            BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_GOVERNMENT"),
                            BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_LEGAL"),
                            BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_LABOR"),
