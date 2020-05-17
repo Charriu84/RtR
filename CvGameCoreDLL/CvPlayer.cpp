@@ -3052,7 +3052,7 @@ void CvPlayer::chooseTech(int iDiscover, CvWString szText, bool bFront)
 		//PB Mod
 		//For Oracle double tech bugfix. Store if this player is logged in.
 		if ( gDLL->IsPitbossHost() && isConnected() ){
-			pInfo->setFlags(PBMOD_ADD_POPUP_FLAG(1));
+			pInfo->setFlags(1);
 		}
 
 		pInfo->setData1(iDiscover);
@@ -20853,6 +20853,31 @@ UnitTypes CvPlayer::getTechFreeUnit(TechTypes eTech) const
 
 	return eUnit;
 }
+
+
+//Charriu FreeUnitForEverybody Start
+UnitTypes CvPlayer::getTechFreeUnitEverybody(TechTypes eTech) const
+{
+	UnitClassTypes eUnitClass = (UnitClassTypes) GC.getTechInfo(eTech).getFreeUnitEverybodyClass();
+	if (eUnitClass == NO_UNITCLASS)
+	{
+		return NO_UNIT;
+	}
+
+	UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass)));
+	if (eUnit == NO_UNIT)
+	{
+		return NO_UNIT;
+	}
+
+	if (GC.getUnitInfo(eUnit).getEspionagePoints() > 0 && GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE))
+	{
+		return NO_UNIT;
+	}
+
+	return eUnit;
+}
+//Charriu FreeUnitForEverybody End
 
 
 // BUG - Trade Totals - start
