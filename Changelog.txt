@@ -1,6 +1,6 @@
 Full Change log here:
 
-Change log 5.0.0.0
+Change log 5.0.0.1
 
 Traits:
 
@@ -400,7 +400,10 @@ Medi: 80% tech cost
 Ren: 70% tech cost
 Industrial: 40% tech cost
 Modern: 30% tech cost
-Future: No changes[/spoiler]
+Future: No changes
+
+Religions and missionaries are now spread equally amongst players, so that everybody starts with at least the same number of cities with religion.
+[/spoiler]
 
 
 Espionage:
@@ -437,6 +440,8 @@ Whaling Boats: Enabled at Sailing.
 Villages: Cannot be destroyed by air bomb mission or pillaged. Also provides access and tile yields to Copper, Iron, Oil, Coal, Aluminium and Uranium. (Can still be improved over by workers)
 
 Towns: Cannot be destroyed by air bomb mission. Also provides access and tile yields to Copper, Iron, Oil, Coal, Aluminium and Uranium. (Can still be improved over by workers). Acts as cities. [Identical functionality as forts, for the purposes of rebasing air units, canals, city defense and city attack promotions etc].[/spoiler]
+
+Oil well construction time reduced to 3 from 10
 
 
 Game Mechanics:
@@ -550,7 +555,12 @@ Toroidal maps: Now return city maintenance as if the map were Cylindrical.
 
 Maximum number of players is now 40, up from 18.
 
-Circumnavigation requires 55% water on the map, otherwise it is disabled. Circumnavigation is no longer a "First to" bonus, but will grant +1 movement to naval units to each player as they individually navigate the map and complete the necessary conditions.[/spoiler]
+Circumnavigation requires 55% water on the map, otherwise it is disabled. Circumnavigation is no longer a "First to" bonus, but will grant +1 movement to naval units to each player as they individually navigate the map and complete the necessary conditions.
+
+WW_DECAY_PEACE_PERCENT is set to 90 instead of 99: This drastically increases the war weariness reduction at peace time.
+
+FORCED_WAR_WAR_WEARINESS_MODIFIER is set to 100: This guarantees no war weariness if you play 'Always war' or 'Permanent war' (might be interesting for PB50 players)
+[/spoiler]
 
 BUG integration
 [spoiler]BUG fully integrated
@@ -717,6 +727,8 @@ And thanks to Charriu in implementing the Game options and sorting out the DLL f
 History:
 
 5.0.0.1
+- Add missing changes to war weariness peace reduction, no WW on Always war and permanent war and oil well construction time reduced
+- Add equal religions and missionaries to late era starts
 - Small Bugfixes
 - Add Moding Section
 
