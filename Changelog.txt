@@ -648,9 +648,77 @@ Observer mode
 Pitboss Observer: https://github.com/novice-rb/observer
 Pitboss Portal: https://github.com/novice-rb/pitboss-portal[/spoiler]
 
+Knowledgebase For Modders
+
+[spoiler]All of these are additions for balancing the game
+
+GlobalDefines.xml
+
+CIRCUMNAVIGATE_MIN_WATER_PERCENT = The Circumnavigation bonus is only active if the map has more then X per cent of water tiles
+TECH_COST_CIV_COUNT_HARD_CAP = Upper limit civs giving known tech bonus. 0 is disabled
+TECH_COST_CIV_COUNT_HARD_CAP_LOWER = Lower limit civs giving known tech bonus. 0 is disabled
+TECH_COST_MODIFIER_PER_ERA_MULTIPLIER = Use highest era (possibly capped) and multiply with the fraction of contacts knowing the tech, TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER, and TECH_COST_MODIFIER_PER_ERA_MULTIPLIER
+TECH_COST_MAXIMUM_ERA_CAP = Use highest era (possibly capped) and multiply with the fraction of contacts knowing the tech, TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER, and TECH_COST_MODIFIER_PER_ERA_MULTIPLIER
+TECH_COST_TOTAL_MODIFIER_EARLY_CAP = Use highest era (possibly capped) and multiply with the fraction of contacts knowing the tech, TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER, and TECH_COST_MODIFIER_PER_ERA_MULTIPLIER
+TECH_COST_TOTAL_MODIFIER_ADVANCED_CAP = Use highest era (possibly capped) and multiply with the fraction of contacts knowing the tech, TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER, and TECH_COST_MODIFIER_PER_ERA_MULTIPLIER
+SLAVERY_NERF_ENABLED = Whips generate now 30/20/20/.. hammers for the 1/2/3/.. whip
+CIRCUM_FOR_EVERYBODY = Every player receives the circumnavigation bonus
+ENABLE_EXECUTIVE_SPAWNS_FOR_STRAGGLERS = An corp executive is spawn for players discovering this late after the HQ was settled, might be broken
+ENABLE_FINANCIAL_RIVERSIDE_PENALTY = Financial bonus does not apply on river tiles
+ENABLE_TREAT_TOROIDAL_MAINTENANCE_AS_CYLINDRICAL = Toroidal maps have the same maintenance cost as cylindrical
+ENABLE_NO_ESPIONAGE_FIX = Does what it says
+OWN_CITY_FAIL_GOLD_MULTIPLIER = You no longer generate fail gold for multiple same national wonders etc.
+ENABLE_PITBOSS_PAUSE_FIX = Does what it says
+PEACE_TREATY_NEGOTIATIONS = Works with the disabled "Immediate peace treaty negotiations" game option. Defines when peace treaty negotiations can start
+TECH_COST_SCALING_ALGORITHM = Enable the tech cost scaling from SevenSpirits Tides of War mod
+ENABLE_ALWAYS_SUCCESSFUL_DOMESTIC_RELIGION_SPREAD = Missionaries always succed spreading religions to your own cities
+ENABLE_RIVER_SIDE_YIELD_ALSO_ON_CORNER = River bonus (Lumbermill and Forest Preserve) also applies to the corner tiles
+ENABLE_NON_WORKABLE_TILES_DUE_TO_COASTAL_BLOCKADE = If a tile is blocked by a coastal blockade the adjacent cities can no longer work this tile
+CIRCUMNAVIGATE_FREE_TRADE_ROUTE = Gives +X Trade routes on circumnavigation
+ENABLE_INFLATION_TECH_ALTERNATIVE = Inflation still occurs with increasing turn numbers, but in addition if (All techs you discovered / All available techs) * Maximum turn numbers is higher then the current turn, inflation takes the calculated turn from techs as a base for the calculation.
+
+
+CIV4BuildingInfos.xml
+
+DirectProductionTraits = This gives a straight hammer reduction to the building. e.G. a Granary with value 10 would cost 10 hammers less.
+
+
+CIV4TraitInfos.xml
+
+iCityUpkeepModifier = The upkeep per city is reduced by a per cent value
+ExtraYieldLandThresholds = works just like ExtraYieldThresholds, but only on land tiles
+ExtraYieldWaterThresholds = works just like ExtraYieldThresholds, but only on water tiles
+iTradeRouteModifiers = gives a per cent bonus to trade route income similar to the harbor
+
+
+CIV4TechInfos.xml
+
+FreeUnitEverybodyClass = Gives everybody, who discovers the tech a free unit
+
+
+CIV4ImprovementInfos.xml
+
+bPermanent = was changed so that it no longer controls if an improvement can be pillaged, everything else still applies
+bNotPillage = now this controls if an improvement can be pillaged    
+
+
+CIV4BonusInfos.xml
+
+bNukeImmune = makes the tile on which this bonus resides immune to fallout, so improvements on it won't be destroyed by nukes
+
+
+CIV4UnitInfos.xml
+
+DirectProductionTraits = This gives a straight hammer reduction to the unit. e.G. a Worker with value 10 would cost 10 hammers less.
+[/spoiler]
+
 And thanks to Charriu in implementing the Game options and sorting out the DLL for this version of the mod :)
 
 History:
+
+5.0.0.1
+- Small Bugfixes
+- Add Moding Section
 
 5.0.0.0
 - Civs: Native America: Hunting/Agriculture. UB: Monument replacement: Totem Pole. +3XP to Archery units, +1XP to Gunpowder units. Requires Archery, Obsoletes at Assembly Line. UU: scout replacement. Tracker. Starts with Woodsman 3, can create Totem Pole. Upgrades to Explorer and Musketman
