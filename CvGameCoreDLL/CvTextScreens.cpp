@@ -120,6 +120,14 @@ CvString CvTextScreen::buildLeaderInfoHelp( LeaderTypes eLeader, CivilizationTyp
 				strcat(szHelpString, szTempBuffer);
 			}
 
+			//Charriu Trade Route Modifier
+			if (pTraitInfo.m_iTradeRouteModifier != 0)
+			{
+				sprintf(szTempBuffer, "\n  %c%s%d%%%c % from Trade", FC_BULLETPOINT, 
+					((pTraitInfo.m_iTradeRouteModifier > 0) ? "+" : ""), pTraitInfo.m_iTradeRouteModifier, FC_GREAT_PERSON);
+				strcat(szHelpString, szTempBuffer);
+			}
+
 			// Wonder Production Effects
 			if ((pTraitInfo.m_iMaxGlobalBuildingProductionModifier != 0) 
 				|| (pTraitInfo.m_iMaxTeamBuildingProductionModifier != 0) 
@@ -187,6 +195,24 @@ CvString CvTextScreen::buildLeaderInfoHelp( LeaderTypes eLeader, CivilizationTyp
 					sprintf(szTempBuffer, "\n  %c%s%d%c/Plot with %d%c", FC_BULLETPOINT, 
 						((GC.getEXTRA_YIELD() > 0) ? "+" : ""), GC.getEXTRA_YIELD(), GC.getYieldInfo()[iI].m_iChar, 
 						pTraitInfo.m_paiExtraYieldThreshold[iI], GC.getYieldInfo()[iI].m_iChar);
+					strcat(szHelpString, szTempBuffer);
+				}
+
+				//Charriu ExtraYieldLandThreshold
+				if (pTraitInfo.m_paiExtraYieldLandThreshold[iI] > 0)
+				{
+					sprintf(szTempBuffer, "\n  %c%s%d%c/Plot with %d%c", FC_BULLETPOINT, 
+						((GC.getEXTRA_YIELD() > 0) ? "+" : ""), GC.getEXTRA_YIELD(), GC.getYieldInfo()[iI].m_iChar, 
+						pTraitInfo.m_paiExtraYieldLandThreshold[iI], GC.getYieldInfo()[iI].m_iChar);
+					strcat(szHelpString, szTempBuffer);
+				}
+
+				//Charriu ExtraYieldWaterThreshold
+				if (pTraitInfo.m_paiExtraYieldWaterThreshold[iI] > 0)
+				{
+					sprintf(szTempBuffer, "\n  %c%s%d%c/Plot with %d%c", FC_BULLETPOINT, 
+						((GC.getEXTRA_YIELD() > 0) ? "+" : ""), GC.getEXTRA_YIELD(), GC.getYieldInfo()[iI].m_iChar, 
+						pTraitInfo.m_paiExtraYieldWaterThreshold[iI], GC.getYieldInfo()[iI].m_iChar);
 					strcat(szHelpString, szTempBuffer);
 				}
 

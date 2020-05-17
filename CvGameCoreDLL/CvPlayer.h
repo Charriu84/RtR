@@ -487,6 +487,10 @@ public:
 	int getCityUpkeepModifier() const;																																						// Exposed to Python
 	void changeCityUpkeepModifier(int iChange);
 
+	//Charriu Trade Route Modifier
+	int getTradeRouteModifier() const;																																						// Exposed to Python
+	void changeTradeRouteModifier(int iChange);
+
 	int getLevelExperienceModifier() const;																																						// Exposed to Python
 	void changeLevelExperienceModifier(int iChange);
 
@@ -594,6 +598,10 @@ public:
 	void changeTotalBeakersFromTech(int iChange);																																	// Exposed to Python  
 	DllExport int getTotalBeakersTradedAway() const;																																				// Exposed to Python
 	void changeTotalBeakersTradedAway(int iChange);																																	// Exposed to Python  
+	//Charriu Inflation Tech Alternative
+	DllExport int getTotalTech() const;																																				// Exposed to Python
+	void changeTotalTech(int iChange);																																	// Exposed to Python  
+
 
 	int getCombatExperience() const; 	// Exposed to Python  
 	void setCombatExperience(int iExperience);   // Exposed to Python
@@ -682,6 +690,14 @@ public:
 
 	int getExtraYieldThreshold(YieldTypes eIndex) const;																							// Exposed to Python
 	void updateExtraYieldThreshold(YieldTypes eIndex);
+
+	//Charriu ExtraYieldLandThreshold
+	int getExtraYieldLandThreshold(YieldTypes eIndex) const;																							// Exposed to Python
+	void updateExtraYieldLandThreshold(YieldTypes eIndex);
+
+	//Charriu ExtraYieldWaterThreshold
+	int getExtraYieldWaterThreshold(YieldTypes eIndex) const;																							// Exposed to Python
+	void updateExtraYieldWaterThreshold(YieldTypes eIndex);
 
 	int getTradeYieldModifier(YieldTypes eIndex) const;																								// Exposed to Python
 	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
@@ -979,6 +995,8 @@ public:
 
 	void verifyUnitStacksValid();
 	UnitTypes getTechFreeUnit(TechTypes eTech) const;
+	//Charriu FreeUnitForEverybody
+	UnitTypes getTechFreeUnitEverybody(TechTypes eTech) const;
 
 // BUG - Trade Totals - start
 	void calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer = NO_PLAYER, bool bRound = false, bool bBase = false) const;
@@ -1166,6 +1184,8 @@ protected:
 	int m_iInflationModifier;
 	int m_iTotalBeakersFromTech;
 	int m_iTotalBeakersTradedAway;
+	//Charriu Inflation Tech Alternative
+	int m_iTotalTech;
 
 	uint m_uiStartTime;  // XXX save these?
 
@@ -1194,7 +1214,13 @@ protected:
 	int* m_aiYieldRateModifier;
 	int* m_aiCapitalYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
+	//Charriu ExtraYieldLandThreshold
+	int* m_aiExtraYieldLandThreshold;
+	//Charriu ExtraYieldWaterThreshold
+	int* m_aiExtraYieldWaterThreshold;
 	int* m_aiTradeYieldModifier;
+	//Charriu Trade Route Modifier
+	int m_iTradeRouteModifier;
 	int* m_aiFreeCityCommerce;
 	int* m_aiCommercePercent;
 	int* m_aiCommerceRate;

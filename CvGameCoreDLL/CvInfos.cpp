@@ -981,6 +981,8 @@ m_iTradeRoutes(0),
 m_iFeatureProductionModifier(0),
 m_iWorkerSpeedModifier(0),
 m_iFirstFreeUnitClass(NO_UNITCLASS),
+//Charriu FreeUnitForEverybody
+m_iFreeUnitEverybodyClass(NO_UNITCLASS),
 m_iHealth(0),
 m_iHappiness(0),
 m_iFirstFreeTechs(0),
@@ -1086,6 +1088,12 @@ int CvTechInfo::getWorkerSpeedModifier() const
 int CvTechInfo::getFirstFreeUnitClass() const	
 {
 	return m_iFirstFreeUnitClass;
+}
+
+//Charriu FreeUnitForEverybody
+int CvTechInfo::getFreeUnitEverybodyClass() const	
+{
+	return m_iFreeUnitEverybodyClass;
 }
 
 int CvTechInfo::getHealth() const	
@@ -1299,6 +1307,8 @@ void CvTechInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iAdvancedStartCostIncrease);
 	stream->Read(&m_iEra);
 	stream->Read(&m_iFirstFreeUnitClass);
+	//Charriu FreeUnitForEverybody
+	stream->Read(&m_iFreeUnitEverybodyClass);
 	stream->Read(&m_iFeatureProductionModifier);
 	stream->Read(&m_iWorkerSpeedModifier);
 	stream->Read(&m_iTradeRoutes);
@@ -1373,6 +1383,8 @@ void CvTechInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iAdvancedStartCostIncrease);
 	stream->Write(m_iEra);
 	stream->Write(m_iFirstFreeUnitClass);
+	//Charriu FreeUnitForEverybody
+	stream->Write(m_iFreeUnitEverybodyClass);
 	stream->Write(m_iFeatureProductionModifier);
 	stream->Write(m_iWorkerSpeedModifier);
 	stream->Write(m_iTradeRoutes);
@@ -1437,6 +1449,10 @@ bool CvTechInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "FirstFreeUnitClass");
 	m_iFirstFreeUnitClass = pXML->FindInInfoClass(szTextVal);
+
+	//Charriu FreeUnitForEverybody
+	pXML->GetChildXmlValByName(szTextVal, "FreeUnitEverybodyClass");
+	m_iFreeUnitEverybodyClass = pXML->FindInInfoClass(szTextVal);
 
 	pXML->GetChildXmlValByName(&m_iFeatureProductionModifier, "iFeatureProductionModifier");
 	pXML->GetChildXmlValByName(&m_iWorkerSpeedModifier, "iWorkerSpeedModifier");
@@ -12901,6 +12917,8 @@ m_bHills(false),
 m_bFlatlands(false),
 m_bNoRiverSide(false),
 m_bNormalize(false),
+//Charriu Nuke immune resources
+m_bNukeImmune(false),
 m_piYieldChange(NULL),
 m_piImprovementChange(NULL),
 m_pbTerrain(NULL),
@@ -13075,6 +13093,12 @@ bool CvBonusInfo::isNormalize() const
 	return m_bNormalize; 
 }
 
+//Charriu Nuke immune resources
+bool CvBonusInfo::isNukeImmune() const			
+{
+	return m_bNukeImmune; 
+}
+
 const TCHAR* CvBonusInfo::getArtDefineTag() const
 {
 	return m_szArtDefineTag; 
@@ -13178,6 +13202,8 @@ void CvBonusInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bFlatlands);
 	stream->Read(&m_bNoRiverSide);
 	stream->Read(&m_bNormalize);
+	//Charriu Nuke immune resources
+	stream->Read(&m_bNukeImmune);
 
 	stream->ReadString(m_szArtDefineTag);
 
@@ -13241,6 +13267,8 @@ void CvBonusInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bFlatlands);
 	stream->Write(m_bNoRiverSide);
 	stream->Write(m_bNormalize);
+	//Charriu Nuke immune resources
+	stream->Write(m_bNukeImmune);
 
 	stream->WriteString(m_szArtDefineTag);
 
@@ -13319,6 +13347,8 @@ bool CvBonusInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bFlatlands, "bFlatlands");
 	pXML->GetChildXmlValByName(&m_bNoRiverSide, "bNoRiverSide");
 	pXML->GetChildXmlValByName(&m_bNormalize, "bNormalize");
+	//Charriu Nuke immune resources
+	pXML->GetChildXmlValByName(&m_bNukeImmune, "bNukeImmune");
 
 	pXML->SetVariableListTagPair(&m_pbTerrain, "TerrainBooleans", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos());
 	pXML->SetVariableListTagPair(&m_pbFeature, "FeatureBooleans", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
@@ -16688,7 +16718,13 @@ m_iMaxGlobalBuildingProductionModifier(0),
 m_iMaxTeamBuildingProductionModifier(0),		
 m_iMaxPlayerBuildingProductionModifier(0),
 m_paiExtraYieldThreshold(NULL),
+//Charriu ExtraYieldLandThreshold
+m_paiExtraYieldLandThreshold(NULL),
+//Charriu ExtraYieldWaterThreshold
+m_paiExtraYieldWaterThreshold(NULL),
 m_paiTradeYieldModifier(NULL),
+//Charriu Trade Route Modifier
+m_iTradeRouteModifier(0),
 m_paiCommerceChange(NULL),
 m_paiCommerceModifier(NULL),
 m_pabFreePromotionUnitCombat(NULL),
@@ -16706,6 +16742,10 @@ m_pabFreePromotion(NULL)
 CvTraitInfo::~CvTraitInfo()
 {
 	SAFE_DELETE_ARRAY(m_paiExtraYieldThreshold);
+	//Charriu ExtraYieldLandThreshold
+	SAFE_DELETE_ARRAY(m_paiExtraYieldLandThreshold);
+	//Charriu ExtraYieldWaterThreshold
+	SAFE_DELETE_ARRAY(m_paiExtraYieldWaterThreshold);
 	SAFE_DELETE_ARRAY(m_paiTradeYieldModifier);
 	SAFE_DELETE_ARRAY(m_paiCommerceChange);
 	SAFE_DELETE_ARRAY(m_paiCommerceModifier);
@@ -16737,6 +16777,12 @@ int CvTraitInfo::getUpkeepModifier() const
 int CvTraitInfo::getCityUpkeepModifier() const					
 {
 	return m_iCityUpkeepModifier; 
+}
+
+//Charriu Trade Route Modifier
+int CvTraitInfo::getTradeRouteModifier() const
+{
+	return m_iTradeRouteModifier;
 }
 
 int CvTraitInfo::getLevelExperienceModifier() const					
@@ -16789,6 +16835,18 @@ void CvTraitInfo::setShortDescription(const TCHAR* szVal)
 int CvTraitInfo::getExtraYieldThreshold(int i) const
 {
 	return m_paiExtraYieldThreshold ? m_paiExtraYieldThreshold[i] : -1; 
+}
+
+//Charriu ExtraYieldLandThreshold
+int CvTraitInfo::getExtraYieldLandThreshold(int i) const
+{
+	return m_paiExtraYieldLandThreshold ? m_paiExtraYieldLandThreshold[i] : -1; 
+}
+
+//Charriu ExtraYieldWaterThreshold
+int CvTraitInfo::getExtraYieldWaterThreshold(int i) const
+{
+	return m_paiExtraYieldWaterThreshold ? m_paiExtraYieldWaterThreshold[i] : -1; 
 }
 
 int CvTraitInfo::getTradeYieldModifier(int i) const
@@ -16851,6 +16909,28 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 		pXML->InitList(&m_paiExtraYieldThreshold, NUM_YIELD_TYPES);
 	}
 
+	//Charriu ExtraYieldLandThreshold
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(), "ExtraYieldLandThresholds"))
+	{
+		pXML->SetYields(&m_paiExtraYieldLandThreshold);
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+	else
+	{
+		pXML->InitList(&m_paiExtraYieldLandThreshold, NUM_YIELD_TYPES);
+	}
+
+	//Charriu ExtraYieldWaterThreshold
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(), "ExtraYieldWaterThresholds"))
+	{
+		pXML->SetYields(&m_paiExtraYieldWaterThreshold);
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+	else
+	{
+		pXML->InitList(&m_paiExtraYieldWaterThreshold, NUM_YIELD_TYPES);
+	}
+
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(), "TradeYieldModifiers"))
 	{
 		pXML->SetYields(&m_paiTradeYieldModifier);
@@ -16860,6 +16940,9 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 	{
 		pXML->InitList(&m_paiTradeYieldModifier, NUM_YIELD_TYPES);
 	}
+
+	//Charriu Trade Route Modifier
+	pXML->GetChildXmlValByName(&m_iTradeRouteModifier, "iTradeRouteModifiers");
 
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(), "CommerceChanges"))
 	{

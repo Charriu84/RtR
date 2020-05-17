@@ -568,6 +568,8 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_LEADERHEAD_RELATIONS,
 // BUG - Leaderhead Relations - end
 
+//Charriu FreeUnitForEverybody
+	WIDGET_HELP_FREE_UNIT_EVERYBODY,
 #ifdef _USRDLL
 	NUM_WIDGET_TYPES
 #endif
@@ -1280,6 +1282,8 @@ enum DomainTypes			// Exposed to Python
 	DOMAIN_AIR,
 	DOMAIN_LAND,
 	DOMAIN_IMMOBILE,
+	//Charriu Domain Scout movement
+	DOMAIN_SCOUT,
 
 #ifdef _USRDLL
 	NUM_DOMAIN_TYPES

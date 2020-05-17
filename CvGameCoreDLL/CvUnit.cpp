@@ -211,7 +211,8 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		}
 	}
 
-	if (getDomainType() == DOMAIN_LAND)
+	//Charriu Domain Scout movement
+	if (getDomainType() == DOMAIN_LAND || getDomainType() == DOMAIN_SCOUT)
 	{
 		if (baseCombatStr() > 0)
 		{
@@ -2214,7 +2215,8 @@ bool CvUnit::canEnterArea(TeamTypes eTeam, const CvArea* pArea, bool bIgnoreRigh
 		return false;
 	}
 
-	if (isBarbarian() && DOMAIN_LAND == getDomainType())
+	//Charriu Domain Scout movement
+	if (isBarbarian() && (DOMAIN_LAND == getDomainType() || DOMAIN_SCOUT == getDomainType()))
 	{
 		if (eTeam != NO_TEAM && eTeam != getTeam())
 		{
@@ -2419,6 +2421,8 @@ bool CvUnit::canMoveInto(const CvPlot* pPlot, bool bAttack, bool bDeclareWar, bo
 		break;
 
 	case DOMAIN_LAND:
+	//Charriu Domain Scout movement
+	case DOMAIN_SCOUT:
 		if (pPlot->isWater() && !canMoveAllTerrain())
 		{
 			if (!pPlot->isCity() || 0 == GC.getDefineINT("LAND_UNITS_CAN_ATTACK_WATER_CITIES"))
@@ -3171,6 +3175,8 @@ bool CvUnit::shouldLoadOnMove(const CvPlot* pPlot) const
 	switch (getDomainType())
 	{
 	case DOMAIN_LAND:
+	//Charriu Domain Scout movement
+	case DOMAIN_SCOUT:
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       10/30/09                     Mongoose & jdog5000      */
 /*                                                                                              */
@@ -3691,7 +3697,8 @@ bool CvUnit::canAirlift(const CvPlot* pPlot) const
 {
 	CvCity* pCity;
 
-	if (getDomainType() != DOMAIN_LAND)
+	//Charriu Domain Scout movement
+	if (getDomainType() != DOMAIN_LAND && getDomainType() != DOMAIN_SCOUT)
 	{
 		return false;
 	}
@@ -5475,7 +5482,8 @@ bool CvUnit::spread(ReligionTypes eReligion)
 
 		iSpreadProb += (((GC.getNumReligionInfos() - pCity->getReligionCount()) * (100 - iSpreadProb)) / GC.getNumReligionInfos());
 
-		if (GC.getGameINLINE().getSorenRandNum(100, "Unit Spread Religion") < iSpreadProb)
+		//Charriu Reliable domestic spread
+		if ((GC.getDefineINT("ENABLE_ALWAYS_SUCCESSFUL_DOMESTIC_RELIGION_SPREAD") > 0 && pCity->getTeam() == getTeam()) || GC.getGameINLINE().getSorenRandNum(100, "Unit Spread Religion") < iSpreadProb)
 		{
 			pCity->setHasReligion(eReligion, true, true, false);
 			bSuccess = true;
@@ -8491,7 +8499,8 @@ bool CvUnit::isWaiting() const
 
 bool CvUnit::isFortifyable() const
 {
-	if (!canFight() || noDefensiveBonus() || ((getDomainType() != DOMAIN_LAND) && (getDomainType() != DOMAIN_IMMOBILE)))
+	//Charriu Domain Scout movement
+	if (!canFight() || noDefensiveBonus() || ((getDomainType() != DOMAIN_LAND) && (getDomainType() != DOMAIN_SCOUT) && (getDomainType() != DOMAIN_IMMOBILE)))
 	{
 		return false;
 	}
@@ -8700,7 +8709,8 @@ int CvUnit::evasionProbability() const
 
 int CvUnit::withdrawalProbability() const
 {
-	if (getDomainType() == DOMAIN_LAND && plot()->isWater())
+	//Charriu Domain Scout movement
+	if ((getDomainType() == DOMAIN_LAND || getDomainType() == DOMAIN_SCOUT) && plot()->isWater())
 	{
 		return 0;
 	}
@@ -8915,7 +8925,8 @@ bool CvUnit::canCargoAllMove() const
 
 		if (pLoopUnit->getTransportUnit() == this)
 		{
-			if (pLoopUnit->getDomainType() == DOMAIN_LAND)
+			//Charriu Domain Scout movement
+			if ((pLoopUnit->getDomainType() == DOMAIN_LAND) || (pLoopUnit->getDomainType() == DOMAIN_SCOUT))
 			{
 				if (!(pLoopUnit->canMove()))
 				{
@@ -10866,7 +10877,8 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking)
 				}
 			}
 
-			if (getDomainType() == DOMAIN_LAND
+			//Charriu Domain Scout movement
+			if ((getDomainType() == DOMAIN_LAND || getDomainType() == DOMAIN_SCOUT)
 				&& !m_pUnitInfo->isIgnoreBuildingDefense()
 				&& pCombatUnit->plot()->getPlotCity() 
 				&& pCombatUnit->plot()->getPlotCity()->getBuildingDefense() > 0 

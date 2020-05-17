@@ -499,7 +499,8 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 								{
 									if ((calculateUnitCost() > 0) && (AI_getPlotDanger( pLoopUnit->plot(), 2, false) == 0))
 									{
-										if ((pLoopUnit->getDomainType() != DOMAIN_LAND) || pLoopUnit->plot()->plotCount(PUF_isMilitaryHappiness, -1, -1, getID()) > 1)
+										//Charriu Domain Scout movement
+										if (((pLoopUnit->getDomainType() != DOMAIN_LAND) && (pLoopUnit->getDomainType() != DOMAIN_SCOUT)) || pLoopUnit->plot()->plotCount(PUF_isMilitaryHappiness, -1, -1, getID()) > 1)
 										{
 										pLoopUnit->kill(false);
 										bKilled = true;
@@ -3704,7 +3705,8 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 													{
 														iMilitaryValue += 200;
 														
-														if (AI_calculateTotalBombard(DOMAIN_LAND) == 0)
+														//Charriu Domain Scout movement
+														if (AI_calculateTotalBombard(DOMAIN_LAND) == 0 && AI_calculateTotalBombard(DOMAIN_SCOUT) == 0)
 														{
 															iMilitaryValue += 800;
 															if (AI_isDoStrategy(AI_STRATEGY_DAGGER))
@@ -7766,7 +7768,15 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	FAssertMsg(eUnit != NO_UNIT, "Unit is not assigned a valid value");
 	FAssertMsg(eUnitAI != NO_UNITAI, "UnitAI is not assigned a valid value");
 
-	if (GC.getUnitInfo(eUnit).getDomainType() != AI_unitAIDomainType(eUnitAI))
+	//Charriu Domain Scout movement
+	if (AI_unitAIDomainType(eUnitAI) == DOMAIN_LAND || AI_unitAIDomainType(eUnitAI) == DOMAIN_SCOUT)
+	{
+		if (GC.getUnitInfo(eUnit).getDomainType() != DOMAIN_LAND && GC.getUnitInfo(eUnit).getDomainType() != DOMAIN_SCOUT)
+		{
+			return 0;
+		}
+	}
+	else if (GC.getUnitInfo(eUnit).getDomainType() != AI_unitAIDomainType(eUnitAI))
 	{
 		if (eUnitAI != UNITAI_ICBM)//XXX
 		{
@@ -8282,7 +8292,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 				//Total Bombard == 200: 100%
 				//Total Bombard == 300: 50%
 				//Total Bombard == 400: 
-				int iTotalBombardRate = AI_calculateTotalBombard(DOMAIN_LAND);
+				//Charriu Domain Scout movement
+				int iTotalBombardRate = AI_calculateTotalBombard(DOMAIN_LAND) + AI_calculateTotalBombard(DOMAIN_SCOUT);
 					if (iTotalBombardRate < 100)
 					{
 					iBombardValue *= 4 * (200 - iTotalBombardRate);
@@ -14167,6 +14178,14 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 
 			// financial +4
             iValue += (GC.getTraitInfo((TraitTypes)iI).getExtraYieldThreshold(YIELD_COMMERCE)) * 2 * GC.getDefineINT("EXTRA_YIELD");
+
+			//Charriu ExtraYieldLandThreshold
+			// financial +4
+            iValue += (GC.getTraitInfo((TraitTypes)iI).getExtraYieldLandThreshold(YIELD_COMMERCE)) * 2 * GC.getDefineINT("EXTRA_YIELD");
+
+			//Charriu ExtraYieldWaterThreshold
+			// financial +4
+            iValue += (GC.getTraitInfo((TraitTypes)iI).getExtraYieldWaterThreshold(YIELD_COMMERCE)) * 2 * GC.getDefineINT("EXTRA_YIELD");
             
 			// (none in default xml), set so 100% boost = 4
 			iValue += (GC.getTraitInfo((TraitTypes)iI).getTradeYieldModifier(YIELD_COMMERCE)) / 25;

@@ -313,6 +313,8 @@ public:
 	int getFeatureProductionModifier() const;	// Exposed to Python
 	int getWorkerSpeedModifier() const;		// Exposed to Python
 	int getFirstFreeUnitClass() const;		// Exposed to Python
+	//Charriu FreeUnitForEverybody
+	int getFreeUnitEverybodyClass() const;		// Exposed to Python
 	int getHealth() const;								// Exposed to Python
 	int getHappiness() const;							// Exposed to Python
 	int getFirstFreeTechs() const;				// Exposed to Python
@@ -380,6 +382,8 @@ protected:
 	int m_iFeatureProductionModifier;
 	int m_iWorkerSpeedModifier;
 	int m_iFirstFreeUnitClass;
+	//Charriu FreeUnitForEverybody
+	int m_iFreeUnitEverybodyClass;
 	int m_iHealth;
 	int m_iHappiness;
 	int m_iFirstFreeTechs;
@@ -3088,6 +3092,8 @@ public:
 	bool isFlatlands() const;						// Exposed to Python
 	bool isNoRiverSide() const;					// Exposed to Python
 	bool isNormalize() const;						// Exposed to Python
+	//Charriu Nuke immune resources
+	bool isNukeImmune() const;						// Exposed to Python
 
 	const TCHAR* getArtDefineTag() const;
 	void setArtDefineTag(const TCHAR* szVal);
@@ -3146,6 +3152,8 @@ protected:
 	bool m_bFlatlands;
 	bool m_bNoRiverSide;
 	bool m_bNormalize;
+	//Charriu Nuke immune resources
+	bool m_bNukeImmune;
 
 	CvString m_szArtDefineTag;
 
@@ -4222,6 +4230,8 @@ public:
 	int getUpkeepModifier() const;				// Exposed to Python
 	//T-hawk for RB balance mod
 	int getCityUpkeepModifier() const;				// Exposed to Python
+	//Charriu Trade Route Modifier
+	int getTradeRouteModifier() const;				// Exposed to Python
 	int getLevelExperienceModifier() const;				// Exposed to Python
 	int getGreatPeopleRateModifier() const;				// Exposed to Python
 	int getGreatGeneralRateModifier() const;				// Exposed to Python
@@ -4236,6 +4246,10 @@ public:
 	// Arrays
 
 	int getExtraYieldThreshold(int i) const;				// Exposed to Python
+	//Charriu ExtraYieldLandThreshold
+	int getExtraYieldLandThreshold(int i) const;				// Exposed to Python
+	//Charriu ExtraYieldWaterThreshold
+	int getExtraYieldWaterThreshold(int i) const;				// Exposed to Python
 	int getTradeYieldModifier(int i) const;				// Exposed to Python
 	int getCommerceChange(int i) const;				// Exposed to Python
 	int getCommerceModifier(int i) const;				// Exposed to Python
@@ -4266,7 +4280,13 @@ protected:
 	// Arrays
 
 	int* m_paiExtraYieldThreshold;
+	//Charriu ExtraYieldLandThreshold
+	int* m_paiExtraYieldLandThreshold;
+	//Charriu ExtraYieldWaterThreshold
+	int* m_paiExtraYieldWaterThreshold;
 	int* m_paiTradeYieldModifier;
+	//Charriu Trade Route Modifier
+	int m_iTradeRouteModifier;
 	int* m_paiCommerceChange;
 	int* m_paiCommerceModifier;
 

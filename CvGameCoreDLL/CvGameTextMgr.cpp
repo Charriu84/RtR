@@ -1656,6 +1656,8 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot)
 		break;
 
 	case DOMAIN_LAND:
+	//Charriu Domain Scout movement
+	case DOMAIN_SCOUT:
 		bValid = !(pPlot->isWater());
 		break;
 
@@ -2327,6 +2329,9 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			szTempBuffer.Format(L"\nStack Str: land=%d(%d), sea=%d(%d), air=%d(%d)",
 				pPlot->AI_sumStrength(NO_PLAYER, NO_PLAYER, DOMAIN_LAND, false, false, false),
 				pPlot->AI_sumStrength(NO_PLAYER, NO_PLAYER, DOMAIN_LAND, true, false, false),
+				//Charriu Domain Scout movement
+				pPlot->AI_sumStrength(NO_PLAYER, NO_PLAYER, DOMAIN_SCOUT, false, false, false),
+				pPlot->AI_sumStrength(NO_PLAYER, NO_PLAYER, DOMAIN_SCOUT, true, false, false),
 				pPlot->AI_sumStrength(NO_PLAYER, NO_PLAYER, DOMAIN_SEA, false, false, false),
 				pPlot->AI_sumStrength(NO_PLAYER, NO_PLAYER, DOMAIN_SEA, true, false, false),
 				pPlot->AI_sumStrength(NO_PLAYER, NO_PLAYER, DOMAIN_AIR, false, false, false),
@@ -3940,6 +3945,16 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 			{
 				szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_EXTRA_YIELD_THRESHOLDS", GC.getYieldInfo((YieldTypes) iI).getChar(), GC.getTraitInfo(eTrait).getExtraYieldThreshold(iI), GC.getYieldInfo((YieldTypes) iI).getChar()));
 			}
+			//Charriu ExtraYieldLandThreshold
+			if (GC.getTraitInfo(eTrait).getExtraYieldLandThreshold(iI) > 0)
+			{
+				szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_EXTRA_YIELD_LAND_THRESHOLDS", GC.getYieldInfo((YieldTypes) iI).getChar(), GC.getTraitInfo(eTrait).getExtraYieldLandThreshold(iI), GC.getYieldInfo((YieldTypes) iI).getChar()));
+			}
+			//Charriu ExtraYieldWaterThreshold
+			if (GC.getTraitInfo(eTrait).getExtraYieldWaterThreshold(iI) > 0)
+			{
+				szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_EXTRA_YIELD_WATER_THRESHOLDS", GC.getYieldInfo((YieldTypes) iI).getChar(), GC.getTraitInfo(eTrait).getExtraYieldWaterThreshold(iI), GC.getYieldInfo((YieldTypes) iI).getChar()));
+			}
 			// Trade Yield Modifiers
 			if (GC.getTraitInfo(eTrait).getTradeYieldModifier(iI) != 0)
 			{
@@ -3959,6 +3974,12 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 			{
 				szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_COMMERCE_MODIFIERS", GC.getTraitInfo(eTrait).getCommerceModifier(iI), GC.getCommerceInfo((CommerceTypes) iI).getChar(), "COMMERCE"));
 			}
+		}
+
+		//Charriu Trade Route Modifier
+		if (GC.getTraitInfo(eTrait).getTradeRouteModifier() != 0)
+		{
+			szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_TRADE_ROUTE_MODIFIER", GC.getTraitInfo(eTrait).getTradeRouteModifier()));
 		}
 
 		// Free Promotions
@@ -5902,6 +5923,10 @@ void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech,
 
 	//	Creates a free unit...
 	buildFreeUnitString(szBuffer, eTech, true, bPlayerContext);
+
+	//Charriu FreeUnitForEverybody
+	//	Creates a free unit...
+	buildFreeUnitEverybodyString(szBuffer, eTech, true, bPlayerContext);
 
 	//	Increases feature production...
 	buildFeatureProductionString(szBuffer, eTech, true, bPlayerContext);
@@ -11424,6 +11449,36 @@ void CvGameTextMgr::buildFreeUnitString(CvWStringBuffer &szBuffer, TechTypes eTe
 	}
 }
 
+//Charriu FreeUnitForEverybody Start
+void CvGameTextMgr::buildFreeUnitEverybodyString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
+{
+	UnitTypes eFreeUnit = NO_UNIT;
+	if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
+	{
+		eFreeUnit = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getTechFreeUnitEverybody(eTech);
+	}
+	else
+	{
+		if (GC.getTechInfo(eTech).getFreeUnitEverybodyClass() != NO_UNITCLASS)
+		{
+			eFreeUnit = (UnitTypes)GC.getUnitClassInfo((UnitClassTypes)GC.getTechInfo(eTech).getFreeUnitEverybodyClass()).getDefaultUnitIndex();
+		}
+	}
+
+	if (eFreeUnit != NO_UNIT)
+	{
+		if (!bPlayerContext || (GC.getGameINLINE().countKnownTechNumTeams(eTech) == 0))
+		{
+			if (bList)
+			{
+				szBuffer.append(NEWLINE);
+			}
+			szBuffer.append(gDLL->getText("TXT_KEY_TECH_EVERYBODY_RECEIVES", GC.getUnitInfo(eFreeUnit).getTextKeyWide()));
+		}
+	}
+}
+//Charriu FreeUnitForEverybody End
+
 void CvGameTextMgr::buildFeatureProductionString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
 	if (GC.getTechInfo(eTech).getFeatureProductionModifier() != 0)
@@ -15892,6 +15947,15 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 					szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_MOD_CAPITAL", iNewMod));
 					iModifier += iNewMod;
 				}
+			}
+
+			//Charriu Trade Route Modifier
+			iNewMod = pCity->getTraitTradeModifier();
+			if (0 != iNewMod)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TRAIT_MODIFIER", iNewMod));
+				iModifier += iNewMod;
 			}
 
 			if (NULL != pOtherCity)
