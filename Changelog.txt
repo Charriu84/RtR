@@ -730,6 +730,7 @@ History:
 - Add missing changes to war weariness peace reduction, no WW on Always war and permanent war and oil well construction time reduced
 - Add equal religions and missionaries to late era starts
 - Small Bugfixes
+- New Icon for gold per turn used in Info Screen
 - Add Moding Section
 
 5.0.0.0
