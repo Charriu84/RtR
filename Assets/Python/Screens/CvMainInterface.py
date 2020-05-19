@@ -3710,7 +3710,11 @@ class CvMainInterface:
                         HURRY_WHIP = gc.getInfoTypeForString("HURRY_POPULATION")
                         if pHeadSelectedCity.canHurry(HURRY_WHIP, False):
                             iRate = pHeadSelectedCity.hurryProduction(HURRY_WHIP) / pHeadSelectedCity.hurryPopulation(HURRY_WHIP)
-                            self.pBarProductionBar_Whip.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, True)
+                            if (gc.getDefineINT("SLAVERY_NERF_ENABLED") > 0 and pHeadSelectedCity.hurryPopulation(HURRY_WHIP) > 1):
+                                iRate = pHeadSelectedCity.hurryProductionRate(HURRY_WHIP)
+                                self.pBarProductionBar_Whip.drawTickMarksSlaveryNerf(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, True)
+                            else:
+                                self.pBarProductionBar_Whip.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, True)
 # BUG - Progress Bar - Tick Marks - end
 
                 iCount = 0

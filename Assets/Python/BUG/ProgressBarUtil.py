@@ -142,6 +142,41 @@ class ProgressBar:
 
 #       BugUtil.debug("tick marks - done")
 
+    def drawTickMarksSlaveryNerf(self, screen, iCurr, iTotal, iFirst, iRate, bDouble):
+        if iRate <= 0:
+            return
+
+        self._deleteCanvas(screen)
+
+        screen.addDrawControl(self.id, self.BG, self.x, self.y, self.w, self.h, WidgetTypes.WIDGET_GENERAL, -1, -1)
+        self._setVisible(True)
+
+        self._drawTickMarks_SlaveryNerf(screen, iCurr, iTotal, iFirst, iRate, bDouble)
+
+        for item in self.barItems:
+            screen.moveToFront(item)
+
+    def _drawTickMarks_SlaveryNerf(self, screen, iCurr, iTotal, iFirst, iRate, bDouble):
+        i = 1
+        iXPrev = self.w
+        iMin = iCurr / iTotal + 1
+#       BugUtil.debug("tick marks: %i %i %i %i %i %i", iCurr, iTotal, iFirst, iRate, iXPrev, iMin)
+        while True:
+            iX = self.w * (iTotal - (i * iRate) - (iRate / 2)) / iTotal
+#           BugUtil.debug("tick marks: %i %i %i %i %i %i", iCurr, iTotal, iFirst, iRate, iX, iMin)
+
+            if (iX < iMin
+            or  abs(iX - iXPrev) < 5): break
+
+            self._drawline(screen, self.id, iX, self.m_y1, iX, self.m_y2, self.color, bDouble)
+            if self.marks == TICK_MARKS:
+                self._drawline(screen, self.id, iX, self.m_y3, iX, self.m_y4, self.color, bDouble)
+
+            i += 1
+            iXPrev = iX
+
+#       BugUtil.debug("tick marks - done")
+
     def _drawline(self, screen, id, x1, y1, x2, y2, color, double):
 #       BugUtil.debug("tick marks - drawline %s %i %i %i %i", id, x1, y1, x2, y2)
         if double:

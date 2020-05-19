@@ -144,6 +144,8 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("hurryGold", &CyCity::hurryGold, "int (HurryID) - total value of gold when hurrying")
 		.def("hurryPopulation", &CyCity::hurryPopulation, "int (HurryID) - value of each pop when hurrying")
 		.def("hurryProduction", &CyCity::hurryProduction, "int (HurryID)")
+		//Charriu BUG SlaveryNerf implementation
+		.def("hurryProductionRate", &CyCity::hurryProductionRate, "int (HurryID)")
 		.def("flatHurryAngerLength", &CyCity::flatHurryAngerLength, "int ()")
 		.def("hurryAngerLength", &CyCity::hurryAngerLength, "int (HurryID)")
 		.def("maxHurryPopulation", &CyCity::maxHurryPopulation, "int ()")

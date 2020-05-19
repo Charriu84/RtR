@@ -635,6 +635,12 @@ int CyCity::hurryProduction(int /*HurryTypes*/ iHurry)
 	return m_pCity ? m_pCity->hurryProduction((HurryTypes)iHurry) : -1;
 }
 
+//Charriu BUG SlaveryNerf implementation
+int CyCity::hurryProductionRate(int /*HurryTypes*/ iHurry)
+{
+	return m_pCity ? m_pCity->hurryProductionRate((HurryTypes)iHurry) : -1;
+}
+
 int CyCity::flatHurryAngerLength()
 {
 	return m_pCity ? m_pCity->flatHurryAngerLength() : -1;

@@ -5008,6 +5008,25 @@ int CvCity::hurryProduction(HurryTypes eHurry) const
 }
 
 
+//Charriu BUG SlaveryNerf implementation
+int CvCity::hurryProductionRate(HurryTypes eHurry) const
+{
+	int iProduction;
+
+	if (GC.getHurryInfo(eHurry).getProductionPerPopulation() > 0)
+	{
+		if(GC.getDefineINT("SLAVERY_NERF_ENABLED") > 0) {
+			return (100 * getExtraProductionDifference(1 * GC.getGameINLINE().getProductionPerPopulation(eHurry) * 2 / 3)) / std::max(1, getHurryCostModifier());
+		}
+		else {
+			return (100 * getExtraProductionDifference(1 * GC.getGameINLINE().getProductionPerPopulation(eHurry))) / std::max(1, getHurryCostModifier());
+		}
+	}
+
+	return 0;
+}
+
+
 int CvCity::flatHurryAngerLength() const
 {
 	int iAnger;

@@ -216,6 +216,8 @@ public:
 	int hurryGold(HurryTypes eHurry) const;												// Exposed to Python
 	int hurryPopulation(HurryTypes eHurry) const;									// Exposed to Python
 	int hurryProduction(HurryTypes eHurry) const;														// Exposed to Python
+	//Charriu BUG SlaveryNerf implementation
+	int hurryProductionRate(HurryTypes eHurry) const;														// Exposed to Python
 	int flatHurryAngerLength() const;																				// Exposed to Python
 	int hurryAngerLength(HurryTypes eHurry) const;													// Exposed to Python
 	int maxHurryPopulation() const;																					// Exposed to Python

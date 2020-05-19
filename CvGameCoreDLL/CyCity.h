@@ -155,6 +155,8 @@ public:
 	int hurryGold(int /*HurryTypes*/ iHurry);
 	int hurryPopulation(int /*HurryTypes*/ iHurry);
 	int hurryProduction(int /*HurryTypes*/ iHurry);
+	//Charriu BUG SlaveryNerf implementation
+	int hurryProductionRate(int /*HurryTypes*/ iHurry);
 	int flatHurryAngerLength();
 	int hurryAngerLength(int /*HurryTypes*/ iHurry);
 	int maxHurryPopulation();
