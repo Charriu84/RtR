@@ -3749,12 +3749,7 @@
 			<BonusHappinessChanges/>
 			<BonusProductionModifiers/>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>1</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers/>
 			<BuildingHappinessChanges/>
 			<PrereqBuildingClasses/>
@@ -3924,12 +3919,7 @@
 			<BonusHappinessChanges/>
 			<BonusProductionModifiers/>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>1</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers>
 				<DomainProductionModifier>
 					<DomainType>DOMAIN_SEA</DomainType>
@@ -4115,12 +4105,7 @@
 			<BonusHappinessChanges/>
 			<BonusProductionModifiers/>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>2</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers/>
 			<BuildingHappinessChanges/>
 			<PrereqBuildingClasses/>
@@ -4301,12 +4286,7 @@
 			<BonusHappinessChanges/>
 			<BonusProductionModifiers/>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>2</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers/>
 			<BuildingHappinessChanges/>
 			<PrereqBuildingClasses/>
@@ -4474,12 +4454,7 @@
 			<BonusHappinessChanges/>
 			<BonusProductionModifiers/>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>3</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers/>
 			<BuildingHappinessChanges/>
 			<PrereqBuildingClasses/>
@@ -4656,12 +4631,7 @@
 			<BonusHappinessChanges/>
 			<BonusProductionModifiers/>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>3</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers/>
 			<BuildingHappinessChanges/>
 			<PrereqBuildingClasses/>
@@ -4837,7 +4807,7 @@
 			<DomainFreeExperiences>
 				<DomainFreeExperience>
 					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>7</iExperience>
+					<iExperience>4</iExperience>
 				</DomainFreeExperience>
 			</DomainFreeExperiences>
 			<DomainProductionModifiers>
@@ -6136,10 +6106,6 @@
 			<DomainFreeExperiences>
 				<DomainFreeExperience>
 					<DomainType>DOMAIN_LAND</DomainType>
-					<iExperience>2</iExperience>
-				</DomainFreeExperience>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
 					<iExperience>2</iExperience>
 				</DomainFreeExperience>
 			</DomainFreeExperiences>
@@ -13637,12 +13603,7 @@
 			<BonusHappinessChanges/>
 			<BonusProductionModifiers/>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>3</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers/>
 			<BuildingHappinessChanges/>
 			<PrereqBuildingClasses/>
@@ -27303,12 +27264,7 @@
 				</BonusProductionModifier>
 			</BonusProductionModifiers>
 			<UnitCombatFreeExperiences/>
-			<DomainFreeExperiences>
-				<DomainFreeExperience>
-					<DomainType>DOMAIN_SEA</DomainType>
-					<iExperience>4</iExperience>
-				</DomainFreeExperience>
-			</DomainFreeExperiences>
+			<DomainFreeExperiences/>
 			<DomainProductionModifiers/>
 			<BuildingHappinessChanges/>
 			<PrereqBuildingClasses/>
