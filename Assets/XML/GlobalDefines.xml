@@ -755,7 +755,7 @@
 	</Define>
 	<Define>
 		<DefineName>PEACE_TREATY_LENGTH</DefineName>
-		<iDefineIntVal>5</iDefineIntVal>
+		<iDefineIntVal>10</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>MAX_ANARCHY_TURNS</DefineName>
@@ -1744,15 +1744,15 @@
 	</Define>
 	<Define>
 		<DefineName>PEACE_TREATY_NEGOTIATIONS</DefineName>
-		<iDefineIntVal>5</iDefineIntVal>
+		<iDefineIntVal>10</iDefineIntVal>
 	</Define>
-  <Define>
-    <DefineName>TECH_COST_SCALING_ALGORITHM</DefineName>
-    <iDefineIntVal>1</iDefineIntVal>
-  </Define>
+	<Define>
+	  <DefineName>TECH_COST_SCALING_ALGORITHM</DefineName>
+	  <iDefineIntVal>1</iDefineIntVal>
+	</Define>
   	<Define>
     	<DefineName>ENABLE_ALWAYS_SUCCESSFUL_DOMESTIC_RELIGION_SPREAD</DefineName>
-    	<iDefineIntVal>0</iDefineIntVal>
+    	<iDefineIntVal>1</iDefineIntVal>
   	</Define>
     <Define>
       	<DefineName>ENABLE_RIVER_SIDE_YIELD_ALSO_ON_CORNER</DefineName>
