@@ -7,6 +7,8 @@ import traceback
 # for file ops
 import os
 import sys
+import BugPath
+import codecs
 
 # For Civ game code access
 from CvPythonExtensions import *
@@ -377,6 +379,11 @@ def combatDetailMessageBuilder(cdUnit, ePlayer, iChange):
         CyInterface().addCombatMessage(ePlayer,msg)
 
 def combatMessageBuilder(cdAttacker, cdDefender, iCombatOdds):
+    # CtHCombat.log
+    combatLogName = None
+    if not CyGame().isPitbossHost():
+        combatLogName = BugPath.join(BugPath.getRootDir(), "Combat.log")
+        f = codecs.open(combatLogName, "a", 'utf-8')
     combatMessage = ""
     if (cdAttacker.eOwner == cdAttacker.eVisualOwner):
         combatMessage += "%s's " %(gc.getPlayer(cdAttacker.eOwner).getName(),)
@@ -387,6 +394,8 @@ def combatMessageBuilder(cdAttacker, cdDefender, iCombatOdds):
     combatMessage += "%s (%.2f)" %(cdDefender.sUnitName,cdDefender.iCurrCombatStr/100.0,)
     CyInterface().addCombatMessage(cdAttacker.eOwner,combatMessage)
     CyInterface().addCombatMessage(cdDefender.eOwner,combatMessage)
+    if combatLogName:
+        f.write(combatMessage + " \n")
     combatMessage = "%s %.1f%%" %(localText.getText("TXT_KEY_COMBAT_MESSAGE_ODDS", ()),iCombatOdds/10.0,)
     CyInterface().addCombatMessage(cdAttacker.eOwner,combatMessage)
     CyInterface().addCombatMessage(cdDefender.eOwner,combatMessage)
@@ -394,6 +403,10 @@ def combatMessageBuilder(cdAttacker, cdDefender, iCombatOdds):
     combatDetailMessageBuilder(cdDefender,cdAttacker.eOwner,1)
     combatDetailMessageBuilder(cdAttacker,cdDefender.eOwner,-1)
     combatDetailMessageBuilder(cdDefender,cdDefender.eOwner,1)
+    
+    if combatLogName:
+        f.write(combatMessage + " \n")
+        f.close()
     
 def initDynamicFontIcons():
     global FontIconMap
