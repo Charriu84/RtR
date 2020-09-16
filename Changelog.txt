@@ -1,6 +1,6 @@
 Full Change log here:
 
-Change log 5.0.0.1
+Change log 5.1.0.0
 
 Traits:
 
@@ -61,9 +61,9 @@ Greece: Hunting/Fishing. UB: Colosseum replacement: Odeon. +1XP to all land unit
 
 Holy Roman Empire: Hunting/Mysticism. UB: Courthouse replacement: Rathaus. -75% city maintenance. UU: Longbow replacement. Landskneckt. +50% against Mounted units.
 
-Inca: Agriculture/Mysticism. UB: Granary replacement: Terrace, +1 culture, cost 45 hammers, No trait production modifier. UU: Warrior replacement: Quechua. +100% against archery units.
+Inca: Agriculture/Mysticism. UB: Granary replacement: Terrace, +1 culture, cost 60 hammers. UU: Warrior replacement: Quechua. +100% against archery units.
 
-India: Mysticism/Mining. UB: Granary replacement: Harrapan Granary, +1 happy, +1 health, cost 45 hammers, no bonus production from trait. UU: Pike replacement. Urukku Pikeman. Strength 8.
+India: Mysticism/Mining. UB: Granary replacement: Harrapan Granary, +1 happy, +1 health, cost 60 hammers.  UU: Pike replacement. Urukku Pikeman. Strength 8.
 
 Japan: Fishing/The Wheel. UB: Harbour replacement. Nanban Harbour. +2XP for land units. UU: Maceman replacement. Samurai. Requires only Machinery (Does not require Civil Service) Starts with Drill 2.
 
@@ -103,7 +103,7 @@ Leaders:
 
 [spoiler]New leader LieuYe - ORG/PRO
 New leader San Martin - CHM/CRE
-New leader Nebuchadrezzar - IND/PHI[/spoiler]
+New leader Nebuchadnezzar - IND/PHI[/spoiler]
 
 
 Civics: Government civics:
@@ -150,26 +150,12 @@ Buildings:
 
 Colosseum: +1 happy, +1 happy per 20% culture slider, +1XP to melee, archery, mounted and siege units. Requires Construction. Cost 80 hammers, Bonus XP applies to all Colosseum UB.
 
-Jails: now -50% War Weariness.
-
-Castles (and replacement UB): no longer decrease bombardment rate of catapults or trebuchets. Obsolete at Corporation (Except defensive bonus). Requires Walls. No trait or resource production bonus. Cost 80 hammers.
-
-Temple: now requires Meditation (plus religion in city, no longer requires Priesthood)
-
-Lighthouse: +1XP to naval units. +1 food from water domain tiles. Require Sailing. Cost 60 hammers.
-
-Harbour: +2XP to naval units. +1 health from crab, clam, fish, +50% trade route yield. Requires Compass. Cost 80 hammers.
-
-Customshouse: +3XP to naval units, +100% Foreign trade route yield. Requires Economics. Cost 120 hammers.
-
-Drydock: +7XP to naval units. +50% production of naval units. -1 health. Requires Steel. Cost 120 hammers.[/spoiler]
+Jails: now -50% War Weariness.[/spoiler]
 
 
 Wonders, Projects:
 
 [spoiler]Wonder Resource Modifiers: All wonders that had +100% production with a specific resource now only have +50% production with that resource.
-
-Moai: +4XP to naval units.
 
 Rushmore: Now -50% WW, (from -25%).
 
@@ -206,7 +192,7 @@ War Elephants: Strength 7, +50% vs. Mounted units. Requires Iron, Iron Working, 
 
 Trebuchet: Now requires Machinery, instead of Engineering.
 
-Crossbowman: Strength 6, 1 free strike, +50% against melee units, +25% defense against macemen. Archery unit, requires iron, Archery, Machinery, and Construction. iCollateralDamageLimit: 40%; iCollateralDamageMaxUnits: 3 (causes maximum 40hp damage through collateral, collateral damage hits maximum 3 units)
+Crossbowman: Strength 6, 1 free strike, +50% against melee units, +25% defense against macemen. Archery unit, requires iron, Archery, Machinery
 
 Maceman: Melee unit, strength 8, +50% against melee, +25% against cities, cost 70 hammers, requires Civil Service, Machinery, [copper or iron].
 
@@ -265,70 +251,25 @@ Naval units, promotion and mechanic changes:
 
 Promotions and mechanics:
 
-[spoiler]Ocean: Now costs 3 movement points to enter.
-
-Circumnavigation: +1 movement point on naval units, individual achievement completed by unfogging a single tile on each row and/or column of the map on which the map wraps.
+[spoiler]Circumnavigation: +1 movement point on naval units, individual achievement completed by unfogging a single tile on each row and/or column of the map on which the map wraps.
 
 Coastal Blockade now has a range of 1 square around the blockader, instead of 3 squares.
-
-Drill 1, Drill 2, Drill 3 Drill 4 Flanking 1, Flanking 2, Sentry: No longer available to Naval units.
-
-Sentry: Requires Combat 3 OR Flanking 2 OR Naval Flanking 2 OR Navigation 2.
-
-Navigation 1: Requires no prior promotion. +1 movement. +1 free strike chance.
-
-Navigation 2: Requires Navigation 1. +1 movement. +1 free strike.
-
-New promotion: Naval Flanking 1: Requires no prior promotion. +10% withdrawal chance. -1 terrain movement cost.
-
-New promotion: Naval Flanking 2: Requires Naval Flanking 1. +30% withdrawal chance. +20% Collateral Damage Reduction.
-
-New promotion: Naval Drill 3: Requires Navigation 2 OR Naval Flanking 2. +2 free strike chances. -20% collateral damage.
-
-New promotion: Naval Drill 4: Requires Naval Drill 3. +2 free strikes. -20% collateral damage.
-
-New promotion: Naval Sentry: +1 vision range. Requires Naval Flanking 2 or Navigation 2.[/spoiler]
+[/spoiler]
 
 
 Naval unit changes:
 
-[spoiler]Work boat: Base movement 2. Ignores terrain movement cost.
+[spoiler]
+Caravel: Base movement 3. Strength 4, -30% against galleys and triremes, 1 capacity (can transport any units). Cost 60 hammers, requires Optics. Remove ability to enter cultural borders.
 
-Galley: Base movement 1. Starts with Navigation 1.
+Carrack: Base movement 3. Strength 4, -30% against galleys and triremes, 2 capacity. Remove ability to enter cultural borders. Cost 60 hammers, requires Optics.
 
-Trireme: Base movement 1. Starts with Navigation 1.
+East Indiaman: Base movement 4. Lower to 3 capacity, remove ability to enter culture without OB.
 
-Caravel: Base movement 2. Starts with Navigation 1. Strength 4, -30% against galleys and triremes, 1 capacity (can transport any units). Cost 60 hammers, requires Optics. Remove ability to enter cultural borders.
+Privateer: Base movement 4. Sentry. +65% attack against Ships of the Line. Requires Optics and Military Tradition, Upgrades to Transport (not Destroyer). (Removed ability [to attack without war declaration] and [hidden nationality].)
 
-Carrack: Base movement 3. Starts with Navigation 1. Strength 4, -30% against galleys and triremes, 2 capacity. Remove ability to enter cultural borders. Cost 60 hammers, requires Optics.
-
-Galleon: Base movement 3. Starts with Navigation 1.
-
-East Indiaman: Base movement 3. Starts with Navigation 1. Lower to 3 capacity, remove ability to enter culture without OB.
-
-Privateer: Base movement 3. Starts with Navigation 1, Sentry. +65% attack against Ships of the Line. Requires Optics and Paper, Upgrades to Transport (not Destroyer). (Removed ability [to attack without war declaration] and [hidden nationality].)
-
-Frigate: Base movement 3. Starts with Navigation 1. Upgrades to Transport (not Destroyer).
-
-Ship of the Line: Base movement 3. iCollateraldamage = 75, iCollateraldamagelimit = 70 (ie 30% hp max damage from collateral), iCollateralDamageLimit = 5. Cost 120 hammers.
-
-Ironclad: Base movement 1. Starts with Navigation 1. Cannot enter Ocean (except within own borders). 1 free strike, strength 12, no defensive bonus, requires iron, coal, Steel and Steam Power, costs 120 hammers.
-
-Transport: Base movement 3. Starts with Navigation 1, Navigation 2. Ignores terrain movement cost. Requires  Artillery (not Combustion) (requires Oil OR Uranium)
-
-Destroyer: Base movement 6. Starts with Naval Flanking 1. Requires Artillery (not Combustion) (requires Oil OR Uranium)
-
-Battleship: Base movement 4.
-
-Carrier: Base movement 4.
-
-Submarine: Base movement 4. Ignores terrain movement costs.
-
-Attack Submarine: Base movement 5. Ignores terrain movement costs.
-
-Missile cruiser: Base movement 4.
-
-Stealth Destroyer: Base movement 6. Starts with Naval Flanking 1. [/spoiler]
+Ship of the Line: Base movement 5. iCollateraldamage = 75, iCollateraldamagelimit = 70 (ie 30% hp max damage from collateral), iCollateralDamageLimit = 5. Cost 120 hammers.
+[/spoiler]
 
 
 Barbarians:
@@ -436,10 +377,6 @@ Mines: +1 base hammer at Rep Parts.
 Quarry: +1 base hammer at Rep Parts.
 
 Whaling Boats: Enabled at Sailing.
-
-Villages: Cannot be destroyed by air bomb mission or pillaged. Also provides access and tile yields to Copper, Iron, Oil, Coal, Aluminium and Uranium. (Can still be improved over by workers)
-
-Towns: Cannot be destroyed by air bomb mission. Also provides access and tile yields to Copper, Iron, Oil, Coal, Aluminium and Uranium. (Can still be improved over by workers). Acts as cities. [Identical functionality as forts, for the purposes of rebasing air units, canals, city defense and city attack promotions etc].[/spoiler]
 
 Oil well construction time reduced to 3 from 10
 
@@ -725,6 +662,22 @@ DirectProductionTraits = This gives a straight hammer reduction to the unit. e.G
 And thanks to Charriu in implementing the Game options and sorting out the DLL for this version of the mod :)
 
 History:
+
+5.1.0.0
+- Add free wins against barbs with settler
+- Add fixes from PBmod
+- Add more BUG elements from CtH (KTB, last tech tick, etc.)
+- Workboats no longer count as military units
+- Domestic religion spread never fails
+- Add game options: No score, No WW, No unit gifting, Tie city count to espionage
+- Revert unpillagable villages and towns
+- Towns no longer act as forts
+- Inca and India UB back to 60 cost and PRO bonus
+- Revert back to 10 turns of peace
+- Crossbows back to BtS implementation
+- Temples back to Priesthood
+- Castles reverted back to BtS
+- Removed naval changes (movement, new promotions and XP on buildings)
 
 5.0.0.1
 - Add missing changes to war weariness peace reduction, no WW on Always war and permanent war and oil well construction time reduced
