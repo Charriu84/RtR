@@ -17844,10 +17844,6 @@
 			<iHotKeyPriority>0</iHotKeyPriority>
 			<FreePromotions>
 				<FreePromotion>
-					<PromotionType>PROMOTION_NAVAL_FLANKING1</PromotionType>
-					<bFreePromotion>1</bFreePromotion>
-				</FreePromotion>
-				<FreePromotion>
 					<PromotionType>PROMOTION_NAVIGATION1</PromotionType>
 					<bFreePromotion>1</bFreePromotion>
 				</FreePromotion>
@@ -18224,12 +18220,7 @@
 			<bShiftDown>0</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<FreePromotions>
-				<FreePromotion>
-					<PromotionType>PROMOTION_NAVAL_FLANKING1</PromotionType>
-					<bFreePromotion>1</bFreePromotion>
-				</FreePromotion>
-			</FreePromotions>
+			<FreePromotions/>
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
@@ -18784,12 +18775,7 @@
 			<bShiftDown>0</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<FreePromotions>
-				<FreePromotion>
-					<PromotionType>PROMOTION_NAVAL_FLANKING1</PromotionType>
-					<bFreePromotion>1</bFreePromotion>
-				</FreePromotion>
-			</FreePromotions>
+			<FreePromotions/>
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
