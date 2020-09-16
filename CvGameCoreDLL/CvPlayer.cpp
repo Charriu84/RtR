@@ -38,6 +38,8 @@
 // Public Functions...
 
 CvPlayer::CvPlayer()
+	//PBmod enable Advanced start for new scenario
+	:m_bConfirmAdvancedStartEnd(false)
 {
 	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
@@ -389,6 +391,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	//--------------------------------
 	// Uninit class
 	uninit();
+
+	//PBmod enable Advanced start for new scenario
+	m_bConfirmAdvancedStartEnd = false;
 
 	m_iStartingX = INVALID_PLOT_COORD;
 	m_iStartingY = INVALID_PLOT_COORD;
@@ -3076,7 +3081,7 @@ void CvPlayer::chooseTech(int iDiscover, CvWString szText, bool bFront)
 		//PB Mod
 		//For Oracle double tech bugfix. Store if this player is logged in.
 		if ( gDLL->IsPitbossHost() && isConnected() ){
-			pInfo->setFlags(1);
+			pInfo->setFlags(PBMOD_ADD_POPUP_FLAG(1));
 		}
 
 		pInfo->setData1(iDiscover);
@@ -3107,7 +3112,6 @@ int CvPlayer::calculateScore(bool bFinal, bool bVictory)
 	argsList.add(bFinal);
 	argsList.add(bVictory);
 	gDLL->getPythonIFace()->callFunction(PYGameModule, "calculateScore", argsList.makeFunctionArgs(), &lScore);
-
 	return ((int)lScore);
 }
 
@@ -14354,12 +14358,17 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 		switch (eAction)
 		{
 		case ADVANCEDSTARTACTION_EXIT:
+			//PBmod enable Advanced start for new scenario
+			if ((GC.getGameINLINE().isPitboss() || true) && isHuman()){
+				return;
+			}
+
 			//Try to build this player's empire
 			if (getID() == GC.getGameINLINE().getActivePlayer())
 			{
 				gDLL->getInterfaceIFace()->setBusy(true);
 			}
-			AI_doAdvancedStart(true);			
+			AI_doAdvancedStart(true);
 			if (getID() == GC.getGameINLINE().getActivePlayer())
 			{
 				gDLL->getInterfaceIFace()->setBusy(false);
@@ -14377,7 +14386,22 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 	switch (eAction)
 	{
+	//PBmod enable Advanced start for new scenario
+	case ADVANCEDSTARTACTION_EXIT_CONFIRM:
+		m_bConfirmAdvancedStartEnd = true;
+		break;
 	case ADVANCEDSTARTACTION_EXIT:
+		//PBmod enable Advanced start for new scenario
+		{
+		if ((GC.getGameINLINE().isPitboss() || true) && isHuman()){
+
+			if (m_bConfirmAdvancedStartEnd){
+				; // Player had confirmed end manually.
+			}else{
+				break; // Skip automatic generated event at logoff
+			}
+		}
+
 		changeGold(getAdvancedStartPoints());
 		setAdvancedStartPoints(-1);
 		if (GC.getGameINLINE().getActivePlayer() == getID())
@@ -14405,6 +14429,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			}
 		}
 		break;
+		}
 	case ADVANCEDSTARTACTION_AUTOMATE:
 		if (getID() == GC.getGameINLINE().getActivePlayer())
 		{
