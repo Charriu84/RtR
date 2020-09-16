@@ -5182,17 +5182,14 @@ void CvTeam::setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, b
 			}
 
 			//Charriu FreeUnitForEverybody Start
-			if (GC.getGameINLINE().countKnownTechNumTeams(eIndex) == 1)
+			eFreeUnit = GET_PLAYER(ePlayer).getTechFreeUnitEverybody(eIndex);
+			if (eFreeUnit != NO_UNIT)
 			{
-				eFreeUnit = GET_PLAYER(ePlayer).getTechFreeUnitEverybody(eIndex);
-				if (eFreeUnit != NO_UNIT)
-				{
-					pCapitalCity = GET_PLAYER(ePlayer).getCapitalCity();
+				pCapitalCity = GET_PLAYER(ePlayer).getCapitalCity();
 
-					if (pCapitalCity != NULL)
-					{
-						GET_PLAYER(ePlayer).initUnit(eFreeUnit,pCapitalCity->getX_INLINE(),pCapitalCity->getY_INLINE());
-					}
+				if (pCapitalCity != NULL)
+				{
+					GET_PLAYER(ePlayer).initUnit(eFreeUnit,pCapitalCity->getX_INLINE(),pCapitalCity->getY_INLINE());
 				}
 			}
 			//Charriu FreeUnitForEverybody End
@@ -5555,7 +5552,7 @@ void CvTeam::testCircumnavigated()
 				{
 					if (getID() == GET_PLAYER((PlayerTypes)iI).getTeam())
 					{
-						GET_PLAYER((PlayerTypes)iI).changeCoastalTradeRoutes(GET_PLAYER((PlayerTypes)iI).getCoastalTradeRoutes() + GC.getDefineINT("CIRCUMNAVIGATE_FREE_TRADE_ROUTE"));
+						GET_PLAYER((PlayerTypes)iI).changeCoastalTradeRoutes(GC.getDefineINT("CIRCUMNAVIGATE_FREE_TRADE_ROUTE"));
 						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_CIRC_GLOBE_TRADE", GC.getDefineINT("CIRCUMNAVIGATE_FREE_TRADE_ROUTE"));
 					}
 					else if (isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
