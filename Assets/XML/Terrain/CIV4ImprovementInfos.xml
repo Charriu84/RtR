@@ -1537,7 +1537,7 @@
 				<iYieldChange>0</iYieldChange>
 				<iYieldChange>4</iYieldChange>
 			</YieldChanges>
-			<bActsAsCity>1</bActsAsCity>
+			<bActsAsCity>0</bActsAsCity>
 			<bHillsMakesValid>0</bHillsMakesValid>
 			<bFreshWaterMakesValid>0</bFreshWaterMakesValid>
 			<bRiverSideMakesValid>0</bRiverSideMakesValid>
