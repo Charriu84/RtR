@@ -3095,6 +3095,9 @@ int CvPlayer::calculateScore(bool bFinal, bool bVictory)
 {
 	PROFILE_FUNC();
 
+	if (GC.getGame().isOption(GAMEOPTION_NO_SCORE))
+		return 1;
+
 	if (!isAlive())
 	{
 		return 0;
