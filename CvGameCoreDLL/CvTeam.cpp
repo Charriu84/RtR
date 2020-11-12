@@ -1299,8 +1299,7 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan)
 			}
 		}
 
-		GC.getMapINLINE().verifyUnitValidPlot();
-
+		//Charriu fix order of teleporation on war declaration with multiple players
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
 		{
 			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
@@ -1308,6 +1307,8 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan)
 				GET_PLAYER((PlayerTypes)iI).verifyUnitStacksValid();
 			}
 		}
+
+		GC.getMapINLINE().verifyUnitValidPlot();
 
 		GC.getGameINLINE().AI_makeAssignWorkDirty();
 
