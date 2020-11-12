@@ -6143,7 +6143,7 @@ void CvGame::doTurn()
 				FAssert(getNumGameTurnActive() == kTeam.getAliveCount());
 
 				// PB Mod: Fix immediate turn flip in PBs with simultaneous rounds.
-				// This break was accidental after the if-branch.
+				// This break was accidential after the if-branch.
 				break;
 			}
 		}
@@ -6653,6 +6653,11 @@ void CvGame::createBarbarianCities()
 		return;
 	}
 
+	if (isOption(GAMEOPTION_NO_BARB_CITIES))
+	{
+		return;
+	}
+
 	lResult = 0;
 	gDLL->getPythonIFace()->callFunction(PYGameModule, "createBarbarianCities", NULL, &lResult);
 	if (lResult == 1)
@@ -6817,6 +6822,10 @@ void CvGame::createBarbarianUnits()
 			{
 				eBarbUnitAI = UNITAI_ATTACK_SEA;
 				iDivisor = GC.getHandicapInfo(getHandicapType()).getUnownedWaterTilesPerBarbarianUnit();
+				if (isOption(GAMEOPTION_NO_WATER_BARB))
+				{
+					iDivisor = 0;
+				}
 			}
 			else
 			{
