@@ -1311,7 +1311,8 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 							}
 						}
 
-                        if (GC.getGameINLINE().getSorenRandNum(100, "AI Raze City") < iRazeValue)
+						//Charriu Barbs don't raze cities
+                        if (GC.getGameINLINE().getSorenRandNum(100, "AI Raze City") < iRazeValue && (GC.getDefineINT("BARBS_NEVER_RAZE") == 0 || !isBarbarian()))
 						{
 							bRaze = true;
 							pCity->doTask(TASK_RAZE);
@@ -1319,6 +1320,15 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 					}
 				}
 			}
+		}
+	}
+
+	//Charriu cities captured by barbarians never autoraze
+	if (GC.getDefineINT("BARBS_NEVER_RAZE") == 1 && isBarbarian())
+	{
+		if (pCity->getPopulation() == 1)
+		{
+			pCity->setHighestPopulation(2);
 		}
 	}
 
@@ -7345,17 +7355,6 @@ DenialTypes CvPlayerAI::AI_cityTrade(CvCity* pCity, PlayerTypes ePlayer) const
 
 	FAssert(pCity->getOwnerINLINE() == getID());
 
-	//Plako for RtR mod 11.8.2015
-	if(GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_TRADING)) {
-
-		return DENIAL_TOO_MUCH;
-	}
-	//Charriu for RtR mod 14.04.2019
-	if(GC.getGameINLINE().isOption(GAMEOPTION_NO_MAP_TRADING)) {
-
-		return DENIAL_TOO_MUCH;
-	}
-
 	if (pCity->getLiberationPlayer(false) == ePlayer)
 	{
 		return NO_DENIAL;
@@ -8547,13 +8546,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			int iExploreValue = 100;
 			if (pArea != NULL)
 			{
-			if (pArea->isWater())
-			{
-				if (pArea->getUnitsPerPlayer(BARBARIAN_PLAYER) > 0)
+				if (pArea->isWater())
 				{
-					iExploreValue += (2 * iCombatValue);
+					if (pArea->getUnitsPerPlayer(BARBARIAN_PLAYER) > 0)
+					{
+						iExploreValue += (2 * iCombatValue);
+					}
 				}
-			}
 			}
 			iValue += (GC.getUnitInfo(eUnit).getMoves() * iExploreValue);
 			if (GC.getUnitInfo(eUnit).isAlwaysHostile())

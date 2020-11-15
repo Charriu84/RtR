@@ -3104,28 +3104,32 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 		{
 			PlayerTypes ePlayer = GC.getGameINLINE().getActivePlayer();
 
-			for (int iI = 0; iI < GC.getNumBuildInfos(); iI++)
+			//Charriu show partial build only inside your culture
+			if (pPlot->calculateCulturalOwner() == ePlayer)
 			{
-				if (pPlot->getBuildProgress((BuildTypes)iI) > 0 && pPlot->canBuild((BuildTypes)iI, ePlayer))
+				for (int iI = 0; iI < GC.getNumBuildInfos(); iI++)
 				{
-					BuildTypes eBuild = (BuildTypes)iI;
-					int iTurns = pPlot->getBuildTurnsLeft(eBuild, GC.getGame().getActivePlayer());
-					
-					if (iTurns > 0 && iTurns < MAX_INT)
+					if (pPlot->getBuildProgress((BuildTypes)iI) > 0 && pPlot->canBuild((BuildTypes)iI, ePlayer))
 					{
-						szString.append(NEWLINE);
-						if (eBuild == eBestBuild)
+						BuildTypes eBuild = (BuildTypes)iI;
+						int iTurns = pPlot->getBuildTurnsLeft(eBuild, GC.getGame().getActivePlayer());
+					
+						if (iTurns > 0 && iTurns < MAX_INT)
 						{
-							bBestPartiallyBuilt = true;
-							szString.append(CvWString::format(SETCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
-						}
-						szString.append(GC.getBuildInfo(eBuild).getDescription());
-						szString.append(L": ");
-						szString.append(gDLL->getText("TXT_KEY_ACTION_NUM_TURNS", iTurns));
+							szString.append(NEWLINE);
+							if (eBuild == eBestBuild)
+							{
+								bBestPartiallyBuilt = true;
+								szString.append(CvWString::format(SETCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
+							}
+							szString.append(GC.getBuildInfo(eBuild).getDescription());
+							szString.append(L": ");
+							szString.append(gDLL->getText("TXT_KEY_ACTION_NUM_TURNS", iTurns));
 						
-						if (eBuild == eBestBuild)
-						{
-							szString.append(CvWString::format(ENDCOLR));
+							if (eBuild == eBestBuild)
+							{
+								szString.append(CvWString::format(ENDCOLR));
+							}
 						}
 					}
 				}
@@ -6215,12 +6219,13 @@ void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech,
 			if (getBugOptionBOOL("MiscHover__LastTurnTechs", true, "BUG_LAST_TURN_TECH_HOVER"))
 			{
 				//Show Last Turn Beakers
+				int researchOverflow = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getOverflowResearch();
 				int researchProgress = GET_TEAM(GC.getGameINLINE().getActiveTeam()).getResearchProgress(eTech);
 				int researchCost = GET_TEAM(GC.getGameINLINE().getActiveTeam()).getResearchCost(eTech);
 				int researchRate = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).calculateResearchRate(eTech);
 				int lastTurnRate = 0;
 
-				int tempProgress = researchProgress;
+				int tempProgress = researchProgress + researchOverflow;
 				while (tempProgress < researchCost) 
 				{
 					lastTurnRate = researchCost - tempProgress;
