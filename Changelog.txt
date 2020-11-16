@@ -1,6 +1,6 @@
 Full Change log here:
 
-Change log 5.1.0.0
+Change log 5.1.1.0
 
 Traits:
 
@@ -252,6 +252,7 @@ Naval units, promotion and mechanic changes:
 Promotions and mechanics:
 
 [spoiler]Circumnavigation: +1 movement point on naval units, individual achievement completed by unfogging a single tile on each row and/or column of the map on which the map wraps.
+Circumnavigation is only possible after discovering Optics
 
 Coastal Blockade now has a range of 1 square around the blockader, instead of 3 squares.
 [/spoiler]
@@ -279,7 +280,10 @@ Lion: Strength 1, 1 move. +100% against Melee.
 Panther: Strength 1, 2 move, starts with woodsman 2 promotion.
 Bear: Strength 1, 1 move, +200% against Melee.
 Scout: +200% against barbarian animals. Require no tech. Every player starts with a scout instead of a warrior.
-All difficulty levels adjusted: Human barbarian units are created from turn 40, barb cities can be created beginning from turn 50[/spoiler]
+All difficulty levels adjusted: Human barbarian units are created from turn 40, barb cities can be created beginning from turn 50
+Barbs now never attack your unit stack if the stack includes a settler and a unit that is giving military happiness
+Barbs never raze a city even autoraze. On recapturing a city you too do not autoraze it.
+[/spoiler]
 
 
 Technology:
@@ -380,6 +384,8 @@ Whaling Boats: Enabled at Sailing.
 
 Oil well construction time reduced to 3 from 10
 
+Jungle no longer grows
+
 
 Game Mechanics:
 
@@ -398,7 +404,9 @@ No Map Trading: Maps appear untradable in diplomacy screen
 No Wonder resource modifiers: Resources do not affect world wonder or world project construction speeds.
 No Immediate Peace (Peace treaty negotiations are only possible after 5 turns)
 True AI Diplo: All single player trade items are also available in MP[/spoiler]
-
+No Water Barb: Barbs never spawn water units
+No Barb Cities: Barbs never spawn cities
+No Spies: Nobody can build spies
 
 Events: THESE HAVE NOW BEEN FIXED! PLEASE TEST ACCORDINGLY, THERE MAY STILL BE BUGS!
 
@@ -521,6 +529,10 @@ Production decay counter on a type of build (e.g. axeman) is not reset after com
 Feature growth/disappearance rates, and bonus discovery (mine pop) rates, do not scale with game speed.
 
 Diplomacy Pausing: Diplomacy windows do not occur on game login whilst the game is paused.
+
+Production decay now happens before production in turn order preventing exploit to never decay something
+
+Fix teleporation on first war party caused by war declaration of third party
 
 Autosaves: Autosaves are generated at login and log out; log out saves are saved to a folder specified within the global defines XML file. Default location is C:\temp.
 
@@ -662,6 +674,23 @@ DirectProductionTraits = This gives a straight hammer reduction to the unit. e.G
 And thanks to Charriu in implementing the Game options and sorting out the DLL for this version of the mod :)
 
 History:
+
+5.1.0.0
+- Fix some crashes caused by missing game option files
+- Update texts for last turn tech feature
+- Make Tech Advisor higher to remove any scroll bars
+- Reduce lag in graphs screen
+- Add new gameoptions No Water Barb, No Barb Cities and No Spies
+- Barbs flee from settlers with military units
+- Barbs never autoraze
+- Unlock circumnavigation on Optics
+- Production decay now happens before production in turn order
+- Partial builds BUG feature only inside your culture
+- Fix teleporation on first war party caused by war declaration of third party
+- Vassal as an option under True AI Diplo
+- Remove gold overflow conversion introduced by BUG/Unofficial Patch
+- Jungle no longer grows
+- Fix crash caused on capturing a city
 
 5.1.0.0
 - Add free wins against barbs with settler
