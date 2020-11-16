@@ -1751,7 +1751,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		if (lResult == 1)
 		{
 			//auto raze based on game rules
-			if (pNewCity->isAutoRaze())
+			//Charriu barbs don't raze cities
+			if (pNewCity->isAutoRaze() && (GC.getDefineINT("BARBS_NEVER_RAZE") == 0 || !isBarbarian()))
 			{
 				if (iCaptureGold > 0)
 				{
@@ -3985,7 +3986,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 
 	case TRADE_VASSAL:
 	case TRADE_SURRENDER:
-		if (!isHuman() || GET_PLAYER(eWhoTo).isHuman()) //  human can't be vassal of AI
+		if (!isHuman() || GET_PLAYER(eWhoTo).isHuman() || GC.getGame().isOption(GAMEOPTION_TRUE_AI_DIPLO)) //  human can't be vassal of AI
 		{
 			CvTeam& kVassalTeam = GET_TEAM(getTeam());
 			CvTeam& kMasterTeam = GET_TEAM(GET_PLAYER(eWhoTo).getTeam());
@@ -5279,7 +5280,7 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 		}
 	}
 
-	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE))
+	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE) || GC.getGameINLINE().isOption(GAMEOPTION_NO_SPIES))
 	{
 		if (GC.getUnitInfo(eUnit).isSpy() || GC.getUnitInfo(eUnit).getEspionagePoints() > 0)
 		{
@@ -15990,29 +15991,30 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange)
 		{
 			changeExtraBuildingHappiness(eOurBuilding, (GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) * iChange));
 			changeExtraBuildingHealth(eOurBuilding, (GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) * iChange));
+
+			// AGDM addition:
+			// TODO: Process this when a city is aquired as well. (I.e. a city changes ownership; thus the civics of the city changes
+			int iLoop;
+			for (CvCity* pLoopCity = firstCity(&iLoop); NULL != pLoopCity; pLoopCity = nextCity(&iLoop))
+			{
+				for (iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
+				{
+					pLoopCity->changeBuildingYieldChange((BuildingClassTypes)iI, (YieldTypes)iJ, (GC.getCivicInfo(eCivic)).getBuildingYieldChanges(iI, iJ) * iChange);
+					pLoopCity->changeYieldRateModifier((YieldTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingYieldModifiers(iI, iJ) * iChange);
+				}
+				for (iJ = 0; iJ < NUM_COMMERCE_TYPES; ++iJ)
+				{
+					pLoopCity->changeBuildingCommerceChange((BuildingClassTypes)iI, (CommerceTypes)iJ, (GC.getCivicInfo(eCivic)).getBuildingCommerceChanges(iI, iJ) * iChange);
+					pLoopCity->changeCommerceRateModifier((CommerceTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingCommerceModifiers(iI, iJ) * iChange);
+				}
+				for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
+				{
+					pLoopCity->changeFreeSpecialistCount((SpecialistTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingFreeSpecialistCounts(iI, iJ) * iChange);
+				}
+				pLoopCity->changeMilitaryProductionModifier(pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingMilitaryProductionModifiers(iI) * iChange);
+				pLoopCity->changeFreeExperience(pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingFreeExperiences(iI) * iChange);
+			}
 		}
-		// AGDM addition:
-		// TODO: Process this when a city is aquired as well. (I.e. a city changes ownership; thus the civics of the city changes
-		int iLoop;
-		for (CvCity* pLoopCity = firstCity(&iLoop); NULL != pLoopCity; pLoopCity = nextCity(&iLoop))
-		{
-			for (iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
-			{
-				pLoopCity->changeBuildingYieldChange((BuildingClassTypes)iI, (YieldTypes)iJ, (GC.getCivicInfo(eCivic)).getBuildingYieldChanges(iI, iJ) * iChange);
-				pLoopCity->changeYieldRateModifier((YieldTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingYieldModifiers(iI, iJ) * iChange);
-			}
-			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; ++iJ)
-			{
-				pLoopCity->changeBuildingCommerceChange((BuildingClassTypes)iI, (CommerceTypes)iJ, (GC.getCivicInfo(eCivic)).getBuildingCommerceChanges(iI, iJ) * iChange);
-				pLoopCity->changeCommerceRateModifier((CommerceTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingCommerceModifiers(iI, iJ) * iChange);
-			}
-			for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
-			{
-				pLoopCity->changeFreeSpecialistCount((SpecialistTypes)iJ, pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingFreeSpecialistCounts(iI, iJ) * iChange);
-			}
-			pLoopCity->changeMilitaryProductionModifier(pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingMilitaryProductionModifiers(iI) * iChange);
-			pLoopCity->changeFreeExperience(pLoopCity->getNumActiveBuilding(eOurBuilding) * GC.getCivicInfo(eCivic).getBuildingFreeExperiences(iI) * iChange);
-		}					
 	}
 
 	for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)

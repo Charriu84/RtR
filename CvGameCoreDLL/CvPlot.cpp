@@ -3402,7 +3402,7 @@ int CvPlot::getNumVisibleUnits(PlayerTypes ePlayer) const
 }
 
 //Charriu FREE_WIN_AGAINST_BARB_WITH_SETTLER
-bool CvPlot::hasSettler(PlayerTypes ePlayer) const
+bool CvPlot::hasSettler() const
 {
 	return (plotCheck(PUF_isFound) != NULL);
 }
