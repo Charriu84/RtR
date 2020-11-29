@@ -1,6 +1,6 @@
 Full Change log here:
 
-Change log 5.1.1.0
+Change log 5.1.1.1
 
 Traits:
 
@@ -403,10 +403,10 @@ No City Trading: Unable to trade cities, cities appear untradable in diplomacy s
 No Map Trading: Maps appear untradable in diplomacy screen
 No Wonder resource modifiers: Resources do not affect world wonder or world project construction speeds.
 No Immediate Peace (Peace treaty negotiations are only possible after 5 turns)
-True AI Diplo: All single player trade items are also available in MP[/spoiler]
+True AI Diplo: All single player trade items are also available in MP
 No Water Barb: Barbs never spawn water units
 No Barb Cities: Barbs never spawn cities
-No Spies: Nobody can build spies
+No Spies: Nobody can build spies[/spoiler]
 
 Events: THESE HAVE NOW BEEN FIXED! PLEASE TEST ACCORDINGLY, THERE MAY STILL BE BUGS!
 
