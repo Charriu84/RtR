@@ -505,6 +505,7 @@ class CvEventManager:
                     #TotalCommerce|Gold|Science|City Count|Total Pop|Inflation|Financial Bonus Lighthouse|Financial Bonus|Financial BtS Bonus|Foreign Trade Routes|Foreign Trade Income|Domestic Trade Routes|Domestic Trade Income|Protective Bonus|Domestic Protective Bonus|Domestic Better Protective Bonus|Aggressive Maintenance Bonus|City Maintenance|Unit Cost|Unit Supply|Civic Maintenance|ORG|Labor Civic|Wonders build
                     f.write("%d|" % (player.calculateTotalYield(2))) 
                     f.write("%d|" % (player.calculateBaseNetFullGoldTracking()))
+                    f.write("%d|" % (player.calculateBaseNetFullResearchTracking()))
             
             f.write("\n")    
             f.close()
