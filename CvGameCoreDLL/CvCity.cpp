@@ -5973,6 +5973,9 @@ int CvCity::calculateColonyMaintenance() const
 
 int CvCity::calculateColonyMaintenanceTimes100() const
 {
+	//Charriu remove ColonyMaintenance
+	return 0;
+
 	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_VASSAL_STATES))
 	{
 		return 0;
