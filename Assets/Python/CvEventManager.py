@@ -506,6 +506,9 @@ class CvEventManager:
                     f.write("%d|" % (player.calculateTotalYield(2))) 
                     f.write("%d|" % (player.calculateBaseNetFullGoldTracking()))
                     f.write("%d|" % (player.calculateBaseNetFullResearchTracking()))
+                    f.write("%d|" % (player.getNumCities()))
+                    f.write("%d|" % (player.getTotalPopulation()))
+                    f.write("%d|" % (player.calculateInflationRate()))
             
             f.write("\n")    
             f.close()
