@@ -279,6 +279,14 @@ public:
 	void changeTrackingFinancialBonus(int iChange);
 	//Charriu TrackingOriginalFinancialBonus
 	void changeTrackingOriginalFinancialBonus(int iChange);
+	//Charriu TrackingForeignTradeRoutes
+	void changeTrackingForeignTradeRoutes(int iChange);
+	//Charriu TrackingForeignTradeRoutesCommerce
+	void changeTrackingForeignTradeRoutesCommerce(int iChange);
+	//Charriu TrackingDomesticTradeRoutes
+	void changeTrackingDomesticTradeRoutes(int iChange);
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	void changeTrackingDomesticTradeRoutesCommerce(int iChange);
 	void changeTotalPopulation(int iChange);
 	long getRealPopulation() const;																																				// Exposed to Python
 	int getReligionPopulation(ReligionTypes eReligion) const;
@@ -713,6 +721,15 @@ public:
 	int getTrackingFinancialBonus() const;				// Exposed to Python
 	//Charriu TrackingOriginalFinancialBonus
 	int getTrackingOriginalFinancialBonus() const;				// Exposed to Python
+	//Charriu TrackingForeignTradeRoutes
+	int getTrackingForeignTradeRoutes() const;				// Exposed to Python
+	//Charriu TrackingForeignTradeRoutesCommerce
+	int getTrackingForeignTradeRoutesCommerce() const;				// Exposed to Python
+	//Charriu TrackingDomesticTradeRoutes
+	int getTrackingDomesticTradeRoutes() const;				// Exposed to Python
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	int getTrackingDomesticTradeRoutesCommerce() const;				// Exposed to Python
+
 	int getTradeYieldModifier(YieldTypes eIndex) const;																								// Exposed to Python
 	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
 
@@ -1107,6 +1124,14 @@ protected:
 	int m_iTrackingFinancialBonus;
 	//Charriu TrackingOriginalFinancialBonus
 	int m_iTrackingOriginalFinancialBonus;
+	//Charriu TrackingForeignTradeRoutes
+	int m_iTrackingForeignTradeRoutes;
+	//Charriu TrackingForeignTradeRoutesCommerce
+	int m_iTrackingForeignTradeRoutesCommerce;
+	//Charriu TrackingDomesticTradeRoutes
+	int m_iTrackingDomesticTradeRoutes;
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	int m_iTrackingDomesticTradeRoutesCommerce;
 	int m_iTotalPopulation;
 	int m_iTotalLand;
 	int m_iTotalLandScored;
