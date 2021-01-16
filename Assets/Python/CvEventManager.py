@@ -515,6 +515,10 @@ class CvEventManager:
                     f.write("%d|" % (player.getTrackingForeignTradeRoutesCommerce()))
                     f.write("%d|" % (player.getTrackingDomesticTradeRoutes()))
                     f.write("%d|" % (player.getTrackingDomesticTradeRoutesCommerce()))
+                    f.write("%d|" % (player.getTotalMaintenance()))
+                    f.write("%d|" % (player.calculateUnitCost()))
+                    f.write("%d|" % (player.calculateUnitSupply()))
+                    f.write("%d|" % (player.getCivicUpkeep([], False)))
             
             f.write("\n")    
             f.close()
