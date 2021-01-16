@@ -520,6 +520,7 @@ class CvEventManager:
                     f.write("%d|" % (player.calculateUnitSupply()))
                     f.write("%d|" % (player.getCivicUpkeep([], False)))
                     f.write("%d|" % (player.getCivicUpkeepBonusTracking([], False)))
+                    f.write("%s|" % (player.getWonderTracking()))
             
             f.write("\n")    
             f.close()

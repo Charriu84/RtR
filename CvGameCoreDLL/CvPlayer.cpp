@@ -597,6 +597,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	}
 
 	m_szScriptData = "";
+	m_szWonderTracking = "";
 
 	if (!bConstructorCall)
 	{
@@ -9788,6 +9789,18 @@ void CvPlayer::changeTotalTech(int iChange)
 	}
 }
 
+//Charriu Wonder Tracking
+CvWString CvPlayer::getWonderTracking() const
+{
+	return m_szWonderTracking;
+}
+
+//Charriu Wonder Tracking
+void CvPlayer::setWonderTracking(const CvWString& szValue)
+{
+	m_szWonderTracking = szValue;
+}
+
 int CvPlayer::getTotalBeakersTradedAway() const		 
 {
 	return m_iTotalBeakersTradedAway;
@@ -16452,6 +16465,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(NUM_PLAYEROPTION_TYPES, m_abOptions);
 
 	pStream->ReadString(m_szScriptData);
+	pStream->ReadString(m_szWonderTracking);
 
 	FAssertMsg((0 < GC.getNumBonusInfos()), "GC.getNumBonusInfos() is not greater than zero but it is expected to be in CvPlayer::read");
 	pStream->Read(GC.getNumBonusInfos(), m_paiBonusExport);
@@ -16925,6 +16939,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(NUM_PLAYEROPTION_TYPES, m_abOptions);
 
 	pStream->WriteString(m_szScriptData);
+	pStream->WriteString(m_szWonderTracking);
 
 	FAssertMsg((0 < GC.getNumBonusInfos()), "GC.getNumBonusInfos() is not greater than zero but an array is being allocated in CvPlayer::write");
 	pStream->Write(GC.getNumBonusInfos(), m_paiBonusExport);
