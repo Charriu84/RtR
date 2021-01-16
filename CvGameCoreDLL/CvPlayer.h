@@ -853,8 +853,8 @@ public:
 	int getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy = false) const;										// Exposed to Python					
 	int getCivicUpkeep(CivicTypes* paeCivics = NULL, bool bIgnoreAnarchy = false) const;							// Exposed to Python					
 	//Charriu Tracking Organized
-	int getSingleCivicUpkeepBonusTracking(CivicTypes eCivic, bool bIgnoreAnarchy = false) const;										// Exposed to Python					
-	int getCivicUpkeepBonusTracking(CivicTypes* paeCivics = NULL, bool bIgnoreAnarchy = false) const;							// Exposed to Python					
+	int getSingleCivicUpkeepBonusTracking(int bonusValue, CivicTypes eCivic, bool bIgnoreAnarchy = false) const;										// Exposed to Python					
+	int getCivicUpkeepBonusTracking(int bonusValue, CivicTypes* paeCivics = NULL, bool bIgnoreAnarchy = false) const;							// Exposed to Python					
 	void setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue);															// Exposed to Python					
 
 	int getSpecialistExtraYield(SpecialistTypes eIndex1, YieldTypes eIndex2) const;										// Exposed to Python

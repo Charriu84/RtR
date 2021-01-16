@@ -1898,11 +1898,11 @@ int CyPlayer::getCivicUpkeep(boost::python::list& /*CivicTypes*/ paiCivics, bool
 }
 
 //Charriu Tracking Organized
-int CyPlayer::getCivicUpkeepBonusTracking(boost::python::list& /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy)
+int CyPlayer::getCivicUpkeepBonusTracking(boost::python::list& /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy, int bonusValue)
 {
 	int* pCivics = NULL;
 	gDLL->getPythonIFace()->putSeqInArray(paiCivics.ptr() /*src*/, &pCivics /*dst*/);
-	int iRet = m_pPlayer ? m_pPlayer->getCivicUpkeepBonusTracking((CivicTypes*)pCivics, bIgnoreAnarchy) : -1;
+	int iRet = m_pPlayer ? m_pPlayer->getCivicUpkeepBonusTracking(bonusValue, (CivicTypes*)pCivics, bIgnoreAnarchy) : -1;
 	delete [] pCivics;
 	return iRet;
 }

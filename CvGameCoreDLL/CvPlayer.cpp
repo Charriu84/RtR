@@ -12110,7 +12110,7 @@ int CvPlayer::getCivicUpkeep(CivicTypes* paeCivics, bool bIgnoreAnarchy) const
 }
 
 //Charriu Tracking Organized
-int CvPlayer::getSingleCivicUpkeepBonusTracking(CivicTypes eCivic, bool bIgnoreAnarchy) const
+int CvPlayer::getSingleCivicUpkeepBonusTracking(int bonusValue, CivicTypes eCivic, bool bIgnoreAnarchy) const
 {
 	int iUpkeep;
 	int iUpkeepNormal;
@@ -12155,7 +12155,7 @@ int CvPlayer::getSingleCivicUpkeepBonusTracking(CivicTypes eCivic, bool bIgnoreA
 		iUpkeepNormal /= 100;
 	}
 
-	iUpkeep *= std::max(0, (50));
+	iUpkeep *= std::max(0, bonusValue);
 	iUpkeep /= 100;
 
 	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getCivicUpkeepPercent();
@@ -12174,7 +12174,7 @@ int CvPlayer::getSingleCivicUpkeepBonusTracking(CivicTypes eCivic, bool bIgnoreA
 }
 
 //Charriu Tracking Organized
-int CvPlayer::getCivicUpkeepBonusTracking(CivicTypes* paeCivics, bool bIgnoreAnarchy) const
+int CvPlayer::getCivicUpkeepBonusTracking(int bonusValue, CivicTypes* paeCivics, bool bIgnoreAnarchy) const
 {
 	int iTotalUpkeep;
 	int iI;
@@ -12188,7 +12188,7 @@ int CvPlayer::getCivicUpkeepBonusTracking(CivicTypes* paeCivics, bool bIgnoreAna
 
 	for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 	{
-		iTotalUpkeep += getSingleCivicUpkeepBonusTracking(paeCivics[iI], bIgnoreAnarchy);
+		iTotalUpkeep += getSingleCivicUpkeepBonusTracking(bonusValue, paeCivics[iI], bIgnoreAnarchy);
 	}
 
 	return iTotalUpkeep;
