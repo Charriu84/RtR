@@ -12461,6 +12461,8 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			setUnitProduction(eTrainUnit, 0);
 
 			int iProductionGold = std::max(0, iOverflow - iMaxOverflowForGold) * GC.getDefineINT("MAXED_UNIT_GOLD_PERCENT") / 100;
+			// RBMP decay fix
+			setUnitProductionTime(eTrainUnit, 0);
 			if (iProductionGold > 0)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeGold(iProductionGold);
@@ -13215,7 +13217,7 @@ void CvCity::doDecay()
 					}
 				}
 			}
-
+			
 			//Charriu fix decaytimer not reseting on 0 hammers invested
 			if (getBuildingProduction(eBuilding) <= 0)
 			{
@@ -13243,7 +13245,7 @@ void CvCity::doDecay()
 					}
 				}
 			}
-			
+
 			//Charriu fix decaytimer not reseting on 0 hammers invested
 			if (getUnitProduction(eUnit) <= 0)
 			{
