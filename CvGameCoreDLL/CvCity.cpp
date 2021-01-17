@@ -13408,6 +13408,9 @@ void CvCity::doGreatPeople()
 			}
 
 			createGreatPeople(eGreatPeopleUnit, true, false);
+
+			//Charriu Great Person tracking
+			GET_PLAYER(getOwnerINLINE()).setGreatPersonTracking(GET_PLAYER(getOwnerINLINE()).getGreatPersonTracking() + GC.getUnitInfo(eGreatPeopleUnit).getTextKeyWide());
 		}
 	}
 }
