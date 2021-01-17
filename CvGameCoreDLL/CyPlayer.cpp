@@ -527,6 +527,18 @@ int CyPlayer::calculateGoldRate()
 	return m_pPlayer ? m_pPlayer->calculateGoldRate() : -1;
 }
 
+//Charriu Gold Tracking
+int CyPlayer::calculateBaseNetFullGoldTracking()
+{
+	return m_pPlayer ? m_pPlayer->calculateBaseNetFullGoldTracking() : -1;
+}
+
+//Charriu Science Tracking
+int CyPlayer::calculateBaseNetFullResearchTracking()
+{
+	return m_pPlayer ? m_pPlayer->calculateBaseNetFullResearchTracking() : -1;
+}
+
 int CyPlayer::calculateTotalCommerce()
 {
 	return m_pPlayer ? m_pPlayer->calculateTotalCommerce() : -1;
@@ -1552,6 +1564,54 @@ int CyPlayer::getExtraYieldWaterThreshold(YieldTypes eIndex)
 	return m_pPlayer ? m_pPlayer->getExtraYieldWaterThreshold(eIndex) : NO_YIELD;
 }
 
+//Charriu TrackingFinancialBonus
+int CyPlayer::getTrackingFinancialBonus()
+{
+	if (m_pPlayer != NULL)
+		m_pPlayer->updateYield();
+	return m_pPlayer ? m_pPlayer->getTrackingFinancialBonus() : 0;
+}
+
+//Charriu TrackingOriginalFinancialBonus
+int CyPlayer::getTrackingOriginalFinancialBonus()
+{
+	if (m_pPlayer != NULL)
+		m_pPlayer->updateYield();
+	return m_pPlayer ? m_pPlayer->getTrackingOriginalFinancialBonus() : 0;
+}
+
+//Charriu TrackingForeignTradeRoutes
+int CyPlayer::getTrackingForeignTradeRoutes()
+{
+	if (m_pPlayer != NULL)
+		m_pPlayer->updateTradeRoutes();
+	return m_pPlayer ? m_pPlayer->getTrackingForeignTradeRoutes() : 0;
+}
+
+//Charriu TrackingForeignTradeRoutesCommerce
+int CyPlayer::getTrackingForeignTradeRoutesCommerce()
+{
+	if (m_pPlayer != NULL)
+		m_pPlayer->updateTradeRoutes();
+	return m_pPlayer ? m_pPlayer->getTrackingForeignTradeRoutesCommerce() : 0;
+}
+
+//Charriu TrackingDomesticTradeRoutes
+int CyPlayer::getTrackingDomesticTradeRoutes()
+{
+	if (m_pPlayer != NULL)
+		m_pPlayer->updateTradeRoutes();
+	return m_pPlayer ? m_pPlayer->getTrackingDomesticTradeRoutes() : 0;
+}
+
+//Charriu TrackingDomesticTradeRoutesCommerce
+int CyPlayer::getTrackingDomesticTradeRoutesCommerce()
+{
+	if (m_pPlayer != NULL)
+		m_pPlayer->updateTradeRoutes();
+	return m_pPlayer ? m_pPlayer->getTrackingDomesticTradeRoutesCommerce() : 0;
+}
+
 int CyPlayer::getTradeYieldModifier(YieldTypes eIndex)
 {
 	return m_pPlayer ? m_pPlayer->getTradeYieldModifier(eIndex) : NO_YIELD;
@@ -1837,6 +1897,24 @@ int CyPlayer::getCivicUpkeep(boost::python::list& /*CivicTypes*/ paiCivics, bool
 	return iRet;
 }
 
+//Charriu Tracking Organized
+int CyPlayer::getCivicUpkeepBonusTracking(boost::python::list& /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy, int bonusValue)
+{
+	int* pCivics = NULL;
+	gDLL->getPythonIFace()->putSeqInArray(paiCivics.ptr() /*src*/, &pCivics /*dst*/);
+	int iRet = m_pPlayer ? m_pPlayer->getCivicUpkeepBonusTracking(bonusValue, (CivicTypes*)pCivics, bIgnoreAnarchy) : -1;
+	delete [] pCivics;
+	return iRet;
+}
+
+//Charriu Tracking City Maintenance Bonus
+int CyPlayer::getTrackingMaintenanceBonus(int bonusValue)
+{
+	if (m_pPlayer)
+		return m_pPlayer->getTrackingMaintenanceBonus(bonusValue);
+	return 0;
+}
+
 void CyPlayer::setCivics(int /*CivicOptionTypes*/ eIndex, int /*CivicTypes*/ eNewValue)
 {
 	if (m_pPlayer)
@@ -1925,6 +2003,28 @@ int CyPlayer::getNumCityNames()
 std::wstring CyPlayer::getCityName(int iIndex)
 {
 	return m_pPlayer ? m_pPlayer->getCityName(iIndex) : std::wstring();
+}
+
+//Charriu Wonder Tracking
+std::wstring CyPlayer::getWonderTracking()
+{
+	std::wstring tracking = m_pPlayer ? m_pPlayer->getWonderTracking() : std::wstring();
+	if (m_pPlayer != NULL)
+	{
+		m_pPlayer->setWonderTracking("");
+	}
+	return tracking;
+}
+
+//Charriu Great Person Tracking
+std::wstring CyPlayer::getGreatPersonTracking()
+{
+	std::wstring tracking = m_pPlayer ? m_pPlayer->getGreatPersonTracking() : std::wstring();
+	if (m_pPlayer != NULL)
+	{
+		m_pPlayer->setGreatPersonTracking("");
+	}
+	return tracking;
 }
 
 // returns tuple of (CyCity, iterOut)

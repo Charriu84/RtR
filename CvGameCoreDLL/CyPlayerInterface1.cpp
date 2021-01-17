@@ -126,6 +126,10 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("calculateInflationRate", &CyPlayer::calculateInflationRate, "int ()")
 		.def("calculateInflatedCosts", &CyPlayer::calculateInflatedCosts, "int ()")
 		.def("calculateGoldRate", &CyPlayer::calculateGoldRate, "int ()")
+		//Charriu Gold Tracking
+		.def("calculateBaseNetFullGoldTracking", &CyPlayer::calculateBaseNetFullGoldTracking, "int ()")
+		//Charriu Science Tracking
+		.def("calculateBaseNetFullResearchTracking", &CyPlayer::calculateBaseNetFullResearchTracking, "int ()")
 		.def("calculateTotalCommerce", &CyPlayer::calculateTotalCommerce, "int ()")
 		.def("calculateResearchRate", &CyPlayer::calculateResearchRate, "int (int /*TechTypes*/ eTech)")
 		.def("calculateBaseNetResearch", &CyPlayer::calculateBaseNetResearch, "int ()")
@@ -352,6 +356,18 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getExtraYieldLandThreshold", &CyPlayer::getExtraYieldLandThreshold, "int (YieldTypes eIndex)")
 		//Charriu ExtraYieldWaterThreshold
 		.def("getExtraYieldWaterThreshold", &CyPlayer::getExtraYieldWaterThreshold, "int (YieldTypes eIndex)")
+		//Charriu TrackingFinancialBonus
+		.def("getTrackingFinancialBonus", &CyPlayer::getTrackingFinancialBonus, "int ()")
+		//Charriu TrackingOriginalFinancialBonus
+		.def("getTrackingOriginalFinancialBonus", &CyPlayer::getTrackingOriginalFinancialBonus, "int ()")
+		//Charriu TrackingForeignTradeRoutes
+		.def("getTrackingForeignTradeRoutes", &CyPlayer::getTrackingForeignTradeRoutes, "int ()")
+		//Charriu TrackingForeignTradeRoutesCommerce
+		.def("getTrackingForeignTradeRoutesCommerce", &CyPlayer::getTrackingForeignTradeRoutesCommerce, "int ()")
+		//Charriu TrackingDomesticTradeRoutes
+		.def("getTrackingDomesticTradeRoutes", &CyPlayer::getTrackingDomesticTradeRoutes, "int ()")
+		//Charriu TrackingDomesticTradeRoutesCommerce
+		.def("getTrackingDomesticTradeRoutesCommerce", &CyPlayer::getTrackingDomesticTradeRoutesCommerce, "int ()")
 		.def("getTradeYieldModifier", &CyPlayer::getTradeYieldModifier, "int (YieldTypes eIndex)")
 		.def("getFreeCityCommerce", &CyPlayer::getFreeCityCommerce, "int (CommerceTypes eIndex)")
 		.def("getCommercePercent", &CyPlayer::getCommercePercent, "int (CommerceTypes eIndex)")
@@ -413,6 +429,10 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getCivics", &CyPlayer::getCivics, "int /*CivicTypes*/ (int /*CivicOptionTypes*/ iIndex)")
 		.def("getSingleCivicUpkeep", &CyPlayer::getSingleCivicUpkeep, "int (int /*CivicTypes*/ eCivic, bool bIgnoreAnarchy)")
 		.def("getCivicUpkeep", &CyPlayer::getCivicUpkeep, "int (int* /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy)")
+		//Charriu Tracking Organized
+		.def("getCivicUpkeepBonusTracking", &CyPlayer::getCivicUpkeepBonusTracking, "int (int, int* /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy)")
+		//Charriu Tracking City Maintenance Bonus
+		.def("getTrackingMaintenanceBonus", &CyPlayer::getTrackingMaintenanceBonus, "int (int)")
 		.def("setCivics", &CyPlayer::setCivics, "void (int iCivicOptionType, int iCivicType) - Used to forcibly set civics with no anarchy")
 
 		.def("getCombatExperience", &CyPlayer::getCombatExperience, "int () - Combat experience used to produce Warlords")
@@ -433,6 +453,8 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getCityName", &CyPlayer::getCityName, "std::wstring (int iIndex)")
 		.def("firstCity", &CyPlayer::firstCity, "tuple(CyCity, int iterOut) (bool bReverse) - gets the first city")
 		.def("nextCity", &CyPlayer::nextCity, "tuple(CyCity, int iterOut) (int iterIn, bool bReverse) - gets the next city")
+		.def("getWonderTracking", &CyPlayer::getWonderTracking, "std::wstring ()")
+		.def("getGreatPersonTracking", &CyPlayer::getGreatPersonTracking, "std::wstring ()")
 		.def("getNumCities", &CyPlayer::getNumCities, "int ()")
 		.def("getCity", &CyPlayer::getCity, python::return_value_policy<python::manage_new_object>(), "CyCity* (int iID)")
 		.def("firstUnit", &CyPlayer::firstUnit, "tuple(CyUnit, int iterOut) (bool bReverse) - gets the first unit")

@@ -5868,6 +5868,26 @@ void CvCity::updateMaintenance()
 	}
 }
 
+//Charriu Tracking City Maintenance Bonus
+int CvCity::getTrackingMaintenanceBonus(int bonusValue) const
+{
+	int iNewMaintenance;
+	int iMaintenanceReduction;
+
+	iNewMaintenance = 0;
+	iMaintenanceReduction = 0;
+
+	if (!isDisorder() && !isWeLoveTheKingDay() && (getPopulation() > 0))
+	{
+		iNewMaintenance = (calculateBaseMaintenanceTimes100() * std::max(0, (getMaintenanceModifier() + 100))) / 100;
+
+		if (bonusValue > 0)
+			iMaintenanceReduction = iNewMaintenance * bonusValue / 100;
+	}
+
+	return iNewMaintenance / 100;
+}
+
 int CvCity::calculateDistanceMaintenance() const
 {
 	return (calculateDistanceMaintenanceTimes100() / 100);
@@ -9311,6 +9331,33 @@ void CvCity::updateCommerce(CommerceTypes eIndex)
 	}
 }
 
+//Charriu Commerce Tracking
+int CvCity::getCommerceTracking(CommerceTypes eIndex) const										 
+{
+	int iOldCommerce;
+	int iNewCommerce;
+
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < NUM_COMMERCE_TYPES, "eIndex expected to be < NUM_COMMERCE_TYPES");
+
+	if (isDisorder())
+	{
+		iNewCommerce = 0;
+	}
+	else
+	{
+		int iBaseCommerceRate = getYieldRate(YIELD_COMMERCE) * 100;
+
+		iBaseCommerceRate += 100 * ((getSpecialistPopulation() + getNumGreatPeople()) * GET_PLAYER(getOwnerINLINE()).getSpecialistExtraCommerce(eIndex));
+		iBaseCommerceRate += 100 * (getBuildingCommerce(eIndex) + getSpecialistCommerce(eIndex) + getReligionCommerce(eIndex) + getCorporationCommerce(eIndex) + GET_PLAYER(getOwnerINLINE()).getFreeCityCommerce(eIndex));
+
+		iNewCommerce = (iBaseCommerceRate * getTotalCommerceRateModifier(eIndex)) / 100;
+		iNewCommerce += getYieldRate(YIELD_PRODUCTION) * getProductionToCommerceModifier(eIndex);
+	}
+
+	return iNewCommerce;
+}
+
 
 void CvCity::updateCommerce()
 {
@@ -11681,6 +11728,8 @@ void CvCity::setNumRealBuildingTimed(BuildingTypes eIndex, int iNewValue, bool b
 					{
 						szBuffer = gDLL->getText("TXT_KEY_MISC_COMPLETES_WONDER", GET_PLAYER(getOwnerINLINE()).getNameKey(), GC.getBuildingInfo(eIndex).getTextKeyWide());
 						GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getOwnerINLINE(), szBuffer, getX_INLINE(), getY_INLINE(), (ColorTypes)GC.getInfoTypeForString("COLOR_BUILDING_TEXT"));
+						//Charriu Wonder tracking
+						GET_PLAYER(getOwnerINLINE()).setWonderTracking(GET_PLAYER(getOwnerINLINE()).getWonderTracking() + GC.getBuildingInfo(eIndex).getTextKeyWide());
 
 						for (iI = 0; iI < MAX_PLAYERS; iI++)
 						{
@@ -12162,7 +12211,21 @@ void CvCity::updateTradeRoutes()
 		{
 			pLoopCity->setTradeRoute(getOwnerINLINE(), true);
 
-			iTradeProfit += calculateTradeProfit(pLoopCity);
+			//Charriu TrackingForeignTradeRoutes
+			int tradeProf = calculateTradeProfit(pLoopCity);
+			iTradeProfit += tradeProf;
+
+			if (pLoopCity->getOwnerINLINE() != getOwnerINLINE())
+			{
+				GET_PLAYER(getOwnerINLINE()).changeTrackingForeignTradeRoutes(1);
+				GET_PLAYER(getOwnerINLINE()).changeTrackingForeignTradeRoutesCommerce(tradeProf);
+			}
+			//Charriu TrackingDomesticTradeRoutes
+			else
+			{
+				GET_PLAYER(getOwnerINLINE()).changeTrackingDomesticTradeRoutes(1);
+				GET_PLAYER(getOwnerINLINE()).changeTrackingDomesticTradeRoutesCommerce(tradeProf);
+			}
 		}
 	}
 
@@ -13345,6 +13408,9 @@ void CvCity::doGreatPeople()
 			}
 
 			createGreatPeople(eGreatPeopleUnit, true, false);
+
+			//Charriu Great Person tracking
+			GET_PLAYER(getOwnerINLINE()).setGreatPersonTracking(GET_PLAYER(getOwnerINLINE()).getGreatPersonTracking() + GC.getUnitInfo(eGreatPeopleUnit).getTextKeyWide());
 		}
 	}
 }

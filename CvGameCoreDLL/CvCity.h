@@ -344,6 +344,8 @@ public:
 	int getMaintenance() const;																	// Exposed to Python
 	int getMaintenanceTimes100() const;																	// Exposed to Python
 	void updateMaintenance();
+	//Charriu Tracking City Maintenance Bonus
+	int getTrackingMaintenanceBonus(int bonusValue) const;										// Exposed to Python
 	int calculateDistanceMaintenance() const;										// Exposed to Python
 	int calculateNumCitiesMaintenance() const;									// Exposed to Python
 	int calculateColonyMaintenance() const;									// Exposed to Python
@@ -700,6 +702,8 @@ public:
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;								// Exposed to Python
 	void updateCommerce(CommerceTypes eIndex);
 	void updateCommerce();
+	//Charriu Commerce Tracking
+	int getCommerceTracking(CommerceTypes eIndex) const;						// Exposed to Python
 
 	int getProductionToCommerceModifier(CommerceTypes eIndex) const;						// Exposed to Python
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);

@@ -448,6 +448,23 @@ class CvEventManager:
 
         CvAdvisorUtils.resetNoLiberateCities()
 
+        logName = None
+        if not CyGame().isGameMultiPlayer():  # For local debugging
+            logName = BugPath.join(BugPath.getRootDir(), "CtHBalance.log")
+            f = open(logName, "w")
+            f.write("Players|")
+
+            for iPlayer in range(gc.getMAX_PLAYERS()):
+                player = gc.getPlayer(iPlayer)
+                if (player.isAlive()):
+                    f.write("%s|||||||||||||||||||||||||||" % (player.getCivilizationDescription(1)))
+            f.write("\n")
+            for iPlayer in range(gc.getMAX_PLAYERS()):
+                player = gc.getPlayer(iPlayer)
+                if (player.isAlive()):
+                    f.write("|TotalCommerce|Gold|Science|City Count|Total Pop|Inflation|Financial Bonus|Financial BtS Bonus|Foreign Trade Routes|Foreign Trade Income|Domestic Trade Routes|Domestic Trade Income|City Maintenance|Unit Cost|Unit Supply|Civic Maintenance|AGG|IMP|ORG|IND|Gov Civic|Legal Civic|Labor Civic|Eco Civic|Religion Civic|Wonders|Great Person")
+            f.write("\n")
+            f.close()
 
         combatLogName = None
         if not CyGame().isPitbossHost():
@@ -470,6 +487,52 @@ class CvEventManager:
         'Called at the end of the end of each turn'
         iGameTurn = argsList[0]
         self.bGameTurnProcessing = False
+        # CtHBalance.log
+        logName = None
+        if CyGame().isPitbossHost():
+            logName = os.path.join(gc.getAltrootDir(), "Logs", "CtHBalance.log")
+        elif not CyGame().isGameMultiPlayer():  # For local debugging
+            logName = BugPath.join(BugPath.getRootDir(), "CtHBalance.log")
+
+        if logName:
+            f = codecs.open(logName, "a", 'utf-8')
+
+            # Add values here            
+            f.write("Turn %d|" % (CyGame().getGameTurn()))
+            for iPlayer in range(gc.getMAX_PLAYERS()):
+                player = gc.getPlayer(iPlayer)
+                if (player.isAlive()):
+                    #TotalCommerce|Gold|Science|City Count|Total Pop|Inflation|Financial Bonus|Financial BtS Bonus|Foreign Trade Routes|Foreign Trade Income|Domestic Trade Routes|Domestic Trade Income|City Maintenance|Unit Cost|Unit Supply|Civic Maintenance|AGG|IMP|ORG|IND|Gov Civic|Legal Civic|Labor Civic|Eco Civic|Religion Civic|Wonders|Great Person
+                    f.write("%d|" % (player.calculateTotalYield(2))) 
+                    f.write("%d|" % (player.calculateBaseNetFullGoldTracking()))
+                    f.write("%d|" % (player.calculateBaseNetFullResearchTracking()))
+                    f.write("%d|" % (player.getNumCities()))
+                    f.write("%d|" % (player.getTotalPopulation()))
+                    f.write("%d|" % (player.calculateInflationRate()))
+                    f.write("%d|" % (player.getTrackingFinancialBonus()))
+                    f.write("%d|" % (player.getTrackingOriginalFinancialBonus()))
+                    f.write("%d|" % (player.getTrackingForeignTradeRoutes()))
+                    f.write("%d|" % (player.getTrackingForeignTradeRoutesCommerce()))
+                    f.write("%d|" % (player.getTrackingDomesticTradeRoutes()))
+                    f.write("%d|" % (player.getTrackingDomesticTradeRoutesCommerce()))
+                    f.write("%d|" % (player.getTotalMaintenance()))
+                    f.write("%d|" % (player.calculateUnitCost()))
+                    f.write("%d|" % (player.calculateUnitSupply()))
+                    f.write("%d|" % (player.getCivicUpkeep([], False)))
+                    f.write("%d|" % (player.getTrackingMaintenanceBonus(25)))
+                    f.write("%d|" % (player.getTrackingMaintenanceBonus(10)))
+                    f.write("%d|" % (player.getCivicUpkeepBonusTracking([], False, 50)))
+                    f.write("%d|" % (player.getCivicUpkeepBonusTracking([], False, 15)))
+                    f.write("%s|" % (gc.getCivicInfo(player.getCivics(0)).getDescription()))
+                    f.write("%s|" % (gc.getCivicInfo(player.getCivics(1)).getDescription()))
+                    f.write("%s|" % (gc.getCivicInfo(player.getCivics(2)).getDescription()))
+                    f.write("%s|" % (gc.getCivicInfo(player.getCivics(3)).getDescription()))
+                    f.write("%s|" % (gc.getCivicInfo(player.getCivics(4)).getDescription()))
+                    f.write("%s|" % (player.getWonderTracking()))
+                    f.write("%s|" % (player.getGreatPersonTracking()))
+            
+            f.write("\n")    
+            f.close()
 
     def onBeginPlayerTurn(self, argsList):
         'Called at the beginning of a players turn'

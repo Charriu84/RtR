@@ -397,6 +397,18 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iStartingX = INVALID_PLOT_COORD;
 	m_iStartingY = INVALID_PLOT_COORD;
+	//Charriu TrackingFinancialBonus
+	m_iTrackingFinancialBonus = 0;
+	//Charriu TrackingOriginalFinancialBonus
+	m_iTrackingOriginalFinancialBonus = 0;
+	//Charriu TrackingForeignTradeRoutes
+	m_iTrackingForeignTradeRoutes = 0;
+	//Charriu TrackingForeignTradeRoutesCommerce
+	m_iTrackingForeignTradeRoutesCommerce = 0;
+	//Charriu TrackingDomesticTradeRoutes
+	m_iTrackingDomesticTradeRoutes = 0;
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	m_iTrackingDomesticTradeRoutesCommerce = 0;
 	m_iTotalPopulation = 0;
 	m_iTotalLand = 0;
 	m_iTotalLandScored = 0;
@@ -585,6 +597,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	}
 
 	m_szScriptData = "";
+	m_szWonderTracking = "";
+	m_szGreatPersonTracking = "";
 
 	if (!bConstructorCall)
 	{
@@ -2751,6 +2765,10 @@ void CvPlayer::updateYield()
 {
 	CvCity* pLoopCity;
 	int iLoop;
+	//Charriu TrackingFinancialBonus
+	m_iTrackingFinancialBonus = 0;
+	//Charriu TrackingOriginalFinancialBonus
+	m_iTrackingOriginalFinancialBonus = 0;
 
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
@@ -2933,6 +2951,15 @@ void CvPlayer::updateTradeRoutes()
 	CLinkList<int> cityList;
 	int iTotalTradeModifier;
 	int iLoop;
+
+	//Charriu TrackingForeignTradeRoutes
+	m_iTrackingForeignTradeRoutes = 0;
+	//Charriu TrackingForeignTradeRoutesCommerce
+	m_iTrackingForeignTradeRoutesCommerce = 0;
+	//Charriu TrackingDomesticTradeRoutes
+	m_iTrackingDomesticTradeRoutes = 0;
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	m_iTrackingDomesticTradeRoutesCommerce = 0;
 
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
@@ -6553,6 +6580,39 @@ int CvPlayer::calculateBaseNetGold() const
 	return iNetGold;
 }
 
+//Charriu Gold Tracking
+int CvPlayer::calculateBaseNetFullGoldTracking() const
+{
+	int iNetGold;
+
+	iNetGold = (getCommerceRateTracking(COMMERCE_GOLD) + getGoldPerTurn());
+
+	return iNetGold;
+}
+
+//Charriu Science Tracking
+int CvPlayer::calculateBaseNetFullResearchTracking() const
+{
+	return (GC.getDefineINT("BASE_RESEARCH_RATE") + getCommerceRateTracking(COMMERCE_RESEARCH));
+}
+
+//Charriu Commerce Tracking
+int CvPlayer::getCommerceRateTracking(CommerceTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < NUM_COMMERCE_TYPES, "eIndex is expected to be within maximum bounds (invalid Index)");
+
+	int iRate = 0;
+	int iLoop;
+
+	for (CvCity* pCity = firstCity(&iLoop); NULL != pCity; pCity = nextCity(&iLoop))
+	{
+		iRate += pCity->getCommerceTracking(COMMERCE_GOLD);
+	}
+
+	return iRate / 100;
+}
+
 int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 {
 	int iModifier = 100;
@@ -7813,6 +7873,50 @@ int CvPlayer::getAveragePopulation() const
 	return ((getTotalPopulation() / getNumCities()) + 1);
 }
 
+//Charriu TrackingFinancialBonus
+void CvPlayer::changeTrackingFinancialBonus(int iChange)
+{
+	m_iTrackingFinancialBonus = (m_iTrackingFinancialBonus + iChange);;
+	FAssert(getTrackingFinancialBonus() >= 0);
+}
+
+
+//Charriu TrackingOriginalFinancialBonus
+void CvPlayer::changeTrackingOriginalFinancialBonus(int iChange)
+{
+	m_iTrackingOriginalFinancialBonus = (m_iTrackingOriginalFinancialBonus + iChange);;
+	FAssert(getTrackingOriginalFinancialBonus() >= 0);
+}
+
+//Charriu TrackingForeignTradeRoutes
+void CvPlayer::changeTrackingForeignTradeRoutes(int iChange)
+{
+	m_iTrackingForeignTradeRoutes = (m_iTrackingForeignTradeRoutes + iChange);;
+	FAssert(getTrackingForeignTradeRoutes() >= 0);
+}
+
+
+//Charriu TrackingForeignTradeRoutesCommerce
+void CvPlayer::changeTrackingForeignTradeRoutesCommerce(int iChange)
+{
+	m_iTrackingForeignTradeRoutesCommerce = (m_iTrackingForeignTradeRoutesCommerce + iChange);;
+	FAssert(getTrackingForeignTradeRoutesCommerce() >= 0);
+}
+
+//Charriu TrackingDomesticTradeRoutes
+void CvPlayer::changeTrackingDomesticTradeRoutes(int iChange)
+{
+	m_iTrackingDomesticTradeRoutes = (m_iTrackingDomesticTradeRoutes + iChange);;
+	FAssert(getTrackingDomesticTradeRoutes() >= 0);
+}
+
+
+//Charriu TrackingDomesticTradeRoutesCommerce
+void CvPlayer::changeTrackingDomesticTradeRoutesCommerce(int iChange)
+{
+	m_iTrackingDomesticTradeRoutesCommerce = (m_iTrackingDomesticTradeRoutesCommerce + iChange);;
+	FAssert(getTrackingDomesticTradeRoutesCommerce() >= 0);
+}
 
 void CvPlayer::changeTotalPopulation(int iChange)
 {
@@ -9686,6 +9790,30 @@ void CvPlayer::changeTotalTech(int iChange)
 	}
 }
 
+//Charriu Wonder Tracking
+CvWString CvPlayer::getWonderTracking() const
+{
+	return m_szWonderTracking;
+}
+
+//Charriu Wonder Tracking
+void CvPlayer::setWonderTracking(const CvWString& szValue)
+{
+	m_szWonderTracking = szValue;
+}
+
+//Charriu Great Person Tracking
+CvWString CvPlayer::getGreatPersonTracking() const
+{
+	return m_szGreatPersonTracking;
+}
+
+//Charriu Great Person Tracking
+void CvPlayer::setGreatPersonTracking(const CvWString& szValue)
+{
+	m_szGreatPersonTracking = szValue;
+}
+
 int CvPlayer::getTotalBeakersTradedAway() const		 
 {
 	return m_iTotalBeakersTradedAway;
@@ -10719,6 +10847,42 @@ int CvPlayer::getExtraYieldWaterThreshold(YieldTypes eIndex) const
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex is expected to be within maximum bounds (invalid Index)");
 	return m_aiExtraYieldWaterThreshold[eIndex];
+}
+
+//Charriu TrackingFinancialBonus
+int CvPlayer::getTrackingFinancialBonus() const	
+{
+	return m_iTrackingFinancialBonus;
+}
+
+//Charriu TrackingOriginalFinancialBonus
+int CvPlayer::getTrackingOriginalFinancialBonus() const	
+{
+	return m_iTrackingOriginalFinancialBonus;
+}
+
+//Charriu TrackingForeignTradeRoutes
+int CvPlayer::getTrackingForeignTradeRoutes() const	
+{
+	return m_iTrackingForeignTradeRoutes;
+}
+
+//Charriu TrackingForeignTradeRoutesCommerce
+int CvPlayer::getTrackingForeignTradeRoutesCommerce() const	
+{
+	return m_iTrackingForeignTradeRoutesCommerce;
+}
+
+//Charriu TrackingDomesticTradeRoutes
+int CvPlayer::getTrackingDomesticTradeRoutes() const	
+{
+	return m_iTrackingDomesticTradeRoutes;
+}
+
+//Charriu TrackingDomesticTradeRoutesCommerce
+int CvPlayer::getTrackingDomesticTradeRoutesCommerce() const	
+{
+	return m_iTrackingDomesticTradeRoutesCommerce;
 }
 
 void CvPlayer::updateExtraYieldThreshold(YieldTypes eIndex)
@@ -11958,6 +12122,105 @@ int CvPlayer::getCivicUpkeep(CivicTypes* paeCivics, bool bIgnoreAnarchy) const
 	return iTotalUpkeep;
 }
 
+//Charriu Tracking Organized
+int CvPlayer::getSingleCivicUpkeepBonusTracking(int bonusValue, CivicTypes eCivic, bool bIgnoreAnarchy) const
+{
+	int iUpkeep;
+	int iUpkeepNormal;
+	
+	if (eCivic == NO_CIVIC)
+	{
+		return 0;
+	}
+
+	if (isNoCivicUpkeep((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOptionType())))
+	{
+		return 0;
+	}
+
+	if (GC.getCivicInfo(eCivic).getUpkeep() == NO_UPKEEP)
+	{
+		return 0;
+	}
+
+	if (!bIgnoreAnarchy)
+	{
+		if (isAnarchy())
+		{
+			return 0;
+		}
+	}
+
+	iUpkeep = 0;
+
+	iUpkeep += ((std::max(0, (getTotalPopulation() + GC.getDefineINT("UPKEEP_POPULATION_OFFSET") - GC.getCivicInfo(eCivic).getCivicOptionType())) * GC.getUpkeepInfo((UpkeepTypes)(GC.getCivicInfo(eCivic).getUpkeep())).getPopulationPercent()) / 100);
+	iUpkeep += ((std::max(0, (getNumCities() + GC.getDefineINT("UPKEEP_CITY_OFFSET") + GC.getCivicInfo(eCivic).getCivicOptionType() - (GC.getNumCivicOptionInfos() / 2))) * GC.getUpkeepInfo((UpkeepTypes)(GC.getCivicInfo(eCivic).getUpkeep())).getCityPercent()) / 100);
+
+	iUpkeepNormal = GC.getHandicapInfo(getHandicapType()).getCivicUpkeepPercent() * iUpkeep;
+	iUpkeepNormal /= 100;
+
+	if (!isHuman() && !isBarbarian())
+	{
+		iUpkeepNormal *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAICivicUpkeepPercent();
+		iUpkeepNormal /= 100;
+
+		iUpkeepNormal *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iUpkeepNormal /= 100;
+	}
+
+	iUpkeep *= std::max(0, bonusValue);
+	iUpkeep /= 100;
+
+	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getCivicUpkeepPercent();
+	iUpkeep /= 100;
+
+	if (!isHuman() && !isBarbarian())
+	{
+		iUpkeep *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAICivicUpkeepPercent();
+		iUpkeep /= 100;
+
+		iUpkeep *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iUpkeep /= 100;
+	}
+
+	return std::max(0, (std::max(0, iUpkeepNormal) - std::max(0, iUpkeep)));
+}
+
+//Charriu Tracking Organized
+int CvPlayer::getCivicUpkeepBonusTracking(int bonusValue, CivicTypes* paeCivics, bool bIgnoreAnarchy) const
+{
+	int iTotalUpkeep;
+	int iI;
+
+	if (paeCivics == NULL)
+	{
+		paeCivics = m_paeCivics;
+	}
+
+	iTotalUpkeep = 0;
+
+	for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+	{
+		iTotalUpkeep += getSingleCivicUpkeepBonusTracking(bonusValue, paeCivics[iI], bIgnoreAnarchy);
+	}
+
+	return iTotalUpkeep;
+}
+
+//Charriu Tracking City Maintenance Bonus
+int CvPlayer::getTrackingMaintenanceBonus(int bonusValue) const
+{
+	int totalMaintenance = 0;
+	CvCity* pLoopCity;
+	int iLoop = 0;
+
+	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+	{
+		totalMaintenance += pLoopCity->getTrackingMaintenanceBonus(bonusValue);
+	}
+
+	return totalMaintenance;
+}
 
 void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 {
@@ -16229,6 +16492,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(NUM_PLAYEROPTION_TYPES, m_abOptions);
 
 	pStream->ReadString(m_szScriptData);
+	pStream->ReadString(m_szWonderTracking);
+	pStream->ReadString(m_szGreatPersonTracking);
 
 	FAssertMsg((0 < GC.getNumBonusInfos()), "GC.getNumBonusInfos() is not greater than zero but it is expected to be in CvPlayer::read");
 	pStream->Read(GC.getNumBonusInfos(), m_paiBonusExport);
@@ -16702,6 +16967,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(NUM_PLAYEROPTION_TYPES, m_abOptions);
 
 	pStream->WriteString(m_szScriptData);
+	pStream->WriteString(m_szWonderTracking);
+	pStream->WriteString(m_szGreatPersonTracking);
 
 	FAssertMsg((0 < GC.getNumBonusInfos()), "GC.getNumBonusInfos() is not greater than zero but an array is being allocated in CvPlayer::write");
 	pStream->Write(GC.getNumBonusInfos(), m_paiBonusExport);

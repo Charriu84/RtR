@@ -219,6 +219,12 @@ public:
 	int calculateInflatedCosts() const;																																		// Exposed to Python
 
 	int calculateBaseNetGold() const;
+	//Charriu Gold Tracking
+	int calculateBaseNetFullGoldTracking() const;
+	//Charriu Science Tracking
+	int calculateBaseNetFullResearchTracking() const;
+	//Charriu Commerce Tracking
+	int getCommerceRateTracking(CommerceTypes eIndex) const;
 	int calculateBaseNetResearch(TechTypes eTech = NO_TECH) const;   // Exposed to Python
 	int calculateResearchModifier(TechTypes eTech) const;   // Exposed to Python
 	int calculateGoldRate() const;																																				// Exposed to Python
@@ -269,6 +275,18 @@ public:
 
 	DllExport int getTotalPopulation() const;																															// Exposed to Python
 	int getAveragePopulation() const;																																			// Exposed to Python
+	//Charriu TrackingFinancialBonus
+	void changeTrackingFinancialBonus(int iChange);
+	//Charriu TrackingOriginalFinancialBonus
+	void changeTrackingOriginalFinancialBonus(int iChange);
+	//Charriu TrackingForeignTradeRoutes
+	void changeTrackingForeignTradeRoutes(int iChange);
+	//Charriu TrackingForeignTradeRoutesCommerce
+	void changeTrackingForeignTradeRoutesCommerce(int iChange);
+	//Charriu TrackingDomesticTradeRoutes
+	void changeTrackingDomesticTradeRoutes(int iChange);
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	void changeTrackingDomesticTradeRoutesCommerce(int iChange);
 	void changeTotalPopulation(int iChange);
 	long getRealPopulation() const;																																				// Exposed to Python
 	int getReligionPopulation(ReligionTypes eReligion) const;
@@ -601,6 +619,12 @@ public:
 	//Charriu Inflation Tech Alternative
 	DllExport int getTotalTech() const;																																				// Exposed to Python
 	void changeTotalTech(int iChange);																																	// Exposed to Python  
+	//Charriu Wonder Tracking
+	CvWString getWonderTracking() const;																									// Exposed to Python
+	void setWonderTracking(const CvWString& szValue);																					// Exposed to Python
+	//Charriu Great Person Tracking
+	CvWString getGreatPersonTracking() const;																									// Exposed to Python
+	void setGreatPersonTracking(const CvWString& szValue);																					// Exposed to Python
 
 
 	int getCombatExperience() const; 	// Exposed to Python  
@@ -698,6 +722,19 @@ public:
 	//Charriu ExtraYieldWaterThreshold
 	int getExtraYieldWaterThreshold(YieldTypes eIndex) const;																							// Exposed to Python
 	void updateExtraYieldWaterThreshold(YieldTypes eIndex);
+
+	//Charriu TrackingFinancialBonus
+	int getTrackingFinancialBonus() const;				// Exposed to Python
+	//Charriu TrackingOriginalFinancialBonus
+	int getTrackingOriginalFinancialBonus() const;				// Exposed to Python
+	//Charriu TrackingForeignTradeRoutes
+	int getTrackingForeignTradeRoutes() const;				// Exposed to Python
+	//Charriu TrackingForeignTradeRoutesCommerce
+	int getTrackingForeignTradeRoutesCommerce() const;				// Exposed to Python
+	//Charriu TrackingDomesticTradeRoutes
+	int getTrackingDomesticTradeRoutes() const;				// Exposed to Python
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	int getTrackingDomesticTradeRoutesCommerce() const;				// Exposed to Python
 
 	int getTradeYieldModifier(YieldTypes eIndex) const;																								// Exposed to Python
 	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
@@ -818,7 +855,12 @@ public:
 	DllExport CivicTypes getCivics(CivicOptionTypes eIndex) const;																		// Exposed to Python					
 	int getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy = false) const;										// Exposed to Python					
 	int getCivicUpkeep(CivicTypes* paeCivics = NULL, bool bIgnoreAnarchy = false) const;							// Exposed to Python					
+	//Charriu Tracking Organized
+	int getSingleCivicUpkeepBonusTracking(int bonusValue, CivicTypes eCivic, bool bIgnoreAnarchy = false) const;										// Exposed to Python					
+	int getCivicUpkeepBonusTracking(int bonusValue, CivicTypes* paeCivics = NULL, bool bIgnoreAnarchy = false) const;							// Exposed to Python					
 	void setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue);															// Exposed to Python					
+	//Charriu Tracking City Maintenance Bonus
+	int getTrackingMaintenanceBonus(int bonusValue) const;										// Exposed to Python
 
 	int getSpecialistExtraYield(SpecialistTypes eIndex1, YieldTypes eIndex2) const;										// Exposed to Python
 	void changeSpecialistExtraYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange);
@@ -1089,6 +1131,18 @@ protected:
 
 	int m_iStartingX;
 	int m_iStartingY;
+	//Charriu TrackingFinancialBonus
+	int m_iTrackingFinancialBonus;
+	//Charriu TrackingOriginalFinancialBonus
+	int m_iTrackingOriginalFinancialBonus;
+	//Charriu TrackingForeignTradeRoutes
+	int m_iTrackingForeignTradeRoutes;
+	//Charriu TrackingForeignTradeRoutesCommerce
+	int m_iTrackingForeignTradeRoutesCommerce;
+	//Charriu TrackingDomesticTradeRoutes
+	int m_iTrackingDomesticTradeRoutes;
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	int m_iTrackingDomesticTradeRoutesCommerce;
 	int m_iTotalPopulation;
 	int m_iTotalLand;
 	int m_iTotalLandScored;
@@ -1239,6 +1293,10 @@ protected:
 	bool* m_abOptions;
 
 	CvString m_szScriptData;
+	//Charriu Wondertracking
+	CvWString m_szWonderTracking;
+	//Charriu Great Person Tracking
+	CvWString m_szGreatPersonTracking;
 
 	int* m_paiBonusExport;
 	int* m_paiBonusImport;

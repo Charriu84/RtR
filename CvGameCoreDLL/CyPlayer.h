@@ -139,6 +139,10 @@ public:
 	int calculateInflationRate();
 	int calculateInflatedCosts();
 	int calculateGoldRate();
+	//Charriu Gold Tracking
+	int calculateBaseNetFullGoldTracking();
+	//Charriu Science Tracking
+	int calculateBaseNetFullResearchTracking();
 	int calculateTotalCommerce();
 	int calculateResearchRate(int /*TechTypes*/ eTech);
 	int calculateResearchModifier(int /*TechTypes*/ eTech);
@@ -367,6 +371,18 @@ public:
 	int getExtraYieldLandThreshold(YieldTypes eIndex);
 	//Charriu ExtraYieldWaterThreshold
 	int getExtraYieldWaterThreshold(YieldTypes eIndex);
+	//Charriu TrackingFinancialBonus
+	int getTrackingFinancialBonus();
+	//Charriu TrackingOriginalFinancialBonus
+	int getTrackingOriginalFinancialBonus();
+	//Charriu TrackingForeignTradeRoutes
+	int getTrackingForeignTradeRoutes();
+	//Charriu TrackingForeignTradeRoutesCommerce
+	int getTrackingForeignTradeRoutesCommerce();
+	//Charriu TrackingDomesticTradeRoutes
+	int getTrackingDomesticTradeRoutes();
+	//Charriu TrackingDomesticTradeRoutesCommerce
+	int getTrackingDomesticTradeRoutesCommerce();
 	int getTradeYieldModifier(YieldTypes eIndex);
 	int getFreeCityCommerce(CommerceTypes eIndex);
 	int getCommercePercent(int /*CommerceTypes*/ eIndex);
@@ -430,6 +446,10 @@ public:
 	int /*CivicTypes*/ getCivics(int /*CivicOptionTypes*/ iIndex);
 	int getSingleCivicUpkeep(int /*CivicTypes*/ eCivic, bool bIgnoreAnarchy);
 	int getCivicUpkeep(boost::python::list&  /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy);
+	//Charriu Tracking Organized
+	int getCivicUpkeepBonusTracking(boost::python::list&  /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy, int bonusValue);
+	//Charriu Tracking City Maintenance Bonus
+	int getTrackingMaintenanceBonus(int bonusValue);
 	void setCivics(int /*CivicOptionTypes*/ eIndex, int /*CivicTypes*/ eNewValue);
 
 	int getCombatExperience() const;
@@ -450,6 +470,10 @@ public:
 	std::wstring getCityName(int iIndex);
 	python::tuple firstCity(bool bRev);	// returns tuple of (CyCity, iterOut)
 	python::tuple nextCity(int iterIn, bool bRev);		// returns tuple of (CyCity, iterOut)
+	//Charriu Wonder tracking
+	std::wstring getWonderTracking();
+	//Charriu Great Person tracking
+	std::wstring getGreatPersonTracking();
 	int getNumCities();
 	CyCity* getCity(int iID);
 	python::tuple firstUnit(bool bRev);	// returns tuple of (CyUnit, iterOut)
