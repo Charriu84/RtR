@@ -3123,9 +3123,6 @@ int CvPlayer::calculateScore(bool bFinal, bool bVictory)
 {
 	PROFILE_FUNC();
 
-	if (GC.getGame().isOption(GAMEOPTION_NO_SCORE))
-		return 1;
-
 	if (!isAlive())
 	{
 		return 0;
@@ -3135,6 +3132,9 @@ int CvPlayer::calculateScore(bool bFinal, bool bVictory)
 	{
 		return 0;
 	}
+
+	if (GC.getGame().isOption(GAMEOPTION_NO_SCORE))
+		return 1;
 
 	long lScore = 0;
 
@@ -16254,7 +16254,7 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange)
 		{
 			changeExtraBuildingHappiness(eOurBuilding, (GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) * iChange));
 			changeExtraBuildingHealth(eOurBuilding, (GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) * iChange));
-
+		
 			// AGDM addition:
 			// TODO: Process this when a city is aquired as well. (I.e. a city changes ownership; thus the civics of the city changes
 			int iLoop;
