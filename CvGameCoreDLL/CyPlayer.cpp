@@ -1907,6 +1907,14 @@ int CyPlayer::getCivicUpkeepBonusTracking(boost::python::list& /*CivicTypes*/ pa
 	return iRet;
 }
 
+//Charriu Tracking City Maintenance Bonus
+int CyPlayer::getTrackingMaintenanceBonus(int bonusValue)
+{
+	if (m_pPlayer)
+		return m_pPlayer->getTrackingMaintenanceBonus(bonusValue);
+	return 0;
+}
+
 void CyPlayer::setCivics(int /*CivicOptionTypes*/ eIndex, int /*CivicTypes*/ eNewValue)
 {
 	if (m_pPlayer)

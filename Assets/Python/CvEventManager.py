@@ -457,12 +457,12 @@ class CvEventManager:
             for iPlayer in range(gc.getMAX_PLAYERS()):
                 player = gc.getPlayer(iPlayer)
                 if (player.isAlive()):
-                    f.write("%s||||||||||||||||||||||||" % (player.getCivilizationDescription(1)))
+                    f.write("%s||||||||||||||||||||||||||" % (player.getCivilizationDescription(1)))
             f.write("\n")
             for iPlayer in range(gc.getMAX_PLAYERS()):
                 player = gc.getPlayer(iPlayer)
                 if (player.isAlive()):
-                    f.write("|TotalCommerce|Gold|Science|City Count|Total Pop|Inflation|Financial Bonus|Financial BtS Bonus|Foreign Trade Routes|Foreign Trade Income|Domestic Trade Routes|Domestic Trade Income|City Maintenance|Unit Cost|Unit Supply|Civic Maintenance|ORG|IND|Gov Civic|Legal Civic|Labor Civic|Eco Civic|Religion Civic|Wonders")
+                    f.write("|TotalCommerce|Gold|Science|City Count|Total Pop|Inflation|Financial Bonus|Financial BtS Bonus|Foreign Trade Routes|Foreign Trade Income|Domestic Trade Routes|Domestic Trade Income|City Maintenance|Unit Cost|Unit Supply|Civic Maintenance|AGG|IMP|ORG|IND|Gov Civic|Legal Civic|Labor Civic|Eco Civic|Religion Civic|Wonders")
             f.write("\n")
             f.close()
 
@@ -502,7 +502,7 @@ class CvEventManager:
             for iPlayer in range(gc.getMAX_PLAYERS()):
                 player = gc.getPlayer(iPlayer)
                 if (player.isAlive()):
-                    #TotalCommerce|Gold|Science|City Count|Total Pop|Inflation|Financial Bonus|Financial BtS Bonus|Foreign Trade Routes|Foreign Trade Income|Domestic Trade Routes|Domestic Trade Income|City Maintenance|Unit Cost|Unit Supply|Civic Maintenance|ORG|IND|Gov Civic|Legal Civic|Labor Civic|Eco Civic|Religion Civic|Wonders
+                    #TotalCommerce|Gold|Science|City Count|Total Pop|Inflation|Financial Bonus|Financial BtS Bonus|Foreign Trade Routes|Foreign Trade Income|Domestic Trade Routes|Domestic Trade Income|City Maintenance|Unit Cost|Unit Supply|Civic Maintenance|AGG|IMP|ORG|IND|Gov Civic|Legal Civic|Labor Civic|Eco Civic|Religion Civic|Wonders
                     f.write("%d|" % (player.calculateTotalYield(2))) 
                     f.write("%d|" % (player.calculateBaseNetFullGoldTracking()))
                     f.write("%d|" % (player.calculateBaseNetFullResearchTracking()))
@@ -519,6 +519,8 @@ class CvEventManager:
                     f.write("%d|" % (player.calculateUnitCost()))
                     f.write("%d|" % (player.calculateUnitSupply()))
                     f.write("%d|" % (player.getCivicUpkeep([], False)))
+                    f.write("%d|" % (player.getTrackingMaintenanceBonus(25)))
+                    f.write("%d|" % (player.getTrackingMaintenanceBonus(10)))
                     f.write("%d|" % (player.getCivicUpkeepBonusTracking([], False, 50)))
                     f.write("%d|" % (player.getCivicUpkeepBonusTracking([], False, 15)))
                     f.write("%s|" % (gc.getCivicInfo(player.getCivics(0)).getDescription()))

@@ -5868,6 +5868,26 @@ void CvCity::updateMaintenance()
 	}
 }
 
+//Charriu Tracking City Maintenance Bonus
+int CvCity::getTrackingMaintenanceBonus(int bonusValue) const
+{
+	int iNewMaintenance;
+	int iMaintenanceReduction;
+
+	iNewMaintenance = 0;
+	iMaintenanceReduction = 0;
+
+	if (!isDisorder() && !isWeLoveTheKingDay() && (getPopulation() > 0))
+	{
+		iNewMaintenance = (calculateBaseMaintenanceTimes100() * std::max(0, (getMaintenanceModifier() + 100))) / 100;
+
+		if (bonusValue > 0)
+			iMaintenanceReduction = iNewMaintenance * bonusValue / 100;
+	}
+
+	return iNewMaintenance / 100;
+}
+
 int CvCity::calculateDistanceMaintenance() const
 {
 	return (calculateDistanceMaintenanceTimes100() / 100);

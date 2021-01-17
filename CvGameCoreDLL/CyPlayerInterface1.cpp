@@ -431,6 +431,8 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getCivicUpkeep", &CyPlayer::getCivicUpkeep, "int (int* /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy)")
 		//Charriu Tracking Organized
 		.def("getCivicUpkeepBonusTracking", &CyPlayer::getCivicUpkeepBonusTracking, "int (int, int* /*CivicTypes*/ paiCivics, bool bIgnoreAnarchy)")
+		//Charriu Tracking City Maintenance Bonus
+		.def("getTrackingMaintenanceBonus", &CyPlayer::getTrackingMaintenanceBonus, "int (int)")
 		.def("setCivics", &CyPlayer::setCivics, "void (int iCivicOptionType, int iCivicType) - Used to forcibly set civics with no anarchy")
 
 		.def("getCombatExperience", &CyPlayer::getCombatExperience, "int () - Combat experience used to produce Warlords")

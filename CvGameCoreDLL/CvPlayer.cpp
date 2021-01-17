@@ -12194,6 +12194,20 @@ int CvPlayer::getCivicUpkeepBonusTracking(int bonusValue, CivicTypes* paeCivics,
 	return iTotalUpkeep;
 }
 
+//Charriu Tracking City Maintenance Bonus
+int CvPlayer::getTrackingMaintenanceBonus(int bonusValue) const
+{
+	int totalMaintenance = 0;
+	CvCity* pLoopCity;
+	int iLoop = 0;
+
+	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+	{
+		totalMaintenance += pLoopCity->getTrackingMaintenanceBonus(bonusValue);
+	}
+
+	return totalMaintenance;
+}
 
 void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 {
